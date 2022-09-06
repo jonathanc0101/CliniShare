@@ -4,7 +4,7 @@ var dgram = require('dgram');
 // Create udp server socket object.
 var server = dgram.createSocket("udp4");
 
-// Make udp server listen on port 8089.
+// Make udp server listen on port 9999.
 server.bind(9999);
 
 // When udp server receive message.

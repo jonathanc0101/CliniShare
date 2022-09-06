@@ -1,13 +1,27 @@
-var dgram = require('dgram');
+var udp = require('dgram');
 var ipsGetter = require("./getIp");
-var socket = dgram.createSocket("udp4");
 
 let message = JSON.stringify(ipsGetter());
+"using strict";
 
-socket.bind(9999, undefined, function () {
-    socket.setBroadcast(true);
+const multicast_addr = "224.1.1.1",
+      bin_addr = "0.0.0.0",
+      port = 9999;
+
+
+var listener = udp.createSocket({type:"udp4", reuseAddr:true}),
+    sender = udp.createSocket({type:"udp4", reuseAddr:true});
+
+listener.bind(port, multicast_addr, function(){
+    listener.addMembership(multicast_addr);
+    listener.setBroadcast(true);
 });
 
-socket.send(message, 0, message.length, 9999    , "255.255.255.255", function (err, bytes) {
-    socket.close();
+listener.on("message", function (b, other) {
+    console.log(b.toString().trim());
 });
+
+process.stdin.on("data", function (data){
+    sender.send(data, 0, data.length, port, multicast_addr);
+});
+
