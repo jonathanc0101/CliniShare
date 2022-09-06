@@ -15,12 +15,14 @@ socket.send(message, 0, message.length, 10000 , "255.255.255.255", function (err
     socket.close();
 });
 
+listener.bind(10000,"255.255.255.255",function(){
+    listener.setBroadcast(true);
+    console.log("listening");
+});
+
+
 listener.on("message",function(message,rinfo){
     console.log('Message from: ' + rinfo.address + ':' + rinfo.port +' - ' + message);
 });
 
-listener.bind(10000,undefined,function(){
-    listener.setBroadcast(true);
-    console.log("listening");
-});
 
