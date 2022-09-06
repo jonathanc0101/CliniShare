@@ -2,7 +2,6 @@ var dgram = require('dgram');
 var ipsGetter = require("./getIp");
 
 var socket = dgram.createSocket("udp4");
-var listener = dgram.createSocket("udp4");
 
 let message = JSON.stringify(ipsGetter());
 
@@ -15,14 +14,5 @@ socket.send(message, 0, message.length, 10000 , "255.255.255.255", function (err
     socket.close();
 });
 
-listener.bind(10000,"255.255.255.255",function(){
-    listener.setBroadcast(true);
-    console.log("listening");
-});
-
-
-listener.on("message",function(message,rinfo){
-    console.log('Message from: ' + rinfo.address + ':' + rinfo.port +' - ' + message);
-});
 
 
