@@ -1,14 +1,16 @@
 const os = require("os");
 const dgram = require('dgram');
-const ipsGetter = require("./getIp");
 
-const computadora = { "nombre": os.userInfo().username, 
-"IPS": ipsGetter() }
+const getIPS = require("./getIp");
+const { SERVER_PORT, MAGIC_WORD} = require("./constants");
+const computadora = {
+    "nombre": os.userInfo().username,
+    "IPS": getIPS(),
+    "MAGIC_WORD":MAGIC_WORD,
+}
 
-const { SERVER_PORT } = require("./constants");
 
-
-function sendMessage(myMessage) {
+function broadcastMessage(myMessage) {
     var sender = dgram.createSocket("udp4");
 
     sender.bind(undefined, undefined, function () {
@@ -22,11 +24,21 @@ function sendMessage(myMessage) {
 }
 
 
-function sendComputerData() {
+function broadcastComputerIPS() {
     // broadcasts the computer data to the network
-    sendMessage(JSON.stringify(computadora));
+    broadcastMessage(JSON.stringify(computadora));
 }
 
-sendComputerData();
 
 
+
+function broadcastRepeating() {
+    broadcastComputerIPS();
+    setTimeout(broadcastRepeating,2000);
+}
+
+broadcastRepeating();
+
+
+module.exports.broadcastComputerIPS = broadcastComputerIPS;
+module.exports.broadcastComputerIPSRepeating = broadcastRepeating;
