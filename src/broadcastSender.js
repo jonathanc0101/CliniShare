@@ -1,7 +1,9 @@
 const os = require("os");
 const dgram = require('dgram');
 
-const getIPS = require("./getIp");
+const {observer}= require("./observer");
+
+const getIPS = require("./udp utils/getIp");
 const { SERVER_PORT, MAGIC_WORD} = require("./constants");
 const computadora = {
     "nombre": os.userInfo().username,
@@ -29,9 +31,6 @@ function broadcastComputerIPS() {
     broadcastMessage(JSON.stringify(computadora));
 }
 
-
-
-
 function broadcastRepeating() {
     broadcastComputerIPS();
     setTimeout(broadcastRepeating,2000);
@@ -39,6 +38,7 @@ function broadcastRepeating() {
 
 broadcastRepeating();
 
+observer.emit("hello");
 
 module.exports.broadcastComputerIPS = broadcastComputerIPS;
 module.exports.broadcastComputerIPSRepeating = broadcastRepeating;
