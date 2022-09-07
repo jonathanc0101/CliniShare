@@ -20,6 +20,8 @@
     "electron": "^20.1.0"
   },
   "dependencies": {
+    "broadcast-address": "^1.0.2",
+    "dgram": "^1.0.1",
     "electron-squirrel-startup": "^1.0.0",
     "pg": "^8.8.0"
   },
