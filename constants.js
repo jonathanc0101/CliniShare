@@ -1,0 +1,3 @@
+const SERVER_PORT = 10000;
+
+module.exports.SERVER_PORT = SERVER_PORT;
