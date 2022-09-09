@@ -1,5 +1,0 @@
-const SERVER_PORT = 10000;
-const MAGIC_WORD = "EVERYDAY100";
-
-module.exports.SERVER_PORT = SERVER_PORT;
-module.exports.MAGIC_WORD= MAGIC_WORD;
