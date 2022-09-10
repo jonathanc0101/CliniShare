@@ -1,5 +1,5 @@
-import emitter from './eventEmitter';
-import loadListeners from './subscribers';
+import emitter from './eventEmitter.js';
+import loadListeners from './subscribers.js';
 
 export default () => {
   loadListeners(emitter);
