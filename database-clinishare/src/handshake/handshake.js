@@ -7,7 +7,7 @@ export function handleNewComputer(computadora) {
     for (let ip in computadora.IPS) {
         console.log("IP" + computadora.IPS[ip]);
 
-        const getMethodString = 'http://' + computadora.IPS[ip].trim() + ':' + SERVER_BD_PORT + '/clinishare'
+        const getMethodString = 'http://' + computadora.IPS[ip].toString().trim() + ':' + SERVER_BD_PORT + '/clinishare'
         console.log(getMethodString);
 
         axios
