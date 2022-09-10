@@ -1,9 +1,13 @@
 import app from "./app.js";
 import { sequelize } from "./database/database.js";
 
+<<<<<<< HEAD
 
 
 export async function main() {
+=======
+async function main() {
+>>>>>>> db
   try {
     await sequelize.sync({force: false}) //sincronización con la bd
     // await sequelize.authenticate();

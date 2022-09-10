@@ -27,3 +27,5 @@ contextBridge.exposeInMainWorld('myAPI', {
     replaceText("test","testSucceded")
   }
 })
+
+ 
