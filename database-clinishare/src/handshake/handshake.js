@@ -8,7 +8,7 @@ export async function handleNewComputer(computadora){
         for(let ip in computadora.IPS){
             console.log("IP" + computadora.IPS[ip]);
             
-            let getMethodString = "http//"+ computadora.IPS[ip] + ":" + SERVER_BD_PORT + "/clinishare";
+            let getMethodString = computadora.IPS[ip] + ":" + SERVER_BD_PORT + "/clinishare";
             console.log(getMethodString);
 
             let res = await axios.get(getMethodString);
@@ -27,7 +27,7 @@ export async function handleNewComputer(computadora){
 }
 
 export async function getInitialResponse(req, res) {
-    res.send(JSON.stringify(INITIAL_RESPONSE));
+    res.send(JSON.stringify({"INITIAL_RESPONSE":INITIAL_RESPONSE}));
 }
 
 
