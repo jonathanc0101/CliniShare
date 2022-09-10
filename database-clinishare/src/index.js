@@ -1,6 +1,8 @@
 import app from "./app.js";
 import { sequelize } from "./database/database.js";
 
+
+
 async function main() {
   try {
     await sequelize.sync({force: false}) //sincronización con la bd
