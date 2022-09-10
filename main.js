@@ -1,3 +1,4 @@
+const axios = require('axios');
 
 const { app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
@@ -15,6 +16,7 @@ const createWindow = () => {
   win.loadFile('index.html') 
 }
 
+ 
 
 app.whenReady().then(() => {
   createWindow()
@@ -23,3 +25,13 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
+
+axios
+.get('http://localhost:3000/medicos')
+.then(res => {
+  // console.log(`statusCode: ${res.status}`);
+  console.log(res);
+})
+.catch(error => {
+  console.error(error);
+});

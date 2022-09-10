@@ -5,7 +5,6 @@ const app = express();
 
 //middlewares
 app.use(express.json());
-
 app.use(medicosRoutes);
 
 export default app;
