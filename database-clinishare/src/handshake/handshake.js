@@ -4,6 +4,9 @@ import emitter from "../eventos/eventEmitter.js";
 
 export async function handleNewComputer(computadora){
     try {
+        console.log("nueva computadora " + JSON.stringify(computadora));
+        console.log("IP" + JSON.stringify(computadora.IPS));
+        
         for(ip in computadora.IPS){
             let res = await axios.get(ip + ":" + SERVER_BD_PORT + "/clinishare");
 
