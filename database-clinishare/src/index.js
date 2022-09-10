@@ -3,7 +3,7 @@ import { sequelize } from "./database/database.js";
 
 
 
-async function main() {
+export async function main() {
   try {
     await sequelize.sync({force: false}) //sincronización con la bd
     // await sequelize.authenticate();
@@ -15,4 +15,4 @@ async function main() {
   }
 }
 
-main();
+

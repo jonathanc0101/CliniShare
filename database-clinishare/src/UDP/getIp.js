@@ -1,9 +1,8 @@
-const exp = require('constants');
-const { networkInterfaces } = require('os');
+import { networkInterfaces } from 'os';
 
 const nets = networkInterfaces();
 
-function getIPSV4(){
+export default function getIPSV4(){
     const results = Object.create(null); // Or just '{}', an empty object
 
     for (const name of Object.keys(nets)) {
@@ -22,7 +21,5 @@ function getIPSV4(){
     
     return results;    
 }
-
-module.exports = getIPSV4;
 
 

@@ -1,11 +1,12 @@
-const os = require("os");
-const dgram = require('dgram');
-const ipsGetter = require("./getIp");
+import os from "os";
+import dgram from 'dgram';
+import ipsGetter from "./getIp.js";
+import { SERVER_PORT, MAGIC_STRING } from "./constants.js"
 
 const computadora = { "nombre": os.userInfo().username, 
-"IPS": ipsGetter() }
-
-const { SERVER_PORT } = require("./constants");
+"IPS": ipsGetter() ,
+MAGIC_WORD: MAGIC_STRING,
+};
 
 
 function sendMessage(myMessage) {
@@ -22,7 +23,7 @@ function sendMessage(myMessage) {
 }
 
 
-function sendComputerData() {
+export function sendComputerData() {
     // broadcasts the computer data to the network
     sendMessage(JSON.stringify(computadora));
 }
