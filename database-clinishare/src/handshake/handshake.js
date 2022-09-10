@@ -10,9 +10,10 @@ export function handleNewComputer(computadora){
             let getMethodString = computadora.IPS[ip] + ":" + SERVER_BD_PORT + "/clinishare";
             console.log(getMethodString);
 
-            axios.get(getMethodString).then(res => {
+            axios.get(getMethodString).then(( response )=> {
                 // console.log(`statusCode: ${res.status}`);
-                console.log(res);
+                console.log("response" + response);
+                console.log("response.data" + response.data);
               })
               .catch(error => {
                 console.error(error);
