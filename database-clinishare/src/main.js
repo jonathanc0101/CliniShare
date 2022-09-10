@@ -11,8 +11,7 @@ main();
 //starting broadcast listener
 listenForBroadcasts();
 
-//broadcast self to network
-
-broadcastComputerData();
+//broadcast self to network after a few seconds
+setTimeout(broadcastComputerData, 3000);
 
 // ValidBroadcasts();
