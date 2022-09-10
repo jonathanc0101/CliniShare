@@ -8,10 +8,11 @@ export async function handleNewComputer(computadora){
         for(let ip in computadora.IPS){
             console.log("IP" + computadora.IPS[ip]);
             
-            let getMethodString = computadora.IPS[ip] + ":" + SERVER_BD_PORT + "/clinishare";
+            let getMethodString = "http//"+ computadora.IPS[ip] + ":" + SERVER_BD_PORT + "/clinishare";
             console.log(getMethodString);
 
             let res = await axios.get(getMethodString);
+            console.log((res));
 
             let data = res.data;
 
