@@ -28,7 +28,7 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
 
-<<<<<<< HEAD
+
 const child = fork("./database-clinishare/src/main.js");
 
 child.on("close", function (code) {
@@ -38,7 +38,7 @@ child.on("close", function (code) {
 process.on('exit', function() {
   child.kill();
 });
-=======
+
 axios
 .get('http://localhost:3000/medicos')
 .then(res => {
@@ -48,4 +48,3 @@ axios
 .catch(error => {
   console.error(error);
 });
->>>>>>> db
