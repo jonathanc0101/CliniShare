@@ -2,7 +2,7 @@ import Sequelize from "sequelize";
 
 export const sequelize = new Sequelize(
     "clinisharedb", 
-    "postgres", 
+    "clinishare", 
     "password", 
     {
     host: "localhost",

@@ -1,13 +1,6 @@
 import app from "./app.js";
 import { sequelize } from "./database/database.js";
 
-// import "./models/Paciente.js"
-// import "./models/Medico.js"
-// import "./models/HistoriaClinica.js"
-// import "./models/Evento.js"
-// import "./models/Sincronizacion.js"
-
-
 async function main() {
   try {
     await sequelize.sync({force: false}) //sincronización con la bd

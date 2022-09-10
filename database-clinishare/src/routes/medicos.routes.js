@@ -8,7 +8,7 @@ const router = Router();
 
 router.get("/medicos", getMedicos);
 router.post("/medicos", createMedico);
-router.put("/medicos/id");
-router.delete("/medicos/id");
+// router.put("/medicos/id");
+// router.delete("/medicos/id");
 
 export default router;
