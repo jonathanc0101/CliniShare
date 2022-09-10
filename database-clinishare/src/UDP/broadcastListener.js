@@ -15,6 +15,7 @@ export async function listenForBroadcasts(){
     
     
     listener.on("message",function(message,rinfo){
+        console.log('Message from: ' + rinfo.address + ':' + rinfo.port +' - ' + message);
 
         //si es la misma ip no hacemos nada (estamos enviando nosotros el mensaje)
         let ips = getIPSV4();
@@ -24,7 +25,6 @@ export async function listenForBroadcasts(){
             }
         }
 
-        console.log('Message from: ' + rinfo.address + ':' + rinfo.port +' - ' + message);
     
         const computadora = message;
         if(computadora){

@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "dev": "nodemon database-clinishare/src/main.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +18,8 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.65",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.65",
     "@electron-forge/maker-zip": "^6.0.0-beta.65",
-    "electron": "^20.1.0"
+    "electron": "^20.1.0",
+    "nodemon": "^2.0.19"
   },
   "dependencies": {
     "axios": "^0.27.2",
