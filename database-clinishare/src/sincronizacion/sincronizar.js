@@ -37,7 +37,7 @@ export async function sincronizar(computadora) {
 
                 let datosPacientes = res.data;
 
-                console.log("datosPacientes " + datosPacientes);
+                console.log("datosPacientes " + JSON.stringify(datosPacientes));
                 
                 // hacemosAlgo
                 emitter.emit("pacientes_recibidos", datosPacientes)
