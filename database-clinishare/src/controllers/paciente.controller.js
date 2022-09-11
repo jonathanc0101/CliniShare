@@ -10,60 +10,23 @@ export const getPacientes = async (req, res) => {
 };
 
 export const getPacienteByDni = async (req, res) => {
-  let { dniABuscar } = req.body;
-  const paciente = await Paciente.findAll({
-    where: {
-      dni: dniABuscar
-    },
-
-    attributes: ['id', 'nombre', 'apellido', 'dni']
-
-  });
-
-  console.log(paciente);
-
-  if (!paciente) {
-    res.send(JSON.stringify({}));
-  }
-  else {
-    res.send(JSON.stringify(paciente));
-  }
+  // let { dniABuscar } = req.body;
+  const pacienteEncontrado = await PacientesService.getPacienteByDni(dniABuscar);
+  console.log(pacienteEncontrado);
+  res.send(JSON.stringify(pacienteEncontrado));
 };
 
 export const getDnisDePacientes = async (req, res) => {
-  const pacientes = await Paciente.findAll({
-    attributes: ['dni']
-  });
-
-  console.log(pacientes);
-
-  if (pacientes.length === 0) {
-    res.send(JSON.stringify([{}]));
-  }
-  else {
-    res.send(JSON.stringify(pacientes));
-  }
+  const pacientes = await PacientesService.getDnisDePacientes();
+  console.log("DNI's de pacientes: " + pacientes);
+  res.send(JSON.stringify(pacientes));
 };
 
 
 export const createPaciente = async (req, res) => {
-  const { nombre, apellido, dni } = req.body;
-
-  try {
-    const newPaciente = await Paciente.create({
-      nombre,
-      apellido,
-      dni
-    },);
-
-    const newPacienteAux = { nombre: newPaciente.nombre, apellido: newPaciente.apellido, dni: newPaciente.dni };
-
-    console.log();
-    res.send(JSON.stringify(newPacienteAux));
-
-  } catch (error) {
-    res.send(JSON.stringify({error}));
-  }
+  const {nombre, apellido, dni} = req.body;
+  const newPaciente = await PacientesService.createPaciente({nombre,apellido,dni});
+  res.send(JSON.stringify(newPaciente));
 
 };
 

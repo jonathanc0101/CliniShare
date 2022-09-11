@@ -11,6 +11,7 @@ const router = Router();
 
 router.get("/pacientes/all", getPacientes);
 router.get("/pacientes/all/dnis", getDnisDePacientes);
+router.get("/pacientes/search/dni", getPacienteByDni);
 
 router.post("/pacientes/new", createPaciente);
 router.put("/pacientes/actualizarPacientes",updatePacientes);
