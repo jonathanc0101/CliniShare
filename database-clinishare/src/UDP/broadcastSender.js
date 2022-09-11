@@ -3,7 +3,7 @@ import dgram from 'dgram';
 import ipsGetter from "./getIp.js";
 import { SERVER_PORT, MAGIC_STRING } from "./constants.js"
 
-const computadora = { "nombre": os.userInfo().username, 
+export const computadora = { "nombre": os.userInfo().username, 
 "IPS": ipsGetter() ,
 MAGIC_STRING: MAGIC_STRING,
 };

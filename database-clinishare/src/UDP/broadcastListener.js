@@ -6,6 +6,7 @@ import os from "os";
 
 import {SERVER_PORT, MAGIC_STRING} from "./constants.js";
 
+import { computadora } from './broadcastSender.js';
 
 export async function listenForBroadcasts(){
 
@@ -17,22 +18,21 @@ export async function listenForBroadcasts(){
     
     
     listener.on("message",function(message,rinfo){
-        console.log('Message from: ' + rinfo.address + ':' + rinfo.port +' - ' + message);
-
+        
+        const computadoraNueva =JSON.parse(message);
+        
         //si es la misma ip no hacemos nada (estamos enviando nosotros el mensaje)
-    
-        const computadora =JSON.parse(message);
-
-        if(computadora.nombre == os.userInfo().username) {
+        if(JSON.stringify(computadora) === JSON.stringify(computadoraNueva)) {
             return;
         }
 
-        computadora.MAGIC_STRING = computadora.MAGIC_STRING.trim();
+        computadoraNueva.MAGIC_STRING = computadora.MAGIC_STRING.trim();
         
-        if(computadora){            
+        if(computadoraNueva){            
             
-            if(computadora.MAGIC_STRING === MAGIC_STRING){
-                emitter.emit("new_computer", computadora);
+            if(computadoraNueva.MAGIC_STRING === MAGIC_STRING){
+                console.log('Message from: ' + rinfo.address + ':' + rinfo.port +' - ' + message);
+                emitter.emit("new_computer", computadoraNueva);
             }
         }
 

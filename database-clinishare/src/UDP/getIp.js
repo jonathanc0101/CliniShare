@@ -3,7 +3,7 @@ import { networkInterfaces } from 'os';
 const nets = networkInterfaces();
 
 export default function getIPSV4(){
-    const results = Object.create(null); // Or just '{}', an empty object
+    const results = {}; // Or just '{}', an empty object
 
     for (const name of Object.keys(nets)) {
         for (const net of nets[name]) {

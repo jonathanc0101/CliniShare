@@ -5,10 +5,7 @@ import emitter from "../eventos/eventEmitter.js";
 export function handleNewComputer(computadora) {
 
     for (let ip in computadora.IPS) {
-        console.log("IP" + computadora.IPS[ip]);
-
-        const getMethodString = 'http://' + computadora.IPS[ip].toString().trim() + ':' + SERVER_BD_PORT.toString().trim() + '/clinishare'
-        console.log(getMethodString);
+        const getMethodString = 'http://' + computadora.IPS[ip].toString().trim() + ':' + SERVER_BD_PORT.toString().trim() + '/clinishare';
 
         axios
             .get(getMethodString)
