@@ -1,11 +1,11 @@
 import { Medico } from "../models/Medico.js";
 
 export const getMedicos = async (req, res) => {
-  const medicos = await Medico.findAll();
+  const medicos = await Medico.findAll({attributes: ['id','nombre', 'apellido', 'dni']});
   console.log(medicos);
 
   if (medicos.length === 0) {
-    res.send("obteniendo médicos...");
+    res.send(JSON.stringify({}));
   }
   else {
     res.send(JSON.stringify(medicos));
@@ -23,6 +23,13 @@ export const createMedico = async (req, res) => {
       dni,
       matricula,
     });
+
+    newMedico = {
+      nombre:newMedico.nombre,
+      apellido:newMedico.apellido,
+      dni:newMedico.dni,
+      matricula:newMedico.matricula,
+    }
 
     console.log(newMedico);
     res.send(JSON.stringify(newMedico));

@@ -6,9 +6,9 @@ import {
 
 const router = Router();
 
-router.get("/medicos", getMedicos);
-router.post("/medicos", createMedico);
-// router.put("/medicos/id");
-// router.delete("/medicos/id");
+router.get("/medicos/all", getMedicos);
+router.post("/medicos/new", createMedico);
+// router.put("/medicos/");
+// router.delete("/medicos/");
 
 export default router;

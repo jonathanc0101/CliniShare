@@ -1,9 +1,6 @@
 import dgram from 'dgram';
 
 import emitter from '../eventos/eventEmitter.js';
-import events from '../eventos/events.js';
-events(emitter);
-
 
 import os from "os";
 
