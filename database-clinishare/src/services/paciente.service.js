@@ -1,4 +1,7 @@
 import { Paciente } from "../models/Paciente.js";
+import { HistoriaClinica } from "../models/HistoriaClinica.js";
+import { sequelize } from "../database/database.js";
+
 
 export const PacientesService = {
   getPacientes: () => getPacientesFromModel(),
@@ -6,7 +9,7 @@ export const PacientesService = {
   getPacienteByDni: (dniABuscar) => getPacienteByDniFromModel(dniABuscar),
   getDnisDePacientes: () => getDnisDePacientesFromModel(),
   getInterseccionDNIS: (dnis) => getInterseccionDNISFromModel(dnis),
-  getPacientesPorDnis:(dnis) => getPacientesPorDnisFromModel(dnis),
+  getPacientesPorDnis: (dnis) => getPacientesPorDnisFromModel(dnis),
 };
 
 async function getPacientesFromModel() {
@@ -24,24 +27,42 @@ async function getPacientesFromModel() {
 async function createPacienteFromModel({ nombre, apellido, dni }) {
 
   try {
-    // es asincrono porque es una consulta a la bd, esta guardando un dato dentro de la bd
-    const newPaciente = await Paciente.create({
-      nombre,
-      apellido,
-      dni,
-    });
+    //IMPORTANTE (para el futuro), COMPARAR Y DEJARLE AL USUARIO DECIDIR
+    let newPacienteAux = {};
+    
+    await sequelize.transaction(async (t) => {
 
-    const newPacienteAux = {
-      nombre: newPaciente.nombre,
-      apellido: newPaciente.apellido,
-      dni: newPaciente.dni,
-    };
+      const newPaciente = await Paciente.create({
+        nombre,
+        apellido,
+        dni,
+      },
+        {
+          transaction: t
+        });
+
+      const nuevaHistoria = await HistoriaClinica.create({pacienteId:newPaciente.id},
+        {
+          transaction: t
+        });
+
+        newPacienteAux = {
+        nombre: newPaciente.nombre,
+        apellido: newPaciente.apellido,
+        dni: newPaciente.dni,
+      };
+      
+    });  
 
     return newPacienteAux;
-  } catch (error) {
-    return null;
+    
+   } catch (error) {
+    console.log(error);
+    return {error}
+
   }
 }
+
 
 async function getPacienteByDniFromModel(dniABuscar) {
   // let { dniABuscar } = req.body;
@@ -92,7 +113,7 @@ async function getPacientesPorDnisFromModel(dnisPacientes) {
   if (dnisPacientes.length === 0) {
     return []
   }
-  
+
   let todosLosPacientes = await getPacientesFromModel();
   return todosLosPacientes;
 

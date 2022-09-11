@@ -30,6 +30,7 @@ export const getPacientesPorDnis = async (req, res) => {
 export const createPaciente = async (req, res) => {
   const {nombre, apellido, dni} = req.body;
   const newPaciente = await PacientesService.createPaciente({nombre,apellido,dni});
+  console.log(newPaciente);
   res.send(JSON.stringify(newPaciente));
 
 };
