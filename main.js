@@ -38,13 +38,3 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
-
-axios
-.get('http://localhost:3000/medicos')
-.then(res => {
-  // console.log(`statusCode: ${res.status}`);
-  console.log(res);
-})
-.catch(error => {
-  console.error(error);
-});
