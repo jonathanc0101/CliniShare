@@ -10,8 +10,8 @@ main();
 listenForBroadcasts();
 
 //broadcast self to network after a few seconds
-broadcastComputerData();
+setTimeout(broadcastComputerData,2000);
 
-setInterval(broadcastComputerData, 15000);
+setTimeout(broadcastComputerData, 15000);
 
 // ValidBroadcasts();
