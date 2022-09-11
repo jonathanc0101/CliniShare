@@ -7,7 +7,7 @@ export const getPacientes = async (req, res) => {
   console.log(pacientes);
 
   if (pacientes.length === 0) {
-    res.send("No hay pacientes...");
+    res.send(JSON.stringify([{}]));
   }
   else {
     res.send(JSON.stringify(pacientes));
@@ -28,7 +28,7 @@ export const getPacienteByDni = async (req, res) => {
   console.log(paciente);
 
   if (!paciente) {
-    res.send("No hay paciente con ese nombre...");
+    res.send(JSON.stringify({}));
   }
   else {
     res.send(JSON.stringify(paciente));
@@ -43,7 +43,7 @@ export const getDnisDePacientes = async (req, res) => {
   console.log(pacientes);
 
   if (pacientes.length === 0) {
-    res.send(JSON.stringify({}));
+    res.send(JSON.stringify([{}]));
   }
   else {
     res.send(JSON.stringify(pacientes));
@@ -67,7 +67,7 @@ export const createPaciente = async (req, res) => {
     res.send(JSON.stringify(newPacienteAux));
 
   } catch (error) {
-    res.send("No se pudo crear paciente, error: " + error);
+    res.send(JSON.stringify({error}));
   }
 
 };
