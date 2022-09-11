@@ -2,7 +2,7 @@ import { Medico } from "../models/Medico.js"
 
 export const MedicosService = {
     getMedicos: () => getMedicosFromModel(),
-    createMedico: () => createMedicoFromModel(),
+    createMedico: (medico) => createMedicoFromModel(medico),
 }
 
 async function getMedicosFromModel() {
@@ -19,7 +19,7 @@ async function getMedicosFromModel() {
 async function createMedicoFromModel({nombre,apellido,dni,matricula}){
     try {
         // es asincrono porque es una consulta a la bd, esta guardando un dato dentro de la bd
-        const newMedico = await Medico.create({
+        let newMedico = await Medico.create({
           nombre,
           apellido,
           dni,

@@ -25,6 +25,7 @@ export const Medico = sequelize.define(
     },
     matricula: {
       type: DataTypes.STRING,
+      unique:true
     },
   },
   {

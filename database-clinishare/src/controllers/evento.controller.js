@@ -1,4 +1,3 @@
-import { Evento } from "../models/Evento.js";
 import { EventosService } from "../services/eventos.service.js";
 
 export const getEventos = async (req, res) => {
@@ -7,30 +6,10 @@ export const getEventos = async (req, res) => {
 };
 
 export const createEvento = async (req, res) => {
-  const { titulo, fecha, descripcion } = req.body;
+  const { titulo, fecha, descripcion, pacienteId, historiaClinicaId } = req.body;
 
-  try {
-    const newEvento = await Evento.create({
-      titulo,
-      fecha,
-      descripcion,
-      pacienteId
-    },);
+  const newEvento = await EventosService.createEvento({ titulo, fecha, descripcion, pacienteId, historiaClinicaId } );
 
-    const newEventoAux = { 
-      titulo:newEvento.titulo,
-      fecha:newEvento.fecha,
-      descripcion:newEvento.descripcion,
-      pacienteId:newEvento.pacienteId
-    };
-
-    console.log();
-    res.send(JSON.stringify(newEventoAux));
-
-  } catch (error) {
-    console.log(error);
-    res.send(JSON.stringify({error}));
-  }
-
+  res.send(JSON.stringify());
 };
 
