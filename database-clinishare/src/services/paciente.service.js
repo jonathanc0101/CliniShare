@@ -94,11 +94,8 @@ async function getPacientesPorDnisFromModel(dnisPacientes) {
   }
   
   let todosLosPacientes = await getPacientesFromModel();
-  console.log(todosLosPacientes);
   return todosLosPacientes;
 
-  // let datosPacientes = await JSON.stringify(getPacientesPorDnis(dnisPacientes));
-  // res.send(datosPacientes);
 }
 
 

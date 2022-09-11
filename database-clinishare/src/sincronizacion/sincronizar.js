@@ -28,14 +28,16 @@ export async function sincronizar(computadora) {
         await axios
             .post(postSincronicemosString,dnisASincronizar)
             .then(res => {
-                if(!res.body){
+                if(!res.data){
                     return //chau chau adios
                 }
-                if(res.body.length === 0){
+                if(res.data.length === 0){
                     return //chau chau adios
                 }
 
-                let datosPacientes = res.body;
+                let datosPacientes = res.data;
+
+                console.log("datosPacientes " + datosPacientes);
                 
                 // hacemosAlgo
                 emitter.emit("pacientes_recibidos", datosPacientes)
