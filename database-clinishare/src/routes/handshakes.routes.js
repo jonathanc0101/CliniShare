@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
     getInitialResponse,
-} from "../handshake/handshake.js";
+} from "../sincronizacion/handshake.js";
 
 const router = Router();
 
