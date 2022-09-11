@@ -5,20 +5,17 @@ import { PacientesService } from "../services/paciente.service.js";
 
 export const getPacientes = async (req, res) => {
   const pacientes = await PacientesService.getPacientes();
-  console.log(pacientes);
   res.send(JSON.stringify(pacientes));
 };
 
 export const getPacienteByDni = async (req, res) => {
   // let { dniABuscar } = req.body;
   const pacienteEncontrado = await PacientesService.getPacienteByDni(dniABuscar);
-  console.log(pacienteEncontrado);
   res.send(JSON.stringify(pacienteEncontrado));
 };
 
 export const getDnisDePacientes = async (req, res) => {
   const pacientes = await PacientesService.getDnisDePacientes();
-  console.log("DNI's de pacientes: " + pacientes);
   res.send(JSON.stringify(pacientes));
 };
 

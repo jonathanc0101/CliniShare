@@ -4,7 +4,8 @@ export const PacientesService = {
   getPacientes: () => getPacientesFromModel(),
   createPaciente: (paciente) => createPacienteFromModel(paciente),
   getPacienteByDni: (dniABuscar) => getPacienteByDniFromModel(dniABuscar),
-  getDnisDePacientes: () => getDnisDePacientesFromModel()
+  getDnisDePacientes: () => getDnisDePacientesFromModel(),
+  getInterseccionDNIS: (pacientes) => getInterseccionDNISFromModel(pacientes),
 };
 
 async function getPacientesFromModel() {
@@ -70,4 +71,21 @@ async function getDnisDePacientesFromModel() {
     return pacientes;
   }
 }
+
+async function getInterseccionDNISFromModel(dnis) {
+  let dnisInterseccion = [];
+
+  const pacientes = await getDnisDePacientesFromModel();
+  const newPacientes = pacientes.map((x) => x.dni);
+  const newDnis = dnis.map((x) => x.dni);
+
+  
+  dnisInterseccion = newDnis.filter(value => newPacientes.includes(value));
+  dnisInterseccion = dnisInterseccion.filter(value => newDnis.includes(value));
+  
+  console.log("dnisInterseccion " + dnisInterseccion);
+
+  return dnisInterseccion;
+}
+
 
