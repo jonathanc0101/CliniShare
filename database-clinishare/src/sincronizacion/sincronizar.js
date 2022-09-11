@@ -46,6 +46,5 @@ export async function sincronizar(computadora) {
                 console.error(error);
             });
 
-
 }
 

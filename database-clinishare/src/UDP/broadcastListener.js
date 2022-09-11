@@ -2,8 +2,6 @@ import dgram from 'dgram';
 
 import emitter from '../eventos/eventEmitter.js';
 
-import os from "os";
-
 import {SERVER_PORT, MAGIC_STRING} from "./constants.js";
 
 import { computadora } from './broadcastSender.js';
