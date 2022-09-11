@@ -3,10 +3,11 @@ import {
     getInitialResponse,
 } from "../sincronizacion/handshake.js";
 
+import {getPacientesPorDnis} from "../controllers/paciente.controller.js"
+
 const router = Router();
 
 router.get("/clinishare", (req,res) => res.send(JSON.stringify(getInitialResponse())));
-// router.post("/sincronizar", (req,res) => res.send(JSON.stringify(sincronizar())));
-
+router.post("/sincronizar", getPacientesPorDnis);
 
 export default router;

@@ -24,25 +24,22 @@ export async function sincronizar(computadora) {
             });
 
             let dnisASincronizar = await PacientesService.getInterseccionDNIS(dnisDePacientes);
-            // console.log("dnisDePacientes"+dnisDePacientes.toString());
-            // console.log("dnisASincronizar"+dnisASincronizar.toString());
-            // console.log("url de sincronizar: " + postSincronicemosString);
-
         
-        // axios
-        //     .post(postMethodString,{
+        await axios
+            .post(postSincronicemosString,dnisASincronizar)
+            .then(res => {
+                if(res.body.length === 0){
+                    return //chau chau adios
+                }
+
+                let datosPacientes = res.body;
                 
-        //       })
-        //     .then(res => {
-        //         if(??){
-        //             // hacemosAlgo
-        //             emitter.emit("??", {???})
-        //             return;
-        //         }
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //     });
+                // hacemosAlgo
+                emitter.emit("pacientes_recibidos", datosPacientes)
+            })
+            .catch(error => {
+                console.error(error);
+            });
 
 
 }

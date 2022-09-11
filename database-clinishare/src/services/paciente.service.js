@@ -5,7 +5,8 @@ export const PacientesService = {
   createPaciente: (paciente) => createPacienteFromModel(paciente),
   getPacienteByDni: (dniABuscar) => getPacienteByDniFromModel(dniABuscar),
   getDnisDePacientes: () => getDnisDePacientesFromModel(),
-  getInterseccionDNIS: (pacientes) => getInterseccionDNISFromModel(pacientes),
+  getInterseccionDNIS: (dnis) => getInterseccionDNISFromModel(dnis),
+  getPacientesPorDnis:(dnis) => getPacientesPorDnisFromModel(dnis),
 };
 
 async function getPacientesFromModel() {
@@ -20,8 +21,7 @@ async function getPacientesFromModel() {
   }
 }
 
-async function createPacienteFromModel({nombre, apellido, dni}) {
-  // const { nombre, apellido, dni } = req.body;
+async function createPacienteFromModel({ nombre, apellido, dni }) {
 
   try {
     // es asincrono porque es una consulta a la bd, esta guardando un dato dentro de la bd
@@ -44,7 +44,7 @@ async function createPacienteFromModel({nombre, apellido, dni}) {
 }
 
 async function getPacienteByDniFromModel(dniABuscar) {
-    // let { dniABuscar } = req.body;
+  // let { dniABuscar } = req.body;
   const paciente = await Paciente.findAll({
     where: {
       dni: dniABuscar
@@ -53,7 +53,7 @@ async function getPacienteByDniFromModel(dniABuscar) {
   });
 
   if (!paciente) {
-    return("Paciente no encontrado");
+    return ("Paciente no encontrado");
   }
   else {
     return paciente;
@@ -61,10 +61,10 @@ async function getPacienteByDniFromModel(dniABuscar) {
 }
 
 async function getDnisDePacientesFromModel() {
-    const pacientes = await Paciente.findAll({
-        attributes: ['dni']
-      });
-      
+  const pacientes = await Paciente.findAll({
+    attributes: ['dni']
+  });
+
   if (pacientes.length === 0) {
     return [];
   } else {
@@ -79,13 +79,26 @@ async function getInterseccionDNISFromModel(dnis) {
   const newPacientes = pacientes.map((x) => x.dni);
   const newDnis = dnis.map((x) => x.dni);
 
-  
+
   dnisInterseccion = newDnis.filter(value => newPacientes.includes(value));
   dnisInterseccion = dnisInterseccion.filter(value => newDnis.includes(value));
-  
+
   console.log("dnisInterseccion " + dnisInterseccion);
 
   return dnisInterseccion;
+}
+
+async function getPacientesPorDnisFromModel(dnisPacientes) {
+  if (dnisPacientes.length === 0) {
+    return []
+  }
+  
+  let todosLosPacientes = await getPacientesFromModel();
+  console.log(todosLosPacientes);
+  return todosLosPacientes;
+
+  // let datosPacientes = await JSON.stringify(getPacientesPorDnis(dnisPacientes));
+  // res.send(datosPacientes);
 }
 
 
