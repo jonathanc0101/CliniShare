@@ -13,20 +13,22 @@ export function handleNewComputer(computadora) {
         axios
             .get(getMethodString)
             .then(res => {
-                console.log(res);
-                console.log("DATA " + JSON.stringify( res.data));
+                if(res.data.INITIAL_RESPONSE === INITIAL_RESPONSE ){
+                    // hacemosAlgo
+                    emitter.emit("new_valid_computer", {nombre:computadora.nombre, ip:computadora.IPS[ip]})
+                    return;
+                }
             })
             .catch(error => {
                 console.error(error);
             });
     }
 
-    // emitter.emit("new_valid_computer", )
 
 }
 
 export function getInitialResponse(req, res) {
-    res.send(JSON.stringify({ "INITIAL_RESPONSE": INITIAL_RESPONSE }));
+    return({ "INITIAL_RESPONSE": INITIAL_RESPONSE });
 }
 
 

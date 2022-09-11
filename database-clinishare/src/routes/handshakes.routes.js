@@ -5,6 +5,6 @@ import {
 
 const router = Router();
 
-router.get("/clinishare", getInitialResponse);
+router.get("/clinishare", (req,res) => res.send(JSON.stringify(getInitialResponse())));
 
 export default router;

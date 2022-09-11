@@ -5,7 +5,6 @@ import emitter from '../eventos/eventEmitter.js';
 import os from "os";
 
 import {SERVER_PORT, MAGIC_STRING} from "./constants.js";
-import getIPSV4 from './getIp.js';
 
 
 export async function listenForBroadcasts(){
