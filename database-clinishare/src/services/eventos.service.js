@@ -16,26 +16,28 @@ async function getEventosFromModel() {
   }
 }
 
-async function createEventoFromModel({ titulo,  fecha,  descripcion,  pacienteId }) {
+async function createEventoFromModel({ titulo,  fecha,  descripcion,  pacienteId,historiaClinicaId}) {
   try {
     const newEvento = await Evento.create({
       titulo,
       fecha,
       descripcion,
-      pacienteId
+      pacienteId,
+      historiaClinicaId
     },);
 
     const newEventoAux = {
       titulo: newEvento.titulo,
       fecha: newEvento.fecha,
       descripcion: newEvento.descripcion,
-      pacienteId: newEvento.pacienteId
+      pacienteId: newEvento.pacienteId,
+      historiaClinicaId: newEvento.historiaClinicaId,
     };
 
     return newEventoAux;
 
   } catch (error) {
-    console.log(error);
+
     return { error };
   }
 }
