@@ -1,14 +1,9 @@
 import { Evento } from "../models/Evento.js";
+import { EventosService } from "../services/eventos.service.js";
 
 export const getEventos = async (req, res) => {
-  const eventos = await Evento.findAll({ attributes: ['id', 'titulo', 'fecha', 'descripcion'] });
-
-  if (eventos.length === 0) {
-    res.send(JSON.stringify([{}]));
-  }
-  else {
-    res.send(JSON.stringify(eventos));
-  }
+  const eventos = await EventosService.getEventos();
+  res.send(JSON.stringify(eventos));
 };
 
 export const createEvento = async (req, res) => {

@@ -1,17 +1,12 @@
 import { sequelize } from "../database/database.js";
 import { Evento } from "../models/Evento.js";
 import { Paciente } from "../models/Paciente.js";
+import { PacientesService } from "../services/paciente.service.js";
 
 export const getPacientes = async (req, res) => {
-  const pacientes = await Paciente.findAll({ attributes: ['id', 'nombre', 'apellido', 'dni'] });
+  const pacientes = await PacientesService.getPacientes();
   console.log(pacientes);
-
-  if (pacientes.length === 0) {
-    res.send(JSON.stringify([{}]));
-  }
-  else {
-    res.send(JSON.stringify(pacientes));
-  }
+  res.send(JSON.stringify(pacientes));
 };
 
 export const getPacienteByDni = async (req, res) => {
