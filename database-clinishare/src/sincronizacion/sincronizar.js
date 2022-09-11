@@ -28,6 +28,9 @@ export async function sincronizar(computadora) {
         await axios
             .post(postSincronicemosString,dnisASincronizar)
             .then(res => {
+                if(!res.body){
+                    return //chau chau adios
+                }
                 if(res.body.length === 0){
                     return //chau chau adios
                 }
