@@ -115,7 +115,11 @@ async function getPacientesPorDnisFromModel(dnisPacientes) {
   }
 
   let todosLosPacientes = await getPacientesFromModel();
-  return todosLosPacientes;
+  
+  // FILTRAR
+  let pacientesFiltrados = todosLosPacientes.filter(value => dnisPacientes.includes(value.dni));
+
+  return pacientesFiltrados;
 
 }
 
