@@ -1,6 +1,7 @@
 import { Paciente } from "../models/Paciente.js";
 import { HistoriaClinica } from "../models/HistoriaClinica.js";
 import { sequelize } from "../database/database.js";
+import { Evento } from "../models/Evento.js";
 
 
 export const PacientesService = {
@@ -10,6 +11,7 @@ export const PacientesService = {
   getDnisDePacientes: () => getDnisDePacientesFromModel(),
   getInterseccionDNIS: (dnis) => getInterseccionDNISFromModel(dnis),
   getPacientesPorDnis: (dnis) => getPacientesPorDnisFromModel(dnis),
+  getEventosPorDniPaciente: (dni) => getEventosFromModelPorPacienteDNI(dni),
 };
 
 async function getPacientesFromModel() {
@@ -121,6 +123,33 @@ async function getPacientesPorDnisFromModel(dnisPacientes) {
 
   return pacientesFiltrados;
 
+}
+
+
+// MIGRAR LUEGO A evento.service
+async function getEventosFromModelPorPacienteDNI(pacienteDNI) {
+  const historia = await HistoriaClinica.findAll({
+    //migrar luego a historia.service
+    where : {
+      pacienteDni: pacienteDni
+    }
+  });
+
+  if(!historia){
+    return [];
+  }
+
+  const eventos = await Evento.findAll({
+    where: {
+      historiaClinicaId:historia.historiaClinicaId
+    }
+  });
+
+  if (eventos.length === 0) {
+    [];
+  } else {
+    return eventos;
+  }
 }
 
 
