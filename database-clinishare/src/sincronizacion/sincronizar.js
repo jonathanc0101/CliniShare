@@ -4,7 +4,15 @@ import { PacientesService } from "../services/paciente.service.js";
 import emitter from "../eventos/eventEmitter.js";
 
 export async function sincronizar(computadora) {
-        const postSincronicemosString = 'http://' + computadora.ip.toString().trim() + ':' + SERVER_BD_PORT.toString().trim() + '/sincronizar';
+        let ip = "";
+
+        if(computadora.ip.length > 0){
+            ip = computadora.ip[0];
+        }else{
+            ip = computadora.ip;
+        }
+
+        const postSincronicemosString = 'http://' + ip.toString().trim() + ':' + SERVER_BD_PORT.toString().trim() + '/sincronizar';
 
         const getDNISString = 'http://' + computadora.ip.toString().trim() + ':' + SERVER_BD_PORT.toString().trim() + '/pacientes/all/dnis';
 
