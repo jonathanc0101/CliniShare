@@ -6,10 +6,13 @@ export const getEventos = async (req, res) => {
 };
 
 export const createEvento = async (req, res) => {
-  const { titulo, fecha, descripcion, pacienteId, historiaClinicaId } = req.body;
-
-  const newEvento = await EventosService.createEvento({ titulo, fecha, descripcion, pacienteId, historiaClinicaId } );
-
-  res.send(JSON.stringify());
+  const { titulo, fecha, descripcion } = req.body;
+  const eventoCargado = await EventosService.createEvento({
+    titulo,
+    fecha,
+    descripcion,
+  });
+  console.log(eventoCargado);
+  res.send(JSON.stringify(eventoCargado));
 };
 

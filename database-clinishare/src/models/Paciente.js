@@ -18,7 +18,7 @@ export const Paciente = sequelize.define(
       type: DataTypes.STRING,
     },
     dni: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       unique:true
     },
   },
