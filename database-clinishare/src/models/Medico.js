@@ -3,8 +3,6 @@ import { sequelize } from "../database/database.js";
 import { Sincronizacion } from "./Sincronizacion.js";
 import { Evento } from "./Evento.js";
 
-// import { Task } from "./Task.js";
-
 export const Medico = sequelize.define(
   "medicos",
   {
