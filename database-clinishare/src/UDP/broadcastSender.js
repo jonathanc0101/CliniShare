@@ -30,13 +30,15 @@ export function broadcastComputerData() {
 
 export function responderBroadcast(computer){
     // enviamos nuestros datos (nombre, ips, etc.) a la computadora que nos envió un broadcast
-    console.log("RESPONDER BROADCAST");
+
     var sender = dgram.createSocket("udp4");
+
+    
     let mensajeComputadora = JSON.stringify(computadora);
 
     sender.bind(undefined, undefined);
 
-    sender.send(mensajeComputadora, 0, mensajeComputadora.length, SERVER_PORT, computer.ip, function (err, bytes) {
+    sender.send(mensajeComputadora, 0, mensajeComputadora.length, SERVER_PORT, computer.ip[0], function (err, bytes) {
         sender.close();
     });
 }

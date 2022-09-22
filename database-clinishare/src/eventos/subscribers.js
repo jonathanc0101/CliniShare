@@ -10,6 +10,10 @@ export default function loadListeners(emitter) {
     responderBroadcast(computer);
     sincronizar(computer);
   });
+
+  emitter.on("new_computer_non_looping", (computer) => {
+    sincronizar(computer);
+  });
   // Attach other events
   return emitter;
 };
