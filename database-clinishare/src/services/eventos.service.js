@@ -47,16 +47,13 @@ async function getEventosFromModel() {
 //   }
 // }
 
-async function createEventoFromModel({ titulo, fecha, descripcion }) {
+async function createEventoFromModel(evento) {
   try {
+    evento.fecha = new Date()
     // es asincrono porque es una consulta a la bd, esta guardando un dato dentro de la bd
-    let newEvento = await Evento.create({
-      titulo,
-      fecha: new Date(),
-      descripcion,
-    });
+    let newEvento = await Evento.create(evento)
 
-    return newEvento;
+    return newEvento
   } catch (error) {
     return "No se pudo cargar el evento. " + error;
   }
