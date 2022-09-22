@@ -104,7 +104,7 @@ async function getInterseccionDNISFromModel(dnis) {
   dnisInterseccion = newDnis.filter(value => newPacientes.includes(value));
   dnisInterseccion = dnisInterseccion.filter(value => newDnis.includes(value));
 
-  console.log("dnisInterseccion " + dnisInterseccion);
+  console.log("Dnis obtenidos en la INTERSECCIÓN: " + dnisInterseccion);
 
   return dnisInterseccion;
 }
