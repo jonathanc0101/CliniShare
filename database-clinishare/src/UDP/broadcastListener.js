@@ -18,7 +18,7 @@ export async function listenForBroadcasts(){
         nonLoopingListeners.push(dgram.createSocket("udp4"))
 
         nonLoopingListeners[i].bind(SERVER_PORT,ip,function(){
-            console.log("listening on " + ip);
+            console.log("listening for directed messages on " + ip);
         });
 
         nonLoopingListeners[i].on("message",function(message,rinfo){
@@ -49,7 +49,7 @@ export async function listenForBroadcasts(){
     var listener = dgram.createSocket("udp4");
 
     listener.bind(SERVER_PORT,"255.255.255.255",function(){
-        console.log("listening");
+        console.log("listening for broadcasts");
     });
     
     listener.on("message",function(message,rinfo){
