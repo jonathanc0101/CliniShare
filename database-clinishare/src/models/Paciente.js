@@ -18,7 +18,7 @@ export const Paciente = sequelize.define(
       type: DataTypes.STRING,
     },
     dni: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       unique:true
     },
   },
@@ -29,11 +29,11 @@ export const Paciente = sequelize.define(
 
 //relacionando con paciente
 Paciente.hasOne(HistoriaClinica,{
-  foreignKey: 'pacienteId',
-  sourceKey: 'id'
+  foreignKey: 'pacienteDni',
+  sourceKey: 'dni'
 })
 
 HistoriaClinica.belongsTo(Paciente,{
-  foreignKey: 'pacienteId',
-  targetId: 'id'
+  foreignKey: 'pacienteDni',
+  targetId: 'dni'
 })

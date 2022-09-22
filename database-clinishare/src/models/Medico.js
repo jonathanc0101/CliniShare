@@ -35,22 +35,22 @@ export const Medico = sequelize.define(
 
 //relacionando con evento
 Medico.hasMany(Evento,{
-    foreignKey: 'medicoId',
-    sourceKey: 'id'
+    foreignKey: 'medicoDni',
+    sourceKey: 'dni'
 })
 
 Evento.belongsTo(Medico,{
-    foreignKey: 'medicoId',
-    targetId: 'id'
+    foreignKey: 'medicoDni',
+    targetId: 'dni'
 })
 
 //relacionando con sincronizacion
 Medico.hasMany(Sincronizacion,{
-  foreignKey: 'medicoId',
-  sourceKey: 'id'
+  foreignKey: 'medicoDni',
+  sourceKey: 'dni'
 })
 
 Sincronizacion.belongsTo(Medico,{
-  foreignKey: 'medicoId',
-  targetId: 'id'
+  foreignKey: 'medicoDni',
+  targetId: 'dni'
 })
