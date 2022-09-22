@@ -17,10 +17,10 @@ async function getHistoriasClinicasFromModel() {
 
 }
 
-async function createHistoriaClinicaFromModel({id, pacienteId}) {
+async function createHistoriaClinicaFromModel({id, pacienteDni}) {
     try {
         // es asincrono porque es una consulta a la bd, esta guardando un dato dentro de la bd
-        let newHistoriaClinica = await HistoriaClinica.create({ id, pacienteId});
+        let newHistoriaClinica = await HistoriaClinica.create({ id, pacienteDni});
     
         return newHistoriaClinica;
       
