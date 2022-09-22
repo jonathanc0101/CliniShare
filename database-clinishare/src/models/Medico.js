@@ -44,11 +44,11 @@ Evento.belongsTo(Medico,{
 
 //relacionando con sincronizacion
 Medico.hasMany(Sincronizacion,{
-  foreignKey: 'medicoDNI',
-  sourceKey: 'dni'
+  foreignKey: 'medicoId',
+  sourceKey: 'id'
 })
 
 Sincronizacion.belongsTo(Medico,{
-  foreignKey: 'medicoDNI',
-  targetId: 'dni'
+  foreignKey: 'medicoId',
+  targetId: 'id'
 })
