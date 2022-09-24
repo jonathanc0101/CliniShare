@@ -7,8 +7,9 @@ import {
 
 const router = Router();
 
-router.get("/eventos/:dni", getEventosPorDni);
+//tener en cuenta el orden de las rutas que comienzan de la misma manera
 router.get("/eventos/all", getEventos);
+router.get("/eventos/:dni", getEventosPorDni);
 router.post("/eventos/new", createEvento);
 
 export default router;
