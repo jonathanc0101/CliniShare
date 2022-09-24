@@ -9,8 +9,7 @@ export const PacientesService = {
   getPacienteByDni: (dniABuscar) => getPacienteByDniFromModel(dniABuscar),
   getDnisDePacientes: () => getDnisDePacientesFromModel(),
   getInterseccionDNIS: (dnis) => getInterseccionDNISFromModel(dnis),
-  getPacientesPorDnis: (dnis) => getPacientesPorDnisFromModel(dnis),
-  getEventosPorDniPaciente: (dni) => getEventosFromModelPorPacienteDNI(dni),
+  getPacientesPorDnis: (dnis) => getPacientesPorDnisFromModel(dnis)
 };
 
 async function getPacientesFromModel() {
@@ -124,29 +123,5 @@ async function getPacientesPorDnisFromModel(dnisPacientes) {
   return pacientesFiltrados;
 }
 
-// MIGRAR LUEGO A evento.service
-async function getEventosFromModelPorPacienteDNI(pacienteDNI) {
-  const historia = await HistoriaClinica.findAll({
-    //migrar luego a historia.service
-    where : {
-      pacienteDni: pacienteDni
-    }
-  });
 
-  if(!historia){
-    return [];
-  }
-
-  const eventos = await Evento.findAll({
-    where: {
-      historiaClinicaId:historia.historiaClinicaId
-    }
-  });
-
-  if (eventos.length === 0) {
-    [];
-  } else {
-    return eventos;
-  }
-}
 

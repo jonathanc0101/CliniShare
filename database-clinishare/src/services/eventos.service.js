@@ -1,9 +1,11 @@
 import { Evento } from "../models/Evento.js";
 import { HistoriaClinicaService } from "./historiaClinica.service.js";
+import { HistoriaClinica } from "../models/HistoriaClinica.js";
 
 export const EventosService = {
   getEventos: () => getEventosFromModel(),
   createEvento: (evento) => createEventoFromModel(evento),
+  getEventosPorDniPaciente: (dni) => getEventosFromModelPorPacienteDNI(dni),
 };
 
 async function getEventosFromModel() {
@@ -49,5 +51,31 @@ async function createEventoFromModel(evento) {
     return newEvento;
   } catch (error) {
     return "No se pudo cargar el evento. " + error;
+  }
+}
+
+
+async function getEventosFromModelPorPacienteDNI(pacienteDNI) {
+  const historia = await HistoriaClinica.findAll({
+    //migrar luego a historia.service
+    where : {
+      pacienteDni: pacienteDNI
+    }
+  });
+
+  if(!historia){
+    return [];
+  }
+
+  const eventos = await Evento.findAll({
+    where: {
+      historiaClinicaId:historia.historiaClinicaId
+    }
+  });
+
+  if (eventos.length === 0) {
+    [];
+  } else {
+    return eventos;
   }
 }

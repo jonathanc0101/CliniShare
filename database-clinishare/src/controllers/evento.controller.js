@@ -1,5 +1,4 @@
 import { EventosService } from "../services/eventos.service.js";
-import { PacientesService } from "../services/paciente.service.js";
 
 export const getEventos = async (req, res) => {
   const eventos = await EventosService.getEventos();
@@ -7,9 +6,9 @@ export const getEventos = async (req, res) => {
 };
 
 export const getEventosPorDni = async (req, res) => {
-  let dni = req.query.dni;
+  let dni = req.params.dni;
   console.log("dNI" + dni)
-  const eventos = await PacientesService.getEventosPorDniPaciente(dni);
+  const eventos = await EventosService.getEventosPorDniPaciente(dni);
   res.send(JSON.stringify(eventos));
 };
 
