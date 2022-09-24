@@ -31,14 +31,8 @@ async function createEventoFromModel(evento) {
       );
 
     //si no existe, creo la historia clinica
-    if (historiaClinicaObtenida === null) {
+    if (!historiaClinicaObtenida) {
       return ("No se pudo encontrar la historia clínica");
-      // const historiaClinicaNueva =
-      //   await HistoriaClinicaService.createHistoriaClinica({
-      //     pacienteDni: evento.pacienteDni,
-      //   });
-      //después de crear la historia clinica, asginar al evento correspondiente
-      // evento.historiaClinicaId = historiaClinicaNueva.id;
     } else {
       // Si ya existe la historia clinica, asignarla al evento correspondiente
       evento.historiaClinicaId = historiaClinicaObtenida.id;
