@@ -9,12 +9,32 @@ export const PacientesService = {
   getPacienteByDni: (dniABuscar) => getPacienteByDniFromModel(dniABuscar),
   getDnisDePacientes: () => getDnisDePacientesFromModel(),
   getInterseccionDNIS: (dnis) => getInterseccionDNISFromModel(dnis),
-  getPacientesPorDnis: (dnis) => getPacientesPorDnisFromModel(dnis)
+  getPacientesPorDnis: (dnis) => getPacientesPorDnisFromModel(dnis),
+  getEntidadesPacientesPorDnis: (dnis) =>
+    getEntidadesPacientesPorDnisFromModel(dnis),
 };
 
 async function getPacientesFromModel() {
   const pacientes = await Paciente.findAll({
     attributes: ["id", "nombre", "apellido", "dni"],
+  });
+
+  if (pacientes.length === 0) {
+    return [];
+  } else {
+    return pacientes;
+  }
+}
+
+async function getEntidadesPacientesFromModel() {
+  const pacientes = await Paciente.findAll({
+    attributes: ["id", "nombre", "apellido", "dni"],
+    include: [
+      {
+        model: HistoriaClinica,
+        include: [{ model: Evento }],
+      },
+    ],
   });
 
   if (pacientes.length === 0) {
@@ -123,5 +143,17 @@ async function getPacientesPorDnisFromModel(dnisPacientes) {
   return pacientesFiltrados;
 }
 
+async function getEntidadesPacientesPorDnisFromModel(dnisPacientes) {
+  if (dnisPacientes.length === 0) {
+    return [];
+  }
 
+  let todosLosPacientes = await getEntidadesPacientesFromModel();
 
+  // FILTRAR
+  let pacientesFiltrados = todosLosPacientes.filter((value) =>
+    dnisPacientes.includes(value.dni)
+  );
+
+  return pacientesFiltrados;
+}

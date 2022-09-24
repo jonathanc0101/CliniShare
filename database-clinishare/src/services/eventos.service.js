@@ -56,18 +56,13 @@ async function createEventoFromModel(evento) {
 
 
 async function getEventosFromModelPorPacienteDNI(pacienteDNI) {
-  let historia = await HistoriaClinica.findAll({
-    //migrar luego a historia.service
-    where : {
-      pacienteDni: pacienteDNI
-    }
-  });
+  let historia = await HistoriaClinicaService.getHistoriaClinicaByPacienteDni(pacienteDNI);
   
   if(!historia){
     return [];
   }
   
-  historia = historia[0]; //conseguimos la primera historia
+  historia = historia; //conseguimos la primera historia
 
   console.log("HIST:" + JSON.stringify(historia));
 

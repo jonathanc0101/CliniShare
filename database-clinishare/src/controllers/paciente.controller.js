@@ -25,6 +25,12 @@ export const getPacientesPorDnis = async (req, res) => {
   res.send(JSON.stringify(pacientes));
 };
 
+export const getEntidadesPacientesPorDnis = async (req, res) => {
+  let dnis = req.body;
+  const entidadesPacientes = await PacientesService.getEntidadesPacientesPorDnis(dnis);
+  res.send(JSON.stringify(entidadesPacientes));
+};
+
 
 
 
