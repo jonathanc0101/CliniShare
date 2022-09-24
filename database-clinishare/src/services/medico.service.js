@@ -25,14 +25,7 @@ async function createMedicoFromModel({nombre,apellido,dni,matricula}){
           dni,
           matricula,
         });
-    
-        newMedico = {
-          nombre:newMedico.nombre,
-          apellido:newMedico.apellido,
-          dni:newMedico.dni,
-          matricula:newMedico.matricula,
-        }
-    
+
         return(newMedico);
       
       } catch (error) {
