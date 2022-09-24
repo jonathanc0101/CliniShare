@@ -15,14 +15,15 @@ export const getEventosPorDni = async (req, res) => {
 
 export const createEvento = async (req, res) => {
   try {
-    const { titulo, fecha, descripcion, medicoDni } = req.body;
+    const { titulo, fecha, descripcion, medicoDni, pacienteDni } = req.body;
     const eventoCargado = await EventosService.createEvento({
       titulo,
       fecha,
       descripcion,
       medicoDni,
+      pacienteDni
     });
-    console.log(eventoCargado);
+    // console.log(eventoCargado);
     res.send(JSON.stringify(eventoCargado));
   } catch (error) {
     console.log(error)

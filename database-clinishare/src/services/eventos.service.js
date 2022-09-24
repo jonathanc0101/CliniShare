@@ -3,8 +3,7 @@ import { HistoriaClinicaService } from "./historiaClinica.service.js";
 
 export const EventosService = {
   getEventos: () => getEventosFromModel(),
-  createEvento: (evento, dniPaciente) =>
-    createEventoFromModel(evento, dniPaciente),
+  createEvento: (evento) => createEventoFromModel(evento),
 };
 
 async function getEventosFromModel() {
@@ -19,23 +18,33 @@ async function getEventosFromModel() {
   }
 }
 
-async function createEventoFromModel(evento, dniPaciente) {
+async function createEventoFromModel(evento) {
   try {
-    dniPaciente = "1111";
+    let newEvento = {};
 
-    //preguntar si existe una historia clinica asignado a tal paciente.
+    //Obtengo la hc mediante el dni del paciente
+    const historiaClinicaObtenida =
+      await HistoriaClinicaService.getHistoriaClinicaByPacienteDni(
+        evento.pacienteDni
+      );
+
     //si no existe, creo la historia clinica
-    const historiaClinicaNueva =
-      await HistoriaClinicaService.createHistoriaClinica({
-        pacienteDni: dniPaciente,
-      });
-
-    //después de crear la historia clinica, asginar al evento correspondiente
-    evento.historiaClinicaId = historiaClinicaNueva.id;
+    if (historiaClinicaObtenida === null) {
+      return ("No se pudo encontrar la historia clínica");
+      // const historiaClinicaNueva =
+      //   await HistoriaClinicaService.createHistoriaClinica({
+      //     pacienteDni: evento.pacienteDni,
+      //   });
+      //después de crear la historia clinica, asginar al evento correspondiente
+      // evento.historiaClinicaId = historiaClinicaNueva.id;
+    } else {
+      // Si ya existe la historia clinica, asignarla al evento correspondiente
+      evento.historiaClinicaId = historiaClinicaObtenida.id;
+    }
 
     evento.fecha = new Date();
     // es asincrono porque es una consulta a la bd, esta guardando un dato dentro de la bd
-    let newEvento = await Evento.create(evento);
+    newEvento = await Evento.create(evento);
 
     return newEvento;
   } catch (error) {
