@@ -15,6 +15,9 @@ export const Evento = sequelize.define("evento",{
     },
     descripcion:{
         type: DataTypes.STRING,
+    },
+    importante:{
+        type: DataTypes.BOOLEAN,
     }
 },{
     timestamps: true
