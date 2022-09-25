@@ -7,11 +7,14 @@ export const PacientesService = {
   getPacientes: () => getPacientesFromModel(),
   createPaciente: (paciente) => createPacienteFromModel(paciente),
   getPacienteByDni: (dniABuscar) => getPacienteByDniFromModel(dniABuscar),
+  getPacienteById: (id) => getPacienteByIdFromModel(id),
   getDnisDePacientes: () => getDnisDePacientesFromModel(),
   getInterseccionDNIS: (dnis) => getInterseccionDNISFromModel(dnis),
   getPacientesPorDnis: (dnis) => getPacientesPorDnisFromModel(dnis),
   getEntidadesPacientesPorDnis: (dnis) =>
     getEntidadesPacientesPorDnisFromModel(dnis),
+  updatePacientePorId: (paciente, id) =>
+    updatePacientePorIdFromModel(paciente, id),
 };
 
 async function getPacientesFromModel() {
@@ -83,17 +86,43 @@ async function createPacienteFromModel({ nombre, apellido, dni }) {
   }
 }
 
+async function updatePacientePorIdFromModel(paciente, id) {
+  try {
+    const pacienteUpdateado = await Paciente.update(paciente, {
+      where: { id: id },
+    });
+
+    return pacienteUpdateado;
+  } catch (error) {
+    console.log(error);
+
+    return {};
+  }
+}
+
 async function getPacienteByDniFromModel(dniABuscar) {
-  // let { dniABuscar } = req.body;
-  const paciente = await Paciente.findAll({
+  const paciente = await Paciente.findOne({
     where: {
       dni: dniABuscar,
     },
-    attributes: ["id", "nombre", "apellido", "dni"],
   });
 
   if (!paciente) {
-    return null;
+    return {};
+  } else {
+    return paciente;
+  }
+}
+
+async function getPacienteByIdFromModel(id) {
+  const paciente = await Paciente.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!paciente) {
+    return {};
   } else {
     return paciente;
   }

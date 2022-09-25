@@ -1,8 +1,9 @@
 import { Router } from "express";
 import {
   createPaciente,
-  updatePacientes,
+  updatePacientePorId,
   getPacienteByDni,
+  getPacienteById,
   getPacientes,
   getDnisDePacientes
 } from "../controllers/paciente.controller.js";
@@ -11,10 +12,10 @@ const router = Router();
 
 router.get("/pacientes/all", getPacientes);
 router.get("/pacientes/all/dnis", getDnisDePacientes);
-router.get("/pacientes/search/dni", getPacienteByDni);
+router.get("/pacientes/dni/:dni", getPacienteByDni);
+router.get("/pacientes/id/:id", getPacienteById);
 
 router.post("/pacientes/new", createPaciente);
-router.put("/pacientes/actualizarPacientes",updatePacientes);
-// router.delete("/pacientes/");
+router.put("/pacientes/id/:id",updatePacientePorId);
 
 export default router;
