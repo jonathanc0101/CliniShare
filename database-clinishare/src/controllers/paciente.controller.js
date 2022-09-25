@@ -1,6 +1,3 @@
-import { sequelize } from "../database/database.js";
-import { Evento } from "../models/Evento.js";
-import { Paciente } from "../models/Paciente.js";
 import { PacientesService } from "../services/paciente.service.js";
 
 export const getPacientes = async (req, res) => {
@@ -43,9 +40,9 @@ export const getEntidadesPacientesPorDnis = async (req, res) => {
 
 
 export const createPaciente = async (req, res) => {
-  const {nombre, apellido, dni} = req.body;
-  const newPaciente = await PacientesService.createPaciente({nombre,apellido,dni});
-  console.log(newPaciente);
+  const paciente = req.body;
+  const newPaciente = await PacientesService.createPaciente(paciente);
+  
   res.send(JSON.stringify(newPaciente));
 
 };
