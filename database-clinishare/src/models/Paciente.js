@@ -21,6 +21,10 @@ export const Paciente = sequelize.define(
       type: DataTypes.STRING,
       unique:true
     },
+    activo:{
+      type: DataTypes.BOOLEAN,
+      defaultValue:true,
+    }
   },
   {
     timestamps: true,

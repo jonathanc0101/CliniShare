@@ -47,17 +47,16 @@ async function getEntidadesPacientesFromModel() {
   }
 }
 
-async function createPacienteFromModel({ nombre, apellido, dni }) {
+async function createPacienteFromModel(paciente) {
   try {
-    //IMPORTANTE (para el futuro), COMPARAR Y DEJARLE AL USUARIO DECIDIR
-    let newPacienteAux = {};
+    let newPaciente = {};
 
     await sequelize.transaction(async (t) => {
-      const newPaciente = await Paciente.create(
+      newPaciente = await Paciente.create(
         {
-          nombre,
-          apellido,
-          dni,
+          nombre:paciente.nombre,
+          apellido:paciente.apellido,
+          dni:paciente.dni,
         },
         {
           transaction: t,
@@ -72,17 +71,12 @@ async function createPacienteFromModel({ nombre, apellido, dni }) {
         }
       );
 
-      newPacienteAux = {
-        nombre: newPaciente.nombre,
-        apellido: newPaciente.apellido,
-        dni: newPaciente.dni,
-      };
     });
 
-    return newPacienteAux;
+    return newPaciente;
   } catch (error) {
     console.log("No se pudo cargar el paciente. " + error);
-    return { error };
+    return { };
   }
 }
 
