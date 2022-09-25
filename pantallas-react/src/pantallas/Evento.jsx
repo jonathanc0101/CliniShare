@@ -2,6 +2,7 @@ import React from "react";
 
 import {
     Box,
+    Button,
     Card,
     CardContent,
     Checkbox,
@@ -18,7 +19,6 @@ import {
   import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
   import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
   import { useState } from "react";
-  import { CheckBox } from "@mui/icons-material"
 
 function Evento() {
 
@@ -27,10 +27,14 @@ function Evento() {
     const handleChange = (newValue) => {
       setValue(newValue);
     };
+
+    const handleGuardar = () => {
+      alert("guardando...");
+    }
   
   return (
     <>
-      <Typography component="h2" variant="h2">
+      <Typography component="h4" variant="h4">
         Nuevo evento
       </Typography>
       <Box sx={{ width: "100%" }}>
@@ -39,6 +43,7 @@ function Evento() {
             <Grid container direction="row" spacing={2}>
               <Grid item xs={4} sm={4}>
                 <TextField
+                  disabled
                   label="Identificador"
                   type="text"
                   name="identificador"
@@ -62,7 +67,7 @@ function Evento() {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Stack spacing={3}>
                     <DesktopDatePicker
-                      label="Fecha del evento"
+                      label="Fecha"
                       inputFormat="MM/DD/YYYY"
                       value={value}
                       onChange={handleChange}
@@ -72,20 +77,34 @@ function Evento() {
                 </LocalizationProvider>
               </Grid>
             </Grid>
+
+            <Grid container direction="row" spacing={2}>
+              <Grid item xs={12} sm={12} lg={12}>
+                Descripción
+                <TextareaAutosize
+                  aria-label="maximum height"
+                  placeholder="Descripción"
+                  style={{ width: "100%", height: 100 }}
+                />
+              </Grid>
+            </Grid>
+
             <Grid item xs={12}>
               <hr></hr>
               <Grid item xs={3}>
                 <FormControlLabel
                   value="importante"
+                  label="Este evento es de relevancia permanente"
                   control={<Checkbox />}
-                  label="Evento importante"
                 />
               </Grid>
             </Grid>
-            <hr></hr>Médico N°
+
+            <hr></hr>Médico
             <Grid container direction="row" spacing={2}>
               <Grid item xs={3} sm={3}>
                 <TextField
+                  disabled
                   label="Nombre"
                   type="text"
                   name="nombre"
@@ -96,6 +115,7 @@ function Evento() {
               </Grid>
               <Grid item xs={3} sm={3}>
                 <TextField
+                  disabled
                   label="Apellido"
                   type="text"
                   name="apellido"
@@ -106,6 +126,7 @@ function Evento() {
               </Grid>
               <Grid item xs={3} sm={3}>
                 <TextField
+                  disabled
                   label="DNI"
                   type="text"
                   name="DNI"
@@ -116,6 +137,7 @@ function Evento() {
               </Grid>
               <Grid item xs={3} sm={3}>
                 <TextField
+                  disabled
                   label="Matricula"
                   type="text"
                   name="matricula"
@@ -125,10 +147,11 @@ function Evento() {
                 ></TextField>
               </Grid>
             </Grid>
-            <hr></hr>Paciente N°
+            <hr></hr>Paciente
             <Grid container direction="row" spacing={2}>
               <Grid item xs={3} sm={3}>
                 <TextField
+                  disabled
                   label="Nombre"
                   type="text"
                   name="nombre"
@@ -139,6 +162,7 @@ function Evento() {
               </Grid>
               <Grid item xs={3} sm={3}>
                 <TextField
+                disabled
                   label="Apellido"
                   type="text"
                   name="apellido"
@@ -149,6 +173,7 @@ function Evento() {
               </Grid>
               <Grid item xs={3} sm={3}>
                 <TextField
+                disabled
                   label="DNI"
                   type="text"
                   name="DNI"
@@ -157,15 +182,11 @@ function Evento() {
                   variant="outlined"
                 ></TextField>
               </Grid>
-            </Grid>
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={12} sm={12} lg={6}>
-                Descripción
-                <TextareaAutosize
-                  aria-label="maximum height"
-                  placeholder="Descripción"
-                  style={{ width: 1249, height: 100 }}
-                />
+
+              <Grid item xs={12} sm={12} >
+                <Button size="large" fullWidth onClick={handleGuardar} variant="contained">
+                  Guardar
+                </Button>
               </Grid>
             </Grid>
           </CardContent>

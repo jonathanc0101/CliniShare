@@ -1,25 +1,25 @@
 import { EventosService } from "../services/eventos.service.js";
 
-export const getEventos = async (req, res) => {
+export const getEventos = async (req, res, next) => {
   const eventos = await EventosService.getEventos();
   res.send(JSON.stringify(eventos));
 };
 
-export const getEventosPorDni = async (req, res) => {
+export const getEventosPorDni = async (req, res, next) => {
   let dni = req.params.dni;
   console.log("dNI" + dni);
   const eventos = await EventosService.getEventosPorDniPaciente(dni);
   res.send(JSON.stringify(eventos));
 };
 
-export const getEventoPorId = async (req, res) => {
+export const getEventoPorId = async (req, res, next) => {
   let id = req.params.id;
   const evento = await EventosService.getEventoPorId(id);
 
   res.send(JSON.stringify(evento));
 };
 
-export const createEvento = async (req, res) => {
+export const createEvento = async (req, res, next) => {
   try {
     const evento = req.body;
     const eventoCargado = await EventosService.createEvento(evento);
@@ -30,7 +30,7 @@ export const createEvento = async (req, res) => {
   }
 };
 
-export const updateEventoPorId = async (req, res) => {
+export const updateEventoPorId = async (req, res, next) => {
   const id = req.params.id;
   console.log("updateEventoPorId, ID: " + id);
 

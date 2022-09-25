@@ -1,5 +1,5 @@
 import Evento from "./pantallas/Evento";
-import Medico from "./pantallas/Medico";
+import Paciente from "./pantallas/Paciente";
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Evento></Evento>
-        <Medico></Medico>
+        <Paciente></Paciente>
       </header>
     </div>
   );
