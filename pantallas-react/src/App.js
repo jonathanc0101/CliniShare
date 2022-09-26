@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Evento></Evento>
+        {/* <Evento></Evento> */}
         <Paciente></Paciente>
       </header>
     </div>
