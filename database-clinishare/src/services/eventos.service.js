@@ -52,7 +52,7 @@ async function createEventoFromModel(evento) {
 
     return newEvento;
   } catch (error) {
-    return "No se pudo cargar el evento. " + error;
+    return ("No se pudo cargar el evento");
   }
 }
 
