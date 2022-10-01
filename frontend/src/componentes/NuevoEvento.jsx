@@ -20,6 +20,7 @@ import { useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import EditIcon from "@mui/icons-material/Edit";
 import { urlBackend as url } from "../utilidades/constantes";
+import { api } from "../API backend/api";
 
 const axios = require("axios");
 
@@ -63,11 +64,11 @@ function NuevoEvento() {
     };
     // console.log(evento);
     try {
-      const response = await axios.post(url + "/eventos/new", evento);
-      if (response.data === null) {
+      const response = await api.guardarEvento(evento);
+      if (!response) {
         alert(`El paciente no existe`);
       } else {
-        console.log(response.data);
+        console.log(evento);
         alert(`Se cargo el evento`);
       }
     } catch (err) {
