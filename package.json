@@ -8,8 +8,8 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "dev": "nodemon database-clinishare/src/main.js",
-    "rc":"npm run --prefix pantallas-react/ start"
+    "dev": "nodemon backend/src/main.js",
+    "rc":"npm run --prefix frontend/ start"
   },
   "author": "",
   "license": "ISC",

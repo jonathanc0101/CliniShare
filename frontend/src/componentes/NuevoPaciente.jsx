@@ -12,7 +12,7 @@ import {
 import "../App.css";
 import { api } from "../API backend/api";
 
-function Paciente() {
+function NuevoPaciente() {
   const [Paciente, setPaciente] = useState({
     nombre: "",
     apellido: "",
@@ -119,4 +119,4 @@ function Paciente() {
   );
 }
 
-export default Paciente;
+export default NuevoPaciente;
