@@ -9,7 +9,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "dev": "nodemon backend/src/main.js",
-    "rc":"npm run --prefix frontend/ start"
+    "rc": "npm run --prefix frontend/ start"
   },
   "author": "",
   "license": "ISC",
@@ -20,14 +20,18 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.65",
     "@electron-forge/maker-zip": "^6.0.0-beta.65",
     "electron": "^20.1.0",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.20"
   },
   "dependencies": {
     "axios": "^0.26.0",
     "broadcast-address": "^1.0.2",
+    "cors": "^2.8.5",
     "dgram": "^1.0.1",
     "electron-squirrel-startup": "^1.0.0",
-    "pg": "^8.8.0"
+    "express": "^4.18.1",
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.23.2"
   },
   "config": {
     "forge": {
