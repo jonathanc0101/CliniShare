@@ -3,7 +3,8 @@ import rutas from "./rutas";
 
 export const api = {
   guardarPaciente,
-  guardarEvento
+  guardarEvento,
+  modificarEvento
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -38,16 +39,16 @@ async function guardarEvento(Evento) {
   }
 }
 
-// async function modificarEvento(Evento) {
-//   try {
-//     const response = await axios.post(rutas.nuevoEvento, Evento);
+async function modificarEvento(Evento) {
+  try {
+    const response = await axios.put(rutas.modificarEvento + Evento.id, Evento);
 
-//     const eventoRespuesta = response.data;
+    const eventoRespuesta = response.data;
 
-//     return(Object.keys(eventoRespuesta).length !== 0);
+    return(Object.keys(eventoRespuesta).length !== 0);
     
-//   } catch (error) {
-//     console.error(error);
-//     return false;
-//   }
-// }
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}

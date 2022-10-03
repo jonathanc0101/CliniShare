@@ -4,6 +4,7 @@ const rutas = {
   nuevoPaciente: "pacientes/new",
   nuevoEvento: "eventos/new",
   getPaciente: "pacientes/id/",
+  modificarEvento: "eventos/id/",
 };
 
 for (let ruta in rutas) {

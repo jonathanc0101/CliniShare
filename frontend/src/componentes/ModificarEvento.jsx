@@ -17,6 +17,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
+import { api } from "../API backend/api";
 const axios = require("axios");
 
 function ModificarEvento() {
@@ -60,12 +61,15 @@ function ModificarEvento() {
     };
 
     try {
-      const response = await axios.put(url + "/eventos/id/" + evento.id, evento);
-      console.log(response);
-      console.log(evento);
-      alert("Se modificó el evento");
+      const response = await api.modificarEvento(evento)
+      if (!response) {
+        alert(`Problemas al guardar`);
+      } else {
+        console.log(evento);
+        alert(`Se modific'el evento`);
+      }
     } catch (error) {
-      alert("Problemas al guardar, " + error);
+      alert(error);
     }
   };
 

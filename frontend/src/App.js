@@ -11,12 +11,14 @@ import {
 import ModificarEvento from "./componentes/ModificarEvento";
 import NuevoEvento from "./componentes/NuevoEvento";
 import NuevoPaciente from "./componentes/NuevoPaciente";
+import Pacientes from "./componentes/Pacientes";
 
 const Rutas = () => {
   let routes = useRoutes([
     { path: "/eventos/id", element: <ModificarEvento /> },
     { path: '/eventos/new', element: <NuevoEvento />},
     { path: '/pacientes/new', element: <NuevoPaciente />},
+    { path: '/', element: <Pacientes></Pacientes>}
     // ...
   ]);
   return routes;
