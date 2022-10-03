@@ -4,7 +4,8 @@ import rutas from "./rutas";
 export const api = {
   guardarPaciente,
   guardarEvento,
-  modificarEvento
+  modificarEvento,
+  obtenerEvento
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -43,6 +44,19 @@ async function modificarEvento(Evento) {
   try {
     const response = await axios.put(rutas.modificarEvento + Evento.id, Evento);
 
+    const eventoRespuesta = response.data;
+
+    return(Object.keys(eventoRespuesta).length !== 0);
+    
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+async function obtenerEvento() {
+  try {
+    const response = await axios.get(rutas.getEvento + Evento.id)
     const eventoRespuesta = response.data;
 
     return(Object.keys(eventoRespuesta).length !== 0);
