@@ -56,13 +56,11 @@ async function modificarEvento(Evento) {
 
 async function obtenerEvento() {
   try {
-    const response = await axios.get(rutas.getEvento + Evento.id)
-    const eventoRespuesta = response.data;
-
-    return(Object.keys(eventoRespuesta).length !== 0);
-    
+    const eventoObtenido = await axios.get(rutas.getEvento + "3");
+    //console.log(eventoObtenido.data);
+    return eventoObtenido.data;
   } catch (error) {
-    console.error(error);
-    return false;
+    // console.error(error);
+    return ("El evento no existe")
   }
 }
