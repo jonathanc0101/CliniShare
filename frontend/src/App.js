@@ -19,8 +19,8 @@ const Rutas = () => {
     { path: "/eventos/id", element: <ModificarEvento /> },
     { path: '/eventos/new', element: <NuevoEvento />},
     { path: '/pacientes/new', element: <NuevoPaciente />},
-    // { path: '/', element: <Pacientes></Pacientes>},
-    { path: '/', element: <VerEvento/>}
+    { path: '/', element: <Pacientes></Pacientes>},
+    // { path: '/', element: <VerEvento/>}
     // ...
   ]);
   return routes;

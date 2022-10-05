@@ -5,7 +5,8 @@ const rutas = {
   nuevoEvento: "eventos/new",
   getPaciente: "pacientes/id/",
   modificarEvento: "eventos/id/",
-  getEvento: "eventos/id/"
+  getEvento: "eventos/id/",
+  getEventos: "eventos/all"
 };
 
 for (let ruta in rutas) {

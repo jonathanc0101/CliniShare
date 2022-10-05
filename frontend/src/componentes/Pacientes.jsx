@@ -1,7 +1,17 @@
 import { Box, Button, ButtonGroup, Grid, MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import { api } from "../API backend/api";
 
 function Pacientes() {
+
+  const [eventos, setEventos] = useState([])
+  useEffect( () => {
+    const response = api.obtenerEventos();
+    setEventos(response.data)
+  })
+
   return (
     <>
     <Box sx={{ width: "100%" }}>

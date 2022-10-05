@@ -16,7 +16,7 @@ import {
   import Stack from "@mui/material/Stack";
   import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
   import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-  import { useState } from "react";
+  import { useEffect, useState } from "react";
   import SaveIcon from "@mui/icons-material/Save";
   import EditIcon from "@mui/icons-material/Edit";
   import { urlBackend as url } from "../utilidades/constantes";
@@ -24,60 +24,28 @@ import {
   
   const axios = require("axios");
   
-   function VerEvento() {
-  
+  function VerEvento() {
+    
     // const [eventoData, setEventoData] = useState({
-    //   titulo: "",
-    //   fecha: new Date(),
-    //   importante: false,
-    //   medicoDni: "",
-    //   pacienteDni: "",
-    //   descripcion: "",
-    // });
-  
-    // const { titulo, fecha, importante, medicoDni, pacienteDni, descripcion } =
-    //   eventoData;
-  
-    // const handleOnchange = (e) => {
-    //   if (e.target.name === "importante") {
-    //     setEventoData({ ...eventoData, [e.target.name]: e.target.checked });
-    //   } else {
-    //     setEventoData({ ...eventoData, [e.target.name]: e.target.value });
-    //   }
-    // };
-  
-    // const handleSubmit = async (
-    //   titulo,
-    //   fecha,
-    //   importante,
-    //   medicoDni,
-    //   pacienteDni,
-    //   descripcion
-    // ) => {
-    //   const evento = {
-    //     titulo,
-    //     fecha,
-    //     importante,
-    //     medicoDni,
-    //     pacienteDni,
-    //     descripcion,
-    //   };
-    //   console.log(evento);
-    //   try {
-    //     const eventoObtenido = api.obtenerEvento();
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
-            const eventoObtenido = api.obtenerEvento();
-
-    // };
-  
-    return (
+      //   titulo: "",
+      //   fecha: new Date(),
+      //   importante: false,
+      //   medicoDni: "",
+      //   pacienteDni: "",
+      //   descripcion: "",
+      // });
+      
+      useEffect(() => {
+          const eventoObtenido = api.obtenerEvento();
+          console.log("Objeto: ",eventoObtenido.id);
+      }, []);
+    
+      
+      return (
       <>
         <Grid container direction="row" spacing={40}>
           <Grid item xs={4}>
-            <Typography component="h2" variant="h4" align="right">
-              Nuevo evento
+            <Typography component="h2" variant="h4" align="left">Evento
             </Typography>
           </Grid>
           <Grid item xs={8}>
