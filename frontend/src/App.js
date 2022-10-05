@@ -16,11 +16,11 @@ import VerEvento from "./componentes/VerEvento";
 
 const Rutas = () => {
   let routes = useRoutes([
-    { path: "/eventos/id", element: <ModificarEvento /> },
+    { path: "/eventos/id/:id", element: <ModificarEvento /> },
     { path: '/eventos/new', element: <NuevoEvento />},
     { path: '/pacientes/new', element: <NuevoPaciente />},
     { path: '/', element: <Pacientes></Pacientes>},
-    // { path: '/', element: <VerEvento/>}
+    { path: '/eventos/id/:id', element: <VerEvento/>}
     // ...
   ]);
   return routes;
@@ -28,13 +28,11 @@ const Rutas = () => {
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+
         <Router>
           <Rutas></Rutas>
         </Router>
-      </header>
-    </div>
+
   );
 }
 export default App;
