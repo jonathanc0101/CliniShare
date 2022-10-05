@@ -30,12 +30,14 @@ function ModificarEvento() {
   const [importante, setImportante] = useState("")
   const [fecha, setFecha] = useState("")
   const [medicoDni, setMedicoDni] = useState("")
-  const id = useParams();
+  const params = useParams();
+  console.log(params.id);
 
 
   const update = async (e) => {
-    e.preventDefault();
-    await axios.put(rutas.modificarEvento + id, {
+    e.preventDefault()
+    console.log("te amo");
+    await axios.put(rutas.modificarEvento + params.id, {
       titulo: titulo,
       descripcion: descripcion,
       importante: importante,
@@ -59,7 +61,7 @@ function ModificarEvento() {
   },[])
 
   const getEventoById = async () => {
-    const res = await axios.get(rutas.getEvento + "2")
+    const res = await axios.get(rutas.getEvento + params.id)
     setTitulo(res.data.titulo)
     setImportante(res.data.importante)
     setMedicoDni(res.data.medicoDni)
@@ -131,7 +133,7 @@ function ModificarEvento() {
                     label="Identificador"
                     type="number"
                     name="id"
-                    value={id}
+                    // value={id}
 
                     // onChange={handleOnchange}
                     margin="dense"
@@ -299,7 +301,8 @@ function ModificarEvento() {
                   <IconButton
                     aria-label="save"
                     size="large"
-                    onSubmit={update}
+                    onClick = {update}
+                    // onSubmit={update}
                     // onClick={() =>
                     //   handleSubmit(
                     //     eventoData.id,
