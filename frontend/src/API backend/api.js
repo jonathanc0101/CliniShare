@@ -5,8 +5,8 @@ export const api = {
   guardarPaciente,
   guardarEvento,
   modificarEvento,
-  // obtenerEvento,
-  obtenerEventos
+  obtenerEvento,
+  obtenerEventos,
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -19,8 +19,7 @@ async function guardarPaciente(Paciente) {
 
     const pacienteRespuesta = response.data;
 
-    return(Object.keys(pacienteRespuesta).length !== 0);
-    
+    return Object.keys(pacienteRespuesta).length !== 0;
   } catch (error) {
     console.error(error);
     return false;
@@ -33,38 +32,34 @@ async function guardarEvento(Evento) {
 
     const eventoRespuesta = response.data;
 
-    return(Object.keys(eventoRespuesta).length !== 0);
-    
+    return Object.keys(eventoRespuesta).length !== 0;
   } catch (error) {
     console.error(error);
     return false;
   }
 }
 
-async function modificarEvento(Evento) {
+async function modificarEvento(id, Evento) {
   try {
-    const response = await axios.put(rutas.modificarEvento + Evento.id, Evento);
+    const response = await axios.put(rutas.modificarEvento + id, Evento);
 
     const eventoRespuesta = response.data;
 
-    return(Object.keys(eventoRespuesta).length !== 0);
-    
+    return Object.keys(eventoRespuesta).length !== 0;
   } catch (error) {
     console.error(error);
     return false;
   }
 }
 
-// async function obtenerEvento() {
-//   try {
-//     const eventoObtenido = await axios.get(rutas.getEvento + "3");
-//     console.log(eventoObtenido.data.id);
-//     return eventoObtenido.data;
-//   } catch (error) {
-//     // console.error(error);
-//     return ("El evento no existe")
-//   }
-// }
+async function obtenerEvento(id) {
+  try {
+    const eventoObtenido = await axios.get(rutas.getEvento + id);
+    return eventoObtenido.data;
+  } catch (error) {
+    return "El evento no existe";
+  }
+}
 
 async function obtenerEventos() {
   try {
@@ -72,7 +67,6 @@ async function obtenerEventos() {
     console.log(eventosObtenidos);
     return eventosObtenidos;
   } catch (error) {
-    // console.error(error);
-    return ("El evento no existe")
+    return "El evento no existe";
   }
 }
