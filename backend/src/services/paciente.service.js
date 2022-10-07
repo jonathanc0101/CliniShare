@@ -47,12 +47,7 @@ async function createPacienteFromModel(paciente) {
     let newPaciente = {};
 
     await sequelize.transaction(async (t) => {
-      newPaciente = await Paciente.create(
-        {
-          nombre:paciente.nombre,
-          apellido:paciente.apellido,
-          dni:paciente.dni,
-        },
+      newPaciente = await Paciente.create(paciente,
         {
           transaction: t,
         }

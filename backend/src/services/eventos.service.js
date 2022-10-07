@@ -74,3 +74,17 @@ async function getEventosFromModelPorPacienteDNI(pacienteDNI) {
     return eventos;
   }
 }
+
+async function getEventosFromModelPorPacienteId(pacienteId) {
+  const eventos = await Evento.findAll({
+    where: {
+      pacienteId
+    }
+  });
+
+  if (eventos.length === 0) {
+    [];
+  } else {
+    return eventos;
+  }
+}
