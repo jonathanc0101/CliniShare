@@ -11,7 +11,6 @@ export function handleNewComputer(computadora) {
             .get(getMethodString)
             .then(res => {
                 if(res.data.INITIAL_RESPONSE === INITIAL_RESPONSE ){
-                    // hacemosAlgo
                     emitter.emit("new_valid_computer", {nombre:computadora.nombre, ip:computadora.IPS[ip]})
                     return;
                 }

@@ -6,7 +6,7 @@ export const MedicosService = {
 }
 
 async function getMedicosFromModel() {
-    const medicos = await Medico.findAll({ attributes: ['id', 'nombre', 'apellido', 'dni',"matricula"] });
+    const medicos = await Medico.findAll();
     
     if (medicos.length === 0) {
         return [];
@@ -16,15 +16,9 @@ async function getMedicosFromModel() {
     }
 }
 
-async function createMedicoFromModel({nombre,apellido,dni,matricula}){
+async function createMedicoFromModel(medico){
     try {
-        // es asincrono porque es una consulta a la bd, esta guardando un dato dentro de la bd
-        let newMedico = await Medico.create({
-          nombre,
-          apellido,
-          dni,
-          matricula,
-        });
+        let newMedico = await Medico.create(medico);
 
         return(newMedico);
       

@@ -29,5 +29,5 @@ export const Evento = sequelize.define("evento",{
         defaultValue: Sequelize.fn('now')
       },
 },{
-    timestamps: true
+    timestamps: false
 });

@@ -1,6 +1,4 @@
 import { Evento } from "../models/Evento.js";
-import { HistoriaClinicaService } from "./historiaClinica.service.js";
-import { HistoriaClinica } from "../models/HistoriaClinica.js";
 
 export const EventosService = {
   getEventos: () => getEventosFromModel(),
@@ -32,21 +30,6 @@ async function createEventoFromModel(evento) {
   try {
     let newEvento = {};
 
-    //Obtengo la hc mediante el dni del paciente
-    const historiaClinicaObtenida =
-      await HistoriaClinicaService.getHistoriaClinicaByPacienteDni(
-        evento.pacienteDni
-      );
-
-    //si no existe, creo la historia clinica
-    if (!historiaClinicaObtenida) {
-      return ("No se pudo encontrar la historia clínica");
-    } else {
-      // Si ya existe la historia clinica, asignarla al evento correspondiente
-      evento.historiaClinicaId = historiaClinicaObtenida.id;
-    }
-
-    // es asincrono porque es una consulta a la bd, esta guardando un dato dentro de la bd
     newEvento = await Evento.create(evento);
 
     return newEvento;
@@ -72,19 +55,16 @@ async function updateEventoPorIdFromModel(evento, id) {
 
 
 async function getEventosFromModelPorPacienteDNI(pacienteDNI) {
-  let historia = await HistoriaClinicaService.getHistoriaClinicaByPacienteDni(pacienteDNI);
-  
-  if(!historia){
-    return [];
-  }
-  
-  historia = historia; //conseguimos la primera historia
 
-  console.log("HIST:" + JSON.stringify(historia));
+  const paciente = await Paciente.findOne({where:{
+    dni:pacienteDNI
+  }});
+
+  pacienteId = paciente.id;
 
   const eventos = await Evento.findAll({
     where: {
-      historiaClinicaId:historia.id
+      pacienteId
     }
   });
 

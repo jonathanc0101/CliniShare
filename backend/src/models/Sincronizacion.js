@@ -11,6 +11,6 @@ export const Sincronizacion = sequelize.define("sincronizacion",{
         type: DataTypes.DATE,
     },
 },{
-    timestamps: true
+    timestamps: false
 });
 

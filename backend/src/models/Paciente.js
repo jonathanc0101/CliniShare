@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { HistoriaClinica } from "./HistoriaClinica.js";
 import {Sequelize} from "sequelize";
+import { Evento } from "./Evento.js";
 
 export const Paciente = sequelize.define(
   "pacientes",
@@ -29,21 +29,20 @@ export const Paciente = sequelize.define(
     fechaModificacion: {
       //fecha de la ultima modificación por el medico que lo cargó
       type: DataTypes.DATE,
-      defaultValue: Sequelize.fn('now')
     },
   },
   {
-    timestamps: true,
+    timestamps: false,
   }
 );
 
-//relacionando con paciente
-Paciente.hasOne(HistoriaClinica, {
-  foreignKey: "pacienteDni",
-  sourceKey: "dni",
-});
+//relacionando con evento
+Paciente.hasMany(Evento,{
+  foreignKey: 'pacienteId',
+  sourceKey: 'id'
+})
 
-HistoriaClinica.belongsTo(Paciente, {
-  foreignKey: "pacienteDni",
-  targetId: "dni",
-});
+Evento.belongsTo(Paciente,{
+  foreignKey: 'pacienteId',
+  targetId: 'id'
+})

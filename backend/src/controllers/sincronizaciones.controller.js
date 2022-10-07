@@ -1,5 +1,4 @@
-import { sequelize } from "../database/database.js";
-import { Sincronizacion } from "../models/Sincronizacion.js";
+
 import { SincronizacionService } from "../services/sincronizacion.service.js";
 
 export const getSincronizacionReciente = async (req, res, next) => {
