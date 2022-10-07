@@ -2,10 +2,7 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Icon,
-  IconButton,
   MenuItem,
-  Switch,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Link, Route } from "react-router-dom";
@@ -24,9 +21,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
 import MenuList from "@mui/material/MenuList";
-import axios from "axios";
-import { urlBackend } from "../utilidades/constantes";
-import ModificarEvento from "./ModificarEvento";
+
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -38,6 +33,9 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function Pacientes() {
   const [eventos, setEventos] = useState([]);
+  const [medicoNombre, setMedicoNombre] = useState([]);
+  const [medicoApellido, setMedicoApellido] = useState([]);
+
   useEffect(() => {
     obtenerEventos();
   }, []);
@@ -46,6 +44,12 @@ function Pacientes() {
     const response = await api.obtenerEventos();
     setEventos(response.data);
   };
+
+  // const obtenerMedicoByDni = async () => {
+  //   const response = await api.obtenerMedicoByDni(1000);
+  //   setMedicoNombre(response.nombre);
+  //   setMedicoApellido(response.apellido);
+  // };
 
   const print = () => {
     console.log("se van a mostrar los pacientes ");
@@ -109,11 +113,9 @@ function Pacientes() {
                     <TableCell>{evento.id}</TableCell>
                     <TableCell>{evento.titulo}</TableCell>
                     <TableCell>{evento.descripcion}</TableCell>
-                    <TableCell>{evento.medicoDni}</TableCell>
+                    <TableCell>{medicoNombre} {medicoApellido}</TableCell>
                     <TableCell component="th" scope="row">
-                      <Link
-                        to={"/eventos/id/" + evento.id}
-                      >
+                      <Link to={"/eventos/id/" + evento.id}>
                         <EditIcon color="info"></EditIcon>
                       </Link>
                     </TableCell>

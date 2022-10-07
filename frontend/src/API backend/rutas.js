@@ -1,6 +1,7 @@
 const puertoServidorBackend = 3000;
 
 const rutas = {
+  getMedicoByDni: "medicos/dni/",
   nuevoPaciente: "pacientes/new",
   nuevoEvento: "eventos/new",
   getPaciente: "pacientes/id/",

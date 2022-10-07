@@ -28,14 +28,13 @@ function NuevoEvento() {
 
   const [eventoData, setEventoData] = useState({
     titulo: "",
-    fecha: new Date(),
     importante: false,
     medicoDni: "",
     pacienteDni: "",
     descripcion: "",
   });
 
-  const { titulo, fecha, importante, medicoDni, pacienteDni, descripcion } =
+  const { titulo, importante, medicoDni, pacienteDni, descripcion } =
     eventoData;
 
   const handleOnchange = (e) => {
@@ -48,7 +47,6 @@ function NuevoEvento() {
 
   const handleSubmit = async (
     titulo,
-    fecha,
     importante,
     medicoDni,
     pacienteDni,
@@ -56,7 +54,6 @@ function NuevoEvento() {
   ) => {
     const evento = {
       titulo,
-      fecha,
       importante,
       medicoDni,
       pacienteDni,
@@ -127,7 +124,6 @@ function NuevoEvento() {
                       label="Fecha del evento"
                       inputFormat="DD/MM/YYYY"
                       name="fecha"
-                      value={fecha}
                       onChange={handleOnchange}
                       renderInput={(params) => <TextField {...params} />}
                     />
@@ -262,7 +258,6 @@ function NuevoEvento() {
                   onClick={() =>
                     handleSubmit(
                       titulo,
-                      fecha,
                       importante,
                       medicoDni,
                       pacienteDni,

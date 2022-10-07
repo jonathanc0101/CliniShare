@@ -18,7 +18,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState, useEffect } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
-import {useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function ModificarEvento() {
   const params = useParams();
@@ -27,7 +27,9 @@ function ModificarEvento() {
   const [descripcion, setDescripcion] = useState("");
   const [importante, setImportante] = useState("");
   const [fecha, setFecha] = useState("");
-  const [medicoDni, setMedicoDni] = useState("");
+  const [pacienteNombre, setPacienteNombre] = useState("");
+  const [pacienteApellido, setPacienteApellido] = useState("");
+  const [pacienteDni, setPacienteDni] = useState("");
 
   const update = async () => {
     // e.preventDefault();
@@ -35,25 +37,21 @@ function ModificarEvento() {
       titulo: titulo,
       descripcion: descripcion,
       importante: importante,
-      medicoDni: medicoDni,
     });
     alert("Se modificó el evento exitosamente");
   };
-
- 
-
 
   useEffect(() => {
     (async () => {
       const res = await api.obtenerEvento(params.id);
       setTitulo(res.titulo);
       setImportante(res.importante);
-      setMedicoDni(res.medicoDni);
       setFecha(res.fecha);
       setDescripcion(res.descripcion);
     })();
-
   }, [params.id]);
+
+
 
 
   return (
@@ -65,20 +63,6 @@ function ModificarEvento() {
         <Card>
           <CardContent>
             <Grid container direction="row" spacing={2}>
-              <Grid item xs={4} sm={4}>
-                <TextField
-                  label="Identificador"
-                  type="number"
-                  name="id"
-                  // value={id}
-
-                  // onChange={handleOnchange}
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                  helperText="Campo obligatorio"
-                ></TextField>
-              </Grid>
               <Grid item xs={4} sm={4}>
                 <TextField
                   label="Título"
@@ -123,58 +107,7 @@ function ModificarEvento() {
               </Grid>
             </Grid>
             <br></br>
-            <Typography component="h2" variant="h5" align="left">
-              Medico
-            </Typography>
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={3} sm={3}>
-                <TextField
-                  disabled
-                  label="Nombre"
-                  type="text"
-                  name="nombre"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <TextField
-                  disabled
-                  label="Apellido"
-                  type="text"
-                  name="apellido"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <TextField
-                  label="DNI"
-                  type="text"
-                  name="medicoDni"
-                  value={medicoDni}
-                  onChange={(e) => setMedicoDni(e.target.value)}
-                  // onChange={handleOnchange}
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <TextField
-                  disabled
-                  label="Matricula"
-                  type="text"
-                  name="matricula"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-            </Grid>
-            <br></br>
+            
             <Typography component="h2" variant="h5" align="left">
               Paciente
             </Typography>

@@ -2,6 +2,7 @@ import axios from "axios";
 import rutas from "./rutas";
 
 export const api = {
+  obtenerMedicoByDni,
   guardarPaciente,
   guardarEvento,
   modificarEvento,
@@ -70,3 +71,13 @@ async function obtenerEventos() {
     return "El evento no existe";
   }
 }
+
+async function obtenerMedicoByDni(medicoDni) {
+  try {
+    const medicoEncontrado = await axios.get(rutas.getMedicoByDni + medicoDni);
+    return medicoEncontrado.data;
+  } catch (error) {
+    return "Médico no encontrado";
+  }
+}
+

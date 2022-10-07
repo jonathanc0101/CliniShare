@@ -2,7 +2,7 @@ import { Medico } from "../models/Medico.js";
 
 export const MedicosService = {
   getMedicos: () => getMedicosFromModel(),
-  // getMedicoByDni: (dniABuscar) => getMedicoByDniFromModel(dniABuscar),
+  getMedicoByDni: (dniABuscar) => getMedicoByDniFromModel(dniABuscar),
   createMedico: (medico) => createMedicoFromModel(medico),
 };
 
@@ -34,16 +34,16 @@ async function createMedicoFromModel({ nombre, apellido, dni, matricula }) {
   }
 }
 
-// async function getMedicoByDniFromModel(dniABuscar) {
-//   const medico = await Medico.findOne({
-//     where: {
-//       dni: dniABuscar,
-//     },
-//   });
+async function getMedicoByDniFromModel(dniABuscar) {
+  const medico = await Medico.findOne({
+    where: {
+      dni: dniABuscar,
+    },
+  });
 
-//   if (!medico) {
-//     return {};
-//   } else {
-//     return medico;
-//   }
-// }
+  if (!medico) {
+    return {};
+  } else {
+    return medico;
+  }
+}
