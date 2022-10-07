@@ -46,12 +46,12 @@ async function createEventoFromModel(evento) {
       evento.historiaClinicaId = historiaClinicaObtenida.id;
     }
 
-    evento.fecha = new Date();
     // es asincrono porque es una consulta a la bd, esta guardando un dato dentro de la bd
     newEvento = await Evento.create(evento);
 
     return newEvento;
   } catch (error) {
+    console.log(error);
     return ("No se pudo cargar el evento");
   }
 }
