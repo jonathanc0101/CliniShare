@@ -1,5 +1,4 @@
 import { Paciente } from "../models/Paciente.js";
-import { HistoriaClinica } from "../models/HistoriaClinica.js";
 import { sequelize } from "../database/database.js";
 import { Evento } from "../models/Evento.js";
 
@@ -18,9 +17,7 @@ export const PacientesService = {
 };
 
 async function getPacientesFromModel() {
-  const pacientes = await Paciente.findAll({
-    attributes: ["id", "nombre", "apellido", "dni"],
-  });
+  const pacientes = await Paciente.findAll();
 
   if (pacientes.length === 0) {
     return [];
@@ -31,11 +28,9 @@ async function getPacientesFromModel() {
 
 async function getEntidadesPacientesFromModel() {
   const pacientes = await Paciente.findAll({
-    attributes: ["id", "nombre", "apellido", "dni"],
-    include: [
+      include: [
       {
-        model: HistoriaClinica,
-        include: [{ model: Evento }],
+        model: Evento      
       },
     ],
   });
@@ -58,14 +53,6 @@ async function createPacienteFromModel(paciente) {
           apellido:paciente.apellido,
           dni:paciente.dni,
         },
-        {
-          transaction: t,
-        }
-      );
-
-      //Se crea la historia clíínica del paciente
-      await HistoriaClinica.create(
-        { pacienteDni: newPaciente.dni },
         {
           transaction: t,
         }
@@ -180,3 +167,4 @@ async function getEntidadesPacientesPorDnisFromModel(dnisPacientes) {
 
   return pacientesFiltrados;
 }
+

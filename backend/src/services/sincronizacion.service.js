@@ -22,8 +22,7 @@ console.log("fecha más reciente: " ,maxFecha.toJSON());
 const sincronizacion = await Sincronizacion.findAll({
     where: {
       fecha: maxFecha
-    },
-    attributes: ['id', 'fecha', 'medicoDNI']
+    }
   });
 
   if (!sincronizacion) {
