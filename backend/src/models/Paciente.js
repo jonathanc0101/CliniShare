@@ -1,15 +1,16 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import { HistoriaClinica } from "./HistoriaClinica.js";
-// import { Task } from "./Task.js";
+import {Sequelize} from "sequelize";
 
 export const Paciente = sequelize.define(
   "pacientes",
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
     },
     nombre: {
       type: DataTypes.STRING,
@@ -19,12 +20,17 @@ export const Paciente = sequelize.define(
     },
     dni: {
       type: DataTypes.STRING,
-      unique:true
+      unique: true,
     },
-    activo:{
+    activo: {
       type: DataTypes.BOOLEAN,
-      defaultValue:true,
-    }
+      defaultValue: true,
+    },
+    fechaModificacion: {
+      //fecha de la ultima modificación por el medico que lo cargó
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.fn('now')
+    },
   },
   {
     timestamps: true,
@@ -32,12 +38,12 @@ export const Paciente = sequelize.define(
 );
 
 //relacionando con paciente
-Paciente.hasOne(HistoriaClinica,{
-  foreignKey: 'pacienteDni',
-  sourceKey: 'dni'
-})
+Paciente.hasOne(HistoriaClinica, {
+  foreignKey: "pacienteDni",
+  sourceKey: "dni",
+});
 
-HistoriaClinica.belongsTo(Paciente,{
-  foreignKey: 'pacienteDni',
-  targetId: 'dni'
-})
+HistoriaClinica.belongsTo(Paciente, {
+  foreignKey: "pacienteDni",
+  targetId: "dni",
+});
