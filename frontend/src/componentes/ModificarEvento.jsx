@@ -18,9 +18,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState, useEffect } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import rutas from "../API backend/rutas";
-const axios = require("axios");
+import {useParams } from "react-router-dom";
 
 function ModificarEvento() {
   const params = useParams();
@@ -42,20 +40,21 @@ function ModificarEvento() {
     alert("Se modificó el evento exitosamente");
   };
 
-  const navigate = useNavigate();
+ 
+
 
   useEffect(() => {
-    getEventoById();
-  },[]);
+    (async () => {
+      const res = await api.obtenerEvento(params.id);
+      setTitulo(res.titulo);
+      setImportante(res.importante);
+      setMedicoDni(res.medicoDni);
+      setFecha(res.fecha);
+      setDescripcion(res.descripcion);
+    })();
 
-  const getEventoById = async () => {
-    const res = await api.obtenerEvento(params.id);
-    setTitulo(res.titulo);
-    setImportante(res.importante);
-    setMedicoDni(res.medicoDni);
-    setFecha(res.fecha);
-    setDescripcion(res.descripcion);
-  };
+  }, [params.id]);
+
 
   return (
     <>
