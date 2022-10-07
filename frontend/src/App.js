@@ -11,7 +11,7 @@ import {
 import ModificarEvento from "./componentes/ModificarEvento";
 import NuevoEvento from "./componentes/NuevoEvento";
 import NuevoPaciente from "./componentes/NuevoPaciente";
-import Pacientes from "./componentes/Pacientes";
+import Eventos from "./componentes/Eventos";
 import VerEvento from "./componentes/VerEvento";
 
 const Rutas = () => {
@@ -19,7 +19,7 @@ const Rutas = () => {
     { path: "/eventos/id/:id", element: <ModificarEvento /> },
     { path: '/eventos/new', element: <NuevoEvento />},
     { path: '/pacientes/new', element: <NuevoPaciente />},
-    { path: '/', element: <Pacientes></Pacientes>},
+    { path: '/', element: <Eventos></Eventos>},
     { path: '/eventos/id/:id', element: <VerEvento/>}
     // ...
   ]);
