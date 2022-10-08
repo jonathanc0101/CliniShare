@@ -12,7 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 
-function ListadoEventos({eventos}) {
+function ListadoEventos({eventos = []}) {
   return (
     <>
       <Grid xs={10}>

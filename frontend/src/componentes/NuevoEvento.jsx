@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Card,
   CardContent,
   Checkbox,
@@ -12,14 +11,12 @@ import {
   Typography,
 } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-// import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
-import BotonEditar from "./botones/BotonEditar";
 
 function NuevoEvento() {
   const [medicoDni, setMedicoDni] = useState("");
@@ -57,31 +54,20 @@ function NuevoEvento() {
   const handleSubmit = async (
     titulo,
     importante,
-    medicoId,
-    pacienteId,
+    medicoDni,
+    pacienteDni,
     descripcion
   ) => {
     const evento = {
       titulo,
       importante,
-      medicoId,
-      pacienteId,
+      medicoDni,
+      pacienteDni,
       descripcion,
     };
-    console.log(pacienteDni);
-    const pacienteEncontrado = await api.obtenerPacienteByDni(pacienteDni);
-    console.log("paciente encontrado: ",pacienteEncontrado);
-    evento.pacienteId = pacienteEncontrado.id
-
-    console.log(medicoDni);
-    const medicoEncontrado = await api.obtenerMedicoByDni(medicoDni);
-    console.log("medico encontrado: ",medicoEncontrado);
-    evento.medicoId = medicoEncontrado.id
-
-    console.log(evento);
 
     try {
-      const response = await api.guardarEvento(evento);
+      const response = await api.guardarEventoObteniendoIds(evento);
       if (!response) {
         alert(`El paciente no existe`);
       } else {
