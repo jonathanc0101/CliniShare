@@ -39,6 +39,7 @@ export const Medico = sequelize.define(
   }
 );
 
+
 //relacionando con evento
 Medico.hasMany(Evento, {
   foreignKey: "medicoId",
