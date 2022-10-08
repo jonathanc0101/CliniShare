@@ -35,6 +35,7 @@ function Eventos() {
   const obtenerEventos = async () => {
     const response = await api.obtenerEventos();
     setEventos(response.data);
+    console.log("response: " + JSON.stringify(response));
   };
 
 

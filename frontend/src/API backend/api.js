@@ -86,7 +86,6 @@ async function obtenerEvento(id) {
 async function obtenerEventos() {
   try {
     const eventosObtenidos = await axios.get(rutas.getEventos);
-    console.log(eventosObtenidos);
     return eventosObtenidos;
   } catch (error) {
     return "El evento no existe";
