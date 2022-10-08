@@ -3,6 +3,7 @@ import rutas from "./rutas";
 
 export const api = {
   obtenerMedicoByDni,
+  obtenerPacienteByDni,
   guardarPaciente,
   guardarEvento,
   modificarEvento,
@@ -81,3 +82,11 @@ async function obtenerMedicoByDni(medicoDni) {
   }
 }
 
+async function obtenerPacienteByDni(pacienteDni) {
+  try {
+    const pacienteEncontrado = await axios.get(rutas.getPacienteByDni + pacienteDni);
+    return pacienteEncontrado.data;
+  } catch (error) {
+    return "Paciente no encontrado";
+  }
+}

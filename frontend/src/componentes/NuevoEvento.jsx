@@ -18,24 +18,22 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
-import EditIcon from "@mui/icons-material/Edit";
-import { urlBackend as url } from "../utilidades/constantes";
 import { api } from "../API backend/api";
-
-const axios = require("axios");
+import BotonEditar from "./botones/BotonEditar";
 
 function NuevoEvento() {
+  const [medicoDni, setMedicoDni] = useState("");
+  const [pacienteDni, setPacienteDni] = useState("");
 
   const [eventoData, setEventoData] = useState({
     titulo: "",
     importante: false,
-    medicoDni: "",
-    pacienteDni: "",
+    medicoId: "",
+    pacienteId: "",
     descripcion: "",
   });
 
-  const { titulo, importante, medicoDni, pacienteDni, descripcion } =
-    eventoData;
+  const { titulo, importante, medicoId, pacienteId, descripcion } = eventoData;
 
   const handleOnchange = (e) => {
     if (e.target.name === "importante") {
@@ -45,28 +43,50 @@ function NuevoEvento() {
     }
   };
 
+
+  const cambiarDniPaciente = (e) => {
+    setPacienteDni(e.target.value);
+  }
+
+  const cambiarDniMedico = (e) => {
+    setMedicoDni(e.target.value);
+
+
+  }
+
   const handleSubmit = async (
     titulo,
     importante,
-    medicoDni,
-    pacienteDni,
+    medicoId,
+    pacienteId,
     descripcion
   ) => {
     const evento = {
       titulo,
       importante,
-      medicoDni,
-      pacienteDni,
+      medicoId,
+      pacienteId,
       descripcion,
     };
-    // console.log(evento);
+    console.log(pacienteDni);
+    const pacienteEncontrado = await api.obtenerPacienteByDni(pacienteDni);
+    console.log("paciente encontrado: ",pacienteEncontrado);
+    evento.pacienteId = pacienteEncontrado.id
+
+    console.log(medicoDni);
+    const medicoEncontrado = await api.obtenerMedicoByDni(medicoDni);
+    console.log("medico encontrado: ",medicoEncontrado);
+    evento.medicoId = medicoEncontrado.id
+
+    console.log(evento);
+
     try {
       const response = await api.guardarEvento(evento);
       if (!response) {
         alert(`El paciente no existe`);
       } else {
         console.log(evento);
-        alert(`Se cargo el evento`);
+        alert(`Se cargó el evento exitosamente`);
       }
     } catch (err) {
       console.error(err);
@@ -81,28 +101,13 @@ function NuevoEvento() {
             Nuevo evento
           </Typography>
         </Grid>
-        <Grid item xs={8}>
-          <Button to="/" variant="outlined" startIcon={<EditIcon />}>
-            Editar
-          </Button>
-        </Grid>
+        {/* <BotonEditar></BotonEditar> */}
       </Grid>
 
       <Box sx={{ width: "100%" }}>
         <Card>
           <CardContent>
             <Grid container direction="row" spacing={2}>
-              <Grid item xs={4} sm={4}>
-                <TextField
-                  disabled
-                  label="Identificador"
-                  type="text"
-                  name="identificador"
-                  margin="dense"
-                  variant="outlined"
-                  fullWidth
-                ></TextField>
-              </Grid>
               <Grid item xs={4} sm={4}>
                 <TextField
                   label="Título"
@@ -175,7 +180,7 @@ function NuevoEvento() {
                   type="text"
                   name="medicoDni"
                   value={medicoDni}
-                  onChange={handleOnchange}
+                  onChange={cambiarDniMedico}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -227,7 +232,7 @@ function NuevoEvento() {
                   type="text"
                   name="pacienteDni"
                   value={pacienteDni}
-                  onChange={handleOnchange}
+                  onChange={cambiarDniPaciente}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -259,8 +264,8 @@ function NuevoEvento() {
                     handleSubmit(
                       titulo,
                       importante,
-                      medicoDni,
-                      pacienteDni,
+                      medicoId,
+                      pacienteId,
                       descripcion
                     )
                   }

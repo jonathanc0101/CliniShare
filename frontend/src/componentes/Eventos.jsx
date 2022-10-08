@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   ButtonGroup,
-  MenuItem,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Link, Route } from "react-router-dom";
@@ -14,8 +13,8 @@ import { api } from "../API backend/api";
 
 
 
-import MenuList from "@mui/material/MenuList";
 import ListadoEventos from "./ListadoEventos";
+import Menu from "./Menu";
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -38,9 +37,7 @@ function Eventos() {
     setEventos(response.data);
   };
 
-  const print = () => {
-    console.log("se van a mostrar los pacientes ");
-  };
+
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -66,15 +63,7 @@ function Eventos() {
         </Grid>
       </Grid>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid xs={2}>
-          <Paper square={true}>
-            <MenuList>
-              <MenuItem>Menú</MenuItem>
-              <MenuItem onClick={print}>Mis pacientes</MenuItem>
-              <MenuItem>Mis medicos</MenuItem>
-            </MenuList>
-          </Paper>
-        </Grid>
+<Menu></Menu>
         <ListadoEventos eventos={eventos}></ListadoEventos>
       </Grid>
     </Box>

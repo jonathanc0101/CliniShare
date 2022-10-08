@@ -5,6 +5,8 @@ const rutas = {
   nuevoPaciente: "pacientes/new",
   nuevoEvento: "eventos/new",
   getPaciente: "pacientes/id/",
+  getPacienteByDni: "pacientes/dni/",
+
   modificarEvento: "eventos/id/",
   getEvento: "eventos/id/",
   getEventos: "eventos/all"
