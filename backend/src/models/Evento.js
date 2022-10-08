@@ -11,10 +11,12 @@ export const Evento = sequelize.define("evento",{
     },
     titulo:{
         type: DataTypes.STRING,
+        allowNull: false,
     },
     fecha:{
         type: DataTypes.DATE,
-        defaultValue: Sequelize.fn('now')
+        defaultValue: Sequelize.fn('now'),
+        allowNull: false,
     },
     descripcion:{
         type: DataTypes.STRING,
@@ -22,11 +24,13 @@ export const Evento = sequelize.define("evento",{
     importante:{
         type: DataTypes.BOOLEAN,
         defaultValue:false,
+        allowNull: false,
     },
     fechaModificacion: {
         //fecha de la ultima modificación por el medico que lo cargó
         type: DataTypes.DATE,
-        defaultValue: Sequelize.fn('now')
+        defaultValue: Sequelize.fn('now'),
+        allowNull: false,
       },
 },{
     timestamps: false
