@@ -3,6 +3,7 @@ import { sequelize } from "../database/database.js";
 import { Sincronizacion } from "./Sincronizacion.js";
 import { Evento } from "./Evento.js";
 import {Sequelize} from "sequelize";
+import {Paciente} from "./Paciente.js";
 
 export const Medico = sequelize.define(
   "medicos",
@@ -38,6 +39,23 @@ export const Medico = sequelize.define(
     timestamps: true,
   }
 );
+
+
+//ownership
+Medico.hasOne(Medico,{
+  foreignKey: "ownerId",
+  sourceKey:"id",
+});
+
+Medico.hasMany(Evento,{
+  foreignKey: "ownerId",
+  sourceKey:"id",
+});
+
+Medico.hasMany(Paciente,{
+  foreignKey: "ownerId",
+  sourceKey:"id",
+});
 
 
 //relacionando con evento
