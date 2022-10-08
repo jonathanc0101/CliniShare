@@ -16,6 +16,10 @@ import SaveIcon from "@mui/icons-material/Save";
 import EditIcon from "@mui/icons-material/Edit";
 import { api } from "../API backend/api";
 import { useParams } from "react-router-dom";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import Stack from "@mui/material/Stack";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 function VerEvento() {
   const params = useParams();
@@ -60,21 +64,11 @@ function VerEvento() {
               <Grid item xs={4} sm={4}>
                 <TextField
                   disabled
-                  label="Identificador"
-                  type="text"
-                  name="identificador"
-                  margin="dense"
-                  variant="outlined"
-                  fullWidth
-                ></TextField>
-              </Grid>
-              <Grid item xs={4} sm={4}>
-                <TextField
                   label="Título"
                   type="text"
                   name="titulo"
-                  // value={titulo}
-                  // onChange={handleOnchange}
+                  value={titulo}
+                  onChange={(e) => setTitulo(e.target.value)}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -82,27 +76,28 @@ function VerEvento() {
                 ></TextField>
               </Grid>
               <Grid item xs={4} sm={4}>
-                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <Stack spacing={3}>
-                      <DesktopDatePicker
-                        disabled
-                        label="Fecha del evento"
-                        inputFormat="DD/MM/YYYY"
-                        name="fecha"
-                        // value={fecha}
-                        // onChange={handleOnchange}
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </Stack>
-                  </LocalizationProvider> */}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <Stack spacing={3}>
+                    <DesktopDatePicker
+                      disabled
+                      label="Fecha del evento"
+                      inputFormat="DD/MM/YYYY"
+                      name="fecha"
+                      value={fecha}
+                      onChange={(e) => setFecha(e.target.value)}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </Stack>
+                </LocalizationProvider>
               </Grid>
             </Grid>
             <Grid container direction="row" spacing={40}>
               <Grid item xs={4}>
                 <FormControlLabel
+                  disabled
                   name="importante"
-                  // value={importante}
-                  // onChange={handleOnchange}
+                  value={importante}
+                  onChange={(e) => setImportante(e.target.checked)}
                   control={<Checkbox />}
                   label="Evento importante"
                 />
@@ -137,6 +132,7 @@ function VerEvento() {
               </Grid>
               <Grid item xs={3} sm={3}>
                 <TextField
+                  disabled
                   label="DNI"
                   type="text"
                   name="medicoDni"
@@ -189,6 +185,7 @@ function VerEvento() {
               </Grid>
               <Grid item xs={3} sm={3}>
                 <TextField
+                  disabled
                   label="DNI"
                   type="text"
                   name="pacienteDni"
@@ -207,11 +204,12 @@ function VerEvento() {
                   Descripción
                 </Typography>
                 <TextareaAutosize
+                  disabled
                   aria-label="maximum height"
                   placeholder="Descripción"
                   name="descripcion"
-                  // value={descripcion}
-                  // onChange={handleOnchange}
+                  value={descripcion}
+                  onChange={(e) => setDescripcion(e.target.value)}
                   style={{ width: 1249, height: 100 }}
                 />
               </Grid>

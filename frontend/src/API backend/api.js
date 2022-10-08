@@ -44,7 +44,6 @@ async function guardarEvento(Evento) {
 async function guardarEventoObteniendoIds(Evento) {
   try {
     const pacienteEncontrado = await api.obtenerPacienteByDni(Evento.pacienteDni);
-    console.log(Evento);
     Evento.pacienteId = pacienteEncontrado.id;
 
     const medicoEncontrado = await api.obtenerMedicoByDni(Evento.medicoDni);
