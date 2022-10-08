@@ -1,0 +1,4 @@
+drop table if exists eventos cascade;
+drop table if exists medicos cascade;
+drop table if exists pacientes cascade;
+drop table if exists sincronizacions cascade;

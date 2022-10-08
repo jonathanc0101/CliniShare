@@ -43,6 +43,17 @@ export const Medico = sequelize.define(
   }
 );
 
+//ownership de paciente
+Medico.hasMany(Paciente, {
+  foreignKey: "ownerId",
+  sourceKey: "id",
+});
+
+Paciente.belongsTo(Medico,{
+  foreignKey: "ownerId",
+  sourceKey: "id",
+});
+
 //relacionando con evento
 Medico.hasMany(Evento, {
   foreignKey: "medicoId",
