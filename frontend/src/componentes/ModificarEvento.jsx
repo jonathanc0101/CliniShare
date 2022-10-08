@@ -18,9 +18,11 @@ import { useState, useEffect } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
 import { useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 function ModificarEvento() {
   const params = useParams();
+  let navigate = useNavigate();
 
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -38,6 +40,7 @@ function ModificarEvento() {
       importante: importante,
     });
     alert("Se modificó el evento exitosamente");
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -69,7 +72,6 @@ function ModificarEvento() {
                   name="titulo"
                   value={titulo}
                   onChange={(e) => setTitulo(e.target.value)}
-                  // onChange={handleOnchange}
                   margin="dense"
                   fullWidth
                   variant="outlined"

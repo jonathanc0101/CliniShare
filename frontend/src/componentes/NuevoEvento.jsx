@@ -54,8 +54,8 @@ function NuevoEvento() {
   const handleSubmit = async (
     titulo,
     importante,
-    medicoDni,
-    pacienteDni,
+    medicoId,
+    pacienteId,
     descripcion
   ) => {
     const evento = {
