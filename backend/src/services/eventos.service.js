@@ -12,7 +12,7 @@ async function getEventosFromModel() {
   const eventos = await Evento.findAll();
 
   if (eventos.length === 0) {
-    [];
+    return [];
   } else {
     return eventos;
   }
