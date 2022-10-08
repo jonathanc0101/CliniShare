@@ -9,6 +9,8 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+
 
 function ListadoEventos({eventos}) {
   return (
@@ -33,7 +35,9 @@ function ListadoEventos({eventos}) {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    Ojito
+                  <Link to={"/eventos/ver/id/" + evento.id}>
+                      <VisibilityIcon color="info"></VisibilityIcon>
+                    </Link>
                   </TableCell>
                   <TableCell>{evento.id}</TableCell>
                   <TableCell>{evento.titulo}</TableCell>
