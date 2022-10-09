@@ -19,9 +19,7 @@ axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 async function guardarPaciente(Paciente) {
   try {
     const response = await axios.post(rutas.nuevoPaciente, Paciente);
-
     const pacienteRespuesta = response.data;
-
     return Object.keys(pacienteRespuesta).length !== 0;
   } catch (error) {
     console.error(error);
@@ -29,18 +27,18 @@ async function guardarPaciente(Paciente) {
   }
 }
 
-async function guardarEvento(Evento) {
-  try {
-    const response = await axios.post(rutas.nuevoEvento, Evento);
+// async function guardarEvento(Evento) {
+//   try {
+//     const response = await axios.post(rutas.nuevoEvento, Evento);
 
-    const eventoRespuesta = response.data;
+//     const eventoRespuesta = response.data;
 
-    return Object.keys(eventoRespuesta).length !== 0;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-}
+//     return Object.keys(eventoRespuesta).length !== 0;
+//   } catch (error) {
+//     console.error(error);
+//     return false;
+//   }
+// }
 
 async function guardarEventoObteniendoIds(Evento) {
   try {
@@ -88,6 +86,8 @@ async function obtenerEvento(id) {
 async function obtenerEventos() {
   try {
     const eventosObtenidos = await axios.get(rutas.getEventos);
+    console.log(eventosObtenidos);
+
     return eventosObtenidos;
   } catch (error) {
     return "El evento no existe";

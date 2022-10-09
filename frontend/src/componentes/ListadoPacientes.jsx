@@ -1,4 +1,3 @@
-
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,27 +6,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
-import { Link } from "react-router-dom";
-import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useEffect, useState } from "react";
 
-import { api } from "../API backend/api";
 
+function ListadoPacientes() {
 
-function ListadoEventos() {
-
-  const [eventos, setEventos] = useState([]);
-
-  useEffect(() => {
-    obtenerEventos();
-  }, []);
-
-  const obtenerEventos = async () => {
-    const response = await api.obtenerEventos();
-    setEventos(response.data);
-  };
-
+    const [pacientes, setPaciente] = useState([]);
+  
   return (
     <>
       <Grid xs={10}>
@@ -35,16 +20,16 @@ function ListadoEventos() {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Ver evento</TableCell>
-                <TableCell>N° evento</TableCell>
-                <TableCell>Título</TableCell>
-                <TableCell>Descripción</TableCell>
-                <TableCell>Médico</TableCell>
+                <TableCell>Ver paciente</TableCell>
+
+                <TableCell>Nombre</TableCell>
+                <TableCell>Apellido</TableCell>
+                <TableCell>DNI</TableCell>
                 <TableCell>Editar</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {eventos.map((evento) => (
+              {/* {eventos.map((evento) => (
                 <TableRow
                   key={evento.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -66,7 +51,7 @@ function ListadoEventos() {
                     </Link>
                   </TableCell>
                 </TableRow>
-              ))}
+              ))} */}
             </TableBody>
           </Table>
         </TableContainer>
@@ -75,4 +60,4 @@ function ListadoEventos() {
   );
 }
 
-export default ListadoEventos;
+export default ListadoPacientes;

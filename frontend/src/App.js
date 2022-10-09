@@ -1,10 +1,6 @@
 import "./App.css";
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Routes,
   useRoutes,
 } from "react-router-dom";
 
@@ -13,6 +9,7 @@ import NuevoEvento from "./componentes/NuevoEvento";
 import NuevoPaciente from "./componentes/NuevoPaciente";
 import Eventos from "./componentes/Eventos";
 import VerEvento from "./componentes/VerEvento";
+import Home from "./componentes/Home";
 
 const Rutas = () => {
   let routes = useRoutes([
@@ -20,7 +17,9 @@ const Rutas = () => {
     { path: '/eventos/new', element: <NuevoEvento />},
     { path: '/pacientes/new', element: <NuevoPaciente />},
     { path: '/eventos', element: <Eventos></Eventos>},
-    { path: '/eventos/ver/id/:id', element: <VerEvento/>}
+    { path: '/eventos/ver/id/:id', element: <VerEvento/>},
+    { path: '/', element: <Home></Home>},
+
     // ...
   ]);
   return routes;
