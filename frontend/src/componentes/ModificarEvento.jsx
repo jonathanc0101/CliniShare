@@ -28,9 +28,9 @@ function ModificarEvento() {
   const [descripcion, setDescripcion] = useState("");
   const [importante, setImportante] = useState("");
   const [fecha, setFecha] = useState("");
-  const [pacienteNombre, setPacienteNombre] = useState("");
-  const [pacienteApellido, setPacienteApellido] = useState("");
-  const [pacienteDni, setPacienteDni] = useState("");
+  // const [pacienteNombre, setPacienteNombre] = useState("");
+  // const [pacienteApellido, setPacienteApellido] = useState("");
+  // const [pacienteDni, setPacienteDni] = useState("");
 
   const update = async () => {
     // e.preventDefault();
@@ -171,17 +171,7 @@ function ModificarEvento() {
                   aria-label="save"
                   size="large"
                   onClick={update}
-                  // onSubmit={update}
-                  // onClick={() =>
-                  //   handleSubmit(
-                  //     eventoData.id,
-                  //     eventoData.titulo,
-                  //     eventoData.fecha,
-                  //     eventoData.importante,
-                  //     eventoData.medicoDni,
-                  //     eventoData.descripcion
-                  //   )
-                  // }
+
                 >
                   <SaveIcon color="info" fontSize="inherit" />
                   <Typography color={"black"} variant="h6" align="left">

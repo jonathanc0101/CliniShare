@@ -10,6 +10,8 @@ export const api = {
   obtenerEvento,
   obtenerEventos,
   obtenerPacienteById,
+  obtenerPacientes,
+  modificarPaciente,
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -20,6 +22,30 @@ async function guardarPaciente(Paciente) {
   try {
     const response = await axios.post(rutas.nuevoPaciente, Paciente);
     const pacienteRespuesta = response.data;
+    return Object.keys(pacienteRespuesta).length !== 0;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+async function obtenerPacientes() {
+  try {
+    const pacientesObtenidos = await axios.get(rutas.getPacientes);
+    console.log(pacientesObtenidos);
+
+    return pacientesObtenidos;
+  } catch (error) {
+    return "No se encontraron pacientes";
+  }
+}
+
+async function modificarPaciente(id, Paciente) {
+  try {
+    const response = await axios.put(rutas.modificarPaciente + id, Paciente);
+
+    const pacienteRespuesta = response.data;
+
     return Object.keys(pacienteRespuesta).length !== 0;
   } catch (error) {
     console.error(error);
@@ -86,8 +112,6 @@ async function obtenerEvento(id) {
 async function obtenerEventos() {
   try {
     const eventosObtenidos = await axios.get(rutas.getEventos);
-    console.log(eventosObtenidos);
-
     return eventosObtenidos;
   } catch (error) {
     return "El evento no existe";

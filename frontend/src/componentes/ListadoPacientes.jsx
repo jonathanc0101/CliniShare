@@ -7,12 +7,22 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useEffect, useState } from "react";
-
+import { api } from "../API backend/api";
+import { Link } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 function ListadoPacientes() {
+  const [pacientes, setPacientes] = useState([]);
 
-    const [pacientes, setPaciente] = useState([]);
-  
+  useEffect(() => {
+    obtenerPacientes();
+  }, []);
+
+  const obtenerPacientes = async () => {
+    const response = await api.obtenerPacientes();
+    setPacientes(response.data);
+  };
   return (
     <>
       <Grid xs={10}>
@@ -29,29 +39,26 @@ function ListadoPacientes() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* {eventos.map((evento) => (
+              {pacientes.map((paciente) => (
                 <TableRow
-                  key={evento.id}
+                  key={paciente.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
-                  <Link to={"/eventos/ver/id/" + evento.id}>
-                      <VisibilityIcon color="info"></VisibilityIcon>
-                    </Link>
-                  </TableCell>
-                  <TableCell>{evento.id}</TableCell>
-                  <TableCell>{evento.titulo}</TableCell>
-                  <TableCell>{evento.descripcion}</TableCell>
                   <TableCell>
-
+                  {/* <Link to={"/eventos/ver/id/" + evento.id}> */}
+                      <VisibilityIcon color="info"></VisibilityIcon>
+                    {/* </Link> */}
                   </TableCell>
+                  <TableCell>{paciente.nombre}</TableCell>
+                  <TableCell>{paciente.apellido}</TableCell>
+                  <TableCell>{paciente.dni}</TableCell>
                   <TableCell component="th" scope="row">
-                    <Link to={"/eventos/id/" + evento.id}>
+                    <Link to={"/pacientes/id/" + paciente.id}>
                       <EditIcon color="info"></EditIcon>
                     </Link>
                   </TableCell>
                 </TableRow>
-              ))} */}
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
