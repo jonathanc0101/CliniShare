@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import SaveIcon from "@mui/icons-material/Save";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 import { api } from "../API backend/api";
 import { useParams } from "react-router-dom";
@@ -20,10 +20,12 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function VerEvento() {
   const params = useParams();
-
+  let navigate = useNavigate();
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [importante, setImportante] = useState("");
@@ -39,6 +41,10 @@ function VerEvento() {
       setImportante(res.importante);
       setFecha(res.fecha);
       setDescripcion(res.descripcion);
+      const pacienteEncontrado = await api.obtenerPacienteById(res.pacienteId);
+      setPacienteNombre(pacienteEncontrado.nombre);
+      setPacienteApellido(pacienteEncontrado.apellido);
+      setPacienteDni(pacienteEncontrado.dni);
     })();
   }, [params.id]);
 
@@ -51,8 +57,8 @@ function VerEvento() {
           </Typography>
         </Grid>
         <Grid item xs={8}>
-          <Button to="/" variant="outlined" startIcon={<EditIcon />}>
-            Editar
+          <Button variant="outlined" startIcon={<EditIcon />}>
+            <Link to={"/eventos/id/" + params.id}>Editar</Link>
           </Button>
         </Grid>
       </Grid>
@@ -68,7 +74,6 @@ function VerEvento() {
                   type="text"
                   name="titulo"
                   value={titulo}
-                  onChange={(e) => setTitulo(e.target.value)}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -97,7 +102,6 @@ function VerEvento() {
                   disabled
                   name="importante"
                   value={importante}
-                  onChange={(e) => setImportante(e.target.checked)}
                   control={<Checkbox />}
                   label="Evento importante"
                 />
@@ -136,8 +140,6 @@ function VerEvento() {
                   label="DNI"
                   type="text"
                   name="medicoDni"
-                  // value={medicoDni}
-                  // onChange={handleOnchange}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -167,6 +169,7 @@ function VerEvento() {
                   label="Nombre"
                   type="text"
                   name="nombre"
+                  value={pacienteNombre}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -178,6 +181,7 @@ function VerEvento() {
                   label="Apellido"
                   type="text"
                   name="apellido"
+                  value={pacienteApellido}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -189,8 +193,7 @@ function VerEvento() {
                   label="DNI"
                   type="text"
                   name="pacienteDni"
-                  // value={pacienteDni}
-                  // onChange={handleOnchange}
+                  value={pacienteDni}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -209,7 +212,6 @@ function VerEvento() {
                   placeholder="Descripción"
                   name="descripcion"
                   value={descripcion}
-                  onChange={(e) => setDescripcion(e.target.value)}
                   style={{ width: 1249, height: 100 }}
                 />
               </Grid>
@@ -219,20 +221,11 @@ function VerEvento() {
                 <IconButton
                   aria-label="save"
                   size="large"
-                  // onClick={() =>
-                  //   handleSubmit(
-                  //     titulo,
-                  //     fecha,
-                  //     importante,
-                  //     medicoDni,
-                  //     pacienteDni,
-                  //     descripcion
-                  //   )
-                  // }
+                  onClick={() => navigate(-1)}
                 >
-                  <SaveIcon color="info" fontSize="inherit" />
+                  <ArrowBackIcon color="info" fontSize="inherit" />
                   <Typography color={"black"} variant="h6" align="left">
-                    &nbsp;Guardar
+                    &nbsp;Atrás
                   </Typography>
                 </IconButton>
               </Grid>

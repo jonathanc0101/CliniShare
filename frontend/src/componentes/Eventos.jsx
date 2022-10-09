@@ -1,29 +1,8 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-} from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
-import { Link, Route } from "react-router-dom";
+
 import { useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 
 import { api } from "../API backend/api";
-
-
-
 import ListadoEventos from "./ListadoEventos";
-import Menu from "./Menu";
-
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 function Eventos() {
   const [eventos, setEventos] = useState([]);
@@ -35,14 +14,12 @@ function Eventos() {
   const obtenerEventos = async () => {
     const response = await api.obtenerEventos();
     setEventos(response.data);
-    console.log("response: " + JSON.stringify(response));
+    // console.log("response: " + JSON.stringify(response));
   };
 
-
-
   return (
-    <Box sx={{ width: "100%" }}>
-      <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
+    <>
+      {/* <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
         <Grid xs={12}>
           <Item>
             <ButtonGroup
@@ -62,12 +39,9 @@ function Eventos() {
             </ButtonGroup>
           </Item>
         </Grid>
-      </Grid>
-      <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-<Menu></Menu>
-        <ListadoEventos eventos={eventos}></ListadoEventos>
-      </Grid>
-    </Box>
+      </Grid> */}
+      <ListadoEventos eventos={eventos}></ListadoEventos>
+    </>
   );
 }
 

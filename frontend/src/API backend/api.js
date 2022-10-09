@@ -9,6 +9,9 @@ export const api = {
   modificarEvento,
   obtenerEvento,
   obtenerEventos,
+  obtenerPacienteById,
+  obtenerPacientes,
+  modificarPaciente,
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -18,6 +21,28 @@ axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 async function guardarPaciente(Paciente) {
   try {
     const response = await axios.post(rutas.nuevoPaciente, Paciente);
+    const pacienteRespuesta = response.data;
+    return Object.keys(pacienteRespuesta).length !== 0;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+async function obtenerPacientes() {
+  try {
+    const pacientesObtenidos = await axios.get(rutas.getPacientes);
+    console.log(pacientesObtenidos);
+
+    return pacientesObtenidos;
+  } catch (error) {
+    return "No se encontraron pacientes";
+  }
+}
+
+async function modificarPaciente(id, Paciente) {
+  try {
+    const response = await axios.put(rutas.modificarPaciente + id, Paciente);
 
     const pacienteRespuesta = response.data;
 
@@ -28,22 +53,24 @@ async function guardarPaciente(Paciente) {
   }
 }
 
-async function guardarEvento(Evento) {
-  try {
-    const response = await axios.post(rutas.nuevoEvento, Evento);
+// async function guardarEvento(Evento) {
+//   try {
+//     const response = await axios.post(rutas.nuevoEvento, Evento);
 
-    const eventoRespuesta = response.data;
+//     const eventoRespuesta = response.data;
 
-    return Object.keys(eventoRespuesta).length !== 0;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-}
+//     return Object.keys(eventoRespuesta).length !== 0;
+//   } catch (error) {
+//     console.error(error);
+//     return false;
+//   }
+// }
 
 async function guardarEventoObteniendoIds(Evento) {
   try {
-    const pacienteEncontrado = await api.obtenerPacienteByDni(Evento.pacienteDni);
+    const pacienteEncontrado = await api.obtenerPacienteByDni(
+      Evento.pacienteDni
+    );
     Evento.pacienteId = pacienteEncontrado.id;
 
     const medicoEncontrado = await api.obtenerMedicoByDni(Evento.medicoDni);
@@ -104,6 +131,17 @@ async function obtenerPacienteByDni(pacienteDni) {
   try {
     const pacienteEncontrado = await axios.get(
       rutas.getPacienteByDni + pacienteDni
+    );
+    return pacienteEncontrado.data;
+  } catch (error) {
+    return "Paciente no encontrado";
+  }
+}
+
+async function obtenerPacienteById(pacienteId) {
+  try {
+    const pacienteEncontrado = await axios.get(
+      rutas.getPacienteById + pacienteId
     );
     return pacienteEncontrado.data;
   } catch (error) {

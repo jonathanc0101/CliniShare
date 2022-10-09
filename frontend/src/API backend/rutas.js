@@ -6,9 +6,14 @@ const rutas = {
   nuevoEvento: "eventos/new",
   getPaciente: "pacientes/id/",
   getPacienteByDni: "pacientes/dni/",
+  getPacienteById: "pacientes/id/",
   modificarEvento: "eventos/id/",
   getEvento: "eventos/id/",
-  getEventos: "eventos/all"
+  getEventos: "eventos/all",
+  getPacientes: "pacientes/all",
+  modificarPaciente: "pacientes/id/",
+
+
 };
 
 for (let ruta in rutas) {

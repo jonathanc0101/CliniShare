@@ -18,17 +18,19 @@ import { useState, useEffect } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
 import { useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 function ModificarEvento() {
   const params = useParams();
+  let navigate = useNavigate();
 
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [importante, setImportante] = useState("");
   const [fecha, setFecha] = useState("");
-  const [pacienteNombre, setPacienteNombre] = useState("");
-  const [pacienteApellido, setPacienteApellido] = useState("");
-  const [pacienteDni, setPacienteDni] = useState("");
+  // const [pacienteNombre, setPacienteNombre] = useState("");
+  // const [pacienteApellido, setPacienteApellido] = useState("");
+  // const [pacienteDni, setPacienteDni] = useState("");
 
   const update = async () => {
     // e.preventDefault();
@@ -38,6 +40,7 @@ function ModificarEvento() {
       importante: importante,
     });
     alert("Se modificó el evento exitosamente");
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -69,7 +72,6 @@ function ModificarEvento() {
                   name="titulo"
                   value={titulo}
                   onChange={(e) => setTitulo(e.target.value)}
-                  // onChange={handleOnchange}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -169,17 +171,7 @@ function ModificarEvento() {
                   aria-label="save"
                   size="large"
                   onClick={update}
-                  // onSubmit={update}
-                  // onClick={() =>
-                  //   handleSubmit(
-                  //     eventoData.id,
-                  //     eventoData.titulo,
-                  //     eventoData.fecha,
-                  //     eventoData.importante,
-                  //     eventoData.medicoDni,
-                  //     eventoData.descripcion
-                  //   )
-                  // }
+
                 >
                   <SaveIcon color="info" fontSize="inherit" />
                   <Typography color={"black"} variant="h6" align="left">
