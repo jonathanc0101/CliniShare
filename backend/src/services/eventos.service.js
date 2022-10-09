@@ -4,6 +4,7 @@ export const EventosService = {
   getEventos: () => getEventosFromModel(),
   createEvento: (evento) => createEventoFromModel(evento),
   getEventosPorDniPaciente: (dni) => getEventosFromModelPorPacienteDNI(dni),
+  getEventosPorIdPaciente: (id) => getEventosFromModelPorPacienteId(id),
   updateEventoPorId: (evento,id) => updateEventoPorIdFromModel(evento,id),
   getEventoPorId : (id) => getEventoPorIdFromModel(id),
 };
@@ -28,9 +29,7 @@ async function getEventoPorIdFromModel(id){
 
 async function createEventoFromModel(evento) {
   try {
-    let newEvento = {};
-
-    newEvento = await Evento.create(evento);
+    const newEvento = await Evento.create(evento);
 
     return newEvento;
   } catch (error) {
@@ -41,11 +40,12 @@ async function createEventoFromModel(evento) {
 
 async function updateEventoPorIdFromModel(evento, id) {
   try {
-    const eventoUpdateado = await Evento.update(evento, {
+    const response = await Evento.update(evento, {
       where: { id: id },
     });
 
-    return eventoUpdateado;
+    return response;
+
   } catch (error) {
     console.log(error);
 

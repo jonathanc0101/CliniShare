@@ -34,19 +34,11 @@ const sincronizacion = await Sincronizacion.findAll({
 
 }
 
-async function createSincronizacionFromModel({medicoDNI }) {
+async function createSincronizacionFromModel(sincronizacion) {
   try {
     var fecha = new Date()
     // es asincrono porque es una consulta a la bd, esta guardando un dato dentro de la bd
-    let newSincronizacion = await Sincronizacion.create({
-      fecha,
-      medicoDNI
-    });
-
-    newSincronizacion = {
-      fecha: newSincronizacion.fecha,
-      medicoDNI: newSincronizacion.medicoDNI
-    };
+    let newSincronizacion = await Sincronizacion.create(sincronizacion);
 
     return newSincronizacion;
   } catch (error) {

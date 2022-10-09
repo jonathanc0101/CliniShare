@@ -64,11 +64,11 @@ async function createPacienteFromModel(paciente) {
 
 async function updatePacientePorIdFromModel(paciente, id) {
   try {
-    const pacienteUpdateado = await Paciente.update(paciente, {
+    const response = await Paciente.update(paciente, {
       where: { id: id },
     });
 
-    return pacienteUpdateado;
+    return response;
   } catch (error) {
     console.log(error);
 

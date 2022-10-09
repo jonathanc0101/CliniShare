@@ -1,14 +1,20 @@
 import os from "os";
 import dgram from "dgram";
 import ipsGetter from "./getIp.js";
-import { SERVER_PORT, MAGIC_STRING } from "./constants.js";
+import { SERVER_PORT, MAGIC_STRING, arrUUIDs } from "./constants.js";
 
 export const computadora = {
   nombre: os.userInfo().username,
   IPS: ipsGetter(),
   MAGIC_STRING: MAGIC_STRING,
-  medicoUUID: "63b814ea-8a7a-4442-b2f9-0be3a40e2fdf",
+  medicoUUID: obtenerUUIDTESTING(),
 };
+
+function obtenerUUIDTESTING(){
+  //simula uuid del medico dependiendo del nombre de usuario
+  const indice = os.userInfo().username == "jona" ? 1 : 0;
+  return arrUUIDs[indice];
+}
 
 function broadcastMessage(myMessage) {
   var sender = dgram.createSocket("udp4");
