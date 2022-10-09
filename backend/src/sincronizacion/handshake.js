@@ -10,8 +10,11 @@ export function handleNewComputer(computadora) {
         axios
             .get(getMethodString)
             .then(res => {
+
+                
+
                 if(res.data.INITIAL_RESPONSE === INITIAL_RESPONSE ){
-                    emitter.emit("new_valid_computer", {nombre:computadora.nombre, ip:computadora.IPS[ip]})
+                    emitter.emit("new_valid_computer", getComputadoraConIPReal(computadora,ip));
                     return;
                 }
             })
@@ -33,7 +36,7 @@ export function handleNewComputerNonLooping(computadora) {
             .then(res => {
                 if(res.data.INITIAL_RESPONSE === INITIAL_RESPONSE ){
                     // hacemosAlgo
-                    emitter.emit("new_valid_computer_non_looping", {nombre:computadora.nombre, ip:computadora.IPS[ip]})
+                    emitter.emit("new_valid_computer_non_looping", getComputadoraConIPReal(computadora,ip))
                     return;
                 }
             })
@@ -49,4 +52,12 @@ export function getInitialResponse(req, res) {
     return({ "INITIAL_RESPONSE": INITIAL_RESPONSE });
 }
 
+
+function getComputadoraConIPReal(comp,ip){
+    const ipReal = comp.IPS[ip];
+    delete comp.IPS;
+    comp.ip = ipReal;
+
+    return comp
+}
 

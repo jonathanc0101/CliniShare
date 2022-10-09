@@ -9,6 +9,8 @@ export async function sincronizar(computadora) {
 
         const getDNISString = 'http://' + computadora.ip.toString().trim() + ':' + SERVER_BD_PORT.toString().trim() + '/pacientes/all/dnis';
 
+
+        //obtener DNIS para sincronizar con los que tenemos en comun
         let dnisDePacientes = [];
         await axios
             .get(getDNISString)
@@ -26,6 +28,8 @@ export async function sincronizar(computadora) {
 
             let dnisASincronizar = await PacientesService.getInterseccionDNIS(dnisDePacientes);
         
+
+        //obtener los datos a sincronizar
         await axios
             .post(postSincronicemosString,dnisASincronizar)
             .then(res => {
@@ -37,8 +41,6 @@ export async function sincronizar(computadora) {
                 }
 
                 let datosPacientes = res.data;
-
-                console.log("Datos de pacientes en común:" + JSON.stringify(datosPacientes));
                 
                 // hacemosAlgo
                 emitter.emit("pacientes_recibidos", datosPacientes)
