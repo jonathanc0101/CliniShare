@@ -14,6 +14,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import EventosImportantes from "./EventosImportantes";
 import EventosDePaciente from "./EventosDePaciente";
 
+
+
 function VerPaciente() {
   const params = useParams();
   let navigate = useNavigate();
@@ -78,7 +80,7 @@ function VerPaciente() {
                 ></TextField>
               </Grid>
               <Grid item sm={6}>
-                <EventosImportantes></EventosImportantes>
+                <EventosImportantes id={params.id}></EventosImportantes>
               </Grid>
             </Grid>
           </Box>
