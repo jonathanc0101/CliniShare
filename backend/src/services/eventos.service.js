@@ -85,12 +85,19 @@ async function getEventoImportanteCompletoFromModel(id) {
     ],
   }); 
 
-  return evento;
+  console.log("EVENTOS IMPORTANTES: " + JSON.stringify(eventos));
+
+  if (eventos.length === 0) {
+    return [];
+  } else {
+    return eventos;
+  }
+
 }
 
 
 async function getEventosImportantesCompletosPorIdPacienteFromModel(pacienteId) {
-  const evento = await Evento.findOne({
+  const eventos = await Evento.findAll({
     where: { pacienteId, importante:true },
     include: [
       {
@@ -102,7 +109,7 @@ async function getEventosImportantesCompletosPorIdPacienteFromModel(pacienteId) 
     ],
   }); 
 
-  return evento;
+  return eventos;
 }
 
 
