@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { ListItemButton, ListSubheader, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -18,9 +18,9 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import IconButton from "@mui/material/IconButton";
 import { api } from "../API backend/api";
+import { FixedSizeList } from "react-window";
 
 function EventosImportantes(params) {
-  
   const [eventosImportantes, setEventosImportantes] = useState([]);
 
   useEffect(() => {
@@ -36,21 +36,29 @@ function EventosImportantes(params) {
 
   return (
     <>
-      <Typography component="h5" variant="h6" align="center">
-        Eventos importantes
-      </Typography>
-      <List sx={{ width: "50%", maxWidth: 700, bgcolor: "background.paper" }}>
+      <ListItemText
+        sx={{ my: 0 }}
+        primary="Eventos importantes"
+        primaryTypographyProps={{
+          fontSize: 20,
+          fontWeight: "medium",
+          letterSpacing: 0,
+        }}
+      />
+      <List
+        sx={{
+          width: "100%",
+          maxWidth: 360,
+          bgcolor: "background.paper",
+          position: "relative",
+          overflow: "auto",
+          maxHeight: 100,
+          "& ul": { padding: 0 },
+        }}
+      >
         {eventosImportantes.map((evento) => (
-          <ListItem
-            key={evento.id}
-            disableGutters
-            secondaryAction={
-              <IconButton aria-label="comment">
-                <VisibilityIcon />
-              </IconButton>
-            }
-          >
-            <ListItemText primary={`Line item ${evento.titulo}`} />
+          <ListItem key={`${evento.id}`}>
+            <ListItemText primary={`${evento.titulo}`} />
           </ListItem>
         ))}
       </List>
