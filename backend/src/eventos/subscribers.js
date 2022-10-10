@@ -24,7 +24,7 @@ export default function loadListeners(emitter) {
   });
   
   emitter.on("pacientes_recibidos", (datosPacientes) => {
-    actualizarDatosPacientes(datosPacientes);
+    // actualizarDatosPacientes(datosPacientes);
     console.log("Datos de pacientes en común:" + JSON.stringify(datosPacientes));
   });
 

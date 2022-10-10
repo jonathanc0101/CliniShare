@@ -1,26 +1,27 @@
-import { Medico } from "../models/Medico.js"
+import { Medico } from "../models/Medico.js";
 
 export const MedicosService = {
   getMedicos: () => getMedicosFromModel(),
   getMedicoByDni: (dniABuscar) => getMedicoByDniFromModel(dniABuscar),
   createMedico: (medico) => createMedicoFromModel(medico),
-  getMedicoById: (id) => getMedicoByIdFromModel(id)
+  getMedicoById: (id) => getMedicoByIdFromModel(id),
 };
 
 async function getMedicosFromModel() {
-    const medicos = await Medico.findAll();
-    
-    if (medicos.length === 0) {
-        return [];
-    }
-    else {
-        return medicos;
-    }
+  const medicos = await Medico.findAll();
+
+  if (medicos.length === 0) {
+    return [];
+  } else {
+    return medicos;
+  }
 }
 
-async function createMedicoFromModel(medico){
-    try {
-        let newMedico = await Medico.create(medico);
+async function createMedicoFromModel(medico) {
+  try {
+    console.log("MEDICOMEDICOMEDICOMEDICO:" + medico);
+    let newMedico = await Medico.create(medico);
+
 
     return newMedico;
   } catch (error) {
