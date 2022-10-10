@@ -13,6 +13,7 @@ import Home from "./componentes/Home";
 import ModificarPaciente from "./componentes/ModificarPaciente";
 import ListadoEventos from "./componentes/ListadoEventos";
 import ListadoPacientes from "./componentes/ListadoPacientes";
+import VerPaciente from "./componentes/VerPaciente";
 
 const Rutas = () => {
   let routes = useRoutes([
@@ -22,6 +23,7 @@ const Rutas = () => {
     { path: '/eventos/all', element: <ListadoEventos></ListadoEventos>},
     { path: '/pacientes/all', element: <ListadoPacientes></ListadoPacientes>},
     { path: '/eventos/ver/id/:id', element: <VerEvento/>},
+    { path: '/pacientes/ver/id/:id', element: <VerPaciente/>},
     { path: '/', element: <Home></Home>},
     { path: "/pacientes/id/:id", element: <ModificarPaciente /> },
 

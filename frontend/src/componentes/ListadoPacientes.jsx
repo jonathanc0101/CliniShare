@@ -76,9 +76,9 @@ function ListadoPacientes() {
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell>
-                      {/* <Link to={"/eventos/ver/id/" + evento.id}> */}
+                      <Link to={"/pacientes/ver/id/" + paciente.id}>
                       <VisibilityIcon color="info"></VisibilityIcon>
-                      {/* </Link> */}
+                      </Link>
                     </TableCell>
                     <TableCell>{paciente.nombre}</TableCell>
                     <TableCell>{paciente.apellido}</TableCell>
