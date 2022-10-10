@@ -19,7 +19,7 @@ async function getMedicosFromModel() {
 
 async function createMedicoFromModel(medico) {
   try {
-    console.log("MEDICOMEDICOMEDICOMEDICO:" + medico);
+    
     let newMedico = await Medico.create(medico);
 
 

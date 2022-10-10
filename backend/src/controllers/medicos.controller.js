@@ -6,13 +6,8 @@ export const getMedicos = async (req, res, next) => {
 };
 
 export const createMedico = async (req, res, next) => {
-  const { nombre, apellido, dni, matricula } = req.body;
-  const medicoCreado = await MedicosService.createMedico({
-    nombre,
-    apellido,
-    dni,
-    matricula,
-  });
+  const medico = req.body;
+  const medicoCreado = await MedicosService.createMedico(medico);
 
   res.send(JSON.stringify(medicoCreado));
 };
