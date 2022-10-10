@@ -68,6 +68,40 @@ async function getEventoConPacienteYMedicoPorIdFromModel(id) {
   return evento;
 }
 
+async function getEventoImportanteCompleto(id) {
+  const evento = await Evento.findOne({
+    where: { id: id, importante:true },
+    include: [
+      {
+        model: Medico      
+      },
+      {
+        model: Paciente
+      }
+    ],
+  }); 
+
+  return evento;
+}
+
+
+async function getEventosImportantesCompletosPorIdPaciente(idPaciente) {
+  const evento = await Evento.findOne({
+    where: { idPaciente, importante:true },
+    include: [
+      {
+        model: Medico      
+      },
+      {
+        model: Paciente
+      }
+    ],
+  }); 
+
+  return evento;
+}
+
+
 
 async function createEventoFromModel(evento) {
   try {
