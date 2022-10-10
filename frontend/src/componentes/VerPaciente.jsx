@@ -93,7 +93,6 @@ function VerPaciente() {
         </CardContent>
       </Card>
       <Grid container direction="row" spacing={130}>
- 
         <Grid item>
           <IconButton
             aria-label="save"

@@ -52,7 +52,7 @@ function EventosDePaciente(params) {
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      <Link to={"/eventos/ver/id/" + evento.id}>
+                    <Link to={"/eventos/ver/id/" + evento.id}>
                         <VisibilityIcon color="info"></VisibilityIcon>
                       </Link>
                     </TableCell>

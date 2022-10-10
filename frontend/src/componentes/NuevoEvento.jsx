@@ -79,6 +79,15 @@ function NuevoEvento() {
     };
 
     try {
+      if (
+        evento.titulo.length === 0 ||
+        evento.descripcion.length === 0 ||
+        evento.medicoDni.length === 0
+      ) {
+        alert("Revisar los campos obligatorios")
+        return ;
+      }
+  
       const response = await api.guardarEventoObteniendoIds(evento);
       if (!response) {
         alert(`El paciente no existe`);
@@ -109,6 +118,7 @@ function NuevoEvento() {
             <Grid container direction="row" spacing={2}>
               <Grid item xs={4} sm={4}>
                 <TextField
+                  required
                   label="Título"
                   type="text"
                   name="titulo"

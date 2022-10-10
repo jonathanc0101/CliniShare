@@ -96,7 +96,6 @@ function ModificarPaciente() {
                 ></TextField>
               </Grid>
               <Grid item sm={6}>
-                
                 <EventosImportantes></EventosImportantes>
               </Grid>
             </Grid>
@@ -119,8 +118,7 @@ function ModificarPaciente() {
 
           <Grid container direction="row" spacing={2}>
             <Grid item>
-            <EventosDePaciente id={params.id}/>
-            
+              <EventosDePaciente id={params.id} />
             </Grid>
           </Grid>
           <br></br>

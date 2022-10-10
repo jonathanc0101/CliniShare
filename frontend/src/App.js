@@ -7,7 +7,6 @@ import {
 import ModificarEvento from "./componentes/ModificarEvento";
 import NuevoEvento from "./componentes/NuevoEvento";
 import NuevoPaciente from "./componentes/NuevoPaciente";
-import Eventos from "./componentes/Eventos";
 import VerEvento from "./componentes/VerEvento";
 import Home from "./componentes/Home";
 import ModificarPaciente from "./componentes/ModificarPaciente";

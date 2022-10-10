@@ -28,7 +28,7 @@ function NuevoPaciente() {
       Paciente.length === 0 ||
       Paciente.length === 0
     ) {
-      return Paciente;
+      return ;
     }
 
     const pacienteGuardado = await api.guardarPaciente(Paciente);
