@@ -61,31 +61,37 @@ export const Medico = sequelize.define(
 Medico.hasMany(Paciente, {
   foreignKey: "ownerId",
   sourceKey: "id",
+  allowNull:false,
 });
 
 Paciente.belongsTo(Medico, {
   foreignKey: "ownerId",
   sourceKey: "id",
+  allowNull:false,
 });
 
 //relacionando con evento
 Medico.hasMany(Evento, {
   foreignKey: "medicoId",
   sourceKey: "id",
+  allowNull:false,
 });
 
 Evento.belongsTo(Medico, {
   foreignKey: "medicoId",
   targetId: "id",
+  allowNull:false,
 });
 
 //relacionando con sincronizacion
 Medico.hasMany(Sincronizacion, {
   foreignKey: "medicoId",
   sourceKey: "id",
+  allowNull:false,
 });
 
 Sincronizacion.belongsTo(Medico, {
   foreignKey: "medicoId",
   targetId: "id",
+  allowNull:false,
 });

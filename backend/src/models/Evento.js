@@ -20,6 +20,7 @@ export const Evento = sequelize.define("evento",{
     },
     descripcion:{
         type: DataTypes.STRING,
+        allowNull:false,
     },
     importante:{
         type: DataTypes.BOOLEAN,
