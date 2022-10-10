@@ -50,7 +50,7 @@ function EventosImportantes(params) {
               </IconButton>
             }
           >
-            <ListItemText primary={`Line item ${evento.titulo}`} />
+            <ListItemText primary={`${evento.titulo}`} />
           </ListItem>
         ))}
       </List>
