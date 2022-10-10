@@ -8,10 +8,12 @@ const rutas = {
   getPacienteByDni: "pacientes/dni/",
   getPacienteById: "pacientes/id/",
   modificarEvento: "eventos/id/",
-  getEvento: "eventos/id/",
+  getEventoConPacienteYMedicoPorId: "eventos/id/",
   getEventos: "eventos/all",
   getPacientes: "pacientes/all",
   modificarPaciente: "pacientes/id/",
+  getMedicoById: "medicos/id/",
+
 
 
 };

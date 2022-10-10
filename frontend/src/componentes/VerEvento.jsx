@@ -36,15 +36,14 @@ function VerEvento() {
 
   useEffect(() => {
     (async () => {
-      const res = await api.obtenerEvento(params.id);
+      const res = await api.obtenerEventoConPacienteYMedicoPorId(params.id);
       setTitulo(res.titulo);
       setImportante(res.importante);
       setFecha(res.fecha);
       setDescripcion(res.descripcion);
-      const pacienteEncontrado = await api.obtenerPacienteById(res.pacienteId);
-      setPacienteNombre(pacienteEncontrado.nombre);
-      setPacienteApellido(pacienteEncontrado.apellido);
-      setPacienteDni(pacienteEncontrado.dni);
+      setPacienteNombre(res.pacienteId.nombre);
+      setPacienteApellido(res.pacienteId.apellido);
+      setPacienteDni(res.pacienteId.dni);
     })();
   }, [params.id]);
 

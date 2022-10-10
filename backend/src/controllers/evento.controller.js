@@ -12,9 +12,16 @@ export const getEventosPorDni = async (req, res, next) => {
   res.send(JSON.stringify(eventos));
 };
 
-export const getEventoPorId = async (req, res, next) => {
+// export const getEventoPorId = async (req, res, next) => {
+//   let id = req.params.id;
+//   const evento = await EventosService.getEventoPorId(id);
+
+//   res.send(JSON.stringify(evento));
+// };
+
+export const getEventoConPacienteYMedicoPorId = async (req, res, next) => {
   let id = req.params.id;
-  const evento = await EventosService.getEventoPorId(id);
+  const evento = await EventosService.getEventoConPacienteYMedicoPorId(id);
 
   res.send(JSON.stringify(evento));
 };

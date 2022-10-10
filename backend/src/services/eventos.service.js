@@ -1,11 +1,15 @@
 import { Evento } from "../models/Evento.js";
+import { Paciente } from "../models/Paciente.js";
+import { Medico } from "../models/Medico.js";
+
 
 export const EventosService = {
   getEventos: () => getEventosFromModel(),
   createEvento: (evento) => createEventoFromModel(evento),
   getEventosPorDniPaciente: (dni) => getEventosFromModelPorPacienteDNI(dni),
-  updateEventoPorId: (evento,id) => updateEventoPorIdFromModel(evento,id),
-  getEventoPorId : (id) => getEventoPorIdFromModel(id),
+  updateEventoPorId: (evento, id) => updateEventoPorIdFromModel(evento, id),
+  getEventoPorId: (id) => getEventoPorIdFromModel(id),
+  getEventoConPacienteYMedicoPorId: (id) => getEventoConPacienteYMedicoPorIdFromModel(id),
 };
 
 async function getEventosFromModel() {
@@ -18,13 +22,30 @@ async function getEventosFromModel() {
   }
 }
 
-async function getEventoPorIdFromModel(id){
+async function getEventoPorIdFromModel(id) {
   const evento = await Evento.findOne({
-    where : {id:id}
+    where: { id: id },
   });
 
   return evento;
 }
+
+async function getEventoConPacienteYMedicoPorIdFromModel(id) {
+  const evento = await Evento.findOne({
+    where: { id: id },
+  });
+  const paciente = await Paciente.findOne({
+    where: { id: evento.pacienteId },
+  });
+  const medico = await Medico.findOne({
+    where: { id: evento.medicoId },
+  });
+
+  evento.pacienteId = paciente;
+  evento.medicoId = medico;
+  return evento;
+}
+
 
 async function createEventoFromModel(evento) {
   try {
@@ -35,7 +56,7 @@ async function createEventoFromModel(evento) {
     return newEvento;
   } catch (error) {
     console.log(error);
-    return ("No se pudo cargar el evento");
+    return "No se pudo cargar el evento";
   }
 }
 
@@ -53,19 +74,19 @@ async function updateEventoPorIdFromModel(evento, id) {
   }
 }
 
-
 async function getEventosFromModelPorPacienteDNI(pacienteDNI) {
-
-  const paciente = await Paciente.findOne({where:{
-    dni:pacienteDNI
-  }});
+  const paciente = await Paciente.findOne({
+    where: {
+      dni: pacienteDNI,
+    },
+  });
 
   pacienteId = paciente.id;
 
   const eventos = await Evento.findAll({
     where: {
-      pacienteId
-    }
+      pacienteId,
+    },
   });
 
   if (eventos.length === 0) {
@@ -78,8 +99,8 @@ async function getEventosFromModelPorPacienteDNI(pacienteDNI) {
 async function getEventosFromModelPorPacienteId(pacienteId) {
   const eventos = await Evento.findAll({
     where: {
-      pacienteId
-    }
+      pacienteId,
+    },
   });
 
   if (eventos.length === 0) {
