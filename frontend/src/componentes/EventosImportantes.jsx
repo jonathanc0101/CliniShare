@@ -19,10 +19,7 @@ import ListItemText from "@mui/material/ListItemText";
 import IconButton from "@mui/material/IconButton";
 import { api } from "../API backend/api";
 
-
 function EventosImportantes(params) {
-
-  const { index, style } = props;
   
   const [eventosImportantes, setEventosImportantes] = useState([]);
 
@@ -42,22 +39,21 @@ function EventosImportantes(params) {
       <Typography component="h5" variant="h6" align="center">
         Eventos importantes
       </Typography>
-      <Box
-      sx={{ width: '100%', height: 400, maxWidth: 360, bgcolor: 'background.paper' }}
-    >
-      <FixedSizeList
-        height={400}
-        width={360}
-        itemSize={46}
-        itemCount={200}
-        overscanCount={5}
-      >
-    <ListItem style={style} key={index} component="div" disablePadding>
-      <ListItemButton>
-        <ListItemText primary={`Item ${index + 1}`} />
-      </ListItemButton>
-    </ListItem>      </FixedSizeList>
-    </Box>
+      <List sx={{ width: "50%", maxWidth: 700, bgcolor: "background.paper" }}>
+        {eventosImportantes.map((evento) => (
+          <ListItem
+            key={evento.id}
+            disableGutters
+            secondaryAction={
+              <IconButton aria-label="comment">
+                <VisibilityIcon />
+              </IconButton>
+            }
+          >
+            <ListItemText primary={`${evento.titulo}`} />
+          </ListItem>
+        ))}
+      </List>
       {/* <Grid xs={10}>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
