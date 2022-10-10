@@ -1,6 +1,7 @@
 import { Paciente } from "../models/Paciente.js";
 import { sequelize } from "../database/database.js";
 import { Evento } from "../models/Evento.js";
+import { EventosService } from "./eventos.service.js";
 
 export const PacientesService = {
   getPacientes: () => getPacientesFromModel(),
@@ -15,8 +16,7 @@ export const PacientesService = {
     getEntidadesPacientesPorDnisFromModel(dnis),
   updatePacientePorId: (paciente, id) =>
     updatePacientePorIdFromModel(paciente, id),
-    upsertarPacientes:upsertarPacientesFromModel,
-
+  upsertarPacientes: upsertarPacientesFromModel,
 };
 
 async function getPacientesFromModel() {
@@ -175,18 +175,24 @@ async function getEntidadesPacientesPorDnisFromModel(dnisPacientes) {
   return pacientesFiltrados;
 }
 
-
 async function upsertarPacientesFromModel(pacientes) {
-  // try {
-  //   sequelize.transaction(async (t) => {
-  //      for(const paciente of pacientes){
+  try {
+    sequelize.transaction(async (t) => {
+      for (const paciente of pacientes) {
+        console.log("PACIENTEPACIENTE: " + JSON.stringify(paciente));
+        
+        Paciente.upsert(paciente);
+        
+        //updateamos los eventos correspondientes
+        for(const evento of paciente.eventos){
+          Evento.upsert(evento);
+        }
+      }
+    });
 
-  //      } 
-  //   });
-
-  //   return newPaciente;
-  // } catch (error) {
-  //   console.log("No se pudo cargar el paciente. " + error);
-  //   return {};
-  // }
+    return newPaciente;
+  } catch (error) {
+    console.log("No se pudo cargar el paciente: " + error);
+    return {};
+  }
 }
