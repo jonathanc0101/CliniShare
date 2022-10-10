@@ -22,6 +22,7 @@ import { api } from "../API backend/api";
 
 function EventosImportantes(params) {
 
+  const { index, style } = props;
   
   const [eventosImportantes, setEventosImportantes] = useState([]);
 
