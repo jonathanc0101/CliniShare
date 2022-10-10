@@ -15,6 +15,8 @@ export const PacientesService = {
     getEntidadesPacientesPorDnisFromModel(dnis),
   updatePacientePorId: (paciente, id) =>
     updatePacientePorIdFromModel(paciente, id),
+    upsertarPacientes:upsertarPacientesFromModel,
+
 };
 
 async function getPacientesFromModel() {
@@ -29,9 +31,9 @@ async function getPacientesFromModel() {
 
 async function getEntidadesPacientesFromModel() {
   const pacientes = await Paciente.findAll({
-      include: [
+    include: [
       {
-        model: Evento      
+        model: Evento,
       },
     ],
   });
@@ -48,18 +50,15 @@ async function createPacienteFromModel(paciente) {
     let newPaciente = {};
 
     await sequelize.transaction(async (t) => {
-      newPaciente = await Paciente.create(paciente,
-        {
-          transaction: t,
-        }
-      );
-
+      newPaciente = await Paciente.create(paciente, {
+        transaction: t,
+      });
     });
 
     return newPaciente;
   } catch (error) {
     console.log("No se pudo cargar el paciente. " + error);
-    return { };
+    return {};
   }
 }
 
@@ -176,3 +175,18 @@ async function getEntidadesPacientesPorDnisFromModel(dnisPacientes) {
   return pacientesFiltrados;
 }
 
+
+async function upsertarPacientesFromModel(pacientes) {
+  // try {
+  //   sequelize.transaction(async (t) => {
+  //      for(const paciente of pacientes){
+
+  //      } 
+  //   });
+
+  //   return newPaciente;
+  // } catch (error) {
+  //   console.log("No se pudo cargar el paciente. " + error);
+  //   return {};
+  // }
+}
