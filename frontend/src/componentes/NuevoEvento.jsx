@@ -17,11 +17,12 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState, useEffect } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function NuevoEvento() {
   const params = useParams();
-  console.log(params);
+  let navigate = useNavigate();
+
   const [medicoDni, setMedicoDni] = useState("");
   const [pacienteDni, setPacienteDni] = useState("");
   const [pacienteNombre, setPacienteNombre] = useState("");
@@ -84,6 +85,7 @@ function NuevoEvento() {
       } else {
         console.log(evento);
         alert(`Se cargó el evento exitosamente`);
+        navigate(-1);
       }
     } catch (err) {
       console.error(err);

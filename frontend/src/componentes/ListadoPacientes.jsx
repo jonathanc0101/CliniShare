@@ -13,6 +13,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Menu from "./Menu";
 import { styled } from "@mui/material/styles";
+import { Button } from "@mui/material";
+import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -37,7 +39,19 @@ function ListadoPacientes() {
     <>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
         <Grid xs={12}>
-          <Item>Vacío</Item>
+          <Item>
+            <Button
+              variant="outlined"
+              startIcon={<AddCircleOutlineTwoToneIcon />}
+            >
+              <Link
+                to={"/pacientes/new/"}
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                Agregar paciente
+              </Link>
+            </Button>
+          </Item>
         </Grid>
       </Grid>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

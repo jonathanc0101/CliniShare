@@ -7,6 +7,7 @@ export const EventosService = {
   getEventos: () => getEventosFromModel(),
   createEvento: (evento) => createEventoFromModel(evento),
   getEventosPorDniPaciente: (dni) => getEventosFromModelPorPacienteDNI(dni),
+  getEventosPorPacienteId: (id) => getEventosPorPacienteIdFromModel(id),
   updateEventoPorId: (evento, id) => updateEventoPorIdFromModel(evento, id),
   getEventoPorId: (id) => getEventoPorIdFromModel(id),
   getEventoConPacienteYMedicoPorId: (id) => getEventoConPacienteYMedicoPorIdFromModel(id),
@@ -96,7 +97,7 @@ async function getEventosFromModelPorPacienteDNI(pacienteDNI) {
   }
 }
 
-async function getEventosFromModelPorPacienteId(pacienteId) {
+async function getEventosPorPacienteIdFromModel(pacienteId) {
   const eventos = await Evento.findAll({
     where: {
       pacienteId,
@@ -104,7 +105,7 @@ async function getEventosFromModelPorPacienteId(pacienteId) {
   });
 
   if (eventos.length === 0) {
-    [];
+    return [];
   } else {
     return eventos;
   }

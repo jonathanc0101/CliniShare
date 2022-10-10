@@ -9,6 +9,7 @@ export const api = {
   modificarEvento,
   obtenerEventoConPacienteYMedicoPorId,
   obtenerEventos,
+  obtenerEventosPorPacienteId,
   obtenerPacienteById,
   obtenerMedicoById,
   obtenerPacientes,
@@ -33,7 +34,6 @@ async function guardarPaciente(Paciente) {
 async function obtenerPacientes() {
   try {
     const pacientesObtenidos = await axios.get(rutas.getPacientes);
-    console.log(pacientesObtenidos);
 
     return pacientesObtenidos;
   } catch (error) {
@@ -113,6 +113,15 @@ async function obtenerEventoConPacienteYMedicoPorId(id) {
 async function obtenerEventos() {
   try {
     const eventosObtenidos = await axios.get(rutas.getEventos);
+    return eventosObtenidos;
+  } catch (error) {
+    return "El evento no existe";
+  }
+}
+
+async function obtenerEventosPorPacienteId(pacienteId) {
+  try {
+    const eventosObtenidos = await axios.get(rutas.getEventosPorPacienteId + pacienteId);
     return eventosObtenidos;
   } catch (error) {
     return "El evento no existe";

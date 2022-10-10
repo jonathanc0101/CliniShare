@@ -28,7 +28,7 @@ function VerEvento() {
   let navigate = useNavigate();
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [importante, setImportante] = useState("");
+  const [importante, setImportante] = useState(false);
   const [fecha, setFecha] = useState("");
   const [pacienteNombre, setPacienteNombre] = useState("");
   const [pacienteApellido, setPacienteApellido] = useState("");
@@ -57,7 +57,12 @@ function VerEvento() {
         </Grid>
         <Grid item xs={8}>
           <Button variant="outlined" startIcon={<EditIcon />}>
-            <Link to={"/eventos/id/" + params.id}>Editar</Link>
+            <Link
+              to={"/eventos/id/" + params.id}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              Editar
+            </Link>
           </Button>
         </Grid>
       </Grid>
@@ -100,7 +105,7 @@ function VerEvento() {
                 <FormControlLabel
                   disabled
                   name="importante"
-                  value={importante}
+                  checked={importante}
                   control={<Checkbox />}
                   label="Evento importante"
                 />

@@ -13,12 +13,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
+import EventosDePaciente from "./EventosDePaciente";
+import EventosImportantes from "./EventosImportantes";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function ModificarPaciente() {
-
   const params = useParams();
   let navigate = useNavigate();
 
@@ -51,11 +52,11 @@ function ModificarPaciente() {
       <Typography component="h4" variant="h4">
         Paciente a modificar
       </Typography>
-      <Box sx={{ width: "100%" }}>
-        <Card>
-          <CardContent>
+      <Card>
+        <CardContent>
+          <Box sx={{ width: "100%" }}>
             <Grid container direction="row" spacing={2}>
-              <Grid item xs={4} sm={4}>
+              <Grid item xs={3} sm={2}>
                 <TextField
                   label="Nombre"
                   type="text"
@@ -68,7 +69,7 @@ function ModificarPaciente() {
                   onChange={(e) => setNombre(e.target.value)}
                 ></TextField>
               </Grid>
-              <Grid item xs={4} sm={4}>
+              <Grid item xs={3} sm={2}>
                 <TextField
                   label="Apellido"
                   type="text"
@@ -81,7 +82,7 @@ function ModificarPaciente() {
                   onChange={(e) => setApellido(e.target.value)}
                 ></TextField>
               </Grid>
-              <Grid item xs={4} sm={4}>
+              <Grid item xs={3} sm={2}>
                 <TextField
                   label="DNI"
                   type="text"
@@ -94,30 +95,59 @@ function ModificarPaciente() {
                   onChange={(e) => setDni(e.target.value)}
                 ></TextField>
               </Grid>
-            </Grid>
-            <br></br>
-            <Grid item xs={8}>
-              <Button
-                variant="outlined"
-                startIcon={<AddCircleOutlineTwoToneIcon />}
-              >
-                <Link to={"/eventos/new/paciente/" + params.id}>Agregar evento</Link>
-              </Button>
-            </Grid>
-            <br></br>
-            <Grid container direction="row" spacing={2}>
-              <Grid item>
-                <IconButton aria-label="save" size="large" onClick={update}>
-                  <SaveIcon color="info" fontSize="inherit" />
-                  <Typography color={"black"} variant="h6" align="left">
-                    &nbsp;Guardar
-                  </Typography>
-                </IconButton>
+              <Grid item sm={6}>
+                
+                <EventosImportantes></EventosImportantes>
               </Grid>
             </Grid>
-          </CardContent>
-        </Card>
-      </Box>
+          </Box>
+          <br></br>
+          <Grid item xs={8}>
+            <Button
+              variant="outlined"
+              startIcon={<AddCircleOutlineTwoToneIcon />}
+            >
+              <Link
+                to={"/eventos/new/paciente/" + params.id}
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                Agregar evento
+              </Link>
+            </Button>
+          </Grid>
+          <br></br>
+
+          <Grid container direction="row" spacing={2}>
+            <Grid item>
+            <EventosDePaciente id={params.id}/>
+            
+            </Grid>
+          </Grid>
+          <br></br>
+        </CardContent>
+      </Card>
+      <Grid container direction="row" spacing={130}>
+        <Grid item>
+          <IconButton
+            aria-label="save"
+            size="large"
+            onClick={() => navigate(-1)}
+          >
+            <ArrowBackIcon color="info" fontSize="inherit" />
+            <Typography color={"black"} variant="h6" align="left">
+              &nbsp;Atrás
+            </Typography>
+          </IconButton>
+        </Grid>
+        <Grid item>
+          <IconButton aria-label="save" size="large" onClick={update}>
+            <SaveIcon color="info" fontSize="inherit" />
+            <Typography color={"black"} variant="h6" align="right">
+              &nbsp;Guardar
+            </Typography>
+          </IconButton>
+        </Grid>
+      </Grid>
     </>
   );
 }
