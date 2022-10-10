@@ -186,7 +186,8 @@ async function upsertarPacientesFromModel(pacientes) {
 
         //updateamos los eventos correspondientes
         for(const evento of paciente.eventos){
-          Evento.upsert({...evento, pacienteId});
+          Evento.upsert({...evento, pacienteId, medicoId:"7fcb4de1-e07b-43c6-9561-1f7cb0139b93",
+        });
         }
       }
     });
