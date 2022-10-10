@@ -89,9 +89,9 @@ async function getEventoImportanteCompletoFromModel(id) {
 }
 
 
-async function getEventosImportantesCompletosPorIdPacienteFromModel(idPaciente) {
+async function getEventosImportantesCompletosPorIdPacienteFromModel(pacienteId) {
   const evento = await Evento.findOne({
-    where: { idPaciente, importante:true },
+    where: { pacienteId, importante:true },
     include: [
       {
         model: Medico      
