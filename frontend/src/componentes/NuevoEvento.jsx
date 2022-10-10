@@ -14,13 +14,19 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
+import { useParams, useNavigate } from "react-router-dom";
 
 function NuevoEvento() {
+  const params = useParams();
+  let navigate = useNavigate();
+
   const [medicoDni, setMedicoDni] = useState("");
   const [pacienteDni, setPacienteDni] = useState("");
+  const [pacienteNombre, setPacienteNombre] = useState("");
+  const [pacienteApellido, setPacienteApellido] = useState("");
 
   const [eventoData, setEventoData] = useState({
     titulo: "",
@@ -40,16 +46,22 @@ function NuevoEvento() {
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      const pacienteEncontrado = await api.obtenerPacienteById(params.id);
+      setPacienteNombre(pacienteEncontrado.nombre);
+      setPacienteApellido(pacienteEncontrado.apellido);
+      setPacienteDni(pacienteEncontrado.dni);
+    })();
+  }, [params.id]);
 
-  const cambiarDniPaciente = (e) => {
-    setPacienteDni(e.target.value);
-  }
+  // const cambiarDniPaciente = (e) => {
+  //   setPacienteDni(e.target.value);
+  // }
 
   const cambiarDniMedico = (e) => {
     setMedicoDni(e.target.value);
-
-
-  }
+  };
 
   const handleSubmit = async (
     titulo,
@@ -73,6 +85,7 @@ function NuevoEvento() {
       } else {
         console.log(evento);
         alert(`Se cargó el evento exitosamente`);
+        navigate(-1);
       }
     } catch (err) {
       console.error(err);
@@ -196,6 +209,7 @@ function NuevoEvento() {
                   label="Nombre"
                   type="text"
                   name="nombre"
+                  value={pacienteNombre}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -207,6 +221,7 @@ function NuevoEvento() {
                   label="Apellido"
                   type="text"
                   name="apellido"
+                  value={pacienteApellido}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -214,11 +229,12 @@ function NuevoEvento() {
               </Grid>
               <Grid item xs={3} sm={3}>
                 <TextField
+                  disabled
                   label="DNI"
                   type="text"
                   name="pacienteDni"
                   value={pacienteDni}
-                  onChange={cambiarDniPaciente}
+                  // onChange={cambiarDniPaciente}
                   margin="dense"
                   fullWidth
                   variant="outlined"

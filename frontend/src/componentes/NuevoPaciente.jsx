@@ -11,26 +11,32 @@ import {
 } from "@mui/material";
 import "../App.css";
 import { api } from "../API backend/api";
+import { useNavigate } from "react-router-dom";
 
 function NuevoPaciente() {
+  let navigate = useNavigate();
+
   const [Paciente, setPaciente] = useState({
     nombre: "",
     apellido: "",
     dni: "",
   });
 
-  const handleGuardar =  async function () {
-    if(Paciente.dni.length === 0 || Paciente.length === 0 || Paciente.length === 0){
+  const handleGuardar = async function () {
+    if (
+      Paciente.dni.length === 0 ||
+      Paciente.length === 0 ||
+      Paciente.length === 0
+    ) {
       return Paciente;
     }
 
-    
     const pacienteGuardado = await api.guardarPaciente(Paciente);
-    
-    if(pacienteGuardado === true){
-      alert("Paciente guardado!");
-    }
 
+    if (pacienteGuardado === true) {
+      alert("Paciente guardado!");
+      navigate(-1);
+    }
   };
 
   const handleChange = (event) => {
@@ -47,7 +53,7 @@ function NuevoPaciente() {
     let value = event.target.value.replace(/\D/g, "");
 
     setPaciente((estadoAnterior) => {
-      return { ...estadoAnterior, dni: value};
+      return { ...estadoAnterior, dni: value };
     });
   };
 
@@ -97,8 +103,7 @@ function NuevoPaciente() {
                   helperText="Campo obligatorio"
                   value={Paciente.dni}
                   onChange={handleChangeDni}
-                >
-                </TextField>
+                ></TextField>
               </Grid>
 
               <Grid item xs={12} sm={12}>

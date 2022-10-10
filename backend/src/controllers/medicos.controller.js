@@ -25,3 +25,10 @@ export const getMedicoByDni = async (req, res, next) => {
   );
   res.send(JSON.stringify(medicoEncontrado));
 };
+
+export const getMedicoById = async (req, res, next) => {
+  let id = req.params.id;
+  console.log("getMedicoById, id: " + id);
+  const medicoEncontrado = await MedicosService.getMedicoById(id);
+  res.send(JSON.stringify(medicoEncontrado));
+};

@@ -10,7 +10,19 @@ import { useEffect, useState } from "react";
 import { api } from "../API backend/api";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Menu from "./Menu";
+import { styled } from "@mui/material/styles";
+import { Button } from "@mui/material";
+import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
 function ListadoPacientes() {
   const [pacientes, setPacientes] = useState([]);
@@ -25,43 +37,63 @@ function ListadoPacientes() {
   };
   return (
     <>
-      <Grid xs={10}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Ver paciente</TableCell>
+      <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
+        <Grid xs={12}>
+          <Item>
+            <Button
+              variant="outlined"
+              startIcon={<AddCircleOutlineTwoToneIcon />}
+            >
+              <Link
+                to={"/pacientes/new/"}
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                Agregar paciente
+              </Link>
+            </Button>
+          </Item>
+        </Grid>
+      </Grid>
+      <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Menu></Menu>
+        <Grid xs={10}>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Ver paciente</TableCell>
 
-                <TableCell>Nombre</TableCell>
-                <TableCell>Apellido</TableCell>
-                <TableCell>DNI</TableCell>
-                <TableCell>Editar</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {pacientes.map((paciente) => (
-                <TableRow
-                  key={paciente.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell>
-                  {/* <Link to={"/eventos/ver/id/" + evento.id}> */}
-                      <VisibilityIcon color="info"></VisibilityIcon>
-                    {/* </Link> */}
-                  </TableCell>
-                  <TableCell>{paciente.nombre}</TableCell>
-                  <TableCell>{paciente.apellido}</TableCell>
-                  <TableCell>{paciente.dni}</TableCell>
-                  <TableCell component="th" scope="row">
-                    <Link to={"/pacientes/id/" + paciente.id}>
-                      <EditIcon color="info"></EditIcon>
-                    </Link>
-                  </TableCell>
+                  <TableCell>Nombre</TableCell>
+                  <TableCell>Apellido</TableCell>
+                  <TableCell>DNI</TableCell>
+                  <TableCell>Editar</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {pacientes.map((paciente) => (
+                  <TableRow
+                    key={paciente.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>
+                      {/* <Link to={"/eventos/ver/id/" + evento.id}> */}
+                      <VisibilityIcon color="info"></VisibilityIcon>
+                      {/* </Link> */}
+                    </TableCell>
+                    <TableCell>{paciente.nombre}</TableCell>
+                    <TableCell>{paciente.apellido}</TableCell>
+                    <TableCell>{paciente.dni}</TableCell>
+                    <TableCell component="th" scope="row">
+                      <Link to={"/pacientes/id/" + paciente.id}>
+                        <EditIcon color="info"></EditIcon>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
       </Grid>
     </>
   );

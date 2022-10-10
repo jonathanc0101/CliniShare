@@ -5,6 +5,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import ListadoEventos from "./ListadoEventos";
 import { useState } from "react";
 import ListadoPacientes from "./ListadoPacientes";
+import { Link } from "react-router-dom";
 
 function Menu() {
   const [verEventos, setVerEventos] = useState(false);
@@ -26,13 +27,17 @@ function Menu() {
         <Paper square={true}>
           <MenuList>
             <MenuItem>Menú</MenuItem>
-            <MenuItem onClick={handleListadoPacientes}>Mis pacientes</MenuItem>
-            <MenuItem onClick={handleListadoEventos}>Eventos</MenuItem>
+            <Link to={"/pacientes/all"} style={{ color: 'inherit', textDecoration: 'inherit'}}
+            >
+              <MenuItem >Mis pacientes</MenuItem>
+            </Link>
+
+            <Link to={"/eventos/all"}  style={{ color: 'inherit', textDecoration: 'inherit'}}> 
+              <MenuItem >Eventos</MenuItem>
+            </Link>
           </MenuList>
         </Paper>
       </Grid>
-      {verEventos ? <ListadoEventos /> : null}
-      {verPacientes ? <ListadoPacientes /> : null}
     </>
   );
 }

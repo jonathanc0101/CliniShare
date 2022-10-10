@@ -28,7 +28,7 @@ function VerEvento() {
   let navigate = useNavigate();
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [importante, setImportante] = useState("");
+  const [importante, setImportante] = useState(false);
   const [fecha, setFecha] = useState("");
   const [pacienteNombre, setPacienteNombre] = useState("");
   const [pacienteApellido, setPacienteApellido] = useState("");
@@ -36,15 +36,15 @@ function VerEvento() {
 
   useEffect(() => {
     (async () => {
-      const res = await api.obtenerEvento(params.id);
+      const res = await api.obtenerEventoConPacienteYMedicoPorId(params.id);
+      console.log(JSON.stringify(res));
       setTitulo(res.titulo);
       setImportante(res.importante);
       setFecha(res.fecha);
       setDescripcion(res.descripcion);
-      const pacienteEncontrado = await api.obtenerPacienteById(res.pacienteId);
-      setPacienteNombre(pacienteEncontrado.nombre);
-      setPacienteApellido(pacienteEncontrado.apellido);
-      setPacienteDni(pacienteEncontrado.dni);
+      setPacienteNombre(res.paciente.nombre);
+      setPacienteApellido(res.paciente.apellido);
+      setPacienteDni(res.paciente.dni);
     })();
   }, [params.id]);
 
@@ -58,7 +58,12 @@ function VerEvento() {
         </Grid>
         <Grid item xs={8}>
           <Button variant="outlined" startIcon={<EditIcon />}>
-            <Link to={"/eventos/id/" + params.id}>Editar</Link>
+            <Link
+              to={"/eventos/id/" + params.id}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              Editar
+            </Link>
           </Button>
         </Grid>
       </Grid>
@@ -101,7 +106,7 @@ function VerEvento() {
                 <FormControlLabel
                   disabled
                   name="importante"
-                  value={importante}
+                  checked={importante}
                   control={<Checkbox />}
                   label="Evento importante"
                 />

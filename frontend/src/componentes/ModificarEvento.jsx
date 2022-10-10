@@ -18,7 +18,7 @@ import { useState, useEffect } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
 import { useParams } from "react-router-dom";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function ModificarEvento() {
   const params = useParams();
@@ -28,9 +28,13 @@ function ModificarEvento() {
   const [descripcion, setDescripcion] = useState("");
   const [importante, setImportante] = useState("");
   const [fecha, setFecha] = useState("");
-  // const [pacienteNombre, setPacienteNombre] = useState("");
-  // const [pacienteApellido, setPacienteApellido] = useState("");
-  // const [pacienteDni, setPacienteDni] = useState("");
+  const [pacienteNombre, setPacienteNombre] = useState("");
+  const [pacienteApellido, setPacienteApellido] = useState("");
+  const [pacienteDni, setPacienteDni] = useState("");
+  const [medicoNombre, setMedicoNombre] = useState("");
+  const [medicoApellido, setMedicoApellido] = useState("");
+  const [medicoDni, setMedicoDni] = useState("");
+  const [medicoMatricula, setMedicoMatricula] = useState("");
 
   const update = async () => {
     // e.preventDefault();
@@ -45,16 +49,22 @@ function ModificarEvento() {
 
   useEffect(() => {
     (async () => {
-      const res = await api.obtenerEvento(params.id);
+      const res = await api.obtenerEventoConPacienteYMedicoPorId(params.id);
       setTitulo(res.titulo);
       setImportante(res.importante);
       setFecha(res.fecha);
       setDescripcion(res.descripcion);
+      setPacienteNombre(res.paciente.nombre);
+      setPacienteApellido(res.paciente.apellido);
+      setPacienteDni(res.paciente.dni);
+      setMedicoNombre(res.medico.nombre);
+      setMedicoApellido(res.medico.apellido);
+      setMedicoDni(res.medico.dni);
+      setMedicoMatricula(res.medico.matricula);
     })();
   }, [params.id]);
 
-
-
+  
 
   return (
     <>
@@ -108,11 +118,9 @@ function ModificarEvento() {
               </Grid>
             </Grid>
             <br></br>
-            
             <Typography component="h2" variant="h5" align="left">
-              Paciente
+              Medico
             </Typography>
-
             <Grid container direction="row" spacing={2}>
               <Grid item xs={3} sm={3}>
                 <TextField
@@ -120,6 +128,7 @@ function ModificarEvento() {
                   label="Nombre"
                   type="text"
                   name="nombre"
+                  value={medicoNombre}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -131,6 +140,7 @@ function ModificarEvento() {
                   label="Apellido"
                   type="text"
                   name="apellido"
+                  value={medicoApellido}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -138,10 +148,66 @@ function ModificarEvento() {
               </Grid>
               <Grid item xs={3} sm={3}>
                 <TextField
+                disabled
+                  label="DNI"
+                  type="text"
+                  name="medicoDni"
+                  value={medicoDni}
+                  margin="dense"
+                  fullWidth
+                  variant="outlined"
+                ></TextField>
+              </Grid>
+              <Grid item xs={3} sm={3}>
+                <TextField
+                  disabled
+                  label="Matricula"
+                  type="text"
+                  name="matricula"
+                  value={medicoMatricula}
+                  margin="dense"
+                  fullWidth
+                  variant="outlined"
+                ></TextField>
+              </Grid>
+            </Grid>
+            <br></br>
+            <Typography component="h2" variant="h5" align="left">
+              Paciente
+            </Typography>
+
+            <Grid container direction="row" spacing={2}>
+              <Grid item xs={3} sm={3}>
+                <TextField
+                  disabled
+                  label="Nombre"
+                  type="text"
+                  name="nombre"
+                  value={pacienteNombre}
+                  margin="dense"
+                  fullWidth
+                  variant="outlined"
+                ></TextField>
+              </Grid>
+              <Grid item xs={3} sm={3}>
+                <TextField
+                  disabled
+                  label="Apellido"
+                  type="text"
+                  name="apellido"
+                  value={pacienteApellido}
+                  margin="dense"
+                  fullWidth
+                  variant="outlined"
+                ></TextField>
+              </Grid>
+              <Grid item xs={3} sm={3}>
+                <TextField
+                  disabled
                   label="DNI"
                   type="text"
                   name="pacienteDni"
-                  // onChange={handleOnchange}
+                  value={pacienteDni}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -167,12 +233,7 @@ function ModificarEvento() {
             </Grid>
             <Grid container direction="row" spacing={2}>
               <Grid item>
-                <IconButton
-                  aria-label="save"
-                  size="large"
-                  onClick={update}
-
-                >
+                <IconButton aria-label="save" size="large" onClick={update}>
                   <SaveIcon color="info" fontSize="inherit" />
                   <Typography color={"black"} variant="h6" align="left">
                     &nbsp;Guardar

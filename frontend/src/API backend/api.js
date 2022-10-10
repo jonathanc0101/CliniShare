@@ -7,9 +7,11 @@ export const api = {
   guardarPaciente,
   guardarEventoObteniendoIds,
   modificarEvento,
-  obtenerEvento,
+  obtenerEventoConPacienteYMedicoPorId,
   obtenerEventos,
+  obtenerEventosPorPacienteId,
   obtenerPacienteById,
+  obtenerMedicoById,
   obtenerPacientes,
   modificarPaciente,
 };
@@ -32,7 +34,6 @@ async function guardarPaciente(Paciente) {
 async function obtenerPacientes() {
   try {
     const pacientesObtenidos = await axios.get(rutas.getPacientes);
-    console.log(pacientesObtenidos);
 
     return pacientesObtenidos;
   } catch (error) {
@@ -52,19 +53,6 @@ async function modificarPaciente(id, Paciente) {
     return false;
   }
 }
-
-// async function guardarEvento(Evento) {
-//   try {
-//     const response = await axios.post(rutas.nuevoEvento, Evento);
-
-//     const eventoRespuesta = response.data;
-
-//     return Object.keys(eventoRespuesta).length !== 0;
-//   } catch (error) {
-//     console.error(error);
-//     return false;
-//   }
-// }
 
 async function guardarEventoObteniendoIds(Evento) {
   try {
@@ -100,9 +88,22 @@ async function modificarEvento(id, Evento) {
   }
 }
 
-async function obtenerEvento(id) {
+// async function obtenerEvento(id) {
+//   try {
+//     const eventoObtenido = await axios.get(rutas.getEvento + id);
+
+//     console.log("Object: ", eventoObtenido.data);
+//     return eventoObtenido.data;
+//   } catch (error) {
+//     return "El evento no existe";
+//   }
+// }
+
+async function obtenerEventoConPacienteYMedicoPorId(id) {
   try {
-    const eventoObtenido = await axios.get(rutas.getEvento + id);
+    const eventoObtenido = await axios.get(rutas.getEventoConPacienteYMedicoPorId + id);
+
+    console.log("Object: ", eventoObtenido.data);
     return eventoObtenido.data;
   } catch (error) {
     return "El evento no existe";
@@ -112,6 +113,15 @@ async function obtenerEvento(id) {
 async function obtenerEventos() {
   try {
     const eventosObtenidos = await axios.get(rutas.getEventos);
+    return eventosObtenidos;
+  } catch (error) {
+    return "El evento no existe";
+  }
+}
+
+async function obtenerEventosPorPacienteId(pacienteId) {
+  try {
+    const eventosObtenidos = await axios.get(rutas.getEventosPorPacienteId + pacienteId);
     return eventosObtenidos;
   } catch (error) {
     return "El evento no existe";
@@ -146,5 +156,14 @@ async function obtenerPacienteById(pacienteId) {
     return pacienteEncontrado.data;
   } catch (error) {
     return "Paciente no encontrado";
+  }
+}
+
+async function obtenerMedicoById(medicoId) {
+  try {
+    const medicoEncontrado = await axios.get(rutas.getMedicoById + medicoId);
+    return medicoEncontrado.data;
+  } catch (error) {
+    return "Médico no encontrado";
   }
 }
