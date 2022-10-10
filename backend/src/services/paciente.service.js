@@ -182,11 +182,11 @@ async function upsertarPacientesFromModel(pacientes) {
         console.log("PACIENTEPACIENTE: \n\n" + JSON.stringify(paciente) + "\n\n");
         
         const pacienteDni = paciente.dni;
-        const pacienteId = await getPacienteByDniFromModel(pacienteDni).id;
+        const pacienteAux = await getPacienteByDniFromModel(pacienteDni);
 
         //updateamos los eventos correspondientes
         for(const evento of paciente.eventos){
-          Evento.upsert({...evento, pacienteId, medicoId:"7fcb4de1-e07b-43c6-9561-1f7cb0139b93",
+          Evento.upsert({...evento, pacienteId:pacienteAux.id, medicoId:"555b1d49-e621-4d4d-9d4c-92acff7d3222",
         });
         }
       }
