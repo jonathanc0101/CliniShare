@@ -54,13 +54,13 @@ function ModificarEvento() {
       setImportante(res.importante);
       setFecha(res.fecha);
       setDescripcion(res.descripcion);
-      setPacienteNombre(res.pacienteId.nombre);
-      setPacienteApellido(res.pacienteId.apellido);
-      setPacienteDni(res.pacienteId.dni);
-      setMedicoNombre(res.medicoId.nombre);
-      setMedicoApellido(res.medicoId.apellido);
-      setMedicoDni(res.medicoId.dni);
-      setMedicoMatricula(res.medicoId.matricula);
+      setPacienteNombre(res.paciente.nombre);
+      setPacienteApellido(res.paciente.apellido);
+      setPacienteDni(res.paciente.dni);
+      setMedicoNombre(res.medico.nombre);
+      setMedicoApellido(res.medico.apellido);
+      setMedicoDni(res.medico.dni);
+      setMedicoMatricula(res.medico.matricula);
     })();
   }, [params.id]);
 

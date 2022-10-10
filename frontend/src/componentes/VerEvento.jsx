@@ -37,13 +37,14 @@ function VerEvento() {
   useEffect(() => {
     (async () => {
       const res = await api.obtenerEventoConPacienteYMedicoPorId(params.id);
+      console.log(JSON.stringify(res));
       setTitulo(res.titulo);
       setImportante(res.importante);
       setFecha(res.fecha);
       setDescripcion(res.descripcion);
-      setPacienteNombre(res.pacienteId.nombre);
-      setPacienteApellido(res.pacienteId.apellido);
-      setPacienteDni(res.pacienteId.dni);
+      setPacienteNombre(res.paciente.nombre);
+      setPacienteApellido(res.paciente.apellido);
+      setPacienteDni(res.paciente.dni);
     })();
   }, [params.id]);
 

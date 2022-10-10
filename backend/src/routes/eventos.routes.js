@@ -5,8 +5,9 @@ import {
   getEventos,
   getEventosPorDni,
   getEventosPorPacienteId,
-  // getEventoPorId,
+  getEventoPorId,
   getEventoConPacienteYMedicoPorId,
+  getEventosCompletos,
 
 } from "../controllers/evento.controller.js";
 
@@ -16,8 +17,11 @@ const router = Router();
 router.get("/eventos/all", getEventos);
 router.get("/eventos/dni/:dni", getEventosPorDni);
 router.get("/eventos/paciente/id/:id", getEventosPorPacienteId);
-// router.get("/eventos/id/:id", getEventoPorId);
-router.get("/eventos/id/:id", getEventoConPacienteYMedicoPorId);
+router.get("/eventos/id/:id", getEventoPorId);
+
+router.get("/eventos/all/completos", getEventosCompletos)
+router.get("/eventos/completo/id/:id", getEventoConPacienteYMedicoPorId)
+
 router.post("/eventos/new", createEvento);
 router.put("/eventos/id/:id", updateEventoPorId);
 

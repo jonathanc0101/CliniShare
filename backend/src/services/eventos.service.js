@@ -11,10 +11,31 @@ export const EventosService = {
   updateEventoPorId: (evento, id) => updateEventoPorIdFromModel(evento, id),
   getEventoPorId: (id) => getEventoPorIdFromModel(id),
   getEventoConPacienteYMedicoPorId: (id) => getEventoConPacienteYMedicoPorIdFromModel(id),
+  getEventosCompletos:getEventosCompletosFromModel,
 };
 
 async function getEventosFromModel() {
   const eventos = await Evento.findAll();
+
+  if (eventos.length === 0) {
+    return [];
+  } else {
+    return eventos;
+  }
+}
+
+
+async function getEventosCompletosFromModel() {
+  const eventos = await Evento.findAll({
+    include: [
+      {
+        model: Medico      
+      },
+      {
+        model: Paciente
+      }
+    ],
+  });
 
   if (eventos.length === 0) {
     return [];
@@ -34,16 +55,16 @@ async function getEventoPorIdFromModel(id) {
 async function getEventoConPacienteYMedicoPorIdFromModel(id) {
   const evento = await Evento.findOne({
     where: { id: id },
-  });
-  const paciente = await Paciente.findOne({
-    where: { id: evento.pacienteId },
-  });
-  const medico = await Medico.findOne({
-    where: { id: evento.medicoId },
-  });
+    include: [
+      {
+        model: Medico      
+      },
+      {
+        model: Paciente
+      }
+    ],
+  }); 
 
-  evento.pacienteId = paciente;
-  evento.medicoId = medico;
   return evento;
 }
 
@@ -101,7 +122,7 @@ async function getEventosPorPacienteIdFromModel(pacienteId) {
   const eventos = await Evento.findAll({
     where: {
       pacienteId,
-    },
+    }
   });
 
   if (eventos.length === 0) {
