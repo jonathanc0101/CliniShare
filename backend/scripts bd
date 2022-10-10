@@ -1,3 +1,6 @@
+create user clinishare with password 'password';
+create database clinisharedb with owner clinishare;
+
 drop table if exists eventos cascade;
 drop table if exists medicos cascade;
 drop table if exists pacientes cascade;

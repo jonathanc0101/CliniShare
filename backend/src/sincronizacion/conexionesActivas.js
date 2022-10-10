@@ -1,4 +1,4 @@
-import ConexionActivaService from "../services/conexionActiva.service";
+import {ConexionActivaService} from "../services/conexionActiva.service.js";
 
 export async function registrarConexionActiva(computadora) {
   const conexion = {

@@ -1,6 +1,8 @@
 import { responderBroadcast } from "../UDP/broadcastSender.js";
 import { handleNewComputer, handleNewComputerNonLooping } from "../sincronizacion/handshake.js";
 import { sincronizar } from "../sincronizacion/sincronizar.js";
+import {registrarConexionActiva} from "../sincronizacion/conexionesActivas.js";
+import {actualizarDatosPacientes} from "../sincronizacion/datosPacientes.js";
 // Import other listeners
 
 export default function loadListeners(emitter) {
@@ -22,6 +24,7 @@ export default function loadListeners(emitter) {
   });
   
   emitter.on("pacientes_recibidos", (datosPacientes) => {
+    actualizarDatosPacientes(datosPacientes);
     console.log("Datos de pacientes en común:" + JSON.stringify(datosPacientes));
   });
 

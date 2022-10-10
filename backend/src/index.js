@@ -1,4 +1,5 @@
 import app from "./app.js";
+import { ConexionActiva } from "./models/ConexionActiva.js";
 import { sequelize } from "./database/database.js";
 import { SERVER_BD_PORT } from "./UDP/constants.js";
 

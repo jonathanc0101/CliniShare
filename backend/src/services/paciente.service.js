@@ -8,6 +8,7 @@ export const PacientesService = {
   getPacienteByDni: (dniABuscar) => getPacienteByDniFromModel(dniABuscar),
   getPacienteById: (id) => getPacienteByIdFromModel(id),
   getDnisDePacientes: () => getDnisDePacientesFromModel(),
+  getUUIDSDePacientes: () => getUUIDSDePacientesFromModel(),
   getInterseccionDNIS: (dnis) => getInterseccionDNISFromModel(dnis),
   getPacientesPorDnis: (dnis) => getPacientesPorDnisFromModel(dnis),
   getEntidadesPacientesPorDnis: (dnis) =>
@@ -107,6 +108,18 @@ async function getPacienteByIdFromModel(id) {
 async function getDnisDePacientesFromModel() {
   const pacientes = await Paciente.findAll({
     attributes: ["dni"],
+  });
+
+  if (pacientes.length === 0) {
+    return [];
+  } else {
+    return pacientes;
+  }
+}
+
+async function getUUIDSDePacientesFromModel() {
+  const pacientes = await Paciente.findAll({
+    attributes: ["id"],
   });
 
   if (pacientes.length === 0) {

@@ -5,12 +5,14 @@ import {
   getPacienteByDni,
   getPacienteById,
   getPacientes,
-  getDnisDePacientes
+  getDnisDePacientes,
+  getUUIDSDePacientes,
 } from "../controllers/paciente.controller.js";
 
 const router = Router();
 
 router.get("/pacientes/all", getPacientes);
+router.get("/pacientes/all/uuids", getUUIDSDePacientes);
 router.get("/pacientes/all/dnis", getDnisDePacientes);
 router.get("/pacientes/dni/:dni", getPacienteByDni);
 router.get("/pacientes/id/:id", getPacienteById);
