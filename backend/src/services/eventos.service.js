@@ -12,6 +12,10 @@ export const EventosService = {
   getEventoPorId: (id) => getEventoPorIdFromModel(id),
   getEventoConPacienteYMedicoPorId: (id) => getEventoConPacienteYMedicoPorIdFromModel(id),
   getEventosCompletos:getEventosCompletosFromModel,
+
+  getEventoImportanteCompletoPorId: getEventoImportanteCompletoFromModel,
+  getEventosImportantesCompletosPorIdPaciente: getEventosImportantesCompletosPorIdPacienteFromModel
+  
 };
 
 async function getEventosFromModel() {
@@ -68,7 +72,7 @@ async function getEventoConPacienteYMedicoPorIdFromModel(id) {
   return evento;
 }
 
-async function getEventoImportanteCompleto(id) {
+async function getEventoImportanteCompletoFromModel(id) {
   const evento = await Evento.findOne({
     where: { id: id, importante:true },
     include: [
@@ -85,7 +89,7 @@ async function getEventoImportanteCompleto(id) {
 }
 
 
-async function getEventosImportantesCompletosPorIdPaciente(idPaciente) {
+async function getEventosImportantesCompletosPorIdPacienteFromModel(idPaciente) {
   const evento = await Evento.findOne({
     where: { idPaciente, importante:true },
     include: [
