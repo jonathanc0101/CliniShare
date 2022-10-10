@@ -14,7 +14,7 @@ export const EventosService = {
   getEventosCompletos:getEventosCompletosFromModel,
 
   getEventoImportanteCompletoPorId: getEventoImportanteCompletoFromModel,
-  getEventosImportantesCompletosPorIdPaciente: getEventosImportantesCompletosPorIdPacienteFromModel
+  getEventosCompletosImportantesPorPacienteId: getEventosImportantesCompletosPorIdPacienteFromModel
   
 };
 
