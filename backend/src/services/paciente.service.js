@@ -2,6 +2,7 @@ import { Paciente } from "../models/Paciente.js";
 import { sequelize } from "../database/database.js";
 import { Evento } from "../models/Evento.js";
 import { EventosService } from "./eventos.service.js";
+import { Medico } from "../models/Medico.js";
 
 export const PacientesService = {
   getPacientes: () => getPacientesFromModel(),
@@ -179,14 +180,17 @@ async function upsertarPacientesFromModel(pacientes) {
   try {
     sequelize.transaction(async (t) => {
       for (const paciente of pacientes) {
-        console.log("PACIENTEPACIENTE: \n\n" + JSON.stringify(paciente) + "\n\n");
+        // console.log("PACIENTEPACIENTE: \n\n" + JSON.stringify(paciente) + "\n\n");
         
         const pacienteDni = paciente.dni;
         const pacienteAux = await getPacienteByDniFromModel(pacienteDni);
 
+        const medicosAux = await Medico.findAll();
+        const medicoId = medicosAux[0].id;
+
         //updateamos los eventos correspondientes
         for(const evento of paciente.eventos){
-          Evento.upsert({...evento, pacienteId:pacienteAux.id, medicoId:"555b1d49-e621-4d4d-9d4c-92acff7d3222",
+          Evento.upsert({...evento, pacienteId:pacienteAux.id, medicoId:medicoId,
         });
         }
       }
