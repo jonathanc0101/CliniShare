@@ -2,8 +2,8 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import { Sincronizacion } from "./Sincronizacion.js";
 import { Evento } from "./Evento.js";
-import {Sequelize} from "sequelize";
-import {Paciente} from "./Paciente.js";
+import { Sequelize } from "sequelize";
+import { Paciente } from "./Paciente.js";
 
 export const Medico = sequelize.define(
   "medicos",
@@ -34,13 +34,25 @@ export const Medico = sequelize.define(
     fechaModificacion: {
       //fecha de la ultima modificación por si mismo
       type: DataTypes.DATE,
-      defaultValue: Sequelize.fn('now')
+      defaultValue: Sequelize.fn("now"),
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    timestamps: true,
+    instanceMethods: {
+      generateHash(password) {
+        return bcrypt.hash(password, bcrypt.genSaltSync(8));
+      },
+      validPassword(password) {
+        return bcrypt.compare(password, this.password);
+      },
     },
   },
 
-  {
-    timestamps: true,
-  }
 );
 
 //ownership de paciente
@@ -49,7 +61,7 @@ Medico.hasMany(Paciente, {
   sourceKey: "id",
 });
 
-Paciente.belongsTo(Medico,{
+Paciente.belongsTo(Medico, {
   foreignKey: "ownerId",
   sourceKey: "id",
 });

@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import {Sequelize} from "sequelize";
 
-export const ConexionActiva = sequelize.define("conexionActiva",{
+export const ConexionActiva = sequelize.define("conexionesActivas",{
     id:{
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -27,5 +27,6 @@ export const ConexionActiva = sequelize.define("conexionActiva",{
         defaultValue: true
     }
 },{
+    freezeTableName: true,
     timestamps: true
 });
