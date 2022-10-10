@@ -4,6 +4,8 @@ import { Sincronizacion } from "./Sincronizacion.js";
 import { Evento } from "./Evento.js";
 import { Sequelize } from "sequelize";
 import { Paciente } from "./Paciente.js";
+import bcrypt from "bcryptjs";
+
 
 export const Medico = sequelize.define(
   "medicos",
