@@ -39,6 +39,19 @@ export const getEventoConPacienteYMedicoPorId = async (req, res, next) => {
   res.send(JSON.stringify(evento));
 };
 
+export const getEventosCompletosImportantesPorPacienteId = async (req, res, next) => {
+  let id = req.params.id;
+  const eventos = await EventosService.getEventosCompletosImportantesPorPacienteId(id);
+  res.send(JSON.stringify(eventos));
+}
+
+export const getEventoImportanteCompletoPorId= async (req, res, next) => {
+  let id = req.params.id;
+  const evento = await EventosService.getEventoImportanteCompletoPorId(id);
+
+  res.send(JSON.stringify(evento));
+};
+
 export const createEvento = async (req, res, next) => {
   try {
     const evento = req.body;
