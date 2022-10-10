@@ -180,8 +180,10 @@ async function upsertarPacientesFromModel(pacientes) {
     sequelize.transaction(async (t) => {
       for (const paciente of pacientes) {
         console.log("PACIENTEPACIENTE: " + JSON.stringify(paciente));
-        
-        Paciente.upsert(paciente);
+
+        Paciente.upsert(paciente,{where:{
+          dni:paciente.dni
+        }});
         
         //updateamos los eventos correspondientes
         for(const evento of paciente.eventos){
