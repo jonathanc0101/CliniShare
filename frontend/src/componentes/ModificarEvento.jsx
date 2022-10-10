@@ -26,7 +26,7 @@ function ModificarEvento() {
 
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [importante, setImportante] = useState("");
+  const [importante, setImportante] = useState(false);
   const [fecha, setFecha] = useState("");
   const [pacienteNombre, setPacienteNombre] = useState("");
   const [pacienteApellido, setPacienteApellido] = useState("");
@@ -109,9 +109,8 @@ function ModificarEvento() {
               <Grid item xs={4}>
                 <FormControlLabel
                   name="importante"
-                  value={importante}
+                  checked={importante}
                   onChange={(e) => setImportante(e.target.checked)}
-                  // onChange={handleOnchange}
                   control={<Checkbox />}
                   label="Evento importante"
                 />
@@ -226,6 +225,7 @@ function ModificarEvento() {
                   name="descripcion"
                   value={descripcion}
                   onChange={(e) => setDescripcion(e.target.value)}
+
                   // onChange={handleOnchange}
                   style={{ width: 1249, height: 100 }}
                 />
