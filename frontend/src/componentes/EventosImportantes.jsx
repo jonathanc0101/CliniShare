@@ -13,14 +13,48 @@ import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useEffect, useState } from "react";
 
-function EventosImportantes() {
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import IconButton from "@mui/material/IconButton";
+import { api } from "../API backend/api";
+
+function EventosImportantes(params) {
+  
+  const [eventosImportantes, setEventosImportantes] = useState([]);
+
+  useEffect(() => {
+    const obtenerEventosImportantes = async () => {
+      const response =
+        await api.obtenerEventosCompletosImportantesPorPacienteId(params.id);
+      console.log(response);
+
+      setEventosImportantes(response.data);
+    };
+    obtenerEventosImportantes();
+  }, [params.id]);
+
   return (
     <>
       <Typography component="h5" variant="h6" align="center">
         Eventos importantes
       </Typography>
-
-      <Grid xs={10}>
+      <List sx={{ width: "50%", maxWidth: 700, bgcolor: "background.paper" }}>
+        {eventosImportantes.map((evento) => (
+          <ListItem
+            key={evento.id}
+            disableGutters
+            secondaryAction={
+              <IconButton aria-label="comment">
+                <VisibilityIcon />
+              </IconButton>
+            }
+          >
+            <ListItemText primary={`Line item ${evento.titulo}`} />
+          </ListItem>
+        ))}
+      </List>
+      {/* <Grid xs={10}>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -33,7 +67,7 @@ function EventosImportantes() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* {eventos.map((evento) => (
+              {eventos.map((evento) => (
                   <TableRow
                     key={evento.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -52,15 +86,13 @@ function EventosImportantes() {
                       </Link>
                     </TableCell>
                   </TableRow>
-                ))} */}
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
-      </Grid>
+      </Grid> */}
     </>
   );
 }
-
-
 
 export default EventosImportantes;

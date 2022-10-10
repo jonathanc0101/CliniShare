@@ -14,6 +14,7 @@ export const api = {
   obtenerMedicoById,
   obtenerPacientes,
   modificarPaciente,
+  obtenerEventosCompletosImportantesPorPacienteId,
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -165,5 +166,15 @@ async function obtenerMedicoById(medicoId) {
     return medicoEncontrado.data;
   } catch (error) {
     return "Médico no encontrado";
+  }
+}
+
+
+async function obtenerEventosCompletosImportantesPorPacienteId(pacienteId) {
+  try {
+    const eventosImportantesObtenidos = await axios.get(rutas.getEventosCompletosImportantesPorPacienteId + pacienteId);
+    return eventosImportantesObtenidos;
+  } catch (error) {
+    return "El evento no existe";
   }
 }
