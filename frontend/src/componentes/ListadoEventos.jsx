@@ -39,7 +39,9 @@ function ListadoEventos() {
     <>
         <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
           <Grid xs={12}>
-            <Item></Item>
+          <Item style={{ color: "inherit" }}>
+            Eventos
+          </Item>
           </Grid>
         </Grid>
         <br></br>
