@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Card,
   CardContent,
   Checkbox,
@@ -13,7 +12,6 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import EditIcon from "@mui/icons-material/Edit";
 import { api } from "../API backend/api";
 import { useParams } from "react-router-dom";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
@@ -21,7 +19,6 @@ import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 function VerEvento() {
   const params = useParams();
@@ -37,7 +34,6 @@ function VerEvento() {
   useEffect(() => {
     (async () => {
       const res = await api.obtenerEventoConPacienteYMedicoPorId(params.id);
-      console.log(JSON.stringify(res));
       setTitulo(res.titulo);
       setImportante(res.importante);
       setFecha(res.fecha);
@@ -56,7 +52,7 @@ function VerEvento() {
             Evento
           </Typography>
         </Grid>
-        <Grid item xs={8}>
+        {/* <Grid item xs={8}>
           <Button variant="outlined" startIcon={<EditIcon />}>
             <Link
               to={"/eventos/id/" + params.id}
@@ -65,7 +61,7 @@ function VerEvento() {
               Editar
             </Link>
           </Button>
-        </Grid>
+        </Grid> */}
       </Grid>
 
       <Box sx={{ width: "100%" }}>

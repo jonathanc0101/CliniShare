@@ -15,6 +15,7 @@ export const api = {
   obtenerPacientes,
   modificarPaciente,
   obtenerEventosCompletosImportantesPorPacienteId,
+  obtenerEventosCompletos,
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -104,7 +105,6 @@ async function obtenerEventoConPacienteYMedicoPorId(id) {
   try {
     const eventoObtenido = await axios.get(rutas.getEventoConPacienteYMedicoPorId + id);
 
-    console.log("Object: ", eventoObtenido.data);
     return eventoObtenido.data;
   } catch (error) {
     return "El evento no existe";
@@ -117,6 +117,16 @@ async function obtenerEventos() {
     return eventosObtenidos;
   } catch (error) {
     return "El evento no existe";
+  }
+}
+
+async function obtenerEventosCompletos() {
+  try {
+    const eventosObtenidos = await axios.get(rutas.getEventosCompletos);
+
+    return eventosObtenidos;
+  } catch (error) {
+    return "Error no hay eventos";
   }
 }
 

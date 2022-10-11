@@ -1,8 +1,5 @@
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  useRoutes,
-} from "react-router-dom";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
 
 import ModificarEvento from "./componentes/ModificarEvento";
 import NuevoEvento from "./componentes/NuevoEvento";
@@ -17,15 +14,16 @@ import VerPaciente from "./componentes/VerPaciente";
 const Rutas = () => {
   let routes = useRoutes([
     { path: "/eventos/id/:id", element: <ModificarEvento /> },
-    { path: '/eventos/new/paciente/:id', element: <NuevoEvento />},
-    { path: '/pacientes/new', element: <NuevoPaciente />},
-    { path: '/eventos/all', element: <ListadoEventos></ListadoEventos>},
-    { path: '/pacientes/all', element: <ListadoPacientes></ListadoPacientes>},
-    { path: '/eventos/ver/id/:id', element: <VerEvento/>},
-    { path: '/pacientes/ver/id/:id', element: <VerPaciente/>},
-    { path: '/', element: <Home></Home>},
+    { path: "/eventos/new/paciente/:id", element: <NuevoEvento /> },
+    { path: "/pacientes/new", element: <NuevoPaciente /> },
+    { path: "/eventos/all", element: <ListadoEventos></ListadoEventos> },
+    { path: "/pacientes/all", element: <ListadoPacientes></ListadoPacientes> },
+    { path: "/eventos/ver/id/:id", element: <VerEvento /> },
     { path: "/pacientes/id/:id", element: <ModificarPaciente /> },
 
+    { path: "/pacientes/ver/id/:id", element: <VerPaciente /> },
+
+    { path: "/", element: <Home></Home> },
 
     // ...
   ]);
@@ -34,11 +32,9 @@ const Rutas = () => {
 
 function App() {
   return (
-
-        <Router>
-          <Rutas></Rutas>
-        </Router>
-
+    <Router>
+      <Rutas></Rutas>
+    </Router>
   );
 }
 export default App;

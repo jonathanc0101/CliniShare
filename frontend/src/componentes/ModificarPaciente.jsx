@@ -4,7 +4,6 @@ import { api } from "../API backend/api";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
-  Box,
   Button,
   Card,
   CardContent,
@@ -54,97 +53,89 @@ function ModificarPaciente() {
       </Typography>
       <Card>
         <CardContent>
-          <Box sx={{ width: "100%" }}>
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={3} sm={2}>
-                <TextField
-                  label="Nombre"
-                  type="text"
-                  name="nombre"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                  helperText="Campo obligatorio"
-                  value={nombre}
-                  onChange={(e) => setNombre(e.target.value)}
-                ></TextField>
-              </Grid>
-              <Grid item xs={3} sm={2}>
-                <TextField
-                  label="Apellido"
-                  type="text"
-                  name="apellido"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                  helperText="Campo obligatorio"
-                  value={apellido}
-                  onChange={(e) => setApellido(e.target.value)}
-                ></TextField>
-              </Grid>
-              <Grid item xs={3} sm={2}>
-                <TextField
-                  label="DNI"
-                  type="text"
-                  name="dni"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                  helperText="Campo obligatorio"
-                  value={dni}
-                  onChange={(e) => setDni(e.target.value)}
-                ></TextField>
-              </Grid>
-              <Grid item sm={6}>
-                <EventosImportantes id={params.id}></EventosImportantes>
-              </Grid>
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={3} sm={2}>
+              <TextField
+                label="Nombre"
+                type="text"
+                name="nombre"
+                margin="dense"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+              ></TextField>
             </Grid>
-          </Box>
-          <br></br>
+            <Grid item xs={3} sm={2}>
+              <TextField
+                label="Apellido"
+                type="text"
+                name="apellido"
+                margin="dense"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+                value={apellido}
+                onChange={(e) => setApellido(e.target.value)}
+              ></TextField>
+            </Grid>
+            <Grid item xs={3} sm={2}>
+              <TextField
+                label="DNI"
+                type="text"
+                name="dni"
+                margin="dense"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+                value={dni}
+                onChange={(e) => setDni(e.target.value)}
+              ></TextField>
+            </Grid>
+            <Grid item xs={6}>
+              <EventosImportantes id={params.id}></EventosImportantes>
+            </Grid>
+          </Grid>
+          
           <Grid item xs={8}>
             <Button
-              variant="outlined"
+              variant="contained"
               startIcon={<AddCircleOutlineTwoToneIcon />}
             >
               <Link
                 to={"/eventos/new/paciente/" + params.id}
-                style={{ color: "inherit", textDecoration: "inherit" }}
+                style={{ color: "inherit", textDecoration: "inherit"}}
               >
                 Agregar evento
               </Link>
             </Button>
           </Grid>
+          <hr></hr>
           <br></br>
-
           <Grid container direction="row" spacing={2}>
             <Grid item>
               <EventosDePaciente id={params.id} />
             </Grid>
           </Grid>
-          <br></br>
         </CardContent>
       </Card>
-      <Grid container direction="row" spacing={130}>
-        <Grid item>
-          <IconButton
-            aria-label="save"
-            size="large"
-            onClick={() => navigate(-1)}
-          >
-            <ArrowBackIcon color="info" fontSize="inherit" />
-            <Typography color={"black"} variant="h6" align="left">
-              &nbsp;Atrás
-            </Typography>
-          </IconButton>
-        </Grid>
-        <Grid item>
-          <IconButton aria-label="save" size="large" onClick={update}>
-            <SaveIcon color="info" fontSize="inherit" />
-            <Typography color={"black"} variant="h6" align="right">
-              &nbsp;Guardar
-            </Typography>
-          </IconButton>
-        </Grid>
+      <br></br>
+      <Grid item>
+        <IconButton aria-label="save" size="large" onClick={() => navigate(-1)}>
+          <ArrowBackIcon color="info" fontSize="inherit" />
+          <Typography color={"black"} variant="h6" align="left">
+            &nbsp;Atrás
+          </Typography>
+        </IconButton>
+      </Grid>
+      <Grid item>
+        <IconButton aria-label="save" size="large" onClick={update}>
+          <SaveIcon color="info" fontSize="inherit" />
+          <Typography color={"black"} variant="h6" align="right">
+            &nbsp;Guardar
+          </Typography>
+        </IconButton>
       </Grid>
     </>
   );

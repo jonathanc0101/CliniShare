@@ -10,8 +10,12 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { api } from "../API backend/api";
+import Grid from "@mui/material/Unstable_Grid2";
+
+
 
 function EventosDePaciente(params) {
+
   const [eventos, setEventos] = useState([]);
   const [eventosVacios, setEventosVacios] = useState(false);
 
@@ -19,11 +23,13 @@ function EventosDePaciente(params) {
   useEffect(() => {
     const obtenerEventosPorPacienteId = async () => {
       const response = await api.obtenerEventosPorPacienteId(params.id);
-      console.log(response);
-      if (response.data.length === 0){
-        setEventosVacios(true);
-      }else{
+console.log(response.data);
+      if(response.data.length !== 0){
       setEventos(response.data);
+      
+    }else
+    {
+      setEventosVacios(true);
     }
     };
     obtenerEventosPorPacienteId();
@@ -33,12 +39,15 @@ function EventosDePaciente(params) {
 
   return (
     <>
-    {eventosVacios ? <div>No hay eventos</div>:
+    {eventosVacios ? <div>No hay ningún evento</div>: 
+        <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 1250 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Ver evento</TableCell>
+              {/* <TableCell>Fecha</TableCell> */}
+
               <TableCell>Título</TableCell>
               <TableCell>Descripción</TableCell>
               <TableCell>Médico</TableCell>
@@ -53,9 +62,11 @@ function EventosDePaciente(params) {
                   >
                     <TableCell component="th" scope="row">
                     <Link to={"/eventos/ver/id/" + evento.id}>
-                        <VisibilityIcon color="info"></VisibilityIcon>
+                        <VisibilityIcon color="success"></VisibilityIcon>
                       </Link>
                     </TableCell>
+                    {/* <TableCell>{evento.fecha}</TableCell> */}
+
                     <TableCell>{evento.titulo}</TableCell>
                     <TableCell>{evento.descripcion}</TableCell>
                     <TableCell></TableCell>
@@ -68,7 +79,8 @@ function EventosDePaciente(params) {
                 ))}
           </TableBody>
         </Table>
-      </TableContainer> }
+      </TableContainer> 
+</Grid>}
     </>
   );
 }

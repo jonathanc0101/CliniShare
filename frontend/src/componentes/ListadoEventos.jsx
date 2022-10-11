@@ -10,11 +10,9 @@ import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useEffect, useState } from "react";
-import MenuList from "@mui/material/MenuList";
-import { MenuItem } from "@mui/material";
+
 import { api } from "../API backend/api";
 import { styled } from "@mui/material/styles";
-import { Box } from "@mui/material";
 import Menu from "./Menu";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -33,7 +31,7 @@ function ListadoEventos() {
   }, []);
 
   const obtenerEventos = async () => {
-    const response = await api.obtenerEventos();
+    const response = await api.obtenerEventosCompletos();
     setEventos(response.data);
   };
 
@@ -41,9 +39,10 @@ function ListadoEventos() {
     <>
         <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
           <Grid xs={12}>
-            <Item>Vacío</Item>
+            <Item></Item>
           </Grid>
         </Grid>
+        <br></br>
         <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Menu></Menu>
 
@@ -72,7 +71,7 @@ function ListadoEventos() {
                     </TableCell>
                     <TableCell>{evento.titulo}</TableCell>
                     <TableCell>{evento.descripcion}</TableCell>
-                    <TableCell></TableCell>
+                    <TableCell>{evento.medico.nombre} {evento.medico.apellido}</TableCell>
                     <TableCell component="th" scope="row">
                       <Link to={"/eventos/id/" + evento.id}>
                         <EditIcon color="info"></EditIcon>

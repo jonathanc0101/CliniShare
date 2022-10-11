@@ -39,24 +39,28 @@ function ListadoPacientes() {
     <>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
         <Grid xs={12}>
-          <Item>
-            <Button
-              variant="outlined"
-              startIcon={<AddCircleOutlineTwoToneIcon />}
-            >
-              <Link
-                to={"/pacientes/new/"}
-                style={{ color: "inherit", textDecoration: "inherit" }}
-              >
-                Agregar paciente
-              </Link>
-            </Button>
-          </Item>
+          <Item></Item>
         </Grid>
       </Grid>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Menu></Menu>
+
         <Grid xs={10}>
+          <Button 
+            variant="contained"
+            startIcon={<AddCircleOutlineTwoToneIcon />}
+          >
+            <Link
+              to={"/pacientes/new/"}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              Agregar paciente
+            </Link>
+          </Button>
+          <br></br>
+
+          <br></br>
+
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
@@ -77,7 +81,7 @@ function ListadoPacientes() {
                   >
                     <TableCell>
                       <Link to={"/pacientes/ver/id/" + paciente.id}>
-                      <VisibilityIcon color="info"></VisibilityIcon>
+                        <VisibilityIcon color="info"></VisibilityIcon>
                       </Link>
                     </TableCell>
                     <TableCell>{paciente.nombre}</TableCell>

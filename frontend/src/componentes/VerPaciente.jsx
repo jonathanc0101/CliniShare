@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardContent,
   Grid,
@@ -13,8 +14,9 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EventosImportantes from "./EventosImportantes";
 import EventosDePaciente from "./EventosDePaciente";
+import { Link } from "react-router-dom";
 
-
+import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
 
 function VerPaciente() {
   const params = useParams();
@@ -84,8 +86,21 @@ function VerPaciente() {
               </Grid>
             </Grid>
           </Box>
+          <hr></hr>
+          <Grid item xs={8}>
+            <Button
+              variant="outlined"
+              startIcon={<AddCircleOutlineTwoToneIcon />}
+            >
+              <Link
+                to={"/eventos/new/paciente/" + params.id}
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                Agregar evento
+              </Link>
+            </Button>
+          </Grid>
           <br></br>
-
           <Grid container direction="row" spacing={2}>
             <Grid item>
               <EventosDePaciente id={params.id} />
@@ -94,7 +109,6 @@ function VerPaciente() {
           <br></br>
         </CardContent>
       </Card>
-      <Grid container direction="row" spacing={130}>
         <Grid item>
           <IconButton
             aria-label="save"
@@ -107,7 +121,6 @@ function VerPaciente() {
             </Typography>
           </IconButton>
         </Grid>
-      </Grid>
     </>
   );
 }

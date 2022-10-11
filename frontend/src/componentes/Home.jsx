@@ -1,9 +1,8 @@
-import { Box, Button, ButtonGroup } from "@mui/material";
+import { Box} from "@mui/material";
 import Menu from "./Menu";
 import Grid from "@mui/material/Unstable_Grid2";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import { Link } from "react-router-dom";
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -36,7 +35,6 @@ function Home() {
                 </Link>
               </Button>
             </ButtonGroup> */}
-            Nada
           </Item>
           </Grid>
         </Grid>
