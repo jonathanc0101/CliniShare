@@ -89,7 +89,7 @@ function VerPaciente() {
           <hr></hr>
           <Grid item xs={8}>
             <Button
-              variant="outlined"
+              variant="contained"
               startIcon={<AddCircleOutlineTwoToneIcon />}
             >
               <Link

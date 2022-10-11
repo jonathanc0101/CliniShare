@@ -19,6 +19,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function ModificarEvento() {
   const params = useParams();
@@ -231,7 +232,6 @@ function ModificarEvento() {
                 />
               </Grid>
             </Grid>
-            <Grid container direction="row" spacing={2}>
               <Grid item>
                 <IconButton aria-label="save" size="large" onClick={update}>
                   <SaveIcon color="info" fontSize="inherit" />
@@ -240,7 +240,14 @@ function ModificarEvento() {
                   </Typography>
                 </IconButton>
               </Grid>
-            </Grid>
+              <Grid item>
+        <IconButton aria-label="save" size="large" onClick={() => navigate(-1)}>
+          <ArrowBackIcon color="info" fontSize="inherit" />
+          <Typography color={"black"} variant="h6" align="left">
+            &nbsp;Atrás
+          </Typography>
+        </IconButton>
+      </Grid>
           </CardContent>
         </Card>
       </Box>

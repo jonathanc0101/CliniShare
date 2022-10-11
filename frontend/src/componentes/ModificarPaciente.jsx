@@ -49,7 +49,7 @@ function ModificarPaciente() {
   return (
     <>
       <Typography component="h4" variant="h4">
-        Paciente a modificar
+        Paciente
       </Typography>
       <Card>
         <CardContent>
@@ -122,14 +122,6 @@ function ModificarPaciente() {
       </Card>
       <br></br>
       <Grid item>
-        <IconButton aria-label="save" size="large" onClick={() => navigate(-1)}>
-          <ArrowBackIcon color="info" fontSize="inherit" />
-          <Typography color={"black"} variant="h6" align="left">
-            &nbsp;Atrás
-          </Typography>
-        </IconButton>
-      </Grid>
-      <Grid item>
         <IconButton aria-label="save" size="large" onClick={update}>
           <SaveIcon color="info" fontSize="inherit" />
           <Typography color={"black"} variant="h6" align="right">
@@ -137,6 +129,15 @@ function ModificarPaciente() {
           </Typography>
         </IconButton>
       </Grid>
+      <Grid item>
+        <IconButton aria-label="save" size="large" onClick={() => navigate(-1)}>
+          <ArrowBackIcon color="info" fontSize="inherit" />
+          <Typography color={"black"} variant="h6" align="left">
+            &nbsp;Atrás
+          </Typography>
+        </IconButton>
+      </Grid>
+      
     </>
   );
 }
