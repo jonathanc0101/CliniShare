@@ -87,6 +87,7 @@ function VerPaciente() {
             </Grid>
           </Box>
           <hr></hr>
+          <br></br>
           <Grid item xs={8}>
             <Button
               variant="contained"
@@ -100,8 +101,9 @@ function VerPaciente() {
               </Link>
             </Button>
           </Grid>
-          <br></br>
+<br></br>
           <Grid container direction="row" spacing={2}>
+            
             <Grid item>
               <EventosDePaciente id={params.id} />
             </Grid>

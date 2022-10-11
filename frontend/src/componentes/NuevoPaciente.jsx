@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Card,
+  IconButton,
   CardContent,
   Grid,
   TextField,
@@ -12,6 +13,7 @@ import {
 import "../App.css";
 import { api } from "../API backend/api";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function NuevoPaciente() {
   let navigate = useNavigate();
@@ -28,13 +30,14 @@ function NuevoPaciente() {
       Paciente.length === 0 ||
       Paciente.length === 0
     ) {
-      return ;
+      alert("Revisar los campos obligatorios");
+      return;
     }
 
     const pacienteGuardado = await api.guardarPaciente(Paciente);
 
     if (pacienteGuardado === true) {
-      alert("Paciente guardado!");
+      alert("Se guardó el paciente exitosamente");
       navigate(-1);
     }
   };
@@ -115,6 +118,18 @@ function NuevoPaciente() {
                 >
                   Guardar
                 </Button>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  aria-label="save"
+                  size="large"
+                  onClick={() => navigate(-1)}
+                >
+                  <ArrowBackIcon color="info" fontSize="inherit" />
+                  <Typography color={"black"} variant="h6" align="left">
+                    &nbsp;Atrás
+                  </Typography>
+                </IconButton>
               </Grid>
             </Grid>
           </CardContent>

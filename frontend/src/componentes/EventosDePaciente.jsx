@@ -12,59 +12,48 @@ import EditIcon from "@mui/icons-material/Edit";
 import { api } from "../API backend/api";
 import Grid from "@mui/material/Unstable_Grid2";
 
-
-
 function EventosDePaciente(params) {
-
   const [eventos, setEventos] = useState([]);
   const [eventosVacios, setEventosVacios] = useState(false);
-
 
   useEffect(() => {
     const obtenerEventosPorPacienteId = async () => {
       const response = await api.obtenerEventosPorPacienteId(params.id);
-console.log(response.data);
-      if(response.data.length !== 0){
-      setEventos(response.data);
-      
-    }else
-    {
-      setEventosVacios(true);
-    }
+      if (response.data.length !== 0) {
+        setEventos(response.data);
+      } else {
+        setEventosVacios(true);
+      }
     };
     obtenerEventosPorPacienteId();
-    }, [params.id]);
-
-
+  }, [params.id]);
 
   return (
     <>
-    {eventosVacios ? <div>No hay ningún evento</div>: 
+      {eventosVacios ? (
+        <div>No hay ningún evento</div>
+      ) : (
         <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 1250 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Ver evento</TableCell>
-              {/* <TableCell>Fecha</TableCell> */}
+          <h4>&nbsp;&nbsp;Historia clínica</h4>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 1250 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  {/* <TableCell>Fecha</TableCell> */}
 
-              <TableCell>Título</TableCell>
-              <TableCell>Descripción</TableCell>
-              <TableCell>Médico</TableCell>
-              <TableCell>Editar</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {eventos.map((evento) => (
+                  <TableCell>Título</TableCell>
+                  <TableCell>Descripción</TableCell>
+                  <TableCell>Médico</TableCell>
+                  <TableCell>Editar</TableCell>
+                  <TableCell>Ver</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {eventos.map((evento) => (
                   <TableRow
                     key={evento.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
-                    <Link to={"/eventos/ver/id/" + evento.id}>
-                        <VisibilityIcon color="success"></VisibilityIcon>
-                      </Link>
-                    </TableCell>
                     {/* <TableCell>{evento.fecha}</TableCell> */}
 
                     <TableCell>{evento.titulo}</TableCell>
@@ -75,12 +64,18 @@ console.log(response.data);
                         <EditIcon color="info"></EditIcon>
                       </Link>
                     </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Link to={"/eventos/ver/id/" + evento.id}>
+                        <VisibilityIcon color="info"></VisibilityIcon>
+                      </Link>
+                    </TableCell>
                   </TableRow>
                 ))}
-          </TableBody>
-        </Table>
-      </TableContainer> 
-</Grid>}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      )}
     </>
   );
 }

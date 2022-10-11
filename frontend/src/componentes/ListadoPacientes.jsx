@@ -39,14 +39,16 @@ function ListadoPacientes() {
     <>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
         <Grid xs={12}>
-          <Item></Item>
+          <Item style={{ color: "inherit" }}>
+            Mis pacientes
+          </Item>
         </Grid>
       </Grid>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Menu></Menu>
 
         <Grid xs={10}>
-          <Button 
+          <Button
             variant="contained"
             startIcon={<AddCircleOutlineTwoToneIcon />}
           >

@@ -18,6 +18,7 @@ import { useState, useEffect } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
 import { useParams, useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function NuevoEvento() {
   const params = useParams();
@@ -84,10 +85,10 @@ function NuevoEvento() {
         evento.descripcion.length === 0 ||
         evento.medicoDni.length === 0
       ) {
-        alert("Revisar los campos obligatorios")
-        return ;
+        alert("Revisar los campos obligatorios");
+        return;
       }
-  
+
       const response = await api.guardarEventoObteniendoIds(evento);
       if (!response) {
         alert(`El paciente no existe`);
@@ -267,7 +268,6 @@ function NuevoEvento() {
                 />
               </Grid>
             </Grid>
-            <Grid container direction="row" spacing={2}>
               <Grid item>
                 <IconButton
                   aria-label="save"
@@ -288,7 +288,18 @@ function NuevoEvento() {
                   </Typography>
                 </IconButton>
               </Grid>
-            </Grid>
+              <Grid item>
+                <IconButton
+                  aria-label="save"
+                  size="large"
+                  onClick={() => navigate(-1)}
+                >
+                  <ArrowBackIcon color="info" fontSize="inherit" />
+                  <Typography color={"black"} variant="h6" align="left">
+                    &nbsp;Atrás
+                  </Typography>
+                </IconButton>
+              </Grid>
           </CardContent>
         </Card>
       </Box>

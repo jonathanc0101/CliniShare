@@ -97,7 +97,8 @@ function ModificarPaciente() {
               <EventosImportantes id={params.id}></EventosImportantes>
             </Grid>
           </Grid>
-          
+          <hr></hr>
+          <br></br>
           <Grid item xs={8}>
             <Button
               variant="contained"
@@ -105,13 +106,13 @@ function ModificarPaciente() {
             >
               <Link
                 to={"/eventos/new/paciente/" + params.id}
-                style={{ color: "inherit", textDecoration: "inherit"}}
+                style={{ color: "inherit", textDecoration: "inherit" }}
               >
                 Agregar evento
               </Link>
             </Button>
           </Grid>
-          <hr></hr>
+          <br></br>
           <br></br>
           <Grid container direction="row" spacing={2}>
             <Grid item>
@@ -137,7 +138,6 @@ function ModificarPaciente() {
           </Typography>
         </IconButton>
       </Grid>
-      
     </>
   );
 }
