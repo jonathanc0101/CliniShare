@@ -103,7 +103,9 @@ async function modificarEvento(id, Evento) {
 
 async function obtenerEventoConPacienteYMedicoPorId(id) {
   try {
-    const eventoObtenido = await axios.get(rutas.getEventoConPacienteYMedicoPorId + id);
+    const eventoObtenido = await axios.get(
+      rutas.getEventoConPacienteYMedicoPorId + id
+    );
 
     return eventoObtenido.data;
   } catch (error) {
@@ -114,6 +116,7 @@ async function obtenerEventoConPacienteYMedicoPorId(id) {
 async function obtenerEventos() {
   try {
     const eventosObtenidos = await axios.get(rutas.getEventos);
+
     return eventosObtenidos;
   } catch (error) {
     return "El evento no existe";
@@ -123,7 +126,7 @@ async function obtenerEventos() {
 async function obtenerEventosCompletos() {
   try {
     const eventosObtenidos = await axios.get(rutas.getEventosCompletos);
-
+    eventosObtenidos.data.sort((a, b) => a.fecha < b.fecha);
     return eventosObtenidos;
   } catch (error) {
     return "Error no hay eventos";
@@ -132,7 +135,11 @@ async function obtenerEventosCompletos() {
 
 async function obtenerEventosPorPacienteId(pacienteId) {
   try {
-    const eventosObtenidos = await axios.get(rutas.getEventosPorPacienteId + pacienteId);
+    const eventosObtenidos = await axios.get(
+      rutas.getEventosPorPacienteId + pacienteId
+    );
+    eventosObtenidos.data.sort((a, b) => a.fecha < b.fecha);
+
     return eventosObtenidos;
   } catch (error) {
     return "El evento no existe";
@@ -179,10 +186,11 @@ async function obtenerMedicoById(medicoId) {
   }
 }
 
-
 async function obtenerEventosCompletosImportantesPorPacienteId(pacienteId) {
   try {
-    const eventosImportantesObtenidos = await axios.get(rutas.getEventosCompletosImportantesPorPacienteId + pacienteId);
+    const eventosImportantesObtenidos = await axios.get(
+      rutas.getEventosCompletosImportantesPorPacienteId + pacienteId
+    );
     return eventosImportantesObtenidos;
   } catch (error) {
     return "El evento no existe";

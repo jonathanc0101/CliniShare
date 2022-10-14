@@ -30,6 +30,17 @@ function ListadoEventos() {
     obtenerEventos();
   }, []);
 
+  const formatearFecha = (fechaDeEvento) => {
+    let fecha = new Date(fechaDeEvento);
+    // console.log("fecha en bd: ", fecha);
+    let dia = `${fecha.getDate()}`.padStart(2, "0");
+    let mes = `${fecha.getMonth() + 1}`.padStart(2, "0");
+    let anio = fecha.getFullYear();
+    const fechaFormateada = `${dia}-${mes}-${anio}`;
+    // console.log("fecha formateada: ", fechaFormateada);
+    return fechaFormateada;
+  };
+
   const obtenerEventos = async () => {
     const response = await api.obtenerEventosCompletos();
     setEventos(response.data);
@@ -37,14 +48,14 @@ function ListadoEventos() {
 
   return (
     <>
-        <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
-          <Grid xs={12}>
-            <Item></Item>
-          </Grid>
+      <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
+        <Grid xs={12}>
+          <Item></Item>
         </Grid>
-        <br></br>
-        <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Menu></Menu>
+      </Grid>
+      <br></br>
+      <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Menu></Menu>
 
         <Grid xs={10}>
           <TableContainer component={Paper}>
@@ -53,6 +64,8 @@ function ListadoEventos() {
                 <TableRow>
                   <TableCell>Ver evento</TableCell>
                   <TableCell>Título</TableCell>
+                  <TableCell>Fecha</TableCell>
+
                   <TableCell>Descripción</TableCell>
                   <TableCell>Médico</TableCell>
                   <TableCell>Editar</TableCell>
@@ -70,8 +83,12 @@ function ListadoEventos() {
                       </Link>
                     </TableCell>
                     <TableCell>{evento.titulo}</TableCell>
+                    <TableCell>{formatearFecha(evento.fecha)}</TableCell>
+
                     <TableCell>{evento.descripcion}</TableCell>
-                    <TableCell>{evento.medico.nombre} {evento.medico.apellido}</TableCell>
+                    <TableCell>
+                      {evento.medico.nombre} {evento.medico.apellido}
+                    </TableCell>
                     <TableCell component="th" scope="row">
                       <Link to={"/eventos/id/" + evento.id}>
                         <EditIcon color="info"></EditIcon>
@@ -83,7 +100,7 @@ function ListadoEventos() {
             </Table>
           </TableContainer>
         </Grid>
-        </Grid>
+      </Grid>
     </>
   );
 }

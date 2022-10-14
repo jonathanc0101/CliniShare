@@ -1,11 +1,11 @@
 import {
   Box,
+  Button,
   Card,
   CardContent,
   Checkbox,
   FormControlLabel,
   Grid,
-  IconButton,
   TextareaAutosize,
   TextField,
   Typography,
@@ -16,18 +16,19 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState, useEffect } from "react";
 import SaveIcon from "@mui/icons-material/Save";
+import BotonVolver from "./botones/BotonVolver";
 import { api } from "../API backend/api";
 import { useParams, useNavigate } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { alertas } from "./alertas";
 
 function NuevoEvento() {
   const params = useParams();
-  let navigate = useNavigate();
 
   const [medicoDni, setMedicoDni] = useState("");
   const [pacienteDni, setPacienteDni] = useState("");
   const [pacienteNombre, setPacienteNombre] = useState("");
   const [pacienteApellido, setPacienteApellido] = useState("");
+  let navigate = useNavigate();
 
   const [eventoData, setEventoData] = useState({
     titulo: "",
@@ -56,10 +57,6 @@ function NuevoEvento() {
     })();
   }, [params.id]);
 
-  // const cambiarDniPaciente = (e) => {
-  //   setPacienteDni(e.target.value);
-  // }
-
   const cambiarDniMedico = (e) => {
     setMedicoDni(e.target.value);
   };
@@ -85,17 +82,16 @@ function NuevoEvento() {
         evento.descripcion.length === 0 ||
         evento.medicoDni.length === 0
       ) {
-        alert("Revisar los campos obligatorios");
+        alertas.alertaCamposObligatorios();
         return;
       }
 
       const response = await api.guardarEventoObteniendoIds(evento);
       if (!response) {
-        alert(`El paciente no existe`);
+        alertas.alertaProblemas();
       } else {
-        console.log(evento);
-        alert(`Se cargó el evento exitosamente`);
-        navigate(-1);
+        alertas.alertaExito();
+        // navigate(-1);
       }
     } catch (err) {
       console.error(err);
@@ -245,7 +241,6 @@ function NuevoEvento() {
                   type="text"
                   name="pacienteDni"
                   value={pacienteDni}
-                  // onChange={cambiarDniPaciente}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -268,10 +263,16 @@ function NuevoEvento() {
                 />
               </Grid>
             </Grid>
+            <br></br>
+            <Grid container direction="row" spacing={2}>
+              <Grid item xs={10}>
+                <BotonVolver></BotonVolver>
+              </Grid>
+
               <Grid item>
-                <IconButton
-                  aria-label="save"
-                  size="large"
+                <Button
+                  variant="contained"
+                  endIcon={<SaveIcon />}
                   onClick={() =>
                     handleSubmit(
                       titulo,
@@ -282,24 +283,12 @@ function NuevoEvento() {
                     )
                   }
                 >
-                  <SaveIcon color="info" fontSize="inherit" />
-                  <Typography color={"black"} variant="h6" align="left">
+                  <Typography color={"white"} variant="h7" align="left">
                     &nbsp;Guardar
                   </Typography>
-                </IconButton>
+                </Button>
               </Grid>
-              <Grid item>
-                <IconButton
-                  aria-label="save"
-                  size="large"
-                  onClick={() => navigate(-1)}
-                >
-                  <ArrowBackIcon color="info" fontSize="inherit" />
-                  <Typography color={"black"} variant="h6" align="left">
-                    &nbsp;Atrás
-                  </Typography>
-                </IconButton>
-              </Grid>
+            </Grid>
           </CardContent>
         </Card>
       </Box>
