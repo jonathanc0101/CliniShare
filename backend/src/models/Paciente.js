@@ -1,6 +1,5 @@
-import { DataTypes } from "sequelize";
+import { DataTypes,Sequelize } from "sequelize";
 import { sequelize } from "../database/database.js";
-import {Sequelize} from "sequelize";
 import { Evento } from "./Evento.js";
 
 export const Paciente = sequelize.define(
@@ -30,10 +29,15 @@ export const Paciente = sequelize.define(
       defaultValue: true,
       allowNull: false,
     },
+    fechaNacimiento: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
     fechaModificacion: {
       //fecha de la ultima modificación por el medico que lo cargó
       type: DataTypes.DATE,
-      defaultValue: Sequelize.fn('now')
+      defaultValue: Sequelize.fn('now'),
+      allowNull: false,
     },
   },
   {

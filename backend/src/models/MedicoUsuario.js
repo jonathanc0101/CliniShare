@@ -1,6 +1,5 @@
-import { DataTypes } from "sequelize";
+import { DataTypes,Sequelize } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Sequelize } from "sequelize";
 import bcrypt from "bcrypt";
 
 
@@ -45,11 +44,15 @@ export const MedicoUsuario = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    fechaNacimiento: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
   },
   {
     timestamps: true,
     freezeTableName: true,
-    instanceMethods: {
+    classMethods: {
       generateHash(password) {
         return bcrypt.hash(password, bcrypt.genSaltSync(8));
       },

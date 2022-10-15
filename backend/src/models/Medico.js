@@ -1,9 +1,9 @@
 import { Evento } from "./Evento.js";
 import { Sincronizacion } from "./Sincronizacion.js";
 import { Paciente } from "./Paciente.js";
-import { DataTypes } from "sequelize";
+import { DataTypes,Sequelize } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Sequelize } from "sequelize";
+
 
 
 export const Medico = sequelize.define(
@@ -41,6 +41,10 @@ export const Medico = sequelize.define(
       },
       email: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      fechaNacimiento: {
+        type: DataTypes.DATE,
         allowNull: false,
       },
     },
