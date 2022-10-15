@@ -1,12 +1,10 @@
-import { MedicoUsuario } from "../models/MedicoUsuario";
+import { MedicoUsuario } from "../models/MedicoUsuario.js";
 
 export const MedicosUsuariosService = {
   getMedicos: () => getMedicosFromModel(),
   getMedicoByDni: (dniABuscar) => getMedicoByDniFromModel(dniABuscar),
-  registerMedico: (medico) => registerMedicoFromModel(medico),
   getMedicoById: (id) => getMedicoByIdFromModel(id),
   getMedicoByEmail:getMedicoByEmailFromModel,
-
 };
 
 async function getMedicosFromModel() {

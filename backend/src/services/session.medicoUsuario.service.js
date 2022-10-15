@@ -1,28 +1,55 @@
-import { MedicoUsuario } from "../models/MedicoUsuario";
-import { MedicosUsuariosService } from "./medicoUsuario.service";
+import { MedicoUsuario } from "../models/MedicoUsuario.js";
+import { MedicosUsuariosService } from "./medicoUsuario.service.js";
+import {sesionActivaService} from "./sesionActiva.service.js";
 
-export async function login(email,password){
-    const medicoEncontrado = await MedicosUsuariosService.getMedicoByEmail(email);
+export const sessionService = {
+  login,
+  register,
+};
 
-    if(!medicoEncontrado){
-        return {};
+async function login(email, password) {
+  try {
+    const medicoEncontrado = await MedicosUsuariosService.getMedicoByEmail(
+      email
+    );
+
+    if (!medicoEncontrado) {
+      return {};
+    }
+
+    const passwordIsValid = await MedicoUsuario.validPassword(
+      medicoEncontrado.password,
+      password
+    );
+
+    if(passwordIsValid){
+      token = await sesionActivaService.nueva();
+    }
+
+    if(!token){
+      return {}
+    }else{
+      return token;
     }
     
-    const  passwordIsValid = await MedicoUsuario.validPassword(medicoEncontrado.password,password); 
-
-    return passwordIsValid
+  } catch (error) {
+    return "No se pudo registrar médico usuario, error: " + error;
+  }
 }
 
-export async function registerMedicoFromModel(medico) {
-    try {
-      const password = medico.password; 
-      const hash = MedicoUsuario.generateHash(password);
-      const newMedico = {...medico,password:hash};
-  
-      const responseMedico = await MedicoUsuario.create(newMedico);
-  
-      return responseMedico;
-    } catch (error) {
-      return "No se pudo registrar médico usuario, error: " + error;
-    }
+async function register(medico) {
+  try {
+    const password = medico.password;
+    const hash = MedicoUsuario.generateHash(password);
+    const newMedico = { ...medico, password: hash };
+
+    let responseMedico = await MedicoUsuario.create(newMedico);
+
+    //no le enviamos el hash al usuario para que no pueda bruteforcearlo
+    delete responseMedico.password;
+
+    return responseMedico;
+  } catch (error) {
+    return "No se pudo registrar médico usuario, error: " + error;
   }
+}
