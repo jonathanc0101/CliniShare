@@ -16,6 +16,8 @@ export const api = {
   modificarPaciente,
   obtenerEventosCompletosImportantesPorPacienteId,
   obtenerEventosCompletos,
+  guardarMedico,
+
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -27,6 +29,17 @@ async function guardarPaciente(Paciente) {
     const response = await axios.post(rutas.nuevoPaciente, Paciente);
     const pacienteRespuesta = response.data;
     return Object.keys(pacienteRespuesta).length !== 0;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+async function guardarMedico(Medico) {
+  try {
+    const response = await axios.post(rutas.nuevoMedico, Medico);
+    const medicoRespuesta = response.data;
+    return Object.keys(medicoRespuesta).length !== 0;
   } catch (error) {
     console.error(error);
     return false;
