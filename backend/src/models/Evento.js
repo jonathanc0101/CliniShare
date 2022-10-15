@@ -1,8 +1,7 @@
-import { DataTypes } from "sequelize";
+import { DataTypes ,Sequelize} from "sequelize";
 import { sequelize } from "../database/database.js";
-import {Sequelize} from "sequelize";
 
-export const Evento = sequelize.define("evento",{
+export const Evento = sequelize.define("eventos",{
     id:{
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -33,6 +32,11 @@ export const Evento = sequelize.define("evento",{
         defaultValue: Sequelize.fn('now'),
         allowNull: false,
       },
+    fechaVencimiento: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
 },{
+    freezeTableName: true,
     timestamps: false
 });

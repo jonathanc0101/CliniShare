@@ -48,14 +48,14 @@ function ListadoEventos() {
 
   return (
     <>
-      <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
-        <Grid xs={12}>
-          <Item></Item>
+        <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
+          <Grid xs={12}>
+            <Item></Item>
+          </Grid>
         </Grid>
-      </Grid>
-      <br></br>
-      <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Menu></Menu>
+        <br></br>
+        <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Menu></Menu>
 
         <Grid xs={10}>
           <TableContainer component={Paper}>
