@@ -11,10 +11,20 @@ import { useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { api } from "../API backend/api";
 import Grid from "@mui/material/Unstable_Grid2";
+import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 
 function EventosDePaciente(params) {
   const [eventos, setEventos] = useState([]);
   const [eventosVacios, setEventosVacios] = useState(false);
+
+  const formatearFecha = (fechaDeEvento) => {
+    let fecha = new Date(fechaDeEvento);
+    let dia = `${fecha.getDate()}`.padStart(2, "0");
+    let mes = `${fecha.getMonth() + 1}`.padStart(2, "0");
+    let anio = fecha.getFullYear();
+    const fechaFormateada = `${dia}-${mes}-${anio}`;
+    return fechaFormateada;
+  };
 
   useEffect(() => {
     const obtenerEventosPorPacienteId = async () => {
@@ -39,13 +49,13 @@ function EventosDePaciente(params) {
             <Table sx={{ minWidth: 1250 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  {/* <TableCell>Fecha</TableCell> */}
-
+                  <TableCell align="center">Importante</TableCell>
                   <TableCell>Título</TableCell>
+                  <TableCell>Fecha</TableCell>
                   <TableCell>Descripción</TableCell>
                   <TableCell>Médico</TableCell>
-                  <TableCell>Editar</TableCell>
-                  <TableCell>Ver</TableCell>
+                  <TableCell align="center" >Editar</TableCell>
+                  <TableCell align="center" >Ver</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -54,17 +64,19 @@ function EventosDePaciente(params) {
                     key={evento.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    {/* <TableCell>{evento.fecha}</TableCell> */}
-
+                    <TableCell align="center">{evento.importante ? 
+                    <CheckCircleOutlineRoundedIcon></CheckCircleOutlineRoundedIcon>
+                    : "No"}</TableCell>
                     <TableCell>{evento.titulo}</TableCell>
+                    <TableCell>{formatearFecha(evento.fecha)}</TableCell>
                     <TableCell>{evento.descripcion}</TableCell>
                     <TableCell></TableCell>
-                    <TableCell component="th" scope="row">
+                    <TableCell align="center" component="th" scope="row">
                       <Link to={"/eventos/id/" + evento.id}>
                         <EditIcon color="info"></EditIcon>
                       </Link>
                     </TableCell>
-                    <TableCell component="th" scope="row">
+                    <TableCell align="center" component="th" scope="row">
                       <Link to={"/eventos/ver/id/" + evento.id}>
                         <VisibilityIcon color="info"></VisibilityIcon>
                       </Link>

@@ -19,6 +19,7 @@ import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate } from "react-router-dom";
+import BotonVolver from "./botones/BotonVolver";
 
 function VerEvento() {
   const params = useParams();
@@ -217,20 +218,10 @@ function VerEvento() {
                 />
               </Grid>
             </Grid>
-            <Grid container direction="row" spacing={2}>
+            <br></br>
               <Grid item>
-                <IconButton
-                  aria-label="save"
-                  size="large"
-                  onClick={() => navigate(-1)}
-                >
-                  <ArrowBackIcon color="info" fontSize="inherit" />
-                  <Typography color={"black"} variant="h6" align="left">
-                    &nbsp;Atrás
-                  </Typography>
-                </IconButton>
+                <BotonVolver></BotonVolver>
               </Grid>
-            </Grid>
           </CardContent>
         </Card>
       </Box>

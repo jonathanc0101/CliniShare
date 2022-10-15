@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-
+import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   Box,
   Button,
   Card,
-  IconButton,
   CardContent,
   Grid,
   TextField,
@@ -12,33 +12,43 @@ import {
 } from "@mui/material";
 import "../App.css";
 import { api } from "../API backend/api";
-import { useNavigate } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import SaveIcon from "@mui/icons-material/Save";
+import BotonVolver from "./botones/BotonVolver";
+import { alertas } from "./alertas";
 
 function NuevoPaciente() {
-  let navigate = useNavigate();
+  async function obtenerPacientesExistentes(pacienteDni) {
+    const pacientesExistentes = await api.obtenerPacientes();
+    pacientesExistentes.data.forEach((paciente) => {
+      if (pacienteDni === paciente.dni) {
+        return true;
+      }
+    });
+    return false;
+  }
 
   const [Paciente, setPaciente] = useState({
     nombre: "",
     apellido: "",
-    dni: "",
+    fechaNacimiento: "",
   });
 
   const handleGuardar = async function () {
     if (
       Paciente.dni.length === 0 ||
-      Paciente.length === 0 ||
-      Paciente.length === 0
+      Paciente.nombre.length === 0 ||
+      Paciente.apellido.length === 0
     ) {
-      alert("Revisar los campos obligatorios");
+      alertas.alertaCamposObligatorios();
       return;
+    } else if (obtenerPacientesExistentes(Paciente.dni)) {
+      alertas.alertaPacienteExiste(Paciente.dni);
     }
 
     const pacienteGuardado = await api.guardarPaciente(Paciente);
-
     if (pacienteGuardado === true) {
-      alert("Se guardó el paciente exitosamente");
-      navigate(-1);
+      alertas.alertaExito();
+      // navigate(-1);
     }
   };
 
@@ -50,6 +60,15 @@ function NuevoPaciente() {
       return { ...estadoAnterior, [name]: value };
     });
   };
+
+  const handleChangeFecha = (event) => {
+    const value = event["$d"];
+    console.log(event);
+    setPaciente((estadoAnterior) => {
+      return { ...estadoAnterior, fechaNacimiento: value };
+    });
+  }
+
 
   const handleChangeDni = (event) => {
     // quitamos los valores no numericos
@@ -108,28 +127,37 @@ function NuevoPaciente() {
                   onChange={handleChangeDni}
                 ></TextField>
               </Grid>
-
-              <Grid item xs={12} sm={12}>
-                <Button
-                  size="large"
-                  fullWidth
-                  onClick={handleGuardar}
-                  variant="contained"
-                >
-                  Guardar
-                </Button>
+              <br></br>
+              <Grid container direction="row" spacing={2}>
+                <Grid item xs={4} sm={4}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                      label="Fecha de nacimiento"
+                      name="fechaNacimiento"
+                      value={Paciente.fechaNacimiento}
+                      onChange={handleChangeFecha}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </Grid>
               </Grid>
-              <Grid item>
-                <IconButton
-                  aria-label="save"
-                  size="large"
-                  onClick={() => navigate(-1)}
-                >
-                  <ArrowBackIcon color="info" fontSize="inherit" />
-                  <Typography color={"black"} variant="h6" align="left">
-                    &nbsp;Atrás
-                  </Typography>
-                </IconButton>
+              <br></br>
+              <Grid container direction="row" spacing={2}>
+                <Grid item xs={10}>
+                  <BotonVolver></BotonVolver>
+                </Grid>
+
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    endIcon={<SaveIcon />}
+                    onClick={handleGuardar}
+                  >
+                    <Typography color={"white"} variant="h7" align="left">
+                      &nbsp;Guardar
+                    </Typography>
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </CardContent>

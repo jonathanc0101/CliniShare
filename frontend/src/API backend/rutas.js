@@ -15,7 +15,11 @@ const rutas = {
   modificarPaciente: "pacientes/id/",
   getMedicoById: "medicos/id/",
   getEventosCompletosImportantesPorPacienteId: "eventos/importantes/paciente/id/",
-  getEventosCompletos: "eventos/all/completos"
+  getEventosCompletos: "eventos/all/completos",
+  nuevoMedico: "medicos/new",
+  nuevoMedicoUsuario: "register",
+  LoginMedicoUsuario: "login"
+
 
 
 

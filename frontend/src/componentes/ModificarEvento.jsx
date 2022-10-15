@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardContent,
   Checkbox,
@@ -20,6 +21,8 @@ import { api } from "../API backend/api";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import BotonVolver from "./botones/BotonVolver";
+import { alertas } from "./alertas";
 
 function ModificarEvento() {
   const params = useParams();
@@ -44,7 +47,7 @@ function ModificarEvento() {
       descripcion: descripcion,
       importante: importante,
     });
-    alert("Se modificó el evento exitosamente");
+    alertas.alertaModificacionExitosa();
     navigate(-1);
   };
 
@@ -64,8 +67,6 @@ function ModificarEvento() {
       setMedicoMatricula(res.medico.matricula);
     })();
   }, [params.id]);
-
-  
 
   return (
     <>
@@ -148,7 +149,7 @@ function ModificarEvento() {
               </Grid>
               <Grid item xs={3} sm={3}>
                 <TextField
-                disabled
+                  disabled
                   label="DNI"
                   type="text"
                   name="medicoDni"
@@ -226,28 +227,29 @@ function ModificarEvento() {
                   name="descripcion"
                   value={descripcion}
                   onChange={(e) => setDescripcion(e.target.value)}
-
                   // onChange={handleOnchange}
                   style={{ width: 1249, height: 100 }}
                 />
               </Grid>
             </Grid>
+            <br></br>
+            <Grid container direction="row" spacing={2}>
+              <Grid item xs={10}>
+                <BotonVolver></BotonVolver>
+              </Grid>
+
               <Grid item>
-                <IconButton aria-label="save" size="large" onClick={update}>
-                  <SaveIcon color="info" fontSize="inherit" />
-                  <Typography color={"black"} variant="h6" align="left">
+                <Button
+                  variant="contained"
+                  endIcon={<SaveIcon />}
+                  onClick={update}
+                >
+                  <Typography color={"white"} variant="h7" align="left">
                     &nbsp;Guardar
                   </Typography>
-                </IconButton>
+                </Button>
               </Grid>
-              <Grid item>
-        <IconButton aria-label="save" size="large" onClick={() => navigate(-1)}>
-          <ArrowBackIcon color="info" fontSize="inherit" />
-          <Typography color={"black"} variant="h6" align="left">
-            &nbsp;Atrás
-          </Typography>
-        </IconButton>
-      </Grid>
+            </Grid>
           </CardContent>
         </Card>
       </Box>
