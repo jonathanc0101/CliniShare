@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import {Sequelize} from "sequelize";
 
-export const Evento = sequelize.define("evento",{
+export const Evento = sequelize.define("eventos",{
     id:{
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -34,5 +34,6 @@ export const Evento = sequelize.define("evento",{
         allowNull: false,
       },
 },{
+    freezeTableName: true,
     timestamps: false
 });
