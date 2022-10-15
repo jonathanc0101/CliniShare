@@ -17,6 +17,7 @@ export const api = {
   obtenerEventosCompletosImportantesPorPacienteId,
   obtenerEventosCompletos,
   guardarMedico,
+  guardarMedicoUsuario
 
 };
 
@@ -38,6 +39,18 @@ async function guardarPaciente(Paciente) {
 async function guardarMedico(Medico) {
   try {
     const response = await axios.post(rutas.nuevoMedico, Medico);
+    const medicoRespuesta = response.data;
+    return Object.keys(medicoRespuesta).length !== 0;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+async function guardarMedicoUsuario(Medico) {
+  try {
+    const response = await axios.post(rutas.nuevoMedicoUsuario, Medico);
+    console.log(response);
     const medicoRespuesta = response.data;
     return Object.keys(medicoRespuesta).length !== 0;
   } catch (error) {

@@ -6,30 +6,28 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-// import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 import { api } from "../API backend/api";
 import { alertas } from "./alertas";
 import SaveIcon from "@mui/icons-material/Save";
 
 function RegistroMedico() {
-  const [estado, setEstado] = useState({
-    error: false,
-    loading: false,
-  });
 
   const [medico, setMedico] = useState({
     nombre: "",
     apellido: "",
     dni: "",
     matricula: "",
+    email: "",
+    password: "",
+    fechaNacimiento: "",
   });
 
   const guardar = async function () {
-    setEstado({ loading: true });
 
-    const medicoGuardado = await api.guardarMedico(medico);
+    const medicoGuardado = await api.guardarMedicoUsuario(medico);
     if (medicoGuardado === true) {
       alertas.alertaExito();
       // navigate(-1);
@@ -50,6 +48,14 @@ function RegistroMedico() {
 
     setMedico((estadoAnterior) => {
       return { ...estadoAnterior, dni: value };
+    });
+  };
+
+  const handleChangeFecha = (event) => {
+    const value = event["$d"];
+    console.log(event);
+    setMedico((estadoAnterior) => {
+      return { ...estadoAnterior, fechaNacimiento: value };
     });
   };
 
@@ -121,21 +127,19 @@ function RegistroMedico() {
             </Grid>
           </Grid>
           <br></br>
-          {/* <Grid container direction="row" spacing={2}>
+          <Grid container direction="row" spacing={2}>
             <Grid item xs={4} sm={4}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DesktopDatePicker
                   label="Fecha de nacimiento"
-                  inputFormat="DD/MM/YYYY"
-                  name="fecha"
-                  onChange={(e) => {
-                    e.preventDefault();
-                  }}
+                  name="fechaNacimiento"
+                  value={medico.fechaNacimiento}
+                  onChange={handleChangeFecha}
                   renderInput={(params) => <TextField {...params} />}
                 />
               </LocalizationProvider>
             </Grid>
-          </Grid> */}
+          </Grid>
           <br></br>
 
           <Grid container direction="row" spacing={2}>
@@ -143,7 +147,9 @@ function RegistroMedico() {
               <TextField
                 label="Correo electrónico"
                 type="text"
-                name="correo"
+                name="email"
+                value={medico.email}
+                onChange={handleChange}
                 margin="dense"
                 fullWidth
                 variant="outlined"
@@ -156,7 +162,9 @@ function RegistroMedico() {
               <TextField
                 label="Contraseña"
                 type="text"
-                name="contraseña"
+                name="password"
+                value={medico.password}
+                onChange={handleChange}
                 margin="dense"
                 fullWidth
                 variant="outlined"

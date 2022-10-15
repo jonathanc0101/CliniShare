@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   Box,
   Button,
@@ -29,7 +30,7 @@ function NuevoPaciente() {
   const [Paciente, setPaciente] = useState({
     nombre: "",
     apellido: "",
-    dni: "",
+    fechaNacimiento: "",
   });
 
   const handleGuardar = async function () {
@@ -59,6 +60,15 @@ function NuevoPaciente() {
       return { ...estadoAnterior, [name]: value };
     });
   };
+
+  const handleChangeFecha = (event) => {
+    const value = event["$d"];
+    console.log(event);
+    setPaciente((estadoAnterior) => {
+      return { ...estadoAnterior, fechaNacimiento: value };
+    });
+  }
+
 
   const handleChangeDni = (event) => {
     // quitamos los valores no numericos
@@ -116,6 +126,20 @@ function NuevoPaciente() {
                   value={Paciente.dni}
                   onChange={handleChangeDni}
                 ></TextField>
+              </Grid>
+              <br></br>
+              <Grid container direction="row" spacing={2}>
+                <Grid item xs={4} sm={4}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                      label="Fecha de nacimiento"
+                      name="fechaNacimiento"
+                      value={Paciente.fechaNacimiento}
+                      onChange={handleChangeFecha}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </Grid>
               </Grid>
               <br></br>
               <Grid container direction="row" spacing={2}>
