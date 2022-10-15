@@ -52,14 +52,6 @@ export const MedicoUsuario = sequelize.define(
   {
     timestamps: true,
     freezeTableName: true,
-    classMethods: {
-      generateHash(password) {
-        return bcrypt.hash(password, bcrypt.genSaltSync(8));
-      },
-      validPassword(password) {
-        return bcrypt.compare(password, this.password);
-      },
-    },
   },
 
 );

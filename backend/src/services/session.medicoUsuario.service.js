@@ -7,6 +7,16 @@ export const sessionService = {
   register,
 };
 
+
+async function generateHash(password) {
+  return bcrypt.hash(password, bcrypt.genSaltSync(8));
+};
+
+async function validPassword(password,hash) {
+  return bcrypt.compare(password, hash);
+}
+
+
 async function login(email, password) {
   try {
     const medicoEncontrado = await MedicosUsuariosService.getMedicoByEmail(
@@ -17,7 +27,7 @@ async function login(email, password) {
       return {};
     }
 
-    const passwordIsValid = await MedicoUsuario.validPassword(
+    const passwordIsValid = await validPassword(
       medicoEncontrado.password,
       password
     );
@@ -40,7 +50,7 @@ async function login(email, password) {
 async function register(medico) {
   try {
     const password = medico.password;
-    const hash = MedicoUsuario.generateHash(password);
+    const hash = generateHash(password);
     const newMedico = { ...medico, password: hash };
 
     let responseMedico = await MedicoUsuario.create(newMedico);
