@@ -1,6 +1,7 @@
 import { MedicoUsuario } from "../models/MedicoUsuario.js";
 import { MedicosUsuariosService } from "./medicoUsuario.service.js";
 import {sesionActivaService} from "./sesionActiva.service.js";
+import bcrypt from "bcrypt";
 
 export const sessionService = {
   login,
@@ -28,8 +29,8 @@ async function login(email, password) {
     }
 
     const passwordIsValid = await validPassword(
-      medicoEncontrado.password,
-      password
+      password,
+      medicoEncontrado.password
     );
 
     if(passwordIsValid){
@@ -63,3 +64,4 @@ async function register(medico) {
     return "No se pudo registrar médico usuario, error: " + error;
   }
 }
+
