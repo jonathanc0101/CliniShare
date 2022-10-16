@@ -97,7 +97,7 @@ async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
       }
       const objDNIyFecha = obtenerObjDNIyFecha(evento);
 
-      dnisYFechas.includes(objDNIyFecha);
+      return dnisYFechas.some(elem => JSON.stringify(objDNIyFecha) === JSON.stringify(elem));
     });
 
     return eventosFiltrados;
