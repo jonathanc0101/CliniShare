@@ -164,7 +164,7 @@ async function getInterseccionDNISFromModel(dnis) {
 async function getInterseccionDNISyFechas(dnisyFechas) {
   let dnisyFechasInterseccion = [];
 
-  const dnisYFechasLocales = await getDnisDePacientesFromModel();
+  let dnisYFechasLocales = await getDnisDePacientesFromModel();
 
   dnisYFechasLocales = dnisyFechas.filter((value) => dnisYFechasLocales.includes(value));
   dnisYFechasLocales = dnisInterseccion.filter((value) =>
