@@ -20,16 +20,16 @@ export async function actualizarDatos(datos) {
             // Medico.upsert(medico);
          }
 
-        for (const paciente of datos.pacientes) {
+        // for (const paciente of datos.pacientes) {
           
-          PacientesService.upsertarPorDNIyNacimiento(paciente);
+        //   PacientesService.upsertarPorDNIyNacimiento(paciente);
 
-          //updateamos los eventos correspondientes
-          for(const evento of paciente.eventos){
-            Evento.upsert({...evento, pacienteId:pacienteAux.id, medicoId:medicoId,
-          });
-          }
-        }
+        //   //updateamos los eventos correspondientes
+        //   for(const evento of paciente.eventos){
+        //     Evento.upsert({...evento, pacienteId:pacienteAux.id, medicoId:medicoId,
+        //   });
+        //   }
+        // }
       });
   
       return newPaciente;
