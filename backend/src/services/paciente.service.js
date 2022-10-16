@@ -20,6 +20,7 @@ export const PacientesService = {
     updatePacientePorIdFromModel(paciente, id),
   getDnisYNacimientosDePacientes,
   upsertarPorDNIyNacimiento,
+  getIdPorDniYNacimiento,
 };
 
 async function getPacientesFromModel() {
@@ -131,6 +132,21 @@ async function getDnisYNacimientosDePacientes() {
   }
 }
 
+async function getIdPorDniYNacimiento(paciente){
+  const pacienteFound = await Paciente.findOne({
+    where:{
+      id:paciente.id,
+      fechaNacimiento:paciente.fechaNacimiento
+    }
+  });
+
+  if (!pacienteFound) {
+    return {};
+  } else {
+    return pacienteFound.id;
+  }
+}
+
 
 async function getUUIDSDePacientesFromModel() {
   const pacientes = await Paciente.findAll({
@@ -221,18 +237,18 @@ async function getEntidadesPacientesPorDnisFromModel(dnisPacientes) {
 }
 
 
-async function upsertarPorDNIyNacimiento(paciente){
+async function upsertarPorDNIyNacimiento(paciente,transaction){
   const pacienteFound = await Paciente.findOne({
     where: {
       dni: paciente.dni,
       fechaNacimiento: paciente.fechaNacimiento
-    },
+    }
   });
 
   if(pacienteFound){
     paciente.id = pacienteFound.id;
   }
 
-  Paciente.upsert(pacienteFound);
+  Paciente.upsert(paciente,{transaction});
 }
 

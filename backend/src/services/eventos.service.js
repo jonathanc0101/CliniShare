@@ -98,7 +98,6 @@ async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
       }
       const objDNIyFecha = obtenerObjDNIyFecha(evento);
 
-      console.log("dnisYFechasdnisYFechasdnisYFechas",dnisYFechas);
       return dnisYFechas.some(elem => JSON.stringify(objDNIyFecha) === JSON.stringify(elem));
     });
 
