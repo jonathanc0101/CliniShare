@@ -1,6 +1,6 @@
-import { Medico } from "../models/Medico.js";
 import { EventosService } from "../services/eventos.service.js";
 import { PacientesService } from "../services/paciente.service.js";
+import { sequelize } from "../database/database.js";
 
 export async function handleSincronizarPostRequest(req,res,next){
   res.send(await getDatosParaSincronizar(req.body));
@@ -11,11 +11,13 @@ export async function getDatosParaSincronizar(dnisYFechas){
 }
 
 export async function actualizarDatos(datos) {
+  console.log("datosdatos",datos);
    // aca hay que actualizar los medicos, eventos, y pacientes lo dejamos para despues, pero igual los recibimos
    try {
       await sequelize.transaction(async (t) => {
-         for(const medico of datos.medicos){
-            Medico.upsert(medico);
+         for(const evento in datos){
+          console.log("eventoeventoevento",evento);
+            // Medico.upsert(medico);
          }
 
         for (const paciente of datos.pacientes) {
