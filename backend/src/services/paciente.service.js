@@ -162,18 +162,20 @@ async function getInterseccionDNISFromModel(dnis) {
 }
 
 async function getInterseccionDNISyFechas(dnisyFechas) {
-  let dnisyFechasInterseccion = [];
+  let dnisYFechasInterseccion = [];
 
-  const dnisYFechasLocales = await getDnisDePacientesFromModel();
+  const dnisYNacimientos = await getDnisYNacimientosDePacientes();
+  const localDnisYfechas = dnisYNacimientos.map((x) => {return {dni:x.dni, fechaNacimiento: x.fechaNacimiento}});
+  const newDnisyFechas = dnisyFechas.map((x) => {return {dni:x.dni, fechaNacimiento: x.fechaNacimiento}});
 
-  dnisyFechasInterseccion = dnisyFechas.filter((value) => dnisYFechasLocales.includes(value));
-  dnisyFechasInterseccion = dnisyFechasInterseccion.filter((value) =>
-  dnisyFechas.includes(value)
+  dnisYFechasInterseccion = newDnisyFechas.filter((value) => localDnisYfechas.includes(value));
+  dnisYFechasInterseccion = dnisInterseccion.filter((value) =>
+  newDnisyFechas.includes(value)
   );
 
-  console.log("Dnis y fechas obtenidos en la INTERSECCIÓN: " + dnisyFechasInterseccion);
+  console.log("Dnis y fechas obtenidos en la INTERSECCIÓN: " + dnisYFechasInterseccion);
 
-  return dnisyFechasInterseccion;
+  return dnisYFechasInterseccion;
 }
 
 async function getPacientesPorDnisFromModel(dnisPacientes) {
