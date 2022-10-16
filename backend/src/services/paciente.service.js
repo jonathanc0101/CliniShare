@@ -19,6 +19,7 @@ export const PacientesService = {
   updatePacientePorId: (paciente, id) =>
     updatePacientePorIdFromModel(paciente, id),
   getDnisYNacimientosDePacientes,
+  upsertarPorDNIyNacimiento,
 };
 
 async function getPacientesFromModel() {
@@ -205,4 +206,19 @@ async function getEntidadesPacientesPorDnisFromModel(dnisPacientes) {
   return pacientesFiltrados;
 }
 
+
+async function upsertarPorDNIyNacimiento(paciente){
+  const pacienteFound = await Paciente.findOne({
+    where: {
+      dni: paciente.dni,
+      fechaNacimiento: paciente.fechaNacimiento
+    },
+  });
+
+  if(pacienteFound){
+    paciente.id = pacienteFound.id;
+  }
+
+  Paciente.upsert(pacienteFound);
+}
 
