@@ -49,9 +49,8 @@ async function login(email, password) {
 
 function quitarPassword(medico){
   let medicoFiltrado = {...medico};
-  if(medicoFiltrado.password){
-    delete medicoFiltrado.password
-  }
+  delete medicoFiltrado.password
+
   return medicoFiltrado;
 }
 
