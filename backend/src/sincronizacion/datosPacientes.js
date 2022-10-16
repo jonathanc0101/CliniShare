@@ -2,6 +2,7 @@ import { EventosService } from "../services/eventos.service.js";
 import { PacientesService } from "../services/paciente.service.js";
 import { sequelize } from "../database/database.js";
 import { Medico } from "../models/Medico.js";
+import { Evento } from "../models/Evento.js";
 
 export async function handleSincronizarPostRequest(req, res, next) {
   res.send(await getDatosParaSincronizar(req.body));
@@ -22,7 +23,7 @@ export async function actualizarDatos(datos) {
         const eventoAux = {
           ...evento,
           pacienteId: await PacientesService.getIdPorDniYNacimiento(evento.paciente),
-          medicoId: medicoId,
+          medicoId: evento.medicoId,
         };
         await Evento.upsert(eventoAux,{transaction: t});
       }
