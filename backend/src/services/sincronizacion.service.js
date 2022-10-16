@@ -14,10 +14,9 @@ async function getSincronizacionRecienteFromModel() {
 
 //obtener fecha mas reciente
 let arrayFechas = fechasDeSincronizaciones.map((fechaActual) => new Date(fechaActual.fecha));
-console.log("fechas array: " + arrayFechas);
+
 var maxFecha = new Date(Math.max(...arrayFechas));
 
-console.log("fecha más reciente: " ,maxFecha.toJSON());
 
 const sincronizacion = await Sincronizacion.findAll({
     where: {

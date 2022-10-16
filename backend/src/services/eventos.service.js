@@ -74,7 +74,6 @@ async function getEventosCompletosPorIDPaciente(pacienteId){
 }
 
 async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
-  console.log("dnisYFechasdnisYFechasdnisYFechas," , dnisYFechas);
   const eventos = await Evento.findAll({
     include: [
       {

@@ -27,7 +27,7 @@ export async function sincronizar(computadora) {
 
             let dnisyFechasASincronizar = await PacientesService.getInterseccionDNISyFechas(dnisyNacimientosDePacientes);
             
-            
+        console.log("dnisyFechasASincronizar: ",dnisyFechasASincronizar);
         //obtener los datos a sincronizar
         await axios
             .post(postSincronicemosString,dnisyFechasASincronizar)

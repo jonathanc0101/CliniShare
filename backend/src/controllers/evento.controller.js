@@ -20,7 +20,6 @@ export const getEventosCompletosPorIdPaciente = async (req, res, next) => {
 
 export const getEventosPorDni = async (req, res, next) => {
   let dni = req.params.dni;
-  console.log("dNI" + dni);
   const eventos = await EventosService.getEventosPorDniPaciente(dni);
   res.send(JSON.stringify(eventos));
 };
@@ -70,8 +69,6 @@ export const createEvento = async (req, res, next) => {
 
 export const updateEventoPorId = async (req, res, next) => {
   const id = req.params.id;
-  console.log("updateEventoPorId, ID: " + id);
-
   const evento = req.body;
   const updatedEvento = await EventosService.updateEventoPorId(evento, id);
 

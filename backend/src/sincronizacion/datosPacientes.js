@@ -15,7 +15,6 @@ export async function actualizarDatos(datos) {
          }
 
         for (const paciente of datos.pacientes) {
-          // console.log("PACIENTEPACIENTE: \n\n" + JSON.stringify(paciente) + "\n\n");
           
           PacientesService.upsertarPorDNIyNacimiento(paciente);
 

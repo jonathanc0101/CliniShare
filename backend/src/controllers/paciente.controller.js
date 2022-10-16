@@ -7,14 +7,14 @@ export const getPacientes = async (req, res, next) => {
 
 export const getPacienteByDni = async (req, res, next) => {
   let dniABuscar = req.params.dni;
-  console.log("getPacienteByDni, dniABuscar: " + dniABuscar);
+  
   const pacienteEncontrado = await PacientesService.getPacienteByDni(dniABuscar);
   res.send(JSON.stringify(pacienteEncontrado));
 };
 
 export const getPacienteById = async (req, res, next) => {
   let id = req.params.id;
-  console.log("getPacienteById, id: " + id);
+  
   const pacienteEncontrado = await PacientesService.getPacienteById(id);
   res.send(JSON.stringify(pacienteEncontrado));
 };
@@ -59,7 +59,6 @@ export const createPaciente = async (req, res, next) => {
 
 export const updatePacientePorId = async (req, res, next) => {
   const id = req.params.id;
-  console.log("updatePacientePorId, ID: " + id);
 
   const paciente = req.body;
   const updatedPaciente = await PacientesService.updatePacientePorId(paciente, id);

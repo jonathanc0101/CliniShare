@@ -52,7 +52,7 @@ async function register(medico) {
     const password = medico.password;
     const hash = await generateHash(password);
     const newMedico = { ...medico, password: hash };
-    console.log(newMedico);
+    
     let responseMedico = await MedicoUsuario.create(newMedico);
 
     //no le enviamos el hash al usuario para que no pueda bruteforcearlo
