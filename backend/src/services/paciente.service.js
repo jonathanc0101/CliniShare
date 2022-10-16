@@ -127,7 +127,7 @@ async function getDnisYNacimientosDePacientes() {
   if (pacientes.length === 0) {
     return [];
   } else {
-    return pacientes;
+    return pacientes.map((x)=>{return x.dataValues});
   }
 }
 
@@ -161,19 +161,35 @@ async function getInterseccionDNISFromModel(dnis) {
   return dnisInterseccion;
 }
 
+
+async function test(){
+  const dnis = [ { dni: '1111', fechaNacimiento: '2022-10-20T03:00:00.000Z' } ];
+  console.log("getInterseccionDNISyFechas" , await getInterseccionDNISyFechas(dnis));
+  const responseDNIsyFechasLocales = await getDnisYNacimientosDePacientes(dnis);
+  console.log(responseDNIsyFechasLocales);
+
+}
+
+test();
+
 async function getInterseccionDNISyFechas(dnisyFechas) {
   let dnisYFechasInterseccion = [];
 
-  const dnisYNacimientos = await getDnisYNacimientosDePacientes();
+  
+  const dnisYNacimientos = (await getDnisYNacimientosDePacientes()).map((x)=>{
+    return {dni:x.dni,fechaNacimiento:x.fechaNacimiento }
+  });
   const localDnisYfechas = dnisYNacimientos.map((x) => {return {dni:x.dni, fechaNacimiento: x.fechaNacimiento}});
-  const newDnisyFechas = dnisyFechas.map((x) => {return {dni:x.dni, fechaNacimiento: x.fechaNacimiento}});
+  const newDnisyFechas = dnisyFechas.map((x)=>{
+    return {...x, fechaNacimiento:new Date(x.fechaNacimiento)}
+  });
 
-  dnisYFechasInterseccion = newDnisyFechas.filter((value) => localDnisYfechas.includes(value));
+  dnisYFechasInterseccion = newDnisyFechas.filter((value) => localDnisYfechas.some(elem => JSON.stringify(value) === JSON.stringify(elem)));
   dnisYFechasInterseccion = dnisYFechasInterseccion.filter((value) =>
-  newDnisyFechas.includes(value)
+  newDnisyFechas.some(elem => JSON.stringify(value) === JSON.stringify(elem))
   );
 
-  console.log("Dnis y fechas obtenidos en la INTERSECCIÓN: " + dnisYFechasInterseccion);
+  console.log("Dnis y fechas obtenidos en la INTERSECCIÓN: " + JSON.stringify(dnisYFechasInterseccion));
 
   return dnisYFechasInterseccion;
 }

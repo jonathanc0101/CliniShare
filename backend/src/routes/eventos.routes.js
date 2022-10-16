@@ -8,6 +8,7 @@ import {
   getEventoPorId,
   getEventoConPacienteYMedicoPorId,
   getEventosCompletos,
+  getEventosCompletosPorIdPaciente,
 
   getEventosCompletosImportantesPorPacienteId,
   getEventoImportanteCompletoPorId,
@@ -27,6 +28,7 @@ router.get("/eventos/id/:id", getEventoPorId);
 router.get("/eventos/importante/id/:id", getEventoImportanteCompletoPorId);
 
 router.get("/eventos/all/completos", getEventosCompletos)
+router.get("/eventos/all/completos/idPaciente/:idPaciente", getEventosCompletosPorIdPaciente)
 router.get("/eventos/completo/id/:id", getEventoConPacienteYMedicoPorId)
 
 router.post("/eventos/new", createEvento);

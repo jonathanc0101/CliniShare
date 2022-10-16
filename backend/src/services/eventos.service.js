@@ -12,6 +12,7 @@ export const EventosService = {
   getEventoConPacienteYMedicoPorId: (id) =>
     getEventoConPacienteYMedicoPorIdFromModel(id),
   getEventosCompletos: getEventosCompletosFromModel,
+  getEventosCompletosPorIDPaciente,
 
   getEventoImportanteCompletoPorId: getEventoImportanteCompletoFromModel,
   getEventosCompletosImportantesPorPacienteId:
@@ -48,7 +49,32 @@ async function getEventosCompletosFromModel() {
   }
 }
 
+
+async function getEventosCompletosPorIDPaciente(pacienteId){
+  const eventos = await Evento.findAll({
+    include: [
+      {
+        model: Medico,
+      },
+      {
+        model: Paciente,
+      },
+    ],
+
+    where: { pacienteId },
+
+  });
+
+
+  if (eventos.length === 0) {
+    return [];
+  } else {
+    return eventos;
+  }
+}
+
 async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
+  console.log("dnisYFechasdnisYFechasdnisYFechas," , dnisYFechas);
   const eventos = await Evento.findAll({
     include: [
       {
@@ -115,8 +141,6 @@ async function getEventoImportanteCompletoFromModel(id) {
       },
     ],
   });
-
-  console.log("EVENTOS IMPORTANTES: " + JSON.stringify(eventos));
 
   if (eventos.length === 0) {
     return [];

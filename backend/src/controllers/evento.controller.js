@@ -12,6 +12,12 @@ export const getEventosCompletos = async (req, res, next) => {
 };
 
 
+export const getEventosCompletosPorIdPaciente = async (req, res, next) => {
+  const eventos = await EventosService.getEventosCompletosPorIDPaciente(req.params.idPaciente);
+  res.send(JSON.stringify(eventos));
+};
+
+
 export const getEventosPorDni = async (req, res, next) => {
   let dni = req.params.dni;
   console.log("dNI" + dni);

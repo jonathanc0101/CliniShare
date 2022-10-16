@@ -20,15 +20,14 @@ export async function sincronizar(computadora) {
                 }
                 
                 dnisyNacimientosDePacientes = res.data;
-                console.log(dnisyNacimientosDePacientes);
             })
             .catch(error => {
                 console.error(error);
             });
 
             let dnisyFechasASincronizar = await PacientesService.getInterseccionDNISyFechas(dnisyNacimientosDePacientes);
-        
-
+            
+            
         //obtener los datos a sincronizar
         await axios
             .post(postSincronicemosString,dnisyFechasASincronizar)
