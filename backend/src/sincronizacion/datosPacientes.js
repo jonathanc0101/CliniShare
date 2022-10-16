@@ -3,7 +3,7 @@ import { EventosService } from "../services/eventos.service.js";
 import { PacientesService } from "../services/paciente.service.js";
 
 export async function handleSincronizarPostRequest(req,res,next){
-  res.send(getDatosParaSincronizar(req.body));
+  res.send(await getDatosParaSincronizar(req.body));
 }
 
 export async function getDatosParaSincronizar(dnisYFechas){
