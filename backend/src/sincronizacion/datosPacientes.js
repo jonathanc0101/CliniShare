@@ -2,6 +2,11 @@ import { Medico } from "../models/Medico.js";
 import { EventosService } from "../services/eventos.service.js";
 import { PacientesService } from "../services/paciente.service.js";
 
+export async function getDatosParaSincronizar(req,res,next){
+  res.send(getDatosParaSincronizar(req.body.dnisYFechas));
+}
+
+
 export async function getDatosParaSincronizar(dnisYFechas){
    return await EventosService.getEventosCompletosPorDnisYFechas(dnisYFechas);
 }

@@ -7,6 +7,6 @@ import { getDatosParaSincronizar } from "../sincronizacion/datosPacientes.js";
 const router = Router();
 
 router.get("/clinishare", (req,res) => res.send(JSON.stringify(getInitialResponse())));
-router.post("/sincronizar", (req,res,next) => getDatosParaSincronizar(req.body));
+router.post("/sincronizar", (req,res,next) => getDatosParaSincronizar(req,res,next));
 
 export default router;
