@@ -7,31 +7,31 @@ export async function sincronizar(computadora) {
     
         const postSincronicemosString = 'http://' + computadora.ip.toString().trim() + ':' + SERVER_BD_PORT.toString().trim() + '/sincronizar';
 
-        const getDNISString = 'http://' + computadora.ip.toString().trim() + ':' + SERVER_BD_PORT.toString().trim() + '/pacientes/all/dnis';
+        const getDNISyNacimientosString = 'http://' + computadora.ip.toString().trim() + ':' + SERVER_BD_PORT.toString().trim() + '/pacientes/all/dnis;nacimientos';
 
 
         //obtener DNIS para sincronizar con los que tenemos en comun
-        let dnisDePacientes = [];
+        let dnisyNacimientosDePacientes = [];
         await axios
-            .get(getDNISString)
+            .get(getDNISyNacimientosString)
             .then(res => {
                 if(res.data.count === 0){ //si no tiene pacientes no hay nada que hacer
                     return //chau chau adios
                 }
                 
-                dnisDePacientes = res.data;
-                console.log(dnisDePacientes);
+                dnisyNacimientosDePacientes = res.data;
+                console.log(dnisyNacimientosDePacientes);
             })
             .catch(error => {
                 console.error(error);
             });
 
-            let dnisASincronizar = await PacientesService.getInterseccionDNIS(dnisDePacientes);
+            let dnisyFechasASincronizar = await PacientesService.getInterseccionDNISyFechas(dnisyNacimientosDePacientes);
         
 
         //obtener los datos a sincronizar
         await axios
-            .post(postSincronicemosString,dnisASincronizar)
+            .post(postSincronicemosString,dnisyFechasASincronizar)
             .then(res => {
                 if(!res.data){
                     return //chau chau adios
@@ -43,7 +43,7 @@ export async function sincronizar(computadora) {
                 let datosPacientes = res.data;
                 
                 // hacemosAlgo
-                emitter.emit("pacientes_recibidos", datosPacientes)
+                emitter.emit("datos_recibidos", datosPacientes)
             })
             .catch(error => {
                 console.error(error);

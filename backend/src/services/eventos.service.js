@@ -2,7 +2,6 @@ import { Evento } from "../models/Evento.js";
 import { Paciente } from "../models/Paciente.js";
 import { Medico } from "../models/Medico.js";
 
-
 export const EventosService = {
   getEventos: () => getEventosFromModel(),
   createEvento: (evento) => createEventoFromModel(evento),
@@ -10,12 +9,14 @@ export const EventosService = {
   getEventosPorPacienteId: (id) => getEventosPorPacienteIdFromModel(id),
   updateEventoPorId: (evento, id) => updateEventoPorIdFromModel(evento, id),
   getEventoPorId: (id) => getEventoPorIdFromModel(id),
-  getEventoConPacienteYMedicoPorId: (id) => getEventoConPacienteYMedicoPorIdFromModel(id),
-  getEventosCompletos:getEventosCompletosFromModel,
+  getEventoConPacienteYMedicoPorId: (id) =>
+    getEventoConPacienteYMedicoPorIdFromModel(id),
+  getEventosCompletos: getEventosCompletosFromModel,
 
   getEventoImportanteCompletoPorId: getEventoImportanteCompletoFromModel,
-  getEventosCompletosImportantesPorPacienteId: getEventosImportantesCompletosPorIdPacienteFromModel
-  
+  getEventosCompletosImportantesPorPacienteId:
+    getEventosImportantesCompletosPorIdPacienteFromModel,
+  getEventosCompletosPorDnisYFechas,
 };
 
 async function getEventosFromModel() {
@@ -28,16 +29,15 @@ async function getEventosFromModel() {
   }
 }
 
-
 async function getEventosCompletosFromModel() {
   const eventos = await Evento.findAll({
     include: [
       {
-        model: Medico      
+        model: Medico,
       },
       {
-        model: Paciente
-      }
+        model: Paciente,
+      },
     ],
   });
 
@@ -45,6 +45,37 @@ async function getEventosCompletosFromModel() {
     return [];
   } else {
     return eventos;
+  }
+}
+
+async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
+  const eventos = await Evento.findAll({
+    include: [
+      {
+        model: Medico,
+      },
+      {
+        model: Paciente,
+      },
+    ],
+  });
+
+  if (eventos.length === 0) {
+    return [];
+  } else {
+    const eventosFiltrados = eventos.filter((evento) => {
+      function obtenerObjDNIyFecha(x) {
+        return {
+          dni: x.paciente.dni,
+          fechaNacimiento: x.paciente.fechaNacimiento,
+        };
+      }
+      const objDNIyFecha = obtenerObjDNIyFecha(evento);
+
+      dnisYFechas.includes(objDNIyFecha);
+    });
+
+    return eventosFiltrados;
   }
 }
 
@@ -61,29 +92,29 @@ async function getEventoConPacienteYMedicoPorIdFromModel(id) {
     where: { id: id },
     include: [
       {
-        model: Medico      
+        model: Medico,
       },
       {
-        model: Paciente
-      }
+        model: Paciente,
+      },
     ],
-  }); 
+  });
 
   return evento;
 }
 
 async function getEventoImportanteCompletoFromModel(id) {
   const evento = await Evento.findOne({
-    where: { id: id, importante:true },
+    where: { id: id, importante: true },
     include: [
       {
-        model: Medico      
+        model: Medico,
       },
       {
-        model: Paciente
-      }
+        model: Paciente,
+      },
     ],
-  }); 
+  });
 
   console.log("EVENTOS IMPORTANTES: " + JSON.stringify(eventos));
 
@@ -92,27 +123,25 @@ async function getEventoImportanteCompletoFromModel(id) {
   } else {
     return eventos;
   }
-
 }
 
-
-async function getEventosImportantesCompletosPorIdPacienteFromModel(pacienteId) {
+async function getEventosImportantesCompletosPorIdPacienteFromModel(
+  pacienteId
+) {
   const eventos = await Evento.findAll({
-    where: { pacienteId, importante:true },
+    where: { pacienteId, importante: true },
     include: [
       {
-        model: Medico      
+        model: Medico,
       },
       {
-        model: Paciente
-      }
+        model: Paciente,
+      },
     ],
-  }); 
+  });
 
   return eventos;
 }
-
-
 
 async function createEventoFromModel(evento) {
   try {
@@ -132,7 +161,6 @@ async function updateEventoPorIdFromModel(evento, id) {
     });
 
     return response;
-
   } catch (error) {
     console.log(error);
 
@@ -166,7 +194,7 @@ async function getEventosPorPacienteIdFromModel(pacienteId) {
   const eventos = await Evento.findAll({
     where: {
       pacienteId,
-    }
+    },
   });
 
   if (eventos.length === 0) {

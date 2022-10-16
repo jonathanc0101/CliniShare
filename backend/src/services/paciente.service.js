@@ -12,12 +12,13 @@ export const PacientesService = {
   getDnisDePacientes: () => getDnisDePacientesFromModel(),
   getUUIDSDePacientes: () => getUUIDSDePacientesFromModel(),
   getInterseccionDNIS: (dnis) => getInterseccionDNISFromModel(dnis),
+  getInterseccionDNISyFechas,
   getPacientesPorDnis: (dnis) => getPacientesPorDnisFromModel(dnis),
   getEntidadesPacientesPorDnis: (dnis) =>
     getEntidadesPacientesPorDnisFromModel(dnis),
   updatePacientePorId: (paciente, id) =>
     updatePacientePorIdFromModel(paciente, id),
-  upsertarPacientes: upsertarPacientesFromModel,
+  getDnisYNacimientosDePacientes,
 };
 
 async function getPacientesFromModel() {
@@ -117,6 +118,19 @@ async function getDnisDePacientesFromModel() {
   }
 }
 
+async function getDnisYNacimientosDePacientes() {
+  const pacientes = await Paciente.findAll({
+    attributes: ["dni","fechaNacimiento"],
+  });
+
+  if (pacientes.length === 0) {
+    return [];
+  } else {
+    return pacientes;
+  }
+}
+
+
 async function getUUIDSDePacientesFromModel() {
   const pacientes = await Paciente.findAll({
     attributes: ["id"],
@@ -144,6 +158,21 @@ async function getInterseccionDNISFromModel(dnis) {
   console.log("Dnis obtenidos en la INTERSECCIÓN: " + dnisInterseccion);
 
   return dnisInterseccion;
+}
+
+async function getInterseccionDNISyFechas(dnisyFechas) {
+  let dnisyFechasInterseccion = [];
+
+  const dnisYFechasLocales = await getDnisDePacientesFromModel();
+
+  dnisInterseccion = dnisyFechas.filter((value) => dnisYFechasLocales.includes(value));
+  dnisInterseccion = dnisInterseccion.filter((value) =>
+  dnisyFechas.includes(value)
+  );
+
+  console.log("Dnis y fechas obtenidos en la INTERSECCIÓN: " + dnisyFechasInterseccion);
+
+  return dnisyFechasInterseccion;
 }
 
 async function getPacientesPorDnisFromModel(dnisPacientes) {
@@ -176,29 +205,4 @@ async function getEntidadesPacientesPorDnisFromModel(dnisPacientes) {
   return pacientesFiltrados;
 }
 
-async function upsertarPacientesFromModel(pacientes) {
-  try {
-    sequelize.transaction(async (t) => {
-      for (const paciente of pacientes) {
-        // console.log("PACIENTEPACIENTE: \n\n" + JSON.stringify(paciente) + "\n\n");
-        
-        const pacienteDni = paciente.dni;
-        const pacienteAux = await getPacienteByDniFromModel(pacienteDni);
 
-        const medicosAux = await Medico.findAll();
-        const medicoId = medicosAux[0].id;
-
-        //updateamos los eventos correspondientes
-        for(const evento of paciente.eventos){
-          Evento.upsert({...evento, pacienteId:pacienteAux.id, medicoId:medicoId,
-        });
-        }
-      }
-    });
-
-    return newPaciente;
-  } catch (error) {
-    console.log("No se pudo cargar el paciente: " + error);
-    return {};
-  }
-}

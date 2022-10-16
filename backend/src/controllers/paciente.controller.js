@@ -25,8 +25,13 @@ export const getUUIDSDePacientes = async (req, res, next) => {
 };
 
 export const getDnisDePacientes = async (req, res, next) => {
-  const pacientes = await PacientesService.getDnisDePacientes();
-  res.send(JSON.stringify(pacientes));
+  const dnis = await PacientesService.getDnisDePacientes();
+  res.send(JSON.stringify(dnis));
+};
+
+export const getDnisYNacimientosDePacientes = async (req, res, next) => {
+  const dnisYNacimientos = await PacientesService.getDnisYNacimientosDePacientes();
+  res.send(JSON.stringify(dnisYNacimientos));
 };
 
 export const getPacientesPorDnis = async (req, res, next) => {
