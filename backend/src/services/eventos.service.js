@@ -90,6 +90,7 @@ async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
   } else {
     const eventosFiltrados = eventos.filter((evento) => {
       function obtenerObjDNIyFecha(x) {
+        
         return {
           dni: x.paciente.dni,
           fechaNacimiento: x.paciente.fechaNacimiento,

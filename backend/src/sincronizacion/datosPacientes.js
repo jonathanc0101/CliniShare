@@ -3,7 +3,7 @@ import { EventosService } from "../services/eventos.service.js";
 import { PacientesService } from "../services/paciente.service.js";
 
 export async function getDatosParaSincronizar(dnisYFechas){
-   EventosService.getEventosCompletosPorDnisYFechas(dnisYFechas);
+   return await EventosService.getEventosCompletosPorDnisYFechas(dnisYFechas);
 }
 
 export async function actualizarDatos(datos) {
