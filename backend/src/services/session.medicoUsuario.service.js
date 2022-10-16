@@ -39,12 +39,20 @@ async function login(email, password) {
     if (!token) {
       return {};
     } else {
-      return token;
+      return {token,medico:quitarPassword(medicoEncontrado)};
     }
   } catch (error) {
     console.log( "No se pudo logear médico usuario, error: " + error);
     return {};
   }
+}
+
+function quitarPassword(medico){
+  let medicoFiltrado = {...medico};
+  if(medicoFiltrado.password){
+    delete medicoFiltrado.password
+  }
+  return medicoFiltrado;
 }
 
 async function register(medico) {
