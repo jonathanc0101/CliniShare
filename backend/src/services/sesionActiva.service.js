@@ -1,12 +1,14 @@
 import { SesionActiva } from "../models/SesionActiva.js";
+import bcrypt from "bcrypt";
 
 export const sesionActivaService = {
   nueva,
   comprobarToken,
 };
 
-async function nueva(token) {
+async function nueva() {
   try {
+    const token = await bcrypt.hash("token", bcrypt.genSaltSync(8));
     // eliminamos todos los tokens ya que solo hay una sesion a la vez
     SesionActiva.truncate();
     const nuevoToken = await SesionActiva.create({ token });

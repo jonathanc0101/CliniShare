@@ -18,7 +18,7 @@ async function getMedicosFromModel() {
 }
 
 async function getMedicoByEmailFromModel(email) {
-  const medico = await Medico.findOne({
+  const medico = await MedicoUsuario.findOne({
     where: {
       email,
     },
