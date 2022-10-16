@@ -50,12 +50,12 @@ async function guardarMedico(Medico) {
 
 async function login(email, password) {
   try {
-    const response = await axios.post(rutas.LoginMedicoUsuario);
-    const res = response.data;
-    return Object.keys(res).length !== 0;
+    const response = await axios.post(rutas.LoginMedicoUsuario, {email,password});
+    
+    return response.data;
   } catch (error) {
     console.error(error);
-    return false;
+    return {};
   }
 }
 

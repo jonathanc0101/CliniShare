@@ -8,26 +8,52 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../API backend/api";
+import Home from "./Home";
 
 function LoginForm() {
   const [correoElectronico, setCorreoElectronico] = useState("");
   const [password, setPassword] = useState("");
-  const [usuario, setUsuario] = useState(null);
+  const [usuario, setUsuario] = useState({
+    nombre: "",
+    token:"",
+    email:""
+  });
   const [error, setError] = useState("");
+  const [datosValidos, setDatosValidos] = useState(false);
+
+//   useEffect(()=> {
+
+//   },[])
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
     try {
       const usuario = await api.login(correoElectronico, password);
-      console.log("login?: ", usuario);
+      console.log(Object.keys(usuario).length !== 0);
+      if(Object.keys(usuario).length !== 0){
+        console.log("antes dentro del if ",datosValidos);
+        setDatosValidos(true);
+        console.log("datos valid ",datosValidos);
+
+      }
+
+    //   const usuarioAux = {
+    //     nombre: usuario.medico.nombre,
+    //     token: usuario.token,
+    //     email: usuario.email
+    //   }
+    //   window.localStorage.setItem(
+    //     "loggedCliniShareAppUser", JSON.stringify(usuarioAux)           
+    //   )
       setUsuario(usuario);
       setCorreoElectronico("");
       setPassword("");
+
     } catch (error) {
       console.log(error);
     }
@@ -43,6 +69,7 @@ function LoginForm() {
   const btnstyle = { margin: "8px 0" };
   return (
     <>
+    {datosValidos?<Navigate to="/" /> :
       <Grid>
         <Paper elevation={10} style={paperStyle}>
           <Grid align="center">
@@ -82,9 +109,11 @@ function LoginForm() {
             variant="contained"
             style={btnstyle}
             fullWidth
+            
           >
             Login
           </Button>
+
           {/* <Typography>
             <Link href="#">Forgot password ?</Link>
           </Typography>
@@ -94,6 +123,7 @@ function LoginForm() {
           </Typography> */}
         </Paper>
       </Grid>
+      }
     </>
   );
 }
