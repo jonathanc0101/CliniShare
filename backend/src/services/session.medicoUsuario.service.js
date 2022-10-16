@@ -19,8 +19,6 @@ async function validPassword(password, hash) {
 async function login(email, password) {
   let token = "";
   try {
-
-
     const medicoEncontrado = await MedicosUsuariosService.getMedicoByEmail(
       email
     );
@@ -33,6 +31,7 @@ async function login(email, password) {
       password,
       medicoEncontrado.password
     );
+
     if (passwordIsValid) {
       token = await sesionActivaService.nueva();
     }
@@ -43,7 +42,8 @@ async function login(email, password) {
       return token;
     }
   } catch (error) {
-    return "No se pudo logear médico usuario, error: " + error;
+    console.log( "No se pudo logear médico usuario, error: " + error);
+    return {};
   }
 }
 
