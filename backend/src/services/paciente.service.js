@@ -169,7 +169,7 @@ async function getInterseccionDNISyFechas(dnisyFechas) {
   const newDnisyFechas = dnisyFechas.map((x) => {return {dni:x.dni, fechaNacimiento: x.fechaNacimiento}});
 
   dnisYFechasInterseccion = newDnisyFechas.filter((value) => localDnisYfechas.includes(value));
-  dnisYFechasInterseccion = dnisInterseccion.filter((value) =>
+  dnisYFechasInterseccion = dnisYFechasInterseccion.filter((value) =>
   newDnisyFechas.includes(value)
   );
 
