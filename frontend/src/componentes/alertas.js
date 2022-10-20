@@ -6,6 +6,7 @@ export const alertas = {
   alertaExito,
   alertaProblemas,
   alertaModificacionExitosa,
+  alertaEmailInvalido
 };
 
 async function alertaPacienteExiste(pacienteDni) {
@@ -37,6 +38,14 @@ async function alertaProblemas() {
   Swal.fire({
     title: "",
     text: "Problemas al guardar",
+    icon: "error",
+  });
+}
+
+async function alertaEmailInvalido() {
+  Swal.fire({
+    title: "",
+    text: "Email inválido",
     icon: "error",
   });
 }

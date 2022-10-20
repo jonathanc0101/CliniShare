@@ -15,6 +15,9 @@ import SaveIcon from "@mui/icons-material/Save";
 
 function RegistroMedico() {
 
+  const isEmail = (email) =>
+  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+
   const [medico, setMedico] = useState({
     nombre: "",
     apellido: "",
@@ -26,6 +29,13 @@ function RegistroMedico() {
   });
 
   const guardar = async function () {
+
+    if (!isEmail(medico.email)) {
+      console.log("Email invalido");
+      alertas.alertaEmailInvalido();
+      return;
+      
+    }
 
     const medicoGuardado = await api.guardarMedicoUsuario(medico);
     if (medicoGuardado === true) {
@@ -149,6 +159,7 @@ function RegistroMedico() {
                 type="text"
                 name="email"
                 value={medico.email}
+                
                 onChange={handleChange}
                 margin="dense"
                 fullWidth
