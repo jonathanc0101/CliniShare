@@ -18,18 +18,33 @@ import { alertas } from "./alertas";
 
 function NuevoPaciente() {
   async function obtenerPacientesExistentes(pacienteDni) {
+  
+    console.log("Paciente dni: ", pacienteDni);
     const pacientesExistentes = await api.obtenerPacientes();
-    pacientesExistentes.data.forEach((paciente) => {
-      if (pacienteDni === paciente.dni) {
-        return true;
-      }
-    });
-    return false;
+
+    // pacientesExistentes.data.map((paciente) => {  
+    //   if(paciente.dni===pacienteDni){
+    //     return true;
+    //   }
+    //   return false;
+    // })
+  
+    return pacientesExistentes.data.some(element => { return element.dni === pacienteDni; });
+
+    // pacientesExistentes.data.forEach((paciente) => {
+    //   if (pacienteDni === paciente.dni) {
+    //     console.log("Si existe");
+    //     return 1;
+    //   }
+    // });
+    // console.log("No existe");
+    // return 0;
   }
 
   const [Paciente, setPaciente] = useState({
     nombre: "",
     apellido: "",
+    dni:"",
     fechaNacimiento: "",
   });
 
@@ -41,15 +56,21 @@ function NuevoPaciente() {
     ) {
       alertas.alertaCamposObligatorios();
       return;
-    } else if (obtenerPacientesExistentes(Paciente.dni)) {
+    } 
+
+    const existePaciente = await obtenerPacientesExistentes(Paciente.dni)
+    console.log("AA ", existePaciente);
+    if (existePaciente) {
+      console.log("paciente existe!!");
       alertas.alertaPacienteExiste(Paciente.dni);
-    }
+      return;
+    } else{
 
     const pacienteGuardado = await api.guardarPaciente(Paciente);
     if (pacienteGuardado === true) {
-      alertas.alertaExito();
-      // navigate(-1);
+      alertas.alertaExito("paciente");
     }
+  }
   };
 
   const handleChange = (event) => {

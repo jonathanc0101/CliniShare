@@ -24,10 +24,10 @@ async function alertaCamposObligatorios() {
   });
 }
 
-async function alertaExito() {
+async function alertaExito(entidad) {
   Swal.fire({
     title: "Éxito",
-    text: "El paciente se guardo exitosamente",
+    html: `<p>El <b>${entidad}</b> se guardó exitosamente</p>`,
     icon: "success",
     timer: "2000",
     position: "center",

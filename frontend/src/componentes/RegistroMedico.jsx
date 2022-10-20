@@ -39,7 +39,7 @@ function RegistroMedico() {
 
     const medicoGuardado = await api.guardarMedicoUsuario(medico);
     if (medicoGuardado === true) {
-      alertas.alertaExito();
+      alertas.alertaExito("médico");
       // navigate(-1);
     }
   };
