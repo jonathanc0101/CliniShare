@@ -6,12 +6,12 @@ export const sesionActivaService = {
   comprobarToken,
 };
 
-async function nueva() {
+async function nueva(medicoEncontrado) {
   try {
     const token = await bcrypt.hash("token", bcrypt.genSaltSync(8));
     // eliminamos todos los tokens ya que solo hay una sesion a la vez
     SesionActiva.truncate();
-    const nuevoToken = await SesionActiva.create({ token });
+    const nuevoToken = await SesionActiva.create({ token,medicoId:medicoEncontrado["id"] });
 
     if (!nuevoToken) {
       return {};

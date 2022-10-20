@@ -93,3 +93,4 @@ Sincronizacion.belongsTo(Medico, {
   targetId: "id",
   allowNull:false,
 });
+

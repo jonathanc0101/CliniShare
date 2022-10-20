@@ -3,6 +3,7 @@ import { PacientesService } from "../services/paciente.service.js";
 import { sequelize } from "../database/database.js";
 import { Medico } from "../models/Medico.js";
 import { Evento } from "../models/Evento.js";
+import { SincronizacionService } from "../services/sincronizacion.service.js";
 
 export async function handleSincronizarPostRequest(req, res, next) {
   res.send(await getDatosParaSincronizar(req.body));
@@ -14,7 +15,7 @@ export async function getDatosParaSincronizar(dnisYFechas) {
 
 export async function actualizarDatos(datos) {
   
-  // aca hay que actualizar los medicos, eventos, y pacientes lo dejamos para despues, pero igual los recibimos
+  //hay que resolver el tema de sincronizar los pacientes, que quede almacenada la version mas actualizada del paciente
   try {
     await sequelize.transaction(async (t) => {
       for (const evento of datos) {
@@ -27,7 +28,11 @@ export async function actualizarDatos(datos) {
         };
         await Evento.upsert(eventoAux,{transaction: t});
       }
+
+      await SincronizacionService.createSincronizacion({medicoId:datos["medico"]["id"]})
     });
+
+
 
     return true;
   } catch (error) {

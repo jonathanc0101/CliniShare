@@ -33,7 +33,7 @@ async function login(email, password) {
     );
 
     if (passwordIsValid) {
-      token = await sesionActivaService.nueva();
+      token = await sesionActivaService.nueva(medicoEncontrado);
     }
 
     if (!token) {

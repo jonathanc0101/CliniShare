@@ -1,7 +1,6 @@
 import { Sincronizacion } from "../models/Sincronizacion.js";
 
 export const SincronizacionService = {
-  // getMedicos: () => getMedicosFromModel(),
   getSincronizacionReciente: () => getSincronizacionRecienteFromModel(),
   createSincronizacion: (sincronizacion) =>
     createSincronizacionFromModel(sincronizacion),
@@ -35,9 +34,8 @@ const sincronizacion = await Sincronizacion.findAll({
 
 async function createSincronizacionFromModel(sincronizacion) {
   try {
-    var fecha = new Date()
-    // es asincrono porque es una consulta a la bd, esta guardando un dato dentro de la bd
-    let newSincronizacion = await Sincronizacion.create(sincronizacion);
+    const fecha = new Date()
+    const newSincronizacion = await Sincronizacion.create({...sincronizacion,fecha});
 
     return newSincronizacion;
   } catch (error) {

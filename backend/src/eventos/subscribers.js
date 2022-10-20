@@ -25,7 +25,6 @@ export default function loadListeners(emitter) {
   
   emitter.on("datos_recibidos", (datos) => {
     actualizarDatos(datos);
-    console.log("Datos de pacientes en común:" + JSON.stringify(datos));
   });
 
   

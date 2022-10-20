@@ -1,5 +1,6 @@
 import { DataTypes,Sequelize } from "sequelize";
 import { sequelize } from "../database/database.js";
+import {SesionActiva} from "./SesionActiva.js";
 
 
 export const MedicoUsuario = sequelize.define(
@@ -55,3 +56,14 @@ export const MedicoUsuario = sequelize.define(
 
 );
 
+MedicoUsuario.hasOne(SesionActiva, {
+  foreignKey: "medicoId",
+  sourceKey: "id",
+  allowNull:false,
+});
+
+SesionActiva.belongsTo(MedicoUsuario, {
+  foreignKey: "medicoId",
+  targetId: "id",
+  allowNull:false,
+});
