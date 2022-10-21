@@ -15,6 +15,7 @@ import Menu from "./Menu";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
+import MenuAppBar from "./MenuAppBar";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -39,8 +40,8 @@ function ListadoPacientes() {
     <>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
         <Grid xs={12}>
-          <Item style={{ color: "inherit" }}>
-            Mis pacientes
+          <Item>
+            <MenuAppBar></MenuAppBar>
           </Item>
         </Grid>
       </Grid>
@@ -67,12 +68,13 @@ function ListadoPacientes() {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Ver paciente</TableCell>
 
                   <TableCell>Nombre</TableCell>
                   <TableCell>Apellido</TableCell>
                   <TableCell>DNI</TableCell>
                   <TableCell>Editar</TableCell>
+                  <TableCell>Ver</TableCell>
+
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -81,17 +83,17 @@ function ListadoPacientes() {
                     key={paciente.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell>
-                      <Link to={"/pacientes/ver/id/" + paciente.id}>
-                        <VisibilityIcon color="info"></VisibilityIcon>
-                      </Link>
-                    </TableCell>
                     <TableCell>{paciente.nombre}</TableCell>
                     <TableCell>{paciente.apellido}</TableCell>
                     <TableCell>{paciente.dni}</TableCell>
                     <TableCell component="th" scope="row">
                       <Link to={"/pacientes/id/" + paciente.id}>
                         <EditIcon color="info"></EditIcon>
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <Link to={"/pacientes/ver/id/" + paciente.id}>
+                        <VisibilityIcon color="info"></VisibilityIcon>
                       </Link>
                     </TableCell>
                   </TableRow>
