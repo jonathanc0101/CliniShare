@@ -17,6 +17,7 @@ import BotonVolver from "./botones/BotonVolver";
 import { alertas } from "./alertas";
 
 function NuevoPaciente() {
+
   async function obtenerPacientesExistentes(pacienteDni) {
     console.log("Paciente dni: ", pacienteDni);
     const pacientesExistentes = await api.obtenerPacientes();

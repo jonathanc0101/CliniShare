@@ -2,8 +2,13 @@ import {
   Avatar,
   Button,
   Checkbox,
+  FormControl,
   FormControlLabel,
   Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
   Paper,
   TextField,
   Typography,
@@ -13,10 +18,16 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useEffect, useState } from "react";
 import { api } from "../API backend/api";
 import Home from "./Home";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 
 function LoginForm() {
   const [correoElectronico, setCorreoElectronico] = useState("");
   const [password, setPassword] = useState("");
+  const [values, setValues] = useState({
+    mostrarPassword: "",
+  });
   const [usuario, setUsuario] = useState({
     nombre: "",
     token: "",
@@ -24,20 +35,33 @@ function LoginForm() {
   });
   const [datosValidos, setDatosValidos] = useState(false);
 
-    useEffect(()=> {
-        const loggedCliniShareUserJSON = window.localStorage.getItem("loggedCliniShareAppUser")
-        if(loggedCliniShareUserJSON){
-            const user = JSON.parse(loggedCliniShareUserJSON)
-            setUsuario(user);
-        }
-    },[])
+  useEffect(() => {
+    const loggedCliniShareUserJSON = window.localStorage.getItem(
+      "loggedCliniShareAppUser"
+    );
+    if (loggedCliniShareUserJSON) {
+      const user = JSON.parse(loggedCliniShareUserJSON);
+      setUsuario(user);
+    }
+  }, []);
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      mostrarPassword: !values.mostrarPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
     try {
       const usuario = await api.login(correoElectronico, password);
-      console.log("Object: ",usuario);
+      console.log("Object: ", usuario);
       console.log(Object.keys(usuario).length !== 0);
       if (Object.keys(usuario).length !== 0) {
         setDatosValidos(true);
@@ -47,7 +71,7 @@ function LoginForm() {
           email: usuario.medico.email,
         };
 
-        console.log("Usuario aux: ",usuarioAux);
+        console.log("Usuario aux: ", usuarioAux);
         window.localStorage.setItem(
           "loggedCliniShareAppUser",
           JSON.stringify(usuarioAux)
@@ -82,27 +106,53 @@ function LoginForm() {
               </Avatar>
               <h2>Login</h2>
             </Grid>
-            <TextField
+
+            <InputLabel>Correo electrónico</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-email"
               type="text"
-              label="Correo electrónico"
-              placeholder="Ingrese su correo electrónico"
               value={correoElectronico}
               onChange={({ target }) => setCorreoElectronico(target.value)}
-              fullWidth
+              endAdornment={
+                <InputAdornment position="end">
+                    <AlternateEmailIcon></AlternateEmailIcon>
+    
+                </InputAdornment>
+              }
+              placeholder="Ingrese el correo electrónico"
               required
             />
-            <br></br>
-            <br></br>
 
-            <TextField
-              label="Password"
-              placeholder="Ingrese su contraseña"
-              type="password"
+            <br></br>
+            <br></br>
+            <InputLabel>Password</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={values.mostrarPassword ? "text" : "password"}
               value={password}
               onChange={({ target }) => setPassword(target.value)}
-              fullWidth
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {values.mostrarPassword ? (
+                      <VisibilityOff />
+                    ) : (
+                      <Visibility />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              }
+              placeholder="Ingrese la contraseña"
               required
             />
+            {/* </FormControl> */}
+
+            {/* Recordar contraseña */}
             {/* <FormControlLabel
             control={<Checkbox name="checkedB" color="primary" />}
             label="Remember me"
