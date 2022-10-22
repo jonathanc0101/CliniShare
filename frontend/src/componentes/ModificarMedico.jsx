@@ -12,8 +12,11 @@ import { useEffect, useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
 import BotonVolver from "./botones/BotonVolver";
+import { Navigate } from "react-router-dom";
+import { alertas } from "./alertas";
 
 function ModificarMedico() {
+  const [guardado, setGuardado] = useState(false);
   const [medico, setMedico] = useState({
     nombre: "",
     apellido: "",
@@ -36,18 +39,15 @@ function ModificarMedico() {
     })();
   }, []);
 
-  const usuarioAux = JSON.parse(
-    window.localStorage.getItem("loggedCliniShareAppUser")
-  );
-  const id = usuarioAux.medico.id;
   const update = async () => {
     // e.preventDefault();
-    const respuesta = await api.modificarMedico({...medico
-    });
+    const respuesta = await api.modificarMedico({ ...medico });
     if (respuesta) {
-      alert("Se modificó el médico exitosamente");
+      setGuardado(true);
+
+      alertas.alertaModificacionExitosa("usuario");
     } else {
-      alert("No se pudo actualizar el médico")
+      alertas.alertaProblemas();
     }
   };
 
@@ -203,7 +203,7 @@ function ModificarMedico() {
           </Grid>
           <br></br>
           <Grid container direction="row" spacing={2}>
-          <Grid item xs={10}>
+            <Grid item xs={10}>
               <BotonVolver></BotonVolver>
             </Grid>
             <Grid item xs={2}>
@@ -216,6 +216,7 @@ function ModificarMedico() {
                   &nbsp;Guardar
                 </Typography>
               </Button>
+              {guardado ? <Navigate to={"/"}></Navigate> : null}
             </Grid>
           </Grid>
         </CardContent>

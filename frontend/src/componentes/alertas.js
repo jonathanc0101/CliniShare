@@ -50,7 +50,7 @@ async function alertaEmailInvalido() {
   });
 }
 
-async function alertaModificacionExitosa() {
+async function alertaModificacionExitosa(entidad) {
   Swal.fire({
     title: "Éxito",
     text: "El evento se actualizó exitosamente",
