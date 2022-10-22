@@ -16,9 +16,9 @@ async function registerUser (req, res, next) {
   
 async function loginUser  (req, res, next) {
     const datosLogin = req.body;
-    const token = await userService.login(datosLogin.email, datosLogin.password);
+    const response = await userService.login(datosLogin.email, datosLogin.password);
   
-    res.send(JSON.stringify(token));
+    res.send(JSON.stringify(response));
   };
   
 

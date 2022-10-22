@@ -5,6 +5,7 @@ export const MedicosService = {
   getMedicoByDni: (dniABuscar) => getMedicoByDniFromModel(dniABuscar),
   createMedico: (medico) => createMedicoFromModel(medico),
   getMedicoById: (id) => getMedicoByIdFromModel(id),
+  obtenerMedicoIdAPartirDeMedicoUser,
 };
 
 async function getMedicosFromModel() {
@@ -17,15 +18,24 @@ async function getMedicosFromModel() {
   }
 }
 
+async function obtenerMedicoIdAPartirDeMedicoUser(medicoUser) {
+  const medicoFound =  await Medico.findOne({ where: {
+    dni:medicoUser.dni,
+    email:medicoUser.email,
+  } });
+
+  if(medicoFound){
+    return medicoFound.id
+  }
+}
+
 async function createMedicoFromModel(medico) {
   try {
-    
     let newMedico = await Medico.create(medico);
-
 
     return newMedico;
   } catch (error) {
-    console.log ("No se pudo crear médico, error: " + error);
+    console.log("No se pudo crear médico, error: " + error);
     return {};
   }
 }

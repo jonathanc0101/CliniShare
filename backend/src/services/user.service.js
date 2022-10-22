@@ -3,6 +3,7 @@ import { sesionActivaService } from "./sesionActiva.service.js";
 import bcrypt from "bcrypt";
 import { sequelize } from "../database/database.js";
 import { Medico } from "../models/Medico.js";
+import { MedicosService } from "./medico.service.js";
 import { MedicoUsuario } from "../models/MedicoUsuario.js";
 
 export const userService = {
@@ -42,7 +43,9 @@ async function login(email, password) {
     if (!token) {
       return {};
     } else {
-      return { token, medico: quitarPassword(medicoEncontrado) };
+      let medico = quitarPassword(medicoEncontrado);
+      medico.medicoId = await MedicosService.obtenerMedicoIdAPartirDeMedicoUser(medico);
+      return { token, medico };
     }
   } catch (error) {
     console.log("No se pudo logear médico usuario, error: " + error);
