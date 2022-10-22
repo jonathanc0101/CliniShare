@@ -2,18 +2,18 @@ import os from "os";
 import dgram from "dgram";
 import ipsGetter from "./getIp.js";
 import { SERVER_PORT, MAGIC_STRING, arrUUIDs } from "./constants.js";
+import { sesionActivaService } from "../services/sesionActiva.service.js";
+
 
 export const computadora = {
   nombre: os.userInfo().username,
   IPS: ipsGetter(),
   MAGIC_STRING: MAGIC_STRING,
-  medicoUUID: obtenerUUIDTESTING(),
+  medicoId: await obtenerUUID(),
 };
 
-function obtenerUUIDTESTING(){
-  //simula uuid del medico dependiendo del nombre de usuario
-  const indice = os.userInfo().username == "jona" ? 1 : 0;
-  return arrUUIDs[indice];
+async function obtenerUUID(){
+  await sesionActivaService.obtenerUUIDActual();
 }
 
 function broadcastMessage(myMessage) {

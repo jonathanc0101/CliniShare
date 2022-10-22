@@ -81,16 +81,5 @@ Evento.belongsTo(Medico, {
   allowNull:false,
 });
 
-//relacionando con sincronizacion
-Medico.hasMany(Sincronizacion, {
-  foreignKey: "medicoId",
-  sourceKey: "id",
-  allowNull:false,
-});
 
-Sincronizacion.belongsTo(Medico, {
-  foreignKey: "medicoId",
-  targetId: "id",
-  allowNull:false,
-});
 

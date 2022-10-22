@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 export const sesionActivaService = {
   nueva,
   comprobarToken,
+  obtenerUUIDActual
 };
 
 async function nueva(medicoEncontrado) {
@@ -40,5 +41,20 @@ async function comprobarToken(token) {
   } catch (error) {
     console.log( "No se pudo comprobar token, error: " + error);
     return false
+  }
+}
+
+async function obtenerUUIDActual(){
+  try {
+    const uuid = await SesionActiva.findOne();
+
+    if (uuid) {
+      return uuid.medicoId;
+    } else {
+      return {};
+    }
+  } catch (error) {
+    console.log( "No se pudo encontrar sesion, error: " + error);
+    return {}
   }
 }

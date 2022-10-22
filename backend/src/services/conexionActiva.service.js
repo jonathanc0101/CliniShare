@@ -33,8 +33,8 @@ async function getConexionPorIDFromModel(id){
 
 async function createConexionFromModel(conexion) {
   try {
-    
-    let newConexion = await ConexionActiva.create(conexion);
+    //MODIFICAR, QUE SI LA IP ESTA REPETIDA LOS DATOS SE PISEN
+    let newConexion = await ConexionActiva.upsert(conexion,{where:{ip:conexion.ip}});
 
     return newConexion;
   } catch (error) {
