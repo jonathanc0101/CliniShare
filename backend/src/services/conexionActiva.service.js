@@ -34,7 +34,13 @@ async function getConexionPorIDFromModel(id){
 async function createConexionFromModel(conexion) {
   try {
     //MODIFICAR, QUE SI LA IP ESTA REPETIDA LOS DATOS SE PISEN
-    let newConexion = await ConexionActiva.upsert(conexion,{where:{ip:conexion.ip}});
+    const conexionFound =  await ConexionActiva.findOne({where:{ip:""}});
+
+    if(conexionFound){
+      await ConexionActiva.destroy({where:{ip:conexion.ip}});
+    }
+
+    let newConexion = await ConexionActiva.create(conexion);
 
     return newConexion;
   } catch (error) {
