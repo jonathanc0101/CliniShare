@@ -1,48 +1,58 @@
 import { Sincronizacion } from "../models/Sincronizacion.js";
 
 export const SincronizacionService = {
-  getSincronizacionReciente: () => getSincronizacionRecienteFromModel(),
+  getSincronizacionReciente:  getSincronizacionMasRecienteFromModel,
   createSincronizacion: (sincronizacion) =>
     createSincronizacionFromModel(sincronizacion),
-    registrarSincronizacion
+  registrarSincronizacion,
+  getUltimaFechaDeSincronizacionConMedicoId,
 };
 
-async function registrarSincronizacion(computer){
-  const sincronizacionNueva = {medicoId:computer.medicoId};
+async function registrarSincronizacion(computer) {
+  const sincronizacionNueva = { medicoId: computer.medicoId };
   await createSincronizacionFromModel(sincronizacionNueva);
 }
 
-async function getSincronizacionRecienteFromModel() {
+async function getSincronizacionMasRecienteFromModel(medicoId) {
   const fechasDeSincronizaciones = await Sincronizacion.findAll({
     attributes: ["fecha"],
+    where:{medicoId}
   });
 
-//obtener fecha mas reciente
-let arrayFechas = fechasDeSincronizaciones.map((fechaActual) => new Date(fechaActual.fecha));
+  //obtener fecha mas reciente
+  let arrayFechas = fechasDeSincronizaciones.map(
+    (fechaActual) => new Date(fechaActual.fecha)
+  );
 
-var maxFecha = new Date(Math.max(...arrayFechas));
+  var maxFecha = new Date(Math.max(...arrayFechas));
 
-
-const sincronizacion = await Sincronizacion.findAll({
+  const sincronizacion = await Sincronizacion.findOne({
     where: {
-      fecha: maxFecha
-    }
+      fecha: maxFecha,
+      medicoId
+    },
   });
 
   if (!sincronizacion) {
-    return({});
-  }
-  else {
+    return {};
+  } else {
     return sincronizacion;
   }
-
 }
+
+async function getUltimaFechaDeSincronizacionConMedicoId(medicoId){
+  const ultima = await getSincronizacionMasRecienteFromModel(medicoId);
+  return ultima.fecha;
+}
+
 
 async function createSincronizacionFromModel(sincronizacion) {
   try {
-
     const fecha = new Date();
-    const newSincronizacion = await Sincronizacion.create({...sincronizacion,fecha});
+    const newSincronizacion = await Sincronizacion.create({
+      ...sincronizacion,
+      fecha,
+    });
 
     return newSincronizacion;
   } catch (error) {
