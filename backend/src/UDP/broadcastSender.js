@@ -13,7 +13,7 @@ export const computadora = {
 };
 
 async function obtenerUUID(){
-  await sesionActivaService.obtenerUUIDActual();
+  return await sesionActivaService.obtenerUUIDActual();
 }
 
 function broadcastMessage(myMessage) {
@@ -60,3 +60,4 @@ export function responderBroadcast(computer) {
     }
   );
 }
+

@@ -4,7 +4,7 @@ export async function registrarConexionActiva(computadora) {
   try {
       const conexion = {
         nombreUsuario: computadora.nombre,
-        idMedico: computadora.medicoUUID,
+        medicoId: computadora.medicoId,
         ip: computadora.ip[0],
       };
     

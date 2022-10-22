@@ -12,7 +12,7 @@ export const ConexionActiva = sequelize.define("conexionesActivas",{
         type: DataTypes.STRING,
         allowNull: false,
     },
-    idMedico:{
+    medicoId:{
         type: Sequelize.UUID,
         allowNull: false,
     },

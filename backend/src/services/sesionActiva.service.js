@@ -46,10 +46,10 @@ async function comprobarToken(token) {
 
 async function obtenerUUIDActual(){
   try {
-    const uuid = await SesionActiva.findOne();
+    const uuid = await SesionActiva.findOne({attributes: ["medicoId"]});
 
     if (uuid) {
-      return uuid;
+      return uuid.dataValues.medicoId;
     } else {
       return {};
     }
@@ -59,5 +59,3 @@ async function obtenerUUIDActual(){
   }
 }
 
-
-console.log(await obtenerUUIDActual());
