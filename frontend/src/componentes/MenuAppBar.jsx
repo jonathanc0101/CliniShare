@@ -147,11 +147,18 @@ function MenuAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {/* <Navigate to={"/"}> */}
-              <MenuItem>Account</MenuItem>
-              {/* </Navigate> */}
-              <MenuItem>Dashboard</MenuItem>
-              <MenuItem>Logout</MenuItem>
+              <Link
+                to={"/configuracion/cuenta"}
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                <MenuItem>Cuenta</MenuItem>
+              </Link>
+              <Link
+                to={"/"}
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                <MenuItem>Salir</MenuItem>
+              </Link>
 
               {/* {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>

@@ -11,6 +11,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useEffect, useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
+import BotonVolver from "./botones/BotonVolver";
 
 function ModificarMedico() {
   const [medico, setMedico] = useState({
@@ -202,7 +203,10 @@ function ModificarMedico() {
           </Grid>
           <br></br>
           <Grid container direction="row" spacing={2}>
-            <Grid item>
+          <Grid item xs={10}>
+              <BotonVolver></BotonVolver>
+            </Grid>
+            <Grid item xs={2}>
               <Button
                 variant="contained"
                 endIcon={<SaveIcon />}
