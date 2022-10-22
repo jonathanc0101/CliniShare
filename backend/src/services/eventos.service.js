@@ -20,6 +20,7 @@ export const EventosService = {
   getEventosCompletosImportantesPorPacienteId:
     getEventosImportantesCompletosPorIdPacienteFromModel,
   getEventosCompletosPorDnisYFechas,
+  getEventosCompletosPorDnisYFechasAPartirDeFecha,
 };
 
 async function getEventosFromModel() {
@@ -51,8 +52,7 @@ async function getEventosCompletosFromModel() {
   }
 }
 
-
-async function getEventosCompletosPorIDPaciente(pacienteId){
+async function getEventosCompletosPorIDPaciente(pacienteId) {
   const eventos = await Evento.findAll({
     include: [
       {
@@ -64,9 +64,7 @@ async function getEventosCompletosPorIDPaciente(pacienteId){
     ],
 
     where: { pacienteId },
-
   });
-
 
   if (eventos.length === 0) {
     return [];
@@ -92,7 +90,6 @@ async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
   } else {
     const eventosFiltrados = eventos.filter((evento) => {
       function obtenerObjDNIyFecha(x) {
-        
         return {
           dni: x.paciente.dni,
           fechaNacimiento: x.paciente.fechaNacimiento,
@@ -100,7 +97,48 @@ async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
       }
       const objDNIyFecha = obtenerObjDNIyFecha(evento);
 
-      return dnisYFechas.some(elem => JSON.stringify(objDNIyFecha) === JSON.stringify(elem));
+      return dnisYFechas.some(
+        (elem) => JSON.stringify(objDNIyFecha) === JSON.stringify(elem)
+      );
+    });
+
+    return eventosFiltrados;
+  }
+}
+
+async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
+  dnisYFechas,
+  fecha
+) {
+  const eventos = await Evento.findAll({
+    where: {
+      fechaModificacion: { [Op.gt]: fecha },
+    },
+    include: [
+      {
+        model: Medico,
+      },
+      {
+        model: Paciente,
+      },
+    ],
+  });
+
+  if (eventos.length === 0) {
+    return [];
+  } else {
+    const eventosFiltrados = eventos.filter((evento) => {
+      function obtenerObjDNIyFecha(x) {
+        return {
+          dni: x.paciente.dni,
+          fechaNacimiento: x.paciente.fechaNacimiento,
+        };
+      }
+      const objDNIyFecha = obtenerObjDNIyFecha(evento);
+
+      return dnisYFechas.some(
+        (elem) => JSON.stringify(objDNIyFecha) === JSON.stringify(elem)
+      );
     });
 
     return eventosFiltrados;
@@ -155,15 +193,15 @@ async function getEventosImportantesCompletosPorIdPacienteFromModel(
   pacienteId
 ) {
   const eventos = await Evento.findAll({
-    where: { 
-      pacienteId, importante: true,
-      fechaVencimiento:{
-        [Op.or]:{
+    where: {
+      pacienteId,
+      importante: true,
+      fechaVencimiento: {
+        [Op.or]: {
           [Op.gt]: new Date(),
           [Op.eq]: null,
-        }
-      }
-      
+        },
+      },
     },
     include: [
       {
@@ -185,7 +223,7 @@ async function createEventoFromModel(evento) {
     return newEvento;
   } catch (error) {
     console.log(error);
-    console.log ("No se pudo cargar el evento");
+    console.log("No se pudo cargar el evento");
     return {};
   }
 }

@@ -6,11 +6,16 @@ import { Evento } from "../models/Evento.js";
 import { SincronizacionService } from "../services/sincronizacion.service.js";
 
 export async function handleSincronizarPostRequest(req, res, next) {
-  res.send(await getDatosParaSincronizar(req.body));
+  console.log("\n\n");
+  console.log(req.body);
+  console.log("\n\n");
+
+  res.send(await getDatosParaSincronizar(...req.body));
 }
 
-export async function getDatosParaSincronizar(dnisYFechas) {
-  return await EventosService.getEventosCompletosPorDnisYFechas(dnisYFechas);
+export async function getDatosParaSincronizar(idMedico,dnisYFechas) {
+  const fecha = SincronizacionService.getUltimaFechaDeSincronizacionConMedicoId(idMedico);
+  return await EventosService.getEventosCompletosPorDnisYFechasAPartirDeFecha(dnisYFechas,fecha);
 }
 
 export async function actualizarDatos(datos) {
@@ -29,7 +34,6 @@ export async function actualizarDatos(datos) {
         await Evento.upsert(eventoAux,{transaction: t});
       }
 
-      await SincronizacionService.createSincronizacion({medicoId:datos["medico"]["id"]})
     });
 
 

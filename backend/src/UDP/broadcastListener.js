@@ -4,7 +4,7 @@ import emitter from '../eventos/eventEmitter.js';
 
 import {SERVER_PORT, MAGIC_STRING} from "./constants.js";
 
-import { getComputadora } from './broadcastSender.js';
+import { getComputadora } from './constants.js';
 
 const computadora = await getComputadora();
 

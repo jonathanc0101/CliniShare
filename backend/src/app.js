@@ -3,7 +3,6 @@ import medicosRoutes from "./routes/medicos.routes.js";
 import handshakeRoutes from "./routes/handshakes.routes.js";
 import pacientesRoutes from "./routes/pacientes.routes.js";
 import eventosRoutes from "./routes/eventos.routes.js";
-import sincronizacionesRoutes from "./routes/sincronizaciones.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import cors from "cors";
 
@@ -17,7 +16,6 @@ app.use(medicosRoutes);
 app.use(handshakeRoutes);
 app.use(pacientesRoutes);
 app.use(eventosRoutes);
-app.use(sincronizacionesRoutes);
 app.use(userRoutes);
 
 export default app;

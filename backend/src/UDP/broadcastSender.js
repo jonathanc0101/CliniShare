@@ -1,26 +1,12 @@
-import os from "os";
+
 import dgram from "dgram";
-import ipsGetter from "./getIp.js";
-import { SERVER_PORT, MAGIC_STRING, arrUUIDs } from "./constants.js";
-import { sesionActivaService } from "../services/sesionActiva.service.js";
+import { SERVER_PORT,  } from "./constants.js";
+import { getComputadora } from "./constants.js";
 
 
 
-export const getComputadora = async () => { 
-  const uuid = await obtenerUUID();
-  return {
-    nombre: os.userInfo().username,
-    IPS: ipsGetter(),
-    MAGIC_STRING: MAGIC_STRING,
-    medicoId: uuid,
-  }};
-  
 const computadora =  await getComputadora();
 
-async function obtenerUUID(){
-  const uuid = await sesionActivaService.obtenerUUIDActual();
-  return uuid;
-}
 
 function broadcastMessage(myMessage) {
   var sender = dgram.createSocket("udp4");
