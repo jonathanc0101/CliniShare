@@ -3,6 +3,7 @@ import dgram from "dgram";
 import ipsGetter from "./getIp.js";
 import { SERVER_PORT, MAGIC_STRING, arrUUIDs } from "./constants.js";
 import { sesionActivaService } from "../services/sesionActiva.service.js";
+import { compileFunction } from "vm";
 
 
 export const computadora = {
@@ -13,7 +14,8 @@ export const computadora = {
 };
 
 async function obtenerUUID(){
-  return await sesionActivaService.obtenerUUIDActual();
+  const uuid = await sesionActivaService.obtenerUUIDActual();
+  return uuid;
 }
 
 function broadcastMessage(myMessage) {
