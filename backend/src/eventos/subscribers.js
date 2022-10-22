@@ -12,10 +12,9 @@ export default function loadListeners(emitter) {
   emitter.on("new_computer_non_looping", (computer) => {
     handleNewComputerNonLooping(computer)});
     
-  emitter.on("new_valid_computer", (computer) => {
-    responderBroadcast(computer);
-    registrarConexionActiva(computer);
-    sincronizar(computer);
+    emitter.on("new_valid_computer", (computer) => {
+      registrarConexionActiva(computer);
+      sincronizar(computer).then(responderBroadcast(computer));
   });
 
   emitter.on("new_valid_computer_non_looping", (computer) => {

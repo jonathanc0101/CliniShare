@@ -25,7 +25,8 @@ async function createMedicoFromModel(medico) {
 
     return newMedico;
   } catch (error) {
-    return "No se pudo crear médico, error: " + error;
+    console.log ("No se pudo crear médico, error: " + error);
+    return {};
   }
 }
 
