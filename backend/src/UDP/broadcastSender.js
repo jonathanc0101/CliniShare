@@ -3,15 +3,19 @@ import dgram from "dgram";
 import ipsGetter from "./getIp.js";
 import { SERVER_PORT, MAGIC_STRING, arrUUIDs } from "./constants.js";
 import { sesionActivaService } from "../services/sesionActiva.service.js";
-import { compileFunction } from "vm";
 
 
-export const computadora = {
-  nombre: os.userInfo().username,
-  IPS: ipsGetter(),
-  MAGIC_STRING: MAGIC_STRING,
-  medicoId: await obtenerUUID(),
-};
+
+export const getComputadora = async () => { 
+  const uuid = await obtenerUUID();
+  return {
+    nombre: os.userInfo().username,
+    IPS: ipsGetter(),
+    MAGIC_STRING: MAGIC_STRING,
+    medicoId: uuid,
+  }};
+  
+const computadora =  await getComputadora();
 
 async function obtenerUUID(){
   const uuid = await sesionActivaService.obtenerUUIDActual();

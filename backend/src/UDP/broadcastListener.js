@@ -4,7 +4,9 @@ import emitter from '../eventos/eventEmitter.js';
 
 import {SERVER_PORT, MAGIC_STRING} from "./constants.js";
 
-import { computadora } from './broadcastSender.js';
+import { getComputadora } from './broadcastSender.js';
+
+const computadora = await getComputadora();
 
 export async function listenForBroadcasts(){
 
