@@ -49,7 +49,7 @@ async function obtenerUUIDActual(){
     const uuid = await SesionActiva.findOne();
 
     if (uuid) {
-      return uuid.medicoId;
+      return uuid;
     } else {
       return {};
     }
@@ -58,3 +58,6 @@ async function obtenerUUIDActual(){
     return {}
   }
 }
+
+
+console.log(await obtenerUUIDActual());

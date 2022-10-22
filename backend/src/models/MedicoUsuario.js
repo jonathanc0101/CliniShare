@@ -1,6 +1,7 @@
 import { DataTypes,Sequelize } from "sequelize";
 import { sequelize } from "../database/database.js";
 import {SesionActiva} from "./SesionActiva.js";
+import { Sincronizacion } from "./Sincronizacion.js";
 
 
 export const MedicoUsuario = sequelize.define(
@@ -69,3 +70,15 @@ SesionActiva.belongsTo(MedicoUsuario, {
   allowNull:false,
 });
 
+//relacionando con sincronizacion
+MedicoUsuario.hasMany(Sincronizacion, {
+  foreignKey: "medicoId",
+  sourceKey: "id",
+  allowNull:false,
+});
+
+Sincronizacion.belongsTo(MedicoUsuario, {
+  foreignKey: "medicoId",
+  targetId: "id",
+  allowNull:false,
+});

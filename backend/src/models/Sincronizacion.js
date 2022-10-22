@@ -14,7 +14,7 @@ export const Sincronizacion = sequelize.define("sincronizaciones",{
         allowNull: false,
         defaultValue: Sequelize.fn("now")
     },
-    idMedico:{
+    medicoId:{
         type:Sequelize.UUID,
         allowNull:false,
     }
