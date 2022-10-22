@@ -18,7 +18,6 @@ export default function loadListeners(emitter) {
 
       sincronizar(computer).then(
         () => {
-          console.log("\n\n\n noholas 0\n\n\n");
           responderBroadcast(computer);
           SincronizacionService.registrarSincronizacion(computer)
         }
@@ -27,7 +26,9 @@ export default function loadListeners(emitter) {
 
   emitter.on("new_valid_computer_non_looping", (computer) => {
     registrarConexionActiva(computer);
-    sincronizar(computer);
+    sincronizar(computer).then(() => {
+      SincronizacionService.registrarSincronizacion(computer)
+    });
   });
   
   emitter.on("datos_recibidos", (datos) => {
