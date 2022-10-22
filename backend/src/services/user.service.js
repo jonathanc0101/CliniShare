@@ -85,13 +85,15 @@ async function register(medico) {
 async function modify(medico) {
   try {
     let response = {};
+    const hash = await generateHash(medico.password);
+    const medicoNew = { ...medico, password: hash };
 
     await sequelize.transaction(async (t) => {
-      response = await MedicoUsuario.update(medico, {
-        where: { email: medico.email },
+      response = await MedicoUsuario.update(medicoNew, {
+        where: { email: medicoNew.email },
         transaction: t,
       });
-      await Medico.update(medico, { where: { email: medico.email }, transaction: t });
+      await Medico.update(medicoNew, { where: { email: medicoNew.email }, transaction: t });
     });
 
     if (response) {
