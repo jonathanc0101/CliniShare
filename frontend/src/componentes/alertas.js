@@ -6,6 +6,7 @@ export const alertas = {
   alertaExito,
   alertaProblemas,
   alertaModificacionExitosa,
+  alertaEmailInvalido
 };
 
 async function alertaPacienteExiste(pacienteDni) {
@@ -23,10 +24,10 @@ async function alertaCamposObligatorios() {
   });
 }
 
-async function alertaExito() {
+async function alertaExito(entidad) {
   Swal.fire({
     title: "Éxito",
-    text: "El paciente se guardo exitosamente",
+    html: `<p>El <b>${entidad}</b> se guardó exitosamente</p>`,
     icon: "success",
     timer: "2000",
     position: "center",
@@ -37,6 +38,14 @@ async function alertaProblemas() {
   Swal.fire({
     title: "",
     text: "Problemas al guardar",
+    icon: "error",
+  });
+}
+
+async function alertaEmailInvalido() {
+  Swal.fire({
+    title: "",
+    text: "Email inválido",
     icon: "error",
   });
 }

@@ -90,7 +90,7 @@ function NuevoEvento() {
       if (!response) {
         alertas.alertaProblemas();
       } else {
-        alertas.alertaExito();
+        alertas.alertaExito("evento");
         // navigate(-1);
       }
     } catch (err) {

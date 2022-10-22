@@ -13,6 +13,7 @@ import VerPaciente from "./componentes/VerPaciente";
 import SweetAlert from "./componentes/SweetAlert";
 import RegistroMedico from "./componentes/RegistroMedico";
 import LoginForm from "./componentes/LoginForm";
+import ModificarMedico from "./componentes/ModificarMedico";
 
 const Rutas = () => {
   let routes = useRoutes([
@@ -27,8 +28,9 @@ const Rutas = () => {
     { path: "/pacientes/ver/id/:id", element: <VerPaciente /> },
     { path: "/", element: <Home></Home> },
     { path: "/sa", element: <SweetAlert></SweetAlert> },
-    { path: "/registrar/medico", element: <RegistroMedico></RegistroMedico>},
-    { path: "/login", element: <LoginForm></LoginForm>}
+    { path: "/register/", element: <RegistroMedico></RegistroMedico>},
+    { path: "/login", element: <LoginForm></LoginForm>},
+    { path: "/configuracion/cuenta", element: <ModificarMedico></ModificarMedico>}
 
 
     // ...

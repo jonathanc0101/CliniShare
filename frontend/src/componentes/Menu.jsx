@@ -27,14 +27,19 @@ function Menu() {
         <Paper square={true}>
           <MenuList>
             <MenuItem>Menú</MenuItem>
-            <Link to={"/pacientes/all"} style={{ color: 'inherit', textDecoration: 'inherit'}}
+            <Link
+              to={"/pacientes/all"}
+              style={{ color: "inherit", textDecoration: "inherit" }}
             >
-              <MenuItem >Mis pacientes</MenuItem>
+              <MenuItem>Mis pacientes</MenuItem>
             </Link>
 
-            <Link to={"/eventos/all"}  style={{ color: 'inherit', textDecoration: 'inherit'}}> 
-              <MenuItem >Eventos</MenuItem>
-            </Link>
+            {/* <Link
+              to={"/eventos/all"}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              <MenuItem>Eventos</MenuItem>
+            </Link> */}
           </MenuList>
         </Paper>
       </Grid>

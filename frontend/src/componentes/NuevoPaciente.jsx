@@ -17,19 +17,20 @@ import BotonVolver from "./botones/BotonVolver";
 import { alertas } from "./alertas";
 
 function NuevoPaciente() {
+
   async function obtenerPacientesExistentes(pacienteDni) {
+    console.log("Paciente dni: ", pacienteDni);
     const pacientesExistentes = await api.obtenerPacientes();
-    pacientesExistentes.data.forEach((paciente) => {
-      if (pacienteDni === paciente.dni) {
-        return true;
-      }
+
+    return pacientesExistentes.data.some((element) => {
+      return element.dni === pacienteDni;
     });
-    return false;
   }
 
   const [Paciente, setPaciente] = useState({
     nombre: "",
     apellido: "",
+    dni: "",
     fechaNacimiento: "",
   });
 
@@ -37,18 +38,22 @@ function NuevoPaciente() {
     if (
       Paciente.dni.length === 0 ||
       Paciente.nombre.length === 0 ||
-      Paciente.apellido.length === 0
+      Paciente.apellido.length === 0 ||
+      Paciente.fechaNacimiento.length === 0
     ) {
       alertas.alertaCamposObligatorios();
       return;
-    } else if (obtenerPacientesExistentes(Paciente.dni)) {
-      alertas.alertaPacienteExiste(Paciente.dni);
     }
 
-    const pacienteGuardado = await api.guardarPaciente(Paciente);
-    if (pacienteGuardado === true) {
-      alertas.alertaExito();
-      // navigate(-1);
+    const existePaciente = await obtenerPacientesExistentes(Paciente.dni);
+    if (existePaciente) {
+      alertas.alertaPacienteExiste(Paciente.dni);
+      return;
+    } else {
+      const pacienteGuardado = await api.guardarPaciente(Paciente);
+      if (pacienteGuardado === true) {
+        alertas.alertaExito("paciente");
+      }
     }
   };
 
@@ -67,8 +72,7 @@ function NuevoPaciente() {
     setPaciente((estadoAnterior) => {
       return { ...estadoAnterior, fechaNacimiento: value };
     });
-  }
-
+  };
 
   const handleChangeDni = (event) => {
     // quitamos los valores no numericos
@@ -81,9 +85,10 @@ function NuevoPaciente() {
 
   return (
     <>
-      <Typography component="h4" variant="h4">
-        Nuevo Paciente
+      <Typography component="h4" variant="h5">
+        Nuevo paciente
       </Typography>
+      <br></br>
       <Box sx={{ width: "100%" }}>
         <Card>
           <CardContent>
@@ -128,40 +133,38 @@ function NuevoPaciente() {
                 ></TextField>
               </Grid>
               <br></br>
-              <Grid container direction="row" spacing={2}>
-                <Grid item xs={4} sm={4}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DesktopDatePicker
-                      label="Fecha de nacimiento"
-                      name="fechaNacimiento"
-                      value={Paciente.fechaNacimiento}
-                      onChange={handleChangeFecha}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </LocalizationProvider>
-                </Grid>
-              </Grid>
-              <br></br>
-              <Grid container direction="row" spacing={2}>
-                <Grid item xs={10}>
-                  <BotonVolver></BotonVolver>
-                </Grid>
-
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    endIcon={<SaveIcon />}
-                    onClick={handleGuardar}
-                  >
-                    <Typography color={"white"} variant="h7" align="left">
-                      &nbsp;Guardar
-                    </Typography>
-                  </Button>
-                </Grid>
+              <Grid item xs={4} sm={4}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DesktopDatePicker
+                    label="Fecha de nacimiento"
+                    name="fechaNacimiento"
+                    value={Paciente.fechaNacimiento}
+                    onChange={handleChangeFecha}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
               </Grid>
             </Grid>
           </CardContent>
         </Card>
+        <br></br>
+        <Grid container direction="row" spacing={2}>
+        <Grid item xs={10} >
+            <BotonVolver></BotonVolver>
+          </Grid>
+
+          <Grid item xs={2} >
+            <Button
+              variant="contained"
+              endIcon={<SaveIcon />}
+              onClick={handleGuardar}
+            >
+              <Typography color={"white"} variant="h7" align="left">
+                &nbsp;Guardar
+              </Typography>
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </>
   );
