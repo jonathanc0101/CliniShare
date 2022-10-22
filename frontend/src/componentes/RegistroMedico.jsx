@@ -174,7 +174,7 @@ function RegistroMedico() {
               >
                 <DesktopDatePicker
                   label="Fecha de nacimiento"
-                  toolbarFormat="ddd DD MMMM"
+                  mask="__/__/____"
                   name="fechaNacimiento"
                   value={medico.fechaNacimiento}
                   onChange={handleChangeFecha}
