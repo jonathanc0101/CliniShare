@@ -17,6 +17,7 @@ import { alertas } from "./alertas";
 
 function ModificarMedico() {
   const [guardado, setGuardado] = useState(false);
+  const [passwordAVerificar, setPasswordAVerificar] = useState("");
   const [medico, setMedico] = useState({
     nombre: "",
     apellido: "",
@@ -26,6 +27,8 @@ function ModificarMedico() {
     password: "",
     fechaNacimiento: "",
   });
+
+  const verificarPassword = (password) => password === medico.password;
 
   useEffect(() => {
     (() => {
@@ -40,15 +43,24 @@ function ModificarMedico() {
   }, []);
 
   const update = async () => {
+        if (!verificarPassword(passwordAVerificar)) {
+      alertas.contraseñasDiferentes();
+      return;
+    }
     // e.preventDefault();
     const respuesta = await api.modificarMedico({ ...medico });
     if (respuesta) {
-      setGuardado(true);
-
       alertas.alertaModificacionExitosa("usuario");
+      setGuardado(true);
     } else {
       alertas.alertaProblemas();
     }
+  };
+
+  const handleChangeVerificar = (event) => {
+    let value = event.target.value;
+
+    setPasswordAVerificar(value);
   };
 
   const handleChange = (event) => {
@@ -194,6 +206,8 @@ function ModificarMedico() {
                 label="Verifique contraseña"
                 type="text"
                 name="contraseñaVerificada"
+                value={passwordAVerificar}
+                onChange={handleChangeVerificar}
                 margin="dense"
                 fullWidth
                 variant="outlined"

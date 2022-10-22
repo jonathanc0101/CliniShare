@@ -64,11 +64,7 @@ function LoginForm() {
       console.log(usuario);
       if (Object.keys(usuario).length !== 0) {
         setDatosValidos(true);
-        // const usuarioAux = {
-        //   nombre: usuario.medico.nombre,
-        //   token: usuario.token,
-        //   email: usuario.medico.email,
-        // };
+
 
         window.localStorage.setItem(
           "loggedCliniShareAppUser",

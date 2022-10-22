@@ -14,9 +14,14 @@ import { alertas } from "./alertas";
 import SaveIcon from "@mui/icons-material/Save";
 import { Link, Navigate } from "react-router-dom";
 import BotonVolver from "./botones/BotonVolver";
+import dayjs from "dayjs";
+import "dayjs/locale/es";
 
 function RegistroMedico() {
   const [registrado, setRegistrado] = useState(false);
+  const [passwordAVerificar, setPasswordAVerificar] = useState("");
+
+  const verificarPassword = (password) => password === medico.password;
 
   const isEmail = (email) =>
     /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
@@ -32,8 +37,12 @@ function RegistroMedico() {
   });
 
   const guardar = async function () {
+    if (!verificarPassword(passwordAVerificar)) {
+      alertas.contraseñasDiferentes();
+      return;
+    }
+
     if (!isEmail(medico.email)) {
-      console.log("Email invalido");
       alertas.alertaEmailInvalido();
       return;
     }
@@ -54,6 +63,7 @@ function RegistroMedico() {
       setRegistrado(true);
     } else {
       alertas.alertaProblemas();
+      return;
     }
   };
 
@@ -64,6 +74,12 @@ function RegistroMedico() {
     setMedico((estadoAnterior) => {
       return { ...estadoAnterior, [name]: value };
     });
+  };
+
+  const handleChangeVerificar = (event) => {
+    let value = event.target.value;
+
+    setPasswordAVerificar(value);
   };
 
   const handleChangeDni = (event) => {
@@ -152,9 +168,13 @@ function RegistroMedico() {
           <br></br>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={4} sm={4}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <LocalizationProvider
+                adapterLocale="es"
+                dateAdapter={AdapterDayjs}
+              >
                 <DesktopDatePicker
                   label="Fecha de nacimiento"
+                  toolbarFormat="ddd DD MMMM"
                   name="fechaNacimiento"
                   value={medico.fechaNacimiento}
                   onChange={handleChangeFecha}
@@ -201,6 +221,8 @@ function RegistroMedico() {
                 label="Verifique contraseña"
                 type="text"
                 name="contraseñaVerificada"
+                value={passwordAVerificar}
+                onChange={handleChangeVerificar}
                 margin="dense"
                 fullWidth
                 variant="outlined"

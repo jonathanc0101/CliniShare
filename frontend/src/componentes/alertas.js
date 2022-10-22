@@ -6,7 +6,8 @@ export const alertas = {
   alertaExito,
   alertaProblemas,
   alertaModificacionExitosa,
-  alertaEmailInvalido
+  alertaEmailInvalido,
+  contraseñasDiferentes
 };
 
 async function alertaPacienteExiste(pacienteDni) {
@@ -50,10 +51,18 @@ async function alertaEmailInvalido() {
   });
 }
 
+async function contraseñasDiferentes() {
+  Swal.fire({
+    title: "",
+    text: "Las contraseñas no coinciden",
+    icon: "error",
+  });
+}
+
 async function alertaModificacionExitosa(entidad) {
   Swal.fire({
     title: "Éxito",
-    text: "El evento se actualizó exitosamente",
+    html: `<p>El <b>${entidad}</b> se actualizó exitosamente</p>`,
     icon: "success",
     timer: "2000",
     position: "center",
