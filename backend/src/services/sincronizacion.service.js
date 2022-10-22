@@ -4,7 +4,12 @@ export const SincronizacionService = {
   getSincronizacionReciente: () => getSincronizacionRecienteFromModel(),
   createSincronizacion: (sincronizacion) =>
     createSincronizacionFromModel(sincronizacion),
+    registrarSincronizacion
 };
+
+async function registrarSincronizacion(computer){
+  const sincronizacionNueva = {medicoId:computer.medicoId}
+}
 
 async function getSincronizacionRecienteFromModel() {
   const fechasDeSincronizaciones = await Sincronizacion.findAll({

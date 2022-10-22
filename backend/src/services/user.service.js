@@ -1,7 +1,7 @@
 import { MedicosUsuariosService } from "./medicoUsuario.service.js";
 import { sesionActivaService } from "./sesionActiva.service.js";
 import bcrypt from "bcrypt";
-import { MedicosService } from "./medico.service.js";
+import { sequelize } from "../database/database.js";
 import { Medico } from "../models/Medico.js";
 import { MedicoUsuario } from "../models/MedicoUsuario.js";
 
@@ -77,6 +77,7 @@ async function register(medico) {
 
     return responseUser;
   } catch (error) {
+    console.log(error);
     return {};
   }
 }
@@ -99,6 +100,7 @@ async function modify(medico) {
       return {};
     }
   } catch (error) {
+    console.log(error);
     return {};
   }
 }

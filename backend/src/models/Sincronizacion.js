@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
+import Sequelize from "sequelize";
 
 export const Sincronizacion = sequelize.define("sincronizaciones",{
     id:{
@@ -11,6 +12,7 @@ export const Sincronizacion = sequelize.define("sincronizaciones",{
     fecha:{
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: Sequelize.fn("now")
     },
 },{
     freezeTableName: true,

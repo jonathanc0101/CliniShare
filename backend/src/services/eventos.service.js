@@ -2,6 +2,8 @@ import { Evento } from "../models/Evento.js";
 import { Paciente } from "../models/Paciente.js";
 import { Medico } from "../models/Medico.js";
 
+import { Op } from "sequelize";
+
 export const EventosService = {
   getEventos: () => getEventosFromModel(),
   createEvento: (evento) => createEventoFromModel(evento),
@@ -153,7 +155,16 @@ async function getEventosImportantesCompletosPorIdPacienteFromModel(
   pacienteId
 ) {
   const eventos = await Evento.findAll({
-    where: { pacienteId, importante: true },
+    where: { 
+      pacienteId, importante: true,
+      fechaVencimiento:{
+        [Op.or]:{
+          [Op.gt]: new Date(),
+          [Op.eq]: null,
+        }
+      }
+      
+    },
     include: [
       {
         model: Medico,

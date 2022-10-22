@@ -1,8 +1,7 @@
 import { Paciente } from "../models/Paciente.js";
 import { sequelize } from "../database/database.js";
 import { Evento } from "../models/Evento.js";
-import { EventosService } from "./eventos.service.js";
-import { Medico } from "../models/Medico.js";
+
 
 export const PacientesService = {
   getPacientes: () => getPacientesFromModel(),
