@@ -19,7 +19,7 @@ export default function loadListeners(emitter) {
       sincronizar(computer).then(
         () => {
           responderBroadcast(computer);
-          SincronizacionService.registrarSincronizacion(computer)
+          SincronizacionService.registrarSincronizacion(computer.medicoId)
         }
         );
   });
@@ -27,7 +27,7 @@ export default function loadListeners(emitter) {
   emitter.on("new_valid_computer_non_looping", (computer) => {
     registrarConexionActiva(computer);
     sincronizar(computer).then(() => {
-      SincronizacionService.registrarSincronizacion(computer)
+      SincronizacionService.registrarSincronizacion(computer.medicoId)
     });
   });
   

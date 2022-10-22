@@ -29,7 +29,6 @@ export async function actualizarDatos(datos) {
         await Evento.upsert(eventoAux,{transaction: t});
       }
 
-      await SincronizacionService.createSincronizacion({medicoId:datos["medico"]["id"]})
     });
 
 
