@@ -3,7 +3,8 @@ import { userService } from "../services/user.service.js";
 
 export const userController = {
     registerUser,
-    loginUser
+    loginUser,
+    modifyUser,
 }
 
 async function registerUser (req, res, next) {
@@ -20,3 +21,11 @@ async function loginUser  (req, res, next) {
     res.send(JSON.stringify(token));
   };
   
+
+    
+async function modifyUser  (req, res, next) {
+  const user = req.body;
+  const response = await userService.modify(user);
+
+  res.send(JSON.stringify(response));
+};

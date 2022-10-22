@@ -5,7 +5,17 @@ export const MedicosUsuariosService = {
   getMedicoByDni: (dniABuscar) => getMedicoByDniFromModel(dniABuscar),
   getMedicoById: (id) => getMedicoByIdFromModel(id),
   getMedicoByEmail:getMedicoByEmailFromModel,
+  create,
+  modificar,
 };
+
+async function create(medico){
+  return await MedicoUsuario.create(medico);
+}
+
+async function modificar(medico){
+  return await MedicoUsuario.update(medico,{where:{id:medico.id}})
+}
 
 async function getMedicosFromModel() {
   const medicos = await MedicoUsuario.findAll();
