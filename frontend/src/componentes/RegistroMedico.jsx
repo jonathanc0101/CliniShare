@@ -12,11 +12,14 @@ import { useState } from "react";
 import { api } from "../API backend/api";
 import { alertas } from "./alertas";
 import SaveIcon from "@mui/icons-material/Save";
+import { Link, Navigate } from "react-router-dom";
 
 function RegistroMedico() {
 
+  const [registrado, setRegistrado] = useState(false);
+
   const isEmail = (email) =>
-  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
   const [medico, setMedico] = useState({
     nombre: "",
@@ -29,27 +32,29 @@ function RegistroMedico() {
   });
 
   const guardar = async function () {
-
     if (!isEmail(medico.email)) {
       console.log("Email invalido");
       alertas.alertaEmailInvalido();
       return;
-      
     }
 
     const medicoGuardado = await api.guardarMedicoUsuario(medico);
     if (medicoGuardado === false) {
       alertas.alertaProblemas();
       // navigate(-1);
-    }else if (medico.nombre.length === 0 ||
+    } else if (
+      medico.nombre.length === 0 ||
       medico.dni.length === 0 ||
       medico.apellido.length === 0 ||
       medico.email.length === 0 ||
-      medico.password.length === 0){
-        alertas.alertaCamposObligatorios();
-      }else{
-        alertas.alertaExito("médico");
-      }
+      medico.password.length === 0
+    ) {
+      alertas.alertaCamposObligatorios();
+    } else {
+      alertas.alertaExito("médico");
+      setRegistrado(true);
+    }
+
   };
 
   const handleChange = (event) => {
@@ -167,7 +172,6 @@ function RegistroMedico() {
                 type="text"
                 name="email"
                 value={medico.email}
-                
                 onChange={handleChange}
                 margin="dense"
                 fullWidth
@@ -207,15 +211,17 @@ function RegistroMedico() {
           <br></br>
           <Grid container direction="row" spacing={2}>
             <Grid item>
-              <Button
-                variant="contained"
-                endIcon={<SaveIcon />}
-                onClick={guardar}
-              >
-                <Typography color={"white"} variant="h7" align="left">
-                  &nbsp;Guardar
-                </Typography>
-              </Button>
+             
+                <Button
+                  variant="contained"
+                  endIcon={<SaveIcon />}
+                  onClick={guardar}
+                >
+                  <Typography color={"white"} variant="h7" align="left">
+                    &nbsp;Guardar
+                  </Typography>
+                </Button>
+                {registrado ?  <Navigate to={"/"}></Navigate>: null}
             </Grid>
           </Grid>
         </CardContent>

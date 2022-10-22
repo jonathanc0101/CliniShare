@@ -26,10 +26,10 @@ const Rutas = () => {
     { path: "/pacientes/id/:id", element: <ModificarPaciente /> },
 
     { path: "/pacientes/ver/id/:id", element: <VerPaciente /> },
-    { path: "/", element: <Home></Home> },
+    { path: "/home", element: <Home></Home> },
     { path: "/sa", element: <SweetAlert></SweetAlert> },
     { path: "/register/", element: <RegistroMedico></RegistroMedico>},
-    { path: "/login", element: <LoginForm></LoginForm>},
+    { path: "/", element: <LoginForm></LoginForm>},
     { path: "/configuracion/cuenta/", element: <ModificarMedico></ModificarMedico>}
 
 
