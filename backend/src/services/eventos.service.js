@@ -218,6 +218,7 @@ async function getEventosImportantesCompletosPorIdPacienteFromModel(
 
 async function createEventoFromModel(evento) {
   try {
+    evento.fechaModificacion = new Date();
     const newEvento = await Evento.create(evento);
 
     return newEvento;
@@ -230,6 +231,7 @@ async function createEventoFromModel(evento) {
 
 async function updateEventoPorIdFromModel(evento, id) {
   try {
+    evento.fechaModificacion = new Date();
     const response = await Evento.update(evento, {
       where: { id: id },
     });
