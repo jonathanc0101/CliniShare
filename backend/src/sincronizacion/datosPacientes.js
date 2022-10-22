@@ -15,6 +15,11 @@ export async function handleSincronizarPostRequest(req, res, next) {
 
 export async function getDatosParaSincronizar(idMedico,dnisYFechas) {
   const fecha = SincronizacionService.getUltimaFechaDeSincronizacionConMedicoId(idMedico);
+
+  console.log("\n\n");
+  console.log(fecha);
+  console.log("\n\n");
+
   return await EventosService.getEventosCompletosPorDnisYFechasAPartirDeFecha(dnisYFechas,fecha);
 }
 
