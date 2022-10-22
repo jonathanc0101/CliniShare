@@ -1,21 +1,21 @@
 
-import { sessionService } from "../services/session.medicoUsuario.service.js";
+import { userService } from "../services/user.service.js";
 
-export const sessionController = {
+export const userController = {
     registerUser,
     loginUser
 }
 
 async function registerUser (req, res, next) {
     const credentials = req.body;
-    const response = await sessionService.register(credentials);
+    const response = await userService.register(credentials);
 
     res.send(JSON.stringify(response));
   };
   
 async function loginUser  (req, res, next) {
     const datosLogin = req.body;
-    const token = await sessionService.login(datosLogin.email, datosLogin.password);
+    const token = await userService.login(datosLogin.email, datosLogin.password);
   
     res.send(JSON.stringify(token));
   };
