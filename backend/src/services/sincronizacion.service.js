@@ -24,7 +24,7 @@ const sincronizacion = await Sincronizacion.findAll({
   });
 
   if (!sincronizacion) {
-    return("Sincronizacion no encontrado");
+    return({});
   }
   else {
     return sincronizacion;
@@ -39,6 +39,6 @@ async function createSincronizacionFromModel(sincronizacion) {
 
     return newSincronizacion;
   } catch (error) {
-    return "Error en la creación de sincronización" + error;
+    console.log("Error en la creación de sincronización" + error);
   }
 }

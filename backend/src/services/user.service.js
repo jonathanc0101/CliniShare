@@ -2,6 +2,7 @@ import { MedicoUsuario } from "../models/MedicoUsuario.js";
 import { MedicosUsuariosService } from "./medicoUsuario.service.js";
 import { sesionActivaService } from "./sesionActiva.service.js";
 import bcrypt from "bcrypt";
+import { MedicosService } from "./medico.service.js";
 
 export const userService = {
   login,
@@ -60,13 +61,14 @@ async function register(medico) {
     const hash = await generateHash(password);
     const newMedico = { ...medico, password: hash };
     
-    let responseMedico = await MedicoUsuario.create(newMedico);
+    let responseUser = await MedicoUsuario.create(newMedico);
+    const medicoCreado = await MedicosService.createMedico(newMedico);
 
     //no le enviamos el hash al usuario para que no pueda bruteforcearlo
-    delete responseMedico.password;
+    responseUser = quitarPassword(responseUser);
 
-    return responseMedico;
+    return responseUser;
   } catch (error) {
-    return "No se pudo registrar médico usuario, error: " + error;
+    return {};
   }
 }

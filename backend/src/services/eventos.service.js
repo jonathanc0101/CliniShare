@@ -174,7 +174,8 @@ async function createEventoFromModel(evento) {
     return newEvento;
   } catch (error) {
     console.log(error);
-    return "No se pudo cargar el evento";
+    console.log ("No se pudo cargar el evento");
+    return {};
   }
 }
 

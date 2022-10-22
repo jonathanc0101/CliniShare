@@ -19,7 +19,8 @@ async function nueva(medicoEncontrado) {
 
     return token;
   } catch (error) {
-    return "No se pudo registrar crear nuevo token, error: " + error;
+    console.log( "No se pudo registrar crear nuevo token, error: " + error);
+    return {}
   }
 }
 
@@ -37,6 +38,7 @@ async function comprobarToken(token) {
       return false;
     }
   } catch (error) {
-    return "No se pudo comprobar token, error: " + error;
+    console.log( "No se pudo comprobar token, error: " + error);
+    return false
   }
 }

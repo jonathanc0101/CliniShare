@@ -38,7 +38,8 @@ async function createConexionFromModel(conexion) {
 
     return newConexion;
   } catch (error) {
-    return "Error en la createConexionFromModel " + error;
+    console.log( "Error en la createConexionFromModel " + error);
+    return {};
   }
 }
 
@@ -49,6 +50,7 @@ async function deleteConexionPorIdFromModel(id) {
     });
     
   } catch (error) {
-    return "Error en deleteConexionFromModel " + error;
+    console.log( "Error en deleteConexionFromModel " + error);
+    return {};
   }
 }
