@@ -10,7 +10,7 @@ export async function handleSincronizarPostRequest(req, res, next) {
   console.log(req.body);
   console.log("\n\n");
 
-  res.send(await getDatosParaSincronizar(...req.body));
+  res.send(await getDatosParaSincronizar(req.body.medicoId,req.body.dnisyFechasASincronizar));
 }
 
 export async function getDatosParaSincronizar(idMedico,dnisYFechas) {
