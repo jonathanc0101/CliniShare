@@ -30,7 +30,7 @@ const Rutas = () => {
     { path: "/sa", element: <SweetAlert></SweetAlert> },
     { path: "/register/", element: <RegistroMedico></RegistroMedico>},
     { path: "/login", element: <LoginForm></LoginForm>},
-    { path: "/configuracion/cuenta", element: <ModificarMedico></ModificarMedico>}
+    { path: "/configuracion/cuenta/", element: <ModificarMedico></ModificarMedico>}
 
 
     // ...

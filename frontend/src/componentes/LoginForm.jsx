@@ -61,22 +61,20 @@ function LoginForm() {
 
     try {
       const usuario = await api.login(correoElectronico, password);
-      console.log("Object: ", usuario);
-      console.log(Object.keys(usuario).length !== 0);
+      console.log(usuario);
       if (Object.keys(usuario).length !== 0) {
         setDatosValidos(true);
-        const usuarioAux = {
-          nombre: usuario.medico.nombre,
-          token: usuario.token,
-          email: usuario.medico.email,
-        };
+        // const usuarioAux = {
+        //   nombre: usuario.medico.nombre,
+        //   token: usuario.token,
+        //   email: usuario.medico.email,
+        // };
 
-        console.log("Usuario aux: ", usuarioAux);
         window.localStorage.setItem(
           "loggedCliniShareAppUser",
-          JSON.stringify(usuarioAux)
+          JSON.stringify(usuario)
         );
-        setUsuario(usuarioAux);
+        setUsuario(usuario);
         setCorreoElectronico("");
         setPassword("");
       }

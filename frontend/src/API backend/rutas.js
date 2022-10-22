@@ -18,7 +18,9 @@ const rutas = {
   getEventosCompletos: "eventos/all/completos",
   nuevoMedico: "medicos/new",
   nuevoMedicoUsuario: "register",
-  LoginMedicoUsuario: "login"
+  LoginMedicoUsuario: "login",
+  modificarMedico: "modify",
+
 
 
 

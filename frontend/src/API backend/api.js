@@ -18,7 +18,8 @@ export const api = {
   obtenerEventosCompletos,
   guardarMedico,
   guardarMedicoUsuario,
-  login
+  login,
+  modificarMedico
 
 };
 
@@ -128,17 +129,6 @@ async function modificarEvento(id, Evento) {
   }
 }
 
-// async function obtenerEvento(id) {
-//   try {
-//     const eventoObtenido = await axios.get(rutas.getEvento + id);
-
-//     console.log("Object: ", eventoObtenido.data);
-//     return eventoObtenido.data;
-//   } catch (error) {
-//     return "El evento no existe";
-//   }
-// }
-
 async function obtenerEventoConPacienteYMedicoPorId(id) {
   try {
     const eventoObtenido = await axios.get(
@@ -232,5 +222,18 @@ async function obtenerEventosCompletosImportantesPorPacienteId(pacienteId) {
     return eventosImportantesObtenidos;
   } catch (error) {
     return "El evento no existe";
+  }
+}
+
+async function modificarMedico(Medico) {
+  try {
+    const response = await axios.put(rutas.modificarMedico, Medico);
+
+    const medicoRespuesta = response.data;
+
+    return Object.keys(medicoRespuesta).length !== 0;
+  } catch (error) {
+    console.error(error);
+    return false;
   }
 }

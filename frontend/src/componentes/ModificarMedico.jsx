@@ -10,8 +10,30 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
+import { api } from "../API backend/api";
 
 function ModificarMedico() {
+
+  // const update = async () => {
+  //   // e.preventDefault();
+  //   await api.modificarMedico(params.id, {
+  //     nombre: nombre,
+  //     apellido: apellido,
+  //     dni: dni,
+  //   });
+  //   alert("Se modificó el paciente exitosamente");
+  //   navigate(-1);
+  // };
+
+  useEffect(() => {
+    (async () => {
+      const usuario = await window.localStorage.getItem("loggedCliniShareAppUser");;
+      setNombre(usuario.nombre);
+      setApellido(usuario.apellido);
+      setDni(usuario.dni);
+    })();
+  }, [params.id]);
+
   const emailValido = (email) =>
     /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
