@@ -8,7 +8,8 @@ export const SincronizacionService = {
 };
 
 async function registrarSincronizacion(computer){
-  const sincronizacionNueva = {medicoId:computer.medicoId};
+
+  const sincronizacionNueva = {idMedico:computer.medicoId};
   await createSincronizacionFromModel(sincronizacionNueva);
 }
 
