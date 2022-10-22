@@ -8,47 +8,46 @@ import {
 } from "@mui/material";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
 import { api } from "../API backend/api";
 
 function ModificarMedico() {
-
-  // const update = async () => {
-  //   // e.preventDefault();
-  //   await api.modificarMedico(params.id, {
-  //     nombre: nombre,
-  //     apellido: apellido,
-  //     dni: dni,
-  //   });
-  //   alert("Se modificó el paciente exitosamente");
-  //   navigate(-1);
-  // };
-
-  useEffect(() => {
-    (async () => {
-      const usuario = await window.localStorage.getItem("loggedCliniShareAppUser");;
-      setNombre(usuario.nombre);
-      setApellido(usuario.apellido);
-      setDni(usuario.dni);
-    })();
-  }, [params.id]);
-
-  const emailValido = (email) =>
-    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-
   const [medico, setMedico] = useState({
     nombre: "",
     apellido: "",
     dni: "",
-    matricula: "",
     email: "",
+    matricula: "",
     password: "",
     fechaNacimiento: "",
   });
 
-  const guardar = async () => {
-    return;
+  useEffect(() => {
+    (() => {
+      const usuario = JSON.parse(
+        window.localStorage.getItem("loggedCliniShareAppUser")
+      );
+
+      setMedico((estadoAnterior) => {
+        return { ...estadoAnterior, ...usuario.medico };
+      });
+    })();
+  }, []);
+
+  const usuarioAux = JSON.parse(
+    window.localStorage.getItem("loggedCliniShareAppUser")
+  );
+  const id = usuarioAux.medico.id;
+  const update = async () => {
+    // e.preventDefault();
+    const respuesta = await api.modificarMedico({...medico
+    });
+    if (respuesta) {
+      alert("Se modificó el médico exitosamente");
+    } else {
+      alert("No se pudo actualizar el médico")
+    }
   };
 
   const handleChange = (event) => {
@@ -135,7 +134,7 @@ function ModificarMedico() {
                 type="text"
                 name="matricula"
                 value={medico.matricula}
-                onChange={handleChange}
+                onChange={(e) => setMedico({ matricula: e.target.value })}
                 margin="dense"
                 fullWidth
                 variant="outlined"
@@ -169,14 +168,14 @@ function ModificarMedico() {
                 margin="dense"
                 fullWidth
                 variant="outlined"
-                helperText="Campo obligatorio"
+                disabled
               ></TextField>
             </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={2} sm={6}>
               <TextField
-                label="Contraseña"
+                label="Nueva contraseña"
                 type="text"
                 name="password"
                 value={medico.password}
@@ -207,7 +206,7 @@ function ModificarMedico() {
               <Button
                 variant="contained"
                 endIcon={<SaveIcon />}
-                onClick={guardar}
+                onClick={update}
               >
                 <Typography color={"white"} variant="h7" align="left">
                   &nbsp;Guardar

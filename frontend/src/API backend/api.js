@@ -228,7 +228,7 @@ async function obtenerEventosCompletosImportantesPorPacienteId(pacienteId) {
 async function modificarMedico(Medico) {
   try {
     const response = await axios.put(rutas.modificarMedico, Medico);
-
+    console.log(response.data)
     const medicoRespuesta = response.data;
 
     return Object.keys(medicoRespuesta).length !== 0;
@@ -237,3 +237,4 @@ async function modificarMedico(Medico) {
     return false;
   }
 }
+
