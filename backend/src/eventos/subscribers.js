@@ -15,8 +15,10 @@ export default function loadListeners(emitter) {
     
     emitter.on("new_valid_computer", (computer) => {
       registrarConexionActiva(computer);
+
       sincronizar(computer).then(
         () => {
+          console.log("\n\n\n noholas 0\n\n\n");
           responderBroadcast(computer);
           SincronizacionService.registrarSincronizacion(computer)
         }

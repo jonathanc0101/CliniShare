@@ -8,7 +8,7 @@ export const SincronizacionService = {
 };
 
 async function registrarSincronizacion(computer){
-
+  console.log("\n\n\n hola 0\n\n\n");
   const sincronizacionNueva = {medicoId:computer.medicoId};
   await createSincronizacionFromModel(sincronizacionNueva);
 }
@@ -41,7 +41,9 @@ const sincronizacion = await Sincronizacion.findAll({
 
 async function createSincronizacionFromModel(sincronizacion) {
   try {
-    const fecha = new Date()
+
+    console.log("\n\n\n hola \n\n\n");
+    const fecha = new Date();
     const newSincronizacion = await Sincronizacion.create({...sincronizacion,fecha});
 
     return newSincronizacion;

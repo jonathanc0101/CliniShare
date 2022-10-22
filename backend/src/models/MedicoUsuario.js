@@ -70,15 +70,3 @@ SesionActiva.belongsTo(MedicoUsuario, {
   allowNull:false,
 });
 
-//relacionando con sincronizacion
-MedicoUsuario.hasMany(Sincronizacion, {
-  foreignKey: "medicoId",
-  sourceKey: "id",
-  allowNull:false,
-});
-
-Sincronizacion.belongsTo(MedicoUsuario, {
-  foreignKey: "medicoId",
-  targetId: "id",
-  allowNull:false,
-});
