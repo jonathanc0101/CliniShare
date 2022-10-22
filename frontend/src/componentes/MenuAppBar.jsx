@@ -12,7 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import MedicalIcon from "@mui/icons-material/MedicalServices";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const pages = [];
 const settings = ["Account", "Dashboard", "Logout"];
@@ -23,7 +23,6 @@ function MenuAppBar() {
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -31,7 +30,6 @@ function MenuAppBar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-
   };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -149,19 +147,17 @@ function MenuAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {/* <MenuItem onClick={()=> handleUserClick("/register")}>
-                Account
-                
-              </MenuItem>
+              {/* <Navigate to={"/"}> */}
+              <MenuItem>Account</MenuItem>
+              {/* </Navigate> */}
               <MenuItem>Dashboard</MenuItem>
-              <MenuItem>Logout</MenuItem> */}
+              <MenuItem>Logout</MenuItem>
 
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Link to={"/register"}></Link>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {/* {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+              ))} */}
             </Menu>
           </Box>
         </Toolbar>
