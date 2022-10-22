@@ -34,12 +34,12 @@ function Menu() {
               <MenuItem>Mis pacientes</MenuItem>
             </Link>
 
-            <Link
+            {/* <Link
               to={"/eventos/all"}
               style={{ color: "inherit", textDecoration: "inherit" }}
             >
               <MenuItem>Eventos</MenuItem>
-            </Link>
+            </Link> */}
           </MenuList>
         </Paper>
       </Grid>

@@ -115,11 +115,10 @@ function LoginForm() {
               onChange={({ target }) => setCorreoElectronico(target.value)}
               endAdornment={
                 <InputAdornment position="end">
-                    <AlternateEmailIcon></AlternateEmailIcon>
-    
+                  <AlternateEmailIcon></AlternateEmailIcon>
                 </InputAdornment>
               }
-              placeholder="Ingrese el correo electrónico"
+              placeholder="Correo electrónico"
               required
             />
 
@@ -147,7 +146,7 @@ function LoginForm() {
                   </IconButton>
                 </InputAdornment>
               }
-              placeholder="Ingrese la contraseña"
+              placeholder="Contraseña"
               required
             />
             {/* </FormControl> */}
@@ -164,7 +163,7 @@ function LoginForm() {
               style={btnstyle}
               fullWidth
             >
-              Login
+              INICIAR SESIÓN
             </Button>
 
             {/* <Typography>
