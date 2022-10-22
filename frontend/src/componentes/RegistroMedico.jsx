@@ -13,9 +13,9 @@ import { api } from "../API backend/api";
 import { alertas } from "./alertas";
 import SaveIcon from "@mui/icons-material/Save";
 import { Link, Navigate } from "react-router-dom";
+import BotonVolver from "./botones/BotonVolver";
 
 function RegistroMedico() {
-
   const [registrado, setRegistrado] = useState(false);
 
   const isEmail = (email) =>
@@ -54,7 +54,6 @@ function RegistroMedico() {
       alertas.alertaExito("médico");
       setRegistrado(true);
     }
-
   };
 
   const handleChange = (event) => {
@@ -210,18 +209,21 @@ function RegistroMedico() {
           </Grid>
           <br></br>
           <Grid container direction="row" spacing={2}>
-            <Grid item>
-             
-                <Button
-                  variant="contained"
-                  endIcon={<SaveIcon />}
-                  onClick={guardar}
-                >
-                  <Typography color={"white"} variant="h7" align="left">
-                    &nbsp;Guardar
-                  </Typography>
-                </Button>
-                {registrado ?  <Navigate to={"/"}></Navigate>: null}
+            <Grid item xs={10}>
+              <BotonVolver></BotonVolver>
+            </Grid>
+
+            <Grid item xs={2}>
+              <Button
+                variant="contained"
+                endIcon={<SaveIcon />}
+                onClick={guardar}
+              >
+                <Typography color={"white"} variant="h7" align="left">
+                  &nbsp;Guardar
+                </Typography>
+              </Button>
+              {registrado ? <Navigate to={"/"}></Navigate> : null}
             </Grid>
           </Grid>
         </CardContent>

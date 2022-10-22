@@ -29,7 +29,7 @@ async function alertaExito(entidad) {
     title: "Éxito",
     html: `<p>El <b>${entidad}</b> se guardó exitosamente</p>`,
     icon: "success",
-    timer: "2000",
+    timer: "1000",
     position: "center",
   });
 }
