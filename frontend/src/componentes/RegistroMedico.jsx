@@ -38,11 +38,7 @@ function RegistroMedico() {
       return;
     }
 
-    const medicoGuardado = await api.guardarMedicoUsuario(medico);
-    if (medicoGuardado === false) {
-      alertas.alertaProblemas();
-      // navigate(-1);
-    } else if (
+    if (
       medico.nombre.length === 0 ||
       medico.dni.length === 0 ||
       medico.apellido.length === 0 ||
@@ -50,9 +46,14 @@ function RegistroMedico() {
       medico.password.length === 0
     ) {
       alertas.alertaCamposObligatorios();
-    } else {
+      return;
+    }
+    const medicoGuardado = await api.guardarMedicoUsuario(medico);
+    if (medicoGuardado) {
       alertas.alertaExito("médico");
       setRegistrado(true);
+    } else {
+      alertas.alertaProblemas();
     }
   };
 
