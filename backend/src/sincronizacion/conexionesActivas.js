@@ -8,7 +8,7 @@ export async function registrarConexionActiva(computadora) {
         medicoId: computadora.medicoId,
         ip: computadora.ip[0],
       };
-    
+  
       await ConexionActivaService.createConexion(conexion);
       
     
