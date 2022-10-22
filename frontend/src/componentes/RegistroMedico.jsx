@@ -2,7 +2,12 @@ import {
   Button,
   Card,
   CardContent,
+  FormControl,
   Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
   TextField,
   Typography,
 } from "@mui/material";
@@ -12,6 +17,8 @@ import { useState } from "react";
 import { api } from "../API backend/api";
 import { alertas } from "./alertas";
 import SaveIcon from "@mui/icons-material/Save";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function RegistroMedico() {
 
@@ -38,10 +45,18 @@ function RegistroMedico() {
     }
 
     const medicoGuardado = await api.guardarMedicoUsuario(medico);
-    if (medicoGuardado === true) {
-      alertas.alertaExito("médico");
+    if (medicoGuardado === false) {
+      alertas.alertaProblemas();
       // navigate(-1);
-    }
+    }else if (medico.nombre.length === 0 ||
+      medico.dni.length === 0 ||
+      medico.apellido.length === 0 ||
+      medico.email.length === 0 ||
+      medico.password.length === 0){
+        alertas.alertaCamposObligatorios();
+      }else{
+        alertas.alertaExito("médico");
+      }
   };
 
   const handleChange = (event) => {
@@ -69,6 +84,21 @@ function RegistroMedico() {
     });
   };
 
+  const [values, setValues] = useState({
+    mostrarPassword: "",
+  });
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      mostrarPassword: !values.mostrarPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <Card>
@@ -82,6 +112,7 @@ function RegistroMedico() {
 
             {/* Nombre y apellido */}
             <Grid item xs={4} sm={4}>
+              
               <TextField
                 label="Nombre"
                 type="text"
@@ -168,9 +199,36 @@ function RegistroMedico() {
               ></TextField>
             </Grid>
           </Grid>
+          <br></br>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={2} sm={6}>
-              <TextField
+            <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined"> 
+            <InputLabel>Password</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={values.mostrarPassword ? "text" : "password"}
+              value={medico.password}
+              onChange={handleChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {values.mostrarPassword ? (
+                      <VisibilityOff />
+                    ) : (
+                      <Visibility />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              }
+              required
+            />
+            </FormControl>
+              {/* <TextField
                 label="Contraseña"
                 type="text"
                 name="password"
@@ -180,7 +238,7 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
-              ></TextField>
+              ></TextField> */}
             </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
