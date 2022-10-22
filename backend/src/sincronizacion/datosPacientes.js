@@ -14,7 +14,7 @@ export async function handleSincronizarPostRequest(req, res, next) {
 }
 
 export async function getDatosParaSincronizar(idMedico,dnisYFechas) {
-  const fecha = SincronizacionService.getUltimaFechaDeSincronizacionConMedicoId(idMedico);
+  const fecha = await SincronizacionService.getUltimaFechaDeSincronizacionConMedicoId(idMedico);
 
   console.log("\n\n");
   console.log(fecha);
