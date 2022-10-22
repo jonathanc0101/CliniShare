@@ -94,7 +94,7 @@ function LoginForm() {
   return (
     <>
       {datosValidos ? (
-        <Navigate to="/" />
+        <Navigate to="/home" />
       ) : (
         <Grid>
           <Paper elevation={10} style={paperStyle}>
@@ -147,6 +147,8 @@ function LoginForm() {
               placeholder="Contraseña"
               required
             />
+            <br></br>
+            <br></br>
             {/* </FormControl> */}
 
             {/* Recordar contraseña */}
@@ -164,6 +166,17 @@ function LoginForm() {
               INICIAR SESIÓN
             </Button>
 
+            <br></br>
+            <Link to={"/register"}>
+              <Button
+                color="secondary"
+                variant="contained"
+                style={btnstyle}
+                fullWidth
+              >
+                REGISTRARSE
+              </Button>
+            </Link>
             {/* <Typography>
             <Link href="#">Forgot password ?</Link>
           </Typography>
