@@ -58,12 +58,12 @@ export default function loadListeners(emitter) {
   emitter.on("datos_recibidos", async (obj) => {
     console.log("\n\nevento:datos_recibidos\n\n");
     await actualizarDatos(obj.datosPacientes);
+    await responderBroadcast(obj.computadora);
   });
   
   emitter.on("datos_recibidos_non_looping", async (obj) => {
     await actualizarDatos(obj.datosPacientes);
     console.log("\n\nevento:datos_recibidos_non_looping\n\n");
-    await responderBroadcast(obj.computadora);
   });
 
 
