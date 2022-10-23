@@ -54,10 +54,9 @@ export async function sincronizar(computadora) {
       dnisyFechasASincronizar,
     })
     .then((res) => {
+
+      
       if (!res.data) {
-        return; //chau chau adios
-      }
-      if (res.data.length === 0) {
         return; //chau chau adios
       }
 
