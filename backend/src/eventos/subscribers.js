@@ -48,7 +48,7 @@ export default function loadListeners(emitter) {
     });
   });
 
-  emitter.on("datos_recibidos", async (datos) => {
+  emitter.on("datos_recibidos", async ({datos,computer}) => {
     await actualizarDatos(datos);
     responderBroadcast(computer);
   });
