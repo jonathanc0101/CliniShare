@@ -6,20 +6,11 @@ import { Evento } from "../models/Evento.js";
 import { SincronizacionService } from "../services/sincronizacion.service.js";
 
 export async function handleSincronizarPostRequest(req, res, next) {
-  console.log("\n\n");
-  console.log(req.body);
-  console.log("\n\n");
-
   res.send(await getDatosParaSincronizar(req.body.medicoId,req.body.dnisyFechasASincronizar));
 }
 
 export async function getDatosParaSincronizar(idMedico,dnisYFechas) {
   const fecha = await SincronizacionService.getUltimaFechaDeSincronizacionConMedicoId(idMedico);
-
-  console.log("\n\n");
-  console.log(fecha);
-  console.log("\n\n");
-
   return await EventosService.getEventosCompletosPorDnisYFechasAPartirDeFecha(dnisYFechas,fecha);
 }
 
