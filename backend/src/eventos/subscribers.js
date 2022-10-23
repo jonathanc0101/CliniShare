@@ -48,9 +48,10 @@ export default function loadListeners(emitter) {
     });
   });
 
-  emitter.on("datos_recibidos", async ({datos,computer}) => {
-    await actualizarDatos(datos);
-    responderBroadcast(computer);
+  emitter.on("datos_recibidos", async (obj) => {
+    console.log("\n\nOBJETO\n\n",obj);
+    await actualizarDatos(obj.datos);
+    responderBroadcast(obj.computer);
   });
 
   // Attach other events
