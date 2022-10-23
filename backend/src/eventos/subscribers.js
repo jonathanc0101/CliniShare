@@ -50,8 +50,8 @@ export default function loadListeners(emitter) {
 
   emitter.on("datos_recibidos", async (obj) => {
     console.log("\n\nOBJETO\n\n",obj);
-    await actualizarDatos(obj.datos);
-    responderBroadcast(obj.computer);
+    await actualizarDatos(obj.datosPacientes);
+    responderBroadcast(obj.computadora);
   });
 
   // Attach other events

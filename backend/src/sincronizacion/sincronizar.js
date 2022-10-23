@@ -57,6 +57,7 @@ export async function sincronizar(computadora) {
 
       let datosPacientes = res.data;
 
+      console.log("emitiendo datos_recibidos",{datosPacientes,computadora} );
       // hacemosAlgo
       emitter.emit("datos_recibidos", {datosPacientes,computadora});
     })
