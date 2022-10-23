@@ -65,7 +65,6 @@ function LoginForm() {
       if (Object.keys(usuario).length !== 0) {
         setDatosValidos(true);
 
-
         window.localStorage.setItem(
           "loggedCliniShareAppUser",
           JSON.stringify(usuario)
@@ -163,7 +162,10 @@ function LoginForm() {
             </Button>
 
             <br></br>
-            <Link to={"/register"}>
+            <Link
+              to={"/register"}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
               <Button
                 color="secondary"
                 variant="contained"
