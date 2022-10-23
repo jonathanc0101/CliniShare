@@ -38,5 +38,5 @@ export const Evento = sequelize.define("eventos",{
       },
 },{
     freezeTableName: true,
-    timestamps: false
+    timestamps: true
 });
