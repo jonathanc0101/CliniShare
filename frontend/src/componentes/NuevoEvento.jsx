@@ -30,10 +30,14 @@ function NuevoEvento() {
   const [pacienteApellido, setPacienteApellido] = useState("");
   let navigate = useNavigate();
 
+  const usuario = JSON.parse(
+    window.localStorage.getItem("loggedCliniShareAppUser")
+  );
+
   const [eventoData, setEventoData] = useState({
     titulo: "",
     importante: false,
-    medicoId: "",
+    medicoId: usuario.medico.medicoId,
     pacienteId: "",
     descripcion: "",
   });
@@ -57,10 +61,6 @@ function NuevoEvento() {
     })();
   }, [params.id]);
 
-  const cambiarDniMedico = (e) => {
-    setMedicoDni(e.target.value);
-  };
-
   const handleSubmit = async (
     titulo,
     importante,
@@ -71,7 +71,7 @@ function NuevoEvento() {
     const evento = {
       titulo,
       importante,
-      medicoDni,
+      medicoId,
       pacienteDni,
       descripcion,
     };
@@ -79,8 +79,7 @@ function NuevoEvento() {
     try {
       if (
         evento.titulo.length === 0 ||
-        evento.descripcion.length === 0 ||
-        evento.medicoDni.length === 0
+        evento.descripcion.length === 0 
       ) {
         alertas.alertaCamposObligatorios();
         return;
@@ -151,57 +150,6 @@ function NuevoEvento() {
                   control={<Checkbox />}
                   label="Evento importante"
                 />
-              </Grid>
-            </Grid>
-            <br></br>
-            <Typography component="h2" variant="h5" align="left">
-              Medico
-            </Typography>
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={3} sm={3}>
-                <TextField
-                  disabled
-                  label="Nombre"
-                  type="text"
-                  name="nombre"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <TextField
-                  disabled
-                  label="Apellido"
-                  type="text"
-                  name="apellido"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <TextField
-                  label="DNI"
-                  type="text"
-                  name="medicoDni"
-                  value={medicoDni}
-                  onChange={cambiarDniMedico}
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <TextField
-                  disabled
-                  label="Matricula"
-                  type="text"
-                  name="matricula"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
               </Grid>
             </Grid>
             <br></br>

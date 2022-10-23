@@ -34,7 +34,7 @@ function NuevoPaciente() {
     apellido: "",
     dni: "",
     fechaNacimiento: "",
-    ownerId: "",
+    ownerId: usuario.medico.medicoId,
   });
 
   const handleGuardar = async function () {
@@ -53,8 +53,6 @@ function NuevoPaciente() {
       alertas.alertaPacienteExiste(Paciente.dni);
       return;
     } else {
-      handleChangeUsuarioId();
-      console.log("PACIENTE A GUARDAR: ", Paciente);
       const pacienteGuardado = await api.guardarPaciente(Paciente);
       if (pacienteGuardado === true) {
         alertas.alertaExito("paciente");
@@ -69,7 +67,6 @@ function NuevoPaciente() {
     setPaciente((estadoAnterior) => {
       return { ...estadoAnterior, [name]: value };
     });
-
   };
 
   const handleChangeFecha = (event) => {
@@ -86,18 +83,6 @@ function NuevoPaciente() {
     setPaciente((estadoAnterior) => {
       return { ...estadoAnterior, dni: value };
     });
-
-  };
-
-  const handleChangeUsuarioId = () => {
-    // quitamos los valores no numericos
-    let value = usuario.medico.id.toString();
-
-    setPaciente((estadoAnterior) => {
-      return { ...estadoAnterior, ownerId: value };
-    });
-    console.log("OWNER ID EN HANDLE: ", Paciente.ownerId );
-
   };
 
   return (
