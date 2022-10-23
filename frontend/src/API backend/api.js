@@ -19,8 +19,8 @@ export const api = {
   guardarMedico,
   guardarMedicoUsuario,
   login,
-  modificarMedico
-
+  modificarMedico,
+  crearEvento,
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -30,7 +30,6 @@ axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 async function guardarPaciente(Paciente) {
   try {
     const response = await axios.post(rutas.nuevoPaciente, Paciente);
-    console.log("ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: ",response);
 
     const pacienteRespuesta = response.data;
     return Object.keys(pacienteRespuesta).length !== 0;
@@ -53,8 +52,11 @@ async function guardarMedico(Medico) {
 
 async function login(email, password) {
   try {
-    const response = await axios.post(rutas.LoginMedicoUsuario, {email,password});
-    
+    const response = await axios.post(rutas.LoginMedicoUsuario, {
+      email,
+      password,
+    });
+
     return response.data;
   } catch (error) {
     console.error(error);
@@ -111,6 +113,18 @@ async function guardarEventoObteniendoIds(Evento) {
 
     const eventoRespuesta = response.data;
 
+    return Object.keys(eventoRespuesta).length !== 0;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+async function crearEvento(evento) {
+  try {
+    const response = await axios.post(rutas.nuevoEvento, evento);
+
+    const eventoRespuesta = response.data;
     return Object.keys(eventoRespuesta).length !== 0;
   } catch (error) {
     console.error(error);
@@ -230,7 +244,7 @@ async function obtenerEventosCompletosImportantesPorPacienteId(pacienteId) {
 async function modificarMedico(Medico) {
   try {
     const response = await axios.put(rutas.modificarMedico, Medico);
-    console.log(response.data)
+    console.log(response.data);
     const medicoRespuesta = response.data;
 
     return Object.keys(medicoRespuesta).length !== 0;
@@ -239,4 +253,3 @@ async function modificarMedico(Medico) {
     return false;
   }
 }
-
