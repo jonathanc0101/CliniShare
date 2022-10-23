@@ -50,7 +50,7 @@ export function responderBroadcast(computer) {
     0,
     mensajeComputadora.length,
     SERVER_PORT,
-    computer.ip,
+    computer.ip[0],
     function (err, bytes) {
       sender.close();
     }
