@@ -15,6 +15,7 @@ import { api } from "../API backend/api";
 import SaveIcon from "@mui/icons-material/Save";
 import BotonVolver from "./botones/BotonVolver";
 import { alertas } from "./alertas";
+import "dayjs/locale/es";
 
 function NuevoPaciente() {
   async function obtenerPacientesExistentes(pacienteDni) {
@@ -28,6 +29,10 @@ function NuevoPaciente() {
   const usuario = JSON.parse(
     window.localStorage.getItem("loggedCliniShareAppUser")
   );
+
+  const onKeyDown = (e) => {
+    e.preventDefault();
+  };
 
   const [Paciente, setPaciente] = useState({
     nombre: "",
@@ -136,13 +141,18 @@ function NuevoPaciente() {
               </Grid>
               <br></br>
               <Grid item xs={4} sm={4}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <LocalizationProvider
+                  adapterLocale="es"
+                  dateAdapter={AdapterDayjs}
+                >
                   <DesktopDatePicker
                     label="Fecha de nacimiento"
                     name="fechaNacimiento"
                     value={Paciente.fechaNacimiento}
                     onChange={handleChangeFecha}
-                    renderInput={(params) => <TextField {...params} />}
+                    renderInput={(params) => (
+                      <TextField onKeyDown={onKeyDown} {...params} />
+                    )}
                   />
                 </LocalizationProvider>
               </Grid>
