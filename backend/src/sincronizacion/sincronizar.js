@@ -72,7 +72,7 @@ export async function sincronizar(computadora) {
 
 
 export async function sincronizarNonLooping(computadora) {
-  console.log("\n\nevento:sincronizando non_looping\n\n",computer);
+
   const computadoraLocal = await getComputadora();
   const postSincronicemosString =
     "http://" +
