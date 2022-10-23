@@ -30,6 +30,8 @@ axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 async function guardarPaciente(Paciente) {
   try {
     const response = await axios.post(rutas.nuevoPaciente, Paciente);
+    console.log("ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: ",response);
+
     const pacienteRespuesta = response.data;
     return Object.keys(pacienteRespuesta).length !== 0;
   } catch (error) {

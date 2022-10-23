@@ -17,9 +17,7 @@ import BotonVolver from "./botones/BotonVolver";
 import { alertas } from "./alertas";
 
 function NuevoPaciente() {
-
   async function obtenerPacientesExistentes(pacienteDni) {
-    console.log("Paciente dni: ", pacienteDni);
     const pacientesExistentes = await api.obtenerPacientes();
 
     return pacientesExistentes.data.some((element) => {
@@ -27,11 +25,16 @@ function NuevoPaciente() {
     });
   }
 
+  const usuario = JSON.parse(
+    window.localStorage.getItem("loggedCliniShareAppUser")
+  );
+
   const [Paciente, setPaciente] = useState({
     nombre: "",
     apellido: "",
     dni: "",
     fechaNacimiento: "",
+    ownerId: "",
   });
 
   const handleGuardar = async function () {
@@ -50,6 +53,8 @@ function NuevoPaciente() {
       alertas.alertaPacienteExiste(Paciente.dni);
       return;
     } else {
+      handleChangeUsuarioId();
+      console.log("PACIENTE A GUARDAR: ", Paciente);
       const pacienteGuardado = await api.guardarPaciente(Paciente);
       if (pacienteGuardado === true) {
         alertas.alertaExito("paciente");
@@ -64,11 +69,11 @@ function NuevoPaciente() {
     setPaciente((estadoAnterior) => {
       return { ...estadoAnterior, [name]: value };
     });
+
   };
 
   const handleChangeFecha = (event) => {
     const value = event["$d"];
-    console.log(event);
     setPaciente((estadoAnterior) => {
       return { ...estadoAnterior, fechaNacimiento: value };
     });
@@ -81,6 +86,18 @@ function NuevoPaciente() {
     setPaciente((estadoAnterior) => {
       return { ...estadoAnterior, dni: value };
     });
+
+  };
+
+  const handleChangeUsuarioId = () => {
+    // quitamos los valores no numericos
+    let value = usuario.medico.id.toString();
+
+    setPaciente((estadoAnterior) => {
+      return { ...estadoAnterior, ownerId: value };
+    });
+    console.log("OWNER ID EN HANDLE: ", Paciente.ownerId );
+
   };
 
   return (
@@ -149,11 +166,11 @@ function NuevoPaciente() {
         </Card>
         <br></br>
         <Grid container direction="row" spacing={2}>
-        <Grid item xs={10} >
+          <Grid item xs={10}>
             <BotonVolver></BotonVolver>
           </Grid>
 
-          <Grid item xs={2} >
+          <Grid item xs={2}>
             <Button
               variant="contained"
               endIcon={<SaveIcon />}
