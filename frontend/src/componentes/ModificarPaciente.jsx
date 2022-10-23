@@ -17,32 +17,68 @@ import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwo
 import EventosDePaciente from "./EventosDePaciente";
 import EventosImportantes from "./EventosImportantes";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/es";
+import { alertas } from "./alertas";
 
 function ModificarPaciente() {
   const params = useParams();
   let navigate = useNavigate();
 
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [dni, setDni] = useState("");
+  const [paciente, setPaciente] = useState({
+    nombre: "",
+    apellido: "",
+    dni: "",
+    fechaNacimiento: "",
+  });
+
+  const onKeyDown = (e) => {
+    e.preventDefault();
+  };
+
+  const handleChange = (event) => {
+    let value = event.target.value;
+    let name = event.target.name;
+
+    setPaciente((estadoAnterior) => {
+      return { ...estadoAnterior, [name]: value };
+    });
+  };
+
+  const handleChangeDni = (event) => {
+    let value = event.target.value.replace(/\D/g, "");
+
+    setPaciente((estadoAnterior) => {
+      return { ...estadoAnterior, dni: value };
+    });
+  };
+
+  const handleChangeFecha = (event) => {
+    const value = event["$d"];
+    console.log(event);
+    setPaciente((estadoAnterior) => {
+      return { ...estadoAnterior, fechaNacimiento: value };
+    });
+  };
 
   const update = async () => {
     // e.preventDefault();
-    await api.modificarPaciente(params.id, {
-      nombre: nombre,
-      apellido: apellido,
-      dni: dni,
-    });
-    alert("Se modificó el paciente exitosamente");
-    navigate(-1);
+    const respuesta = await api.modificarPaciente(params.id, { ...paciente });
+    if (respuesta) {
+      alertas.alertaModificacionExitosa("paciente");
+      navigate(-1);
+    } else {
+      alertas.alertaProblemas();
+    }
   };
 
   useEffect(() => {
     (async () => {
-      const res = await api.obtenerPacienteById(params.id);
-      setNombre(res.nombre);
-      setApellido(res.apellido);
-      setDni(res.dni);
+      const pacienteRespuesta = await api.obtenerPacienteById(params.id);
+      setPaciente((estadoAnterior) => {
+        return { ...estadoAnterior, ...pacienteRespuesta };
+      });
     })();
   }, [params.id]);
 
@@ -63,8 +99,8 @@ function ModificarPaciente() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
+                value={paciente.nombre}
+                onChange={handleChange}
               ></TextField>
             </Grid>
             <Grid item xs={3} sm={2}>
@@ -76,8 +112,8 @@ function ModificarPaciente() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
-                value={apellido}
-                onChange={(e) => setApellido(e.target.value)}
+                value={paciente.apellido}
+                onChange={handleChange}
               ></TextField>
             </Grid>
             <Grid item xs={3} sm={2}>
@@ -89,15 +125,30 @@ function ModificarPaciente() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
-                value={dni}
-                onChange={(e) => setDni(e.target.value)}
+                value={paciente.dni}
+                onChange={handleChangeDni}
               ></TextField>
             </Grid>
+
             <Grid item xs={6}>
               <EventosImportantes id={params.id}></EventosImportantes>
             </Grid>
           </Grid>
           <hr></hr>
+          <br></br>
+          <Grid item xs={4} sm={4}>
+            <LocalizationProvider adapterLocale="es" dateAdapter={AdapterDayjs}>
+              <DesktopDatePicker
+                label="Fecha de nacimiento"
+                name="fechaNacimiento"
+                value={paciente.fechaNacimiento}
+                onChange={handleChangeFecha}
+                renderInput={(params) => (
+                  <TextField onKeyDown={onKeyDown} {...params} />
+                )}
+              />
+            </LocalizationProvider>
+          </Grid>
           <br></br>
           <Grid item xs={8}>
             <Button
