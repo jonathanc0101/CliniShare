@@ -72,6 +72,7 @@ export async function sincronizar(computadora) {
 
 
 export async function sincronizarNonLooping(computadora) {
+  console.log("\n\nevento:sincronizando non_looping\n\n",computer);
   const computadoraLocal = await getComputadora();
   const postSincronicemosString =
     "http://" +
@@ -92,7 +93,7 @@ export async function sincronizarNonLooping(computadora) {
   await axios
     .get(getDNISyNacimientosString)
     .then((res) => {
-      if (res.data.count === 0) {
+      if (!res.data.count === 0) {
         //si no tiene pacientes no hay nada que hacer
         return; //chau chau adios
       }
@@ -118,9 +119,7 @@ export async function sincronizarNonLooping(computadora) {
       if (!res.data) {
         return; //chau chau adios
       }
-      if (res.data.length === 0) {
-        return; //chau chau adios
-      }
+
 
       let datosPacientes = res.data;
 
