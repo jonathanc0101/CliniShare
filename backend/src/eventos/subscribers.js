@@ -39,7 +39,6 @@ export default function loadListeners(emitter) {
     console.log("\n\nnew_valid_computer\n\n");
     registrarConexionActiva(computer);
 
-    console.log("registrarConexionActiva",computer)
 
     await sincronizar(computer)
     SincronizacionService.registrarSincronizacion(computer.medicoId);
