@@ -19,6 +19,12 @@ async function loginUser  (req, res, next) {
     const response = await userService.login(datosLogin.email, datosLogin.password);
   
     res.send(JSON.stringify(response));
+
+    if(response.token){
+      return true
+    }else{
+      return false
+    }
   };
   
 

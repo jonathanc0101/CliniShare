@@ -4,12 +4,15 @@ import  emitter  from "../eventos/eventEmitter.js";
 
 const router = Router();
 
-router.post("/login", (req,res,next) =>
-  userController.loginUser(req,res,next).then((res) => {
-    if(res){
+router.post("/login", async (req,res,next) =>
+  {
+    const loggedIn = await userController.loginUser(req,res,next);
+
+    if(loggedIn){
       emitter.emit("logged_in");
     }
-  })
+
+  }
 );
 router.post("/register", userController.registerUser);
 router.put("/modify", userController.modifyUser);

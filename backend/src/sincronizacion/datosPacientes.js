@@ -15,7 +15,9 @@ export async function getDatosParaSincronizar(idMedico,dnisYFechas) {
 }
 
 export async function actualizarDatos(datos) {
-  
+  console.log("datos\n\n");
+  console.log(datos);
+  console.log("datos\n\n");
   //hay que resolver el tema de sincronizar los pacientes, que quede almacenada la version mas actualizada del paciente
   try {
     await sequelize.transaction(async (t) => {
