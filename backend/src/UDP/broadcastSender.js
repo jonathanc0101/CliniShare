@@ -32,12 +32,12 @@ export function broadcastComputerData() {
   broadcastMessage(JSON.stringify(computadora));
 }
 
-export function responderBroadcast(computer) {
+export async function responderBroadcast(computer) {
   // enviamos nuestros datos (nombre, ips, etc.) a la computadora que nos envió un broadcast
 
   var sender = dgram.createSocket("udp4");
 
-  let mensajeComputadora = JSON.stringify(computadora);
+  let mensajeComputadora = JSON.stringify(await getComputadora());
 
   sender.bind(undefined, undefined);
 
