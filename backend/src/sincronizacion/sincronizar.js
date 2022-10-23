@@ -63,7 +63,7 @@ export async function sincronizar(computadora) {
       let datosPacientes = res.data;
 
       // hacemosAlgo
-      emitter.emit("datos_recibidos", {datosPacientes,computadora});
+      emitter.emit("datos_recibidos_non_looping", {datosPacientes,computadora});
     })
     .catch((error) => {
       console.error(error);
@@ -124,7 +124,7 @@ export async function sincronizarNonLooping(computadora) {
       let datosPacientes = res.data;
 
       // hacemosAlgo
-      emitter.emit("datos_recibidos_non_looping", {datosPacientes,computadora});
+      emitter.emit("datos_recibidos", {datosPacientes,computadora});
     })
     .catch((error) => {
       console.error(error);
