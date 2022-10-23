@@ -36,8 +36,8 @@ export default function loadListeners(emitter) {
   emitter.on("new_valid_computer", async (computer) => {
     registrarConexionActiva(computer);
 
-    await sincronizar(computer)
-    await SincronizacionService.registrarSincronizacion(computer.medicoId);
+    sincronizar(computer)
+    SincronizacionService.registrarSincronizacion(computer.medicoId);
   
   });
 
