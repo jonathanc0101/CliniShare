@@ -164,16 +164,33 @@ function ModificarPaciente() {
             </Button>
           </Grid>
           <br></br>
-          <br></br>
           <Grid container direction="row" spacing={2}>
             <Grid item>
               <EventosDePaciente id={params.id} />
             </Grid>
           </Grid>
+          <Grid container direction="row" spacing={2}>
+        <Grid item xs={10}>
+          <Button
+            variant="outlined"
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate(-1)}
+          >
+            <Typography variant="h7">Volver</Typography>
+          </Button>
+        </Grid>
+        <Grid item xs={2}>
+          <Button variant="contained" endIcon={<SaveIcon />} onClick={update}>
+            <Typography color={"white"} variant="h7" align="left">
+              &nbsp;Guardar
+            </Typography>
+          </Button>
+        </Grid>
+      </Grid>
         </CardContent>
       </Card>
-      <br></br>
-      <Grid item>
+
+      {/* <Grid item>
         <IconButton aria-label="save" size="large" onClick={update}>
           <SaveIcon color="info" fontSize="inherit" />
           <Typography color={"black"} variant="h6" align="right">
@@ -188,9 +205,11 @@ function ModificarPaciente() {
             &nbsp;Atrás
           </Typography>
         </IconButton>
-      </Grid>
+      </Grid> */}
+
     </>
   );
 }
+
 
 export default ModificarPaciente;
