@@ -6,10 +6,8 @@ import {SERVER_PORT, MAGIC_STRING} from "./constants.js";
 
 import { getComputadora } from './constants.js';
 
-const computadora = await getComputadora();
-
 export async function listenForBroadcasts(){
-
+    const computadora = await getComputadora();
     // non looping nonLoopingListeners
     let nonLoopingListeners = [];
     let i = 0;
