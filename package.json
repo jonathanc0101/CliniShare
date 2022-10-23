@@ -9,10 +9,12 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "dev": "nodemon backend/src/main.js",
+    "backend": "node backend/src/main.js",
     "rcb": "npm run --prefix frontend/ start",
     "rc": "BROWSER=none npm run --prefix frontend/ start",
     "most": "concurrently -k \"npm:rcb\" \"npm:dev\"",
     "all": "concurrently -k \" npm run rc\" \"npm:electron\" \"npm:dev\"",
+    "prod":"concurrently -k \" npm run rc\" \"npm:electron\" \"npm:backend\"",
     "electron": "wait-on tcp:5000 && electron ."
   },
   "author": "",
