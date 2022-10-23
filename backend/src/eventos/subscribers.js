@@ -43,16 +43,20 @@ export default function loadListeners(emitter) {
 
   emitter.on("new_valid_computer_non_looping", (computer) => {
     registrarConexionActiva(computer);
-    sincronizar(computer).then(() => {
+    sincronizarNonLooping(computer).then(() => {
       SincronizacionService.registrarSincronizacion(computer.medicoId);
     });
   });
 
   emitter.on("datos_recibidos", async (obj) => {
-    console.log("\n\nOBJETO\n\n",obj);
     await actualizarDatos(obj.datosPacientes);
     responderBroadcast(obj.computadora);
   });
+
+  emitter.on("datos_recibidos_non_looping", (obj) => {
+    actualizarDatos(obj.datosPacientes);
+  });
+
 
   // Attach other events
   return emitter;
