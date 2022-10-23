@@ -43,13 +43,14 @@ export function responderBroadcast(computer) {
 
   console.log("RESPONDIENDO BROADCAST");
   console.log("RESPONDIENDO BROADCAST",mensajeComputadora);
+  console.log("RESPONDIENDO A LA COMPUTADORA",computer);
 
   sender.send(
     mensajeComputadora,
     0,
     mensajeComputadora.length,
     SERVER_PORT,
-    computer.ip[0],
+    computer.ip,
     function (err, bytes) {
       sender.close();
     }
