@@ -16,6 +16,8 @@ export default function loadListeners(emitter) {
     const treintaMinutos = 1000 * 60 * 30;
 
     //starting broadcast listener
+
+    //arreglar este tema de que no deja de escuchar en ningun momento, deberia dejar de escuchar cuando se cierra sesion
     listenForBroadcasts();
 
     //broadcast self to network after a few seconds
@@ -31,13 +33,15 @@ export default function loadListeners(emitter) {
     handleNewComputerNonLooping(computer);
   });
 
-  emitter.on("new_valid_computer", (computer) => {
+  emitter.on("new_valid_computer", async (computer) => {
     registrarConexionActiva(computer);
 
-    sincronizar(computer).then(() => {
-      responderBroadcast(computer);
-      SincronizacionService.registrarSincronizacion(computer.medicoId);
-    });
+    await sincronizar(computer)
+     
+    responderBroadcast(computer);
+    
+    await SincronizacionService.registrarSincronizacion(computer.medicoId);
+  
   });
 
   emitter.on("new_valid_computer_non_looping", (computer) => {

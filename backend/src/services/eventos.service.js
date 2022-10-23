@@ -15,7 +15,6 @@ export const EventosService = {
     getEventoConPacienteYMedicoPorIdFromModel(id),
   getEventosCompletos: getEventosCompletosFromModel,
   getEventosCompletosPorIDPaciente,
-
   getEventoImportanteCompletoPorId: getEventoImportanteCompletoFromModel,
   getEventosCompletosImportantesPorPacienteId:
     getEventosImportantesCompletosPorIdPacienteFromModel,
@@ -112,7 +111,10 @@ async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
 ) {
   const eventos = await Evento.findAll({
     where: {
-      fechaModificacion: { [Op.gt]: fecha },
+      [Op.or]: {
+        fechaModificacion: { [Op.gt]: fecha },
+        createdAt: { [Op.gt]: fecha },
+      },
     },
     include: [
       {
