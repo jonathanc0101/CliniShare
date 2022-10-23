@@ -5,9 +5,6 @@ import { getComputadora } from "./constants.js";
 
 
 
-const computadora =  await getComputadora();
-
-
 function broadcastMessage(myMessage) {
   var sender = dgram.createSocket("udp4");
 
@@ -27,7 +24,8 @@ function broadcastMessage(myMessage) {
   );
 }
 
-export function broadcastComputerData() {
+export async function broadcastComputerData() {
+  const computadora = await getComputadora();
   // broadcasts the computer data to the network
   broadcastMessage(JSON.stringify(computadora));
 }
