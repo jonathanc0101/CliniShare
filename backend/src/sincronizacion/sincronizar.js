@@ -5,6 +5,7 @@ import emitter from "../eventos/eventEmitter.js";
 import { getComputadora } from "../UDP/constants.js";
 
 export async function sincronizar(computadora) {
+  console.log("\n\nsincronizando looping \n\n");
   const computadoraLocal = await getComputadora();
   const postSincronicemosString =
     "http://" +
