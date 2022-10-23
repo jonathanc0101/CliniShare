@@ -2,7 +2,7 @@ import {
   handleNewComputer,
   handleNewComputerNonLooping,
 } from "../sincronizacion/handshake.js";
-import { sincronizar } from "../sincronizacion/sincronizar.js";
+import { sincronizar,sincronizarNonLooping } from "../sincronizacion/sincronizar.js";
 import { registrarConexionActiva } from "../sincronizacion/conexionesActivas.js";
 import { SincronizacionService } from "../services/sincronizacion.service.js";
 import { actualizarDatos } from "../sincronizacion/datosPacientes.js";
