@@ -1,7 +1,6 @@
 import {ConexionActivaService} from "../services/conexionActiva.service.js";
 
 export async function registrarConexionActiva(computadora) {
-  console.log("computadoraconexionactivas",computadora);
   try {
       const conexion = {
         nombreUsuario: computadora.nombre,

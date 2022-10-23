@@ -30,22 +30,28 @@ export default function loadListeners(emitter) {
   });
 
   emitter.on("new_computer_non_looping", (computer) => {
+    console.log("\n\nme respondiste\n\n");
     handleNewComputerNonLooping(computer);
   });
 
   emitter.on("new_valid_computer", async (computer) => {
     registrarConexionActiva(computer);
 
-    sincronizar(computer)
+    console.log("registrarConexionActiva",computer)
+
+    await sincronizar(computer)
     SincronizacionService.registrarSincronizacion(computer.medicoId);
   
   });
 
-  emitter.on("new_valid_computer_non_looping", (computer) => {
+  emitter.on("new_valid_computer_non_looping", async (computer) => {
     registrarConexionActiva(computer);
-    sincronizarNonLooping(computer).then(() => {
-      SincronizacionService.registrarSincronizacion(computer.medicoId);
-    });
+
+    console.log("registrarConexionActiva non looping",computer)
+
+    await sincronizarNonLooping(computer)
+    SincronizacionService.registrarSincronizacion(computer.medicoId);
+
   });
 
   emitter.on("datos_recibidos", async (obj) => {

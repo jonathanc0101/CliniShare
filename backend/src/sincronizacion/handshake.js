@@ -3,61 +3,66 @@ import { SERVER_BD_PORT, INITIAL_RESPONSE } from "../UDP/constants.js";
 import emitter from "../eventos/eventEmitter.js";
 
 export function handleNewComputer(computadora) {
+  for (let ip in computadora.IPS) {
+    const getMethodString =
+      "http://" +
+      computadora.IPS[ip].toString().trim() +
+      ":" +
+      SERVER_BD_PORT.toString().trim() +
+      "/clinishare";
 
-    for (let ip in computadora.IPS) {
-        const getMethodString = 'http://' + computadora.IPS[ip].toString().trim() + ':' + SERVER_BD_PORT.toString().trim() + '/clinishare';
-
-        axios
-            .get(getMethodString)
-            .then(res => {
-
-                
-
-                if(res.data.INITIAL_RESPONSE === INITIAL_RESPONSE ){
-                    emitter.emit("new_valid_computer", getComputadoraConIPReal(computadora,ip));
-                    return;
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }
-
-
+    axios
+      .get(getMethodString)
+      .then((res) => {
+        if (res.data.INITIAL_RESPONSE === INITIAL_RESPONSE) {
+          emitter.emit(
+            "new_valid_computer",
+            getComputadoraConIPReal(computadora, ip)
+          );
+          return;
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 }
 
 export function handleNewComputerNonLooping(computadora) {
+  for (let ip in computadora.IPS) {
+    const getMethodString =
+      "http://" +
+      computadora.IPS[ip].toString().trim() +
+      ":" +
+      SERVER_BD_PORT.toString().trim() +
+      "/clinishare";
 
-    for (let ip in computadora.IPS) {
-        const getMethodString = 'http://' + computadora.IPS[ip].toString().trim() + ':' + SERVER_BD_PORT.toString().trim() + '/clinishare';
-
-        axios
-            .get(getMethodString)
-            .then(res => {
-                if(res.data.INITIAL_RESPONSE === INITIAL_RESPONSE ){
-                    // hacemosAlgo
-                    emitter.emit("new_valid_computer_non_looping", getComputadoraConIPReal(computadora,ip))
-                    return;
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }
-
-
+    axios
+      .get(getMethodString)
+      .then((res) => {
+        if (res.data.INITIAL_RESPONSE === INITIAL_RESPONSE) {
+          // hacemosAlgo
+          emitter.emit(
+            "new_valid_computer_non_looping",
+            getComputadoraConIPReal(computadora, ip)
+          );
+          return;
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 }
 
 export function getInitialResponse(req, res) {
-    return({ "INITIAL_RESPONSE": INITIAL_RESPONSE });
+  return { INITIAL_RESPONSE: INITIAL_RESPONSE };
 }
 
+function getComputadoraConIPReal(comp, ip) {
+  const ipReal = comp.IPS[ip];
+  delete comp.IPS;
+  comp.ip = ipReal;
 
-function getComputadoraConIPReal(comp,ip){
-    const ipReal = comp.IPS[ip];
-    delete comp.IPS;
-    comp.ip = ipReal;
-
-    return comp
+  return comp;
 }
-
