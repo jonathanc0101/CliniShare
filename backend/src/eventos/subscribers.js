@@ -65,7 +65,7 @@ export default function loadListeners(emitter) {
   
   emitter.on("datos_recibidos_non_looping", async (obj) => {
     await actualizarDatos(obj.datosPacientes);
-    console.log("\n\nevento:datos_recibidos_non_looping\n\n");
+    console.log("\n\nevento:datos_recibidos_non_looping\n\n", obj.datosPacientes);
   });
 
 
