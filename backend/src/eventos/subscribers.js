@@ -40,7 +40,7 @@ export default function loadListeners(emitter) {
     registrarConexionActiva(computer);
 
 
-    await sincronizar(computer)
+    await sincronizar(computer);
     SincronizacionService.registrarSincronizacion(computer.medicoId);
   
   });
@@ -48,9 +48,10 @@ export default function loadListeners(emitter) {
   emitter.on("new_valid_computer_non_looping", async (computer) => {
     registrarConexionActiva(computer);
 
-    console.log("\n\nevento:new_valid_computer_non_looping\n\n",computer)
+    console.log("\n\nevento:new_valid_computer_non_looping\n\n",computer);
 
-    await sincronizarNonLooping(computer)
+    await sincronizarNonLooping(computer);
+
     SincronizacionService.registrarSincronizacion(computer.medicoId);
 
   });
@@ -58,6 +59,7 @@ export default function loadListeners(emitter) {
   emitter.on("datos_recibidos", async (obj) => {
     console.log("\n\nevento:datos_recibidos\n\n");
     await actualizarDatos(obj.datosPacientes);
+    console.log("\n\n evento: ya se actualizaron los datos \n\n");
     await responderBroadcast(obj.computadora);
   });
   
