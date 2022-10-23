@@ -37,9 +37,6 @@ export default function loadListeners(emitter) {
     registrarConexionActiva(computer);
 
     await sincronizar(computer)
-     
-    responderBroadcast(computer);
-    
     await SincronizacionService.registrarSincronizacion(computer.medicoId);
   
   });
@@ -51,8 +48,9 @@ export default function loadListeners(emitter) {
     });
   });
 
-  emitter.on("datos_recibidos", (datos) => {
-    actualizarDatos(datos);
+  emitter.on("datos_recibidos", async (datos) => {
+    await actualizarDatos(datos);
+    responderBroadcast(computer);
   });
 
   // Attach other events
