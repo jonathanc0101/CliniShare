@@ -1,12 +1,16 @@
 import { Router } from "express";
-import {
-    getInitialResponse,
-} from "../sincronizacion/handshake.js";
+import { getInitialResponse } from "../sincronizacion/handshake.js";
 import { handleSincronizarPostRequest } from "../sincronizacion/datosPacientes.js";
+import emitter from "../eventos/eventEmitter.js";
 
 const router = Router();
 
-router.get("/clinishare", (req,res) => res.send(JSON.stringify(getInitialResponse())));
-router.post("/sincronizar", handleSincronizarPostRequest);
+router.get("/clinishare", (req, res) =>
+  res.send(JSON.stringify(getInitialResponse()))
+);
+router.post("/sincronizar", async (req, res, next) => {
+  await handleSincronizarPostRequest(req, res, next);
+  emitter.emit("datos_enviados",req.body);
+});
 
 export default router;
