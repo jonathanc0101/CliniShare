@@ -33,6 +33,8 @@ export async function broadcastComputerData() {
 export async function responderBroadcast(computer) {
   // enviamos nuestros datos (nombre, ips, etc.) a la computadora que nos envió un broadcast
 
+  console.log("\n\n respondiendo broadcast \n\n",computer);
+
   var sender = dgram.createSocket("udp4");
   const computadoraLocal = await getComputadora();
 

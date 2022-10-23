@@ -56,7 +56,7 @@ export default function loadListeners(emitter) {
 
   emitter.on("datos_recibidos", async (obj) => {
     await actualizarDatos(obj.datosPacientes);
-    responderBroadcast(obj.computadora);
+    await responderBroadcast(obj.computadora);
   });
 
   emitter.on("datos_recibidos_non_looping", (obj) => {
