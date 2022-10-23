@@ -246,8 +246,10 @@ async function upsertarPorDNIyNacimiento(paciente,transaction){
 
   if(pacienteFound){
     paciente.id = pacienteFound.id;
+    Paciente.update(paciente,{transaction});
+  }else{
+    Paciente.create(paciente);
   }
 
-  Paciente.upsert(paciente,{transaction});
 }
 
