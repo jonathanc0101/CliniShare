@@ -134,7 +134,6 @@ async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
     return [];
   } else {
 
-    console.log("\n\n evento:eventos a enviar sin filtrar\n\n ",eventos);
     const eventosFiltrados = eventos.filter((evento) => {
       function obtenerObjDNIyFecha(x) {
         return {
@@ -148,8 +147,6 @@ async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
         (elem) => JSON.stringify(objDNIyFecha) === JSON.stringify(elem)
       );
     });
-
-    console.log("\n\n evento:eventos a enviar filtrados\n\n ",eventosFiltrados);
 
     return eventosFiltrados;
   }
