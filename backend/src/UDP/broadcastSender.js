@@ -41,10 +41,6 @@ export async function responderBroadcast(computer) {
 
   sender.bind(undefined, undefined);
 
-  console.log("RESPONDIENDO BROADCAST");
-  console.log("RESPONDIENDO BROADCAST",mensajeComputadora);
-  console.log("RESPONDIENDO A LA COMPUTADORA",computer);
-
   sender.send(
     mensajeComputadora,
     0,

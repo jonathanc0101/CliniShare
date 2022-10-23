@@ -174,17 +174,6 @@ async function getInterseccionDNISFromModel(dnis) {
   return dnisInterseccion;
 }
 
-
-// async function test(){
-//   const dnis = [ { dni: '1111', fechaNacimiento: '2022-10-20T03:00:00.000Z' } ];
-//   console.log("getInterseccionDNISyFechas" , await getInterseccionDNISyFechas(dnis));
-//   const responseDNIsyFechasLocales = await getDnisYNacimientosDePacientes(dnis);
-//   console.log(responseDNIsyFechasLocales);
-
-// }
-
-// test();
-
 async function getInterseccionDNISyFechas(dnisyFechas) {
   let dnisYFechasInterseccion = [];
 

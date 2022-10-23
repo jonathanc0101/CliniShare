@@ -3,7 +3,6 @@ import { SincronizacionService } from "../services/sincronizacion.service.js";
 
 export const getSincronizacionReciente = async (req, res, next) => {
     const sincronizacionMasReciente = await SincronizacionService.getSincronizacionReciente();
-    console.log(sincronizacionMasReciente);
     res.send(JSON.stringify(sincronizacionMasReciente));
 }
 

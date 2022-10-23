@@ -77,9 +77,3 @@ export async function listenForBroadcasts(){
     
 }
 
-function imprimirIPS(IPS){
-    for (const element in IPS) {
-        console.log(element);
-        console.log(IPS[element]);
-      }
-}
