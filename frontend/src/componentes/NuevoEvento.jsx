@@ -24,31 +24,26 @@ import { alertas } from "./alertas";
 function NuevoEvento() {
   const params = useParams();
 
-  const [medicoDni, setMedicoDni] = useState("");
-  const [pacienteDni, setPacienteDni] = useState("");
-  const [pacienteNombre, setPacienteNombre] = useState("");
-  const [pacienteApellido, setPacienteApellido] = useState("");
-  let navigate = useNavigate();
-
   const usuario = JSON.parse(
     window.localStorage.getItem("loggedCliniShareAppUser")
   );
+  const [pacienteDni, setPacienteDni] = useState("");
+  const [pacienteNombre, setPacienteNombre] = useState("");
+  const [pacienteApellido, setPacienteApellido] = useState("");
 
-  const [eventoData, setEventoData] = useState({
+  const [evento, setEvento] = useState({
     titulo: "",
     importante: false,
     medicoId: usuario.medico.medicoId,
-    pacienteId: "",
+    pacienteId: params.id,
     descripcion: "",
   });
 
-  const { titulo, importante, medicoId, pacienteId, descripcion } = eventoData;
-
   const handleOnchange = (e) => {
     if (e.target.name === "importante") {
-      setEventoData({ ...eventoData, [e.target.name]: e.target.checked });
+      setEvento({ ...evento, [e.target.name]: e.target.checked });
     } else {
-      setEventoData({ ...eventoData, [e.target.name]: e.target.value });
+      setEvento({ ...evento, [e.target.name]: e.target.value });
     }
   };
 
@@ -61,31 +56,21 @@ function NuevoEvento() {
     })();
   }, [params.id]);
 
-  const handleSubmit = async (
-    titulo,
-    importante,
-    medicoId,
-    pacienteId,
-    descripcion
-  ) => {
-    const evento = {
-      titulo,
-      importante,
-      medicoId,
-      pacienteDni,
-      descripcion,
-    };
-
+  const handleSubmit = async (evento) => {
     try {
       if (
         evento.titulo.length === 0 ||
-        evento.descripcion.length === 0 
+        evento.descripcion.length === 0
       ) {
         alertas.alertaCamposObligatorios();
         return;
       }
 
-      const response = await api.guardarEventoObteniendoIds(evento);
+      console.log("Object: ", evento);
+      evento.pacienteId = params.id;
+      evento.medicoId = usuario.medico.medicoId;
+      console.log("paciente y medico: ", evento);
+      const response = await api.crearEvento(evento);
       if (!response) {
         alertas.alertaProblemas();
       } else {
@@ -118,7 +103,7 @@ function NuevoEvento() {
                   label="Título"
                   type="text"
                   name="titulo"
-                  value={titulo}
+                  value={evento.titulo}
                   onChange={handleOnchange}
                   margin="dense"
                   fullWidth
@@ -145,13 +130,14 @@ function NuevoEvento() {
               <Grid item xs={4}>
                 <FormControlLabel
                   name="importante"
-                  value={importante}
+                  value={evento.importante}
                   onChange={handleOnchange}
                   control={<Checkbox />}
                   label="Evento importante"
                 />
               </Grid>
             </Grid>
+            
             <br></br>
             <Typography component="h2" variant="h5" align="left">
               Paciente
@@ -205,7 +191,7 @@ function NuevoEvento() {
                   aria-label="maximum height"
                   placeholder="Descripción"
                   name="descripcion"
-                  value={descripcion}
+                  value={evento.descripcion}
                   onChange={handleOnchange}
                   style={{ width: 1249, height: 100 }}
                 />
@@ -221,15 +207,7 @@ function NuevoEvento() {
                 <Button
                   variant="contained"
                   endIcon={<SaveIcon />}
-                  onClick={() =>
-                    handleSubmit(
-                      titulo,
-                      importante,
-                      medicoId,
-                      pacienteId,
-                      descripcion
-                    )
-                  }
+                  onClick={() => handleSubmit(evento)}
                 >
                   <Typography color={"white"} variant="h7" align="left">
                     &nbsp;Guardar
