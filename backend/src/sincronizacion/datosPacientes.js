@@ -10,8 +10,16 @@ export async function handleSincronizarPostRequest(req, res, next) {
 }
 
 export async function getDatosParaSincronizar(idMedico,dnisYFechas) {
+
   const fecha = await SincronizacionService.getUltimaFechaDeSincronizacionConMedicoId(idMedico);
-  return await EventosService.getEventosCompletosPorDnisYFechasAPartirDeFecha(dnisYFechas,fecha);
+
+  if(!fecha){
+    //primera sincronizacion
+    return await EventosService.getEventosCompletosPorDnisYFechas(dnisYFechas);
+  }else{
+    return await EventosService.getEventosCompletosPorDnisYFechasAPartirDeFecha(dnisYFechas,fecha);
+  }
+
 }
 
 export async function actualizarDatos(datos) {

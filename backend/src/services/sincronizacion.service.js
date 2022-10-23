@@ -19,6 +19,10 @@ async function getSincronizacionMasRecienteFromModel(medicoId) {
     where:{medicoId}
   });
 
+  if(fechasDeSincronizaciones.length === 0){
+    return false
+  }
+
   //obtener fecha mas reciente
   let arrayFechas = fechasDeSincronizaciones.map(
     (fechaActual) => new Date(fechaActual.fecha)
@@ -41,8 +45,15 @@ async function getSincronizacionMasRecienteFromModel(medicoId) {
 }
 
 async function getUltimaFechaDeSincronizacionConMedicoId(medicoId){
+
   const ultima = await getSincronizacionMasRecienteFromModel(medicoId);
-  return ultima.fecha;
+  
+  if(!ultima){
+    return false;
+  }else{
+    return ultima.fecha;
+  }
+
 }
 
 

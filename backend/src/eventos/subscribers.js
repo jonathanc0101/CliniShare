@@ -15,8 +15,6 @@ export default function loadListeners(emitter) {
   emitter.on("logged_in", () => {
     const treintaMinutos = 1000 * 60 * 30;
 
-    console.log("\n\nlogged_in\n\n");
-
     //starting broadcast listener
     listenForBroadcasts();
 
