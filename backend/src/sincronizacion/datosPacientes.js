@@ -26,24 +26,27 @@ export async function actualizarDatos(datos) {
   //hay que resolver el tema de sincronizar los pacientes, que quede almacenada la version mas actualizada del paciente
   try {
     await sequelize.transaction(async (t) => {
+      console.log("EL ERROR PASO ANTES DEL FOR : ");
       for (const evento of datos) {
+        console.log("EL ERROR PASO ANTES DE MEDICO : ");
+        console.log("OBJETO MEDICO : ",evento.medico);
         await Medico.upsert(evento.medico,{transaction: t});
+        console.log("EL ERROR PASO ANTES PACIENTE DE : ");
         await PacientesService.upsertarPorDNIyNacimiento(evento.paciente,t);
         const eventoAux = {
           ...evento,
           pacienteId: await PacientesService.getIdPorDniYNacimiento(evento.paciente),
           medicoId: evento.medicoId,
         };
+        console.log("EL ERROR PASO DESPUES DE PACIENTE: ");
         await Evento.upsert(eventoAux,{transaction: t});
       }
 
     });
 
-
-
     return true;
   } catch (error) {
-    console.log("No se pudo cargar el paciente: " + error);
+    console.log("No se pudo actualizar el evento compartido: " + error);
     return {};
   }
 }
