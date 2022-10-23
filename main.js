@@ -3,17 +3,17 @@ const axios = require('axios');
 const { app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 
-const { fork } = require("child_process");
+// const { fork } = require("child_process");
 
-const child = fork("./database-clinishare/src/main.js");
+// const child = fork("./database-clinishare/src/main.js");
 
-child.on("close", function (code) {
-  console.log("child process exited with code " + code);
-});
+// child.on("close", function (code) {
+//   console.log("child process exited with code " + code);
+// });
 
-process.on('exit', function() {
-  child.kill();
-});
+// process.on('exit', function() {
+//   child.kill();
+// });
 
 
 const createWindow = () => {
@@ -26,7 +26,7 @@ const createWindow = () => {
   })
 
   
-  win.loadFile('index.html') 
+  win.loadURL("http://localhost:5000");
 }
 
  

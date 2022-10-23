@@ -22,10 +22,4 @@ contextBridge.exposeInMainWorld('versions', {
 })
 
 
-contextBridge.exposeInMainWorld('myAPI', {
-  doAThing: () => {
-    replaceText("test","testSucceded")
-  }
-})
-
  
