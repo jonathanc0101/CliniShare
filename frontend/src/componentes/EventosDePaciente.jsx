@@ -28,7 +28,7 @@ function EventosDePaciente(params) {
 
   useEffect(() => {
     const obtenerEventosPorPacienteId = async () => {
-      const response = await api.obtenerEventosPorPacienteId(params.id);
+      const response = await api.obtenerEventosCompletosPorPacienteId(params.id);
       if (response.data.length !== 0) {
         setEventos(response.data);
       } else {
@@ -70,7 +70,7 @@ function EventosDePaciente(params) {
                     <TableCell>{evento.titulo}</TableCell>
                     <TableCell>{formatearFecha(evento.fecha)}</TableCell>
                     <TableCell>{evento.descripcion}</TableCell>
-                    <TableCell></TableCell>
+                    <TableCell>{evento.medico.nombre} {evento.medico.apellido}</TableCell>
                     <TableCell align="center" component="th" scope="row">
                       <Link to={"/eventos/id/" + evento.id}>
                         <EditIcon color="info"></EditIcon>

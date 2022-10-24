@@ -21,6 +21,7 @@ export const api = {
   login,
   modificarMedico,
   crearEvento,
+  obtenerEventosCompletosPorPacienteId,
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -240,6 +241,20 @@ async function obtenerEventosCompletosImportantesPorPacienteId(pacienteId) {
     return "El evento no existe";
   }
 }
+
+async function obtenerEventosCompletosPorPacienteId(pacienteId) {
+  try {
+    const eventosObtenidos = await axios.get(
+      rutas.getEventosCompletosPorPacienteId + pacienteId
+    );
+    eventosObtenidos.data.sort((a, b) => a.fecha < b.fecha);
+
+    return eventosObtenidos;
+  } catch (error) {
+    return "El evento no existe";
+  }
+}
+
 
 async function modificarMedico(Medico) {
   try {

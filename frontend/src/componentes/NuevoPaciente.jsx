@@ -162,7 +162,7 @@ function NuevoPaciente() {
             </Grid>
           </CardContent>
         </Card>
-        <br></br>
+      
         <Grid container direction="row" spacing={2}>
           <Grid item xs={10}>
             <BotonVolver></BotonVolver>

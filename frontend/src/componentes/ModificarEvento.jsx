@@ -47,7 +47,7 @@ function ModificarEvento() {
       descripcion: descripcion,
       importante: importante,
     });
-    alertas.alertaModificacionExitosa();
+    alertas.alertaModificacionExitosa("evento");
     navigate(-1);
   };
 

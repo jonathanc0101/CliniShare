@@ -24,6 +24,7 @@ import { alertas } from "./alertas";
 function NuevoEvento() {
   const params = useParams();
 
+  let navigate = useNavigate();
   const usuario = JSON.parse(
     window.localStorage.getItem("loggedCliniShareAppUser")
   );
@@ -58,10 +59,7 @@ function NuevoEvento() {
 
   const handleSubmit = async (evento) => {
     try {
-      if (
-        evento.titulo.length === 0 ||
-        evento.descripcion.length === 0
-      ) {
+      if (evento.titulo.length === 0 || evento.descripcion.length === 0) {
         alertas.alertaCamposObligatorios();
         return;
       }
@@ -75,7 +73,7 @@ function NuevoEvento() {
         alertas.alertaProblemas();
       } else {
         alertas.alertaExito("evento");
-        // navigate(-1);
+        navigate(-1);
       }
     } catch (err) {
       console.error(err);
@@ -137,7 +135,7 @@ function NuevoEvento() {
                 />
               </Grid>
             </Grid>
-            
+
             <br></br>
             <Typography component="h2" variant="h5" align="left">
               Paciente

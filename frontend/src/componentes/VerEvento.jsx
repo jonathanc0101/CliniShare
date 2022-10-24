@@ -109,8 +109,8 @@ function VerEvento() {
                 />
               </Grid>
             </Grid>
-            <br></br>
-            <Typography component="h2" variant="h5" align="left">
+            {/* <br></br> */}
+            {/* <Typography component="h2" variant="h5" align="left">
               Medico
             </Typography>
             <Grid container direction="row" spacing={2}>
@@ -158,7 +158,7 @@ function VerEvento() {
                   variant="outlined"
                 ></TextField>
               </Grid>
-            </Grid>
+            </Grid> */}
             <br></br>
             <Typography component="h2" variant="h5" align="left">
               Paciente
