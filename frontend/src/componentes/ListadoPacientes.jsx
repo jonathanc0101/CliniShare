@@ -16,12 +16,8 @@ import { styled } from "@mui/material/styles";
 import {
   Button,
   FormControl,
-  IconButton,
-  Input,
   InputAdornment,
-  InputLabel,
   OutlinedInput,
-  TextField,
 } from "@mui/material";
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
 import MenuAppBar from "./MenuAppBar";
@@ -82,7 +78,7 @@ function ListadoPacientes() {
                 onChange={(event) => {
                   setSearchPacientes(event.target.value);
                 }}
-                placeholder="Search..."
+                placeholder="Buscar..."
               />
             </FormControl>
 

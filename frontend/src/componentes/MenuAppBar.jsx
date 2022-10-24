@@ -15,7 +15,6 @@ import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
 const pages = [];
-const settings = ["Account", "Dashboard", "Logout"];
 
 function MenuAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -128,7 +127,9 @@ function MenuAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
+                <Avatar />
+
               </IconButton>
             </Tooltip>
             <Menu

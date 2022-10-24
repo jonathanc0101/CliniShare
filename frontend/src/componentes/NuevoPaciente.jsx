@@ -17,6 +17,7 @@ import BotonVolver from "./botones/BotonVolver";
 import { alertas } from "./alertas";
 import "dayjs/locale/es";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 function NuevoPaciente() {
   let navigate = useNavigate();
@@ -153,6 +154,8 @@ function NuevoPaciente() {
                     name="fechaNacimiento"
                     value={Paciente.fechaNacimiento}
                     onChange={handleChangeFecha}
+                    maxDate={moment().subtract(18, "years").toDate()}
+                    
                     renderInput={(params) => (
                       <TextField onKeyDown={onKeyDown} {...params} />
                     )}
@@ -162,7 +165,7 @@ function NuevoPaciente() {
             </Grid>
           </CardContent>
         </Card>
-      
+
         <Grid container direction="row" spacing={2}>
           <Grid item xs={10}>
             <BotonVolver></BotonVolver>

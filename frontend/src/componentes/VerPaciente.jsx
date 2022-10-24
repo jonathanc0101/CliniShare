@@ -5,6 +5,7 @@ import {
   CardContent,
   Grid,
   IconButton,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -17,6 +18,8 @@ import EventosDePaciente from "./EventosDePaciente";
 import { Link } from "react-router-dom";
 
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
+import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 function VerPaciente() {
   const params = useParams();
@@ -25,12 +28,15 @@ function VerPaciente() {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [dni, setDni] = useState("");
+  const [fechaNacimiento, setFechaNacimiento] = useState("");
+
   useEffect(() => {
     (async () => {
       const res = await api.obtenerPacienteById(params.id);
       setNombre(res.nombre);
       setApellido(res.apellido);
       setDni(res.dni);
+      setFechaNacimiento(res.fechaNacimiento);
     })();
   }, [params.id]);
   return (
@@ -88,6 +94,21 @@ function VerPaciente() {
           </Box>
           <hr></hr>
           <br></br>
+          <Grid item xs={4} sm={4}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DesktopDatePicker
+                  disabled
+                  label="Fecha del evento"
+                  inputFormat="DD/MM/YYYY"
+                  name="fecha"
+                  value={fechaNacimiento}
+                  onChange={(e) => setFechaNacimiento(e.target.value)}
+
+                  renderInput={(params) => <TextField {...params} />}
+                />
+            </LocalizationProvider>
+          </Grid>
+          <br></br>
           <Grid item xs={8}>
             <Button
               variant="contained"
@@ -101,9 +122,8 @@ function VerPaciente() {
               </Link>
             </Button>
           </Grid>
-<br></br>
+          <br></br>
           <Grid container direction="row" spacing={2}>
-            
             <Grid item>
               <EventosDePaciente id={params.id} />
             </Grid>
@@ -111,18 +131,14 @@ function VerPaciente() {
           <br></br>
         </CardContent>
       </Card>
-        <Grid item>
-          <IconButton
-            aria-label="save"
-            size="large"
-            onClick={() => navigate(-1)}
-          >
-            <ArrowBackIcon color="info" fontSize="inherit" />
-            <Typography color={"black"} variant="h6" align="left">
-              &nbsp;Atrás
-            </Typography>
-          </IconButton>
-        </Grid>
+      <Grid item>
+        <IconButton aria-label="save" size="large" onClick={() => navigate(-1)}>
+          <ArrowBackIcon color="info" fontSize="inherit" />
+          <Typography color={"black"} variant="h6" align="left">
+            &nbsp;Atrás
+          </Typography>
+        </IconButton>
+      </Grid>
     </>
   );
 }

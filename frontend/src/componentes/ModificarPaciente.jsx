@@ -21,6 +21,7 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/es";
 import { alertas } from "./alertas";
+import moment from "moment";
 
 function ModificarPaciente() {
   const params = useParams();
@@ -56,7 +57,6 @@ function ModificarPaciente() {
 
   const handleChangeFecha = (event) => {
     const value = event["$d"];
-    console.log(event);
     setPaciente((estadoAnterior) => {
       return { ...estadoAnterior, fechaNacimiento: value };
     });
@@ -143,6 +143,7 @@ function ModificarPaciente() {
                 name="fechaNacimiento"
                 value={paciente.fechaNacimiento}
                 onChange={handleChangeFecha}
+                maxDate={moment().subtract(18, "years").toDate()}
                 renderInput={(params) => (
                   <TextField onKeyDown={onKeyDown} {...params} />
                 )}

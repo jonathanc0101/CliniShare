@@ -15,6 +15,7 @@ import BotonVolver from "./botones/BotonVolver";
 import { Navigate } from "react-router-dom";
 import { alertas } from "./alertas";
 import "dayjs/locale/es";
+import moment from "moment";
 
 function ModificarMedico() {
   const [guardado, setGuardado] = useState(false);
@@ -172,6 +173,7 @@ function ModificarMedico() {
                   name="fechaNacimiento"
                   value={medico.fechaNacimiento}
                   onChange={handleChangeFecha}
+                  maxDate={moment().subtract(18, "years").toDate()}
                   renderInput={(params) => (
                     <TextField onKeyDown={onKeyDown} {...params} />
                   )}

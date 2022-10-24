@@ -61,7 +61,7 @@ function LoginForm() {
 
     try {
       const usuario = await api.login(correoElectronico, password);
-      console.log(usuario);
+      // console.log(usuario);
       if (Object.keys(usuario).length !== 0) {
         setDatosValidos(true);
 
