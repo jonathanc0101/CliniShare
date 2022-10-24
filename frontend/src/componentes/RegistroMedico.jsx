@@ -21,6 +21,10 @@ function RegistroMedico() {
   const [registrado, setRegistrado] = useState(false);
   const [passwordAVerificar, setPasswordAVerificar] = useState("");
 
+  const onKeyDown = (e) => {
+    e.preventDefault();
+  };
+
   const verificarPassword = (password) => password === medico.password;
 
   const isEmail = (email) =>
@@ -174,12 +178,12 @@ function RegistroMedico() {
               >
                 <DesktopDatePicker
                   label="Fecha de nacimiento"
-                  mask="__/__/____"
                   name="fechaNacimiento"
                   value={medico.fechaNacimiento}
                   onChange={handleChangeFecha}
-                  renderInput={(params) => <TextField {...params} />}
-                />
+                  renderInput={(params) => (
+                    <TextField onKeyDown={onKeyDown} {...params} />
+                  )}                />
               </LocalizationProvider>
             </Grid>
           </Grid>

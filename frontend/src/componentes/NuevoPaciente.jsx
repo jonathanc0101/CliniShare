@@ -16,8 +16,10 @@ import SaveIcon from "@mui/icons-material/Save";
 import BotonVolver from "./botones/BotonVolver";
 import { alertas } from "./alertas";
 import "dayjs/locale/es";
+import { useNavigate } from "react-router-dom";
 
 function NuevoPaciente() {
+  let navigate = useNavigate();
   async function obtenerPacientesExistentes(pacienteDni) {
     const pacientesExistentes = await api.obtenerPacientes();
 
@@ -61,6 +63,7 @@ function NuevoPaciente() {
       const pacienteGuardado = await api.guardarPaciente(Paciente);
       if (pacienteGuardado === true) {
         alertas.alertaExito("paciente");
+        navigate(-1);
       }
     }
   };

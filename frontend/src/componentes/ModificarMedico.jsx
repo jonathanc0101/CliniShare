@@ -14,6 +14,7 @@ import { api } from "../API backend/api";
 import BotonVolver from "./botones/BotonVolver";
 import { Navigate } from "react-router-dom";
 import { alertas } from "./alertas";
+import "dayjs/locale/es";
 
 function ModificarMedico() {
   const [guardado, setGuardado] = useState(false);
@@ -27,6 +28,10 @@ function ModificarMedico() {
     password: "",
     fechaNacimiento: "",
   });
+
+  const onKeyDown = (e) => {
+    e.preventDefault();
+  };
 
   const verificarPassword = (password) => password === medico.password;
 
@@ -43,7 +48,7 @@ function ModificarMedico() {
   }, []);
 
   const update = async () => {
-        if (!verificarPassword(passwordAVerificar)) {
+    if (!verificarPassword(passwordAVerificar)) {
       alertas.contraseñasDiferentes();
       return;
     }
@@ -158,13 +163,18 @@ function ModificarMedico() {
           <br></br>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={4} sm={4}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <LocalizationProvider
+                adapterLocale="es"
+                dateAdapter={AdapterDayjs}
+              >
                 <DesktopDatePicker
                   label="Fecha de nacimiento"
                   name="fechaNacimiento"
                   value={medico.fechaNacimiento}
                   onChange={handleChangeFecha}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => (
+                    <TextField onKeyDown={onKeyDown} {...params} />
+                  )}
                 />
               </LocalizationProvider>
             </Grid>
