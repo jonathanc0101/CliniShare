@@ -20,6 +20,7 @@ const rutas = {
   nuevoMedicoUsuario: "register",
   LoginMedicoUsuario: "login",
   modificarMedico: "modify",
+  getEventosCompletosPorPacienteId: "eventos/all/completos/idPaciente/"
 
 
 

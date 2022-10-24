@@ -21,6 +21,7 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/es";
 import { alertas } from "./alertas";
+import moment from "moment";
 
 function ModificarPaciente() {
   const params = useParams();
@@ -56,7 +57,6 @@ function ModificarPaciente() {
 
   const handleChangeFecha = (event) => {
     const value = event["$d"];
-    console.log(event);
     setPaciente((estadoAnterior) => {
       return { ...estadoAnterior, fechaNacimiento: value };
     });
@@ -143,6 +143,7 @@ function ModificarPaciente() {
                 name="fechaNacimiento"
                 value={paciente.fechaNacimiento}
                 onChange={handleChangeFecha}
+                maxDate={moment().subtract(18, "years").toDate()}
                 renderInput={(params) => (
                   <TextField onKeyDown={onKeyDown} {...params} />
                 )}
@@ -164,12 +165,15 @@ function ModificarPaciente() {
             </Button>
           </Grid>
           <br></br>
+          <br></br>
           <Grid container direction="row" spacing={2}>
             <Grid item>
               <EventosDePaciente id={params.id} />
             </Grid>
           </Grid>
-          <Grid container direction="row" spacing={2}>
+        </CardContent>
+      </Card>
+      <Grid container direction="row" spacing={2}>
         <Grid item xs={10}>
           <Button
             variant="outlined"
@@ -187,29 +191,8 @@ function ModificarPaciente() {
           </Button>
         </Grid>
       </Grid>
-        </CardContent>
-      </Card>
-
-      {/* <Grid item>
-        <IconButton aria-label="save" size="large" onClick={update}>
-          <SaveIcon color="info" fontSize="inherit" />
-          <Typography color={"black"} variant="h6" align="right">
-            &nbsp;Guardar
-          </Typography>
-        </IconButton>
-      </Grid>
-      <Grid item>
-        <IconButton aria-label="save" size="large" onClick={() => navigate(-1)}>
-          <ArrowBackIcon color="info" fontSize="inherit" />
-          <Typography color={"black"} variant="h6" align="left">
-            &nbsp;Atrás
-          </Typography>
-        </IconButton>
-      </Grid> */}
-
     </>
   );
 }
-
 
 export default ModificarPaciente;
