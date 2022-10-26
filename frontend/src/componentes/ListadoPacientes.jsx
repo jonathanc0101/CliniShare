@@ -18,6 +18,7 @@ import {
   FormControl,
   InputAdornment,
   OutlinedInput,
+  TablePagination,
 } from "@mui/material";
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
 import MenuAppBar from "./MenuAppBar";
@@ -32,6 +33,18 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function ListadoPacientes() {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   const [searchPacientes, setSearchPacientes] = useState("");
   const [pacientes, setPacientes] = useState([]);
 
@@ -65,7 +78,7 @@ function ListadoPacientes() {
               }}
             /> */}
           <div className="App-search">
-            <FormControl sx={{ m: 1, width: "40ch"}} variant="outlined">
+            <FormControl sx={{ m: 1, width: "40ch" }} variant="outlined">
               {/* <InputLabel>Search...</InputLabel> */}
 
               <OutlinedInput
@@ -81,7 +94,6 @@ function ListadoPacientes() {
                 placeholder="Buscar..."
               />
             </FormControl>
-
           </div>
           <br></br>
           <Button
@@ -99,8 +111,10 @@ function ListadoPacientes() {
 
           <br></br>
 
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableContainer component={Paper} sx={{ maxHeight: 320, maxWidth: 1060 }}>
+            <Table
+              stickyHeader size="small" aria-label="sticky table"
+            >
               <TableHead>
                 <TableRow>
                   <TableCell>Nombre</TableCell>
@@ -112,6 +126,7 @@ function ListadoPacientes() {
               </TableHead>
               <TableBody>
                 {pacientes
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .filter((paciente) => {
                     if (searchPacientes === "") {
                       return paciente;
@@ -146,6 +161,15 @@ function ListadoPacientes() {
               </TableBody>
             </Table>
           </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={pacientes.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </Grid>
       </Grid>
     </>
