@@ -23,7 +23,9 @@ import { alertas } from "./alertas";
 
 function NuevoEvento() {
   const params = useParams();
-
+  const onKeyDown = (e) => {
+    e.preventDefault();
+  };
   let navigate = useNavigate();
   const usuario = JSON.parse(
     window.localStorage.getItem("loggedCliniShareAppUser")
@@ -38,6 +40,7 @@ function NuevoEvento() {
     medicoId: usuario.medico.medicoId,
     pacienteId: params.id,
     descripcion: "",
+    fechaVencimiento: ""
   });
 
   const handleOnchange = (e) => {
@@ -46,6 +49,13 @@ function NuevoEvento() {
     } else {
       setEvento({ ...evento, [e.target.name]: e.target.value });
     }
+  };
+
+  const handleChangeFecha = (event) => {
+    const value = event["$d"];
+    setEvento((estadoAnterior) => {
+      return { ...estadoAnterior, fechaVencimiento: value };
+    });
   };
 
   useEffect(() => {
@@ -64,10 +74,9 @@ function NuevoEvento() {
         return;
       }
 
-      console.log("Object: ", evento);
       evento.pacienteId = params.id;
       evento.medicoId = usuario.medico.medicoId;
-      console.log("paciente y medico: ", evento);
+
       const response = await api.crearEvento(evento);
       if (!response) {
         alertas.alertaProblemas();
@@ -125,7 +134,7 @@ function NuevoEvento() {
               </Grid>
             </Grid>
             <Grid container direction="row" spacing={40}>
-              <Grid item xs={4}>
+              <Grid item xs={4} sm={4}>
                 <FormControlLabel
                   name="importante"
                   value={evento.importante}
@@ -133,6 +142,23 @@ function NuevoEvento() {
                   control={<Checkbox />}
                   label="Evento importante"
                 />
+              </Grid>
+              <Grid item sx={4} sm={4}>
+                <LocalizationProvider
+                  adapterLocale="es"
+                  dateAdapter={AdapterDayjs}
+                >
+                  <DesktopDatePicker
+                    disabled={!evento.importante}
+                    label="Fecha de vencimiento"
+                    name="fechaVencimiento"
+                    value={evento.fechaVencimiento}
+                    onChange={handleChangeFecha}
+                    renderInput={(params) => (
+                      <TextField onKeyDown={onKeyDown} {...params} />
+                    )}
+                  />
+                </LocalizationProvider>
               </Grid>
             </Grid>
 

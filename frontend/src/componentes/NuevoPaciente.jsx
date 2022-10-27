@@ -155,7 +155,6 @@ function NuevoPaciente() {
                     value={Paciente.fechaNacimiento}
                     onChange={handleChangeFecha}
                     maxDate={moment().subtract(18, "years").toDate()}
-                    
                     renderInput={(params) => (
                       <TextField onKeyDown={onKeyDown} {...params} />
                     )}
