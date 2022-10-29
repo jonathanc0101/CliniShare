@@ -20,19 +20,24 @@ import BotonVolver from "./botones/BotonVolver";
 import { api } from "../API backend/api";
 import { useParams, useNavigate } from "react-router-dom";
 import { alertas } from "./alertas";
+import moment from "moment";
+import validator from "validator";
+import el from "date-fns/esm/locale/el/index.js";
 
 function NuevoEvento() {
   const params = useParams();
-  const onKeyDown = (e) => {
-    e.preventDefault();
-  };
   let navigate = useNavigate();
+  moment.locale("es");
+
   const usuario = JSON.parse(
     window.localStorage.getItem("loggedCliniShareAppUser")
   );
-  const [pacienteDni, setPacienteDni] = useState("");
-  const [pacienteNombre, setPacienteNombre] = useState("");
-  const [pacienteApellido, setPacienteApellido] = useState("");
+
+  const [paciente, setPaciente] = useState({
+    nombre: "",
+    apellido: "",
+    dni: "",
+  });
 
   const [evento, setEvento] = useState({
     titulo: "",
@@ -40,8 +45,22 @@ function NuevoEvento() {
     medicoId: usuario.medico.medicoId,
     pacienteId: params.id,
     descripcion: "",
-    fechaVencimiento: ""
+    fechaVencimiento: "",
   });
+
+  useEffect(() => {
+    (async () => {
+      const pacienteEncontrado = await api.obtenerPacienteById(params.id);
+
+      setPaciente((estadoAnterior) => {
+        return { ...estadoAnterior, ...pacienteEncontrado };
+      });
+    })();
+  }, [params.id]);
+
+  const onKeyDown = (e) => {
+    e.preventDefault();
+  };
 
   const handleOnchange = (e) => {
     if (e.target.name === "importante") {
@@ -51,24 +70,32 @@ function NuevoEvento() {
     }
   };
 
-  const handleChangeFecha = (event) => {
-    const value = event["$d"];
-    setEvento((estadoAnterior) => {
-      return { ...estadoAnterior, fechaVencimiento: value };
-    });
-  };
+  const handleChangeFecha = async (e) => {
+    if (e === null) {
+      e = {};
+      console.log(e);
+    } else {
+      const value = e["$d"];
 
-  useEffect(() => {
-    (async () => {
-      const pacienteEncontrado = await api.obtenerPacienteById(params.id);
-      setPacienteNombre(pacienteEncontrado.nombre);
-      setPacienteApellido(pacienteEncontrado.apellido);
-      setPacienteDni(pacienteEncontrado.dni);
-    })();
-  }, [params.id]);
+      setEvento((estadoAnterior) => {
+        return { ...estadoAnterior, fechaVencimiento: value };
+      });
+    }
+  };
 
   const handleSubmit = async (evento) => {
     try {
+      let fechaActual = new Date();
+      if (
+        !validator.isDate(evento.fechaVencimiento) ||
+        evento.fechaVencimiento.getFullYear() < fechaActual.getFullYear()
+      ) {
+        alertas.fechaErronea("vencimiento");
+        return;
+      } else {
+        console.log("fecha bien");
+      }
+
       if (evento.titulo.length === 0 || evento.descripcion.length === 0) {
         alertas.alertaCamposObligatorios();
         return;
@@ -143,7 +170,7 @@ function NuevoEvento() {
                   label="Evento importante"
                 />
               </Grid>
-              <Grid item sx={4} sm={4}>
+              <Grid item xs={4} sm={4}>
                 <LocalizationProvider
                   adapterLocale="es"
                   dateAdapter={AdapterDayjs}
@@ -154,9 +181,8 @@ function NuevoEvento() {
                     name="fechaVencimiento"
                     value={evento.fechaVencimiento}
                     onChange={handleChangeFecha}
-                    renderInput={(params) => (
-                      <TextField onKeyDown={onKeyDown} {...params} />
-                    )}
+                    minDate={moment().add(1, "days")}
+                    renderInput={(params) => <TextField {...params} />}
                   />
                 </LocalizationProvider>
               </Grid>
@@ -174,7 +200,7 @@ function NuevoEvento() {
                   label="Nombre"
                   type="text"
                   name="nombre"
-                  value={pacienteNombre}
+                  value={paciente.nombre}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -186,7 +212,7 @@ function NuevoEvento() {
                   label="Apellido"
                   type="text"
                   name="apellido"
-                  value={pacienteApellido}
+                  value={paciente.apellido}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -198,7 +224,7 @@ function NuevoEvento() {
                   label="DNI"
                   type="text"
                   name="pacienteDni"
-                  value={pacienteDni}
+                  value={paciente.dni}
                   margin="dense"
                   fullWidth
                   variant="outlined"

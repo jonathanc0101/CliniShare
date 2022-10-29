@@ -152,17 +152,17 @@ function ModificarPaciente() {
           </Grid>
           <br></br>
           <Grid item xs={8}>
-            <Button
-              variant="contained"
-              startIcon={<AddCircleOutlineTwoToneIcon />}
+            <Link
+              to={"/eventos/new/paciente/" + params.id}
+              style={{ color: "inherit", textDecoration: "inherit" }}
             >
-              <Link
-                to={"/eventos/new/paciente/" + params.id}
-                style={{ color: "inherit", textDecoration: "inherit" }}
+              <Button
+                variant="contained"
+                startIcon={<AddCircleOutlineTwoToneIcon />}
               >
                 Agregar evento
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </Grid>
           <br></br>
           <br></br>

@@ -236,6 +236,7 @@ async function obtenerEventosCompletosImportantesPorPacienteId(pacienteId) {
     const eventosImportantesObtenidos = await axios.get(
       rutas.getEventosCompletosImportantesPorPacienteId + pacienteId
     );
+
     return eventosImportantesObtenidos;
   } catch (error) {
     return "El evento no existe";

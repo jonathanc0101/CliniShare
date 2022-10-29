@@ -96,25 +96,27 @@ function ListadoPacientes() {
             </FormControl>
           </div>
           <br></br>
-          <Button
-            variant="contained"
-            startIcon={<AddCircleOutlineTwoToneIcon />}
+
+          <Link
+            to={"/pacientes/new/"}
+            style={{ color: "inherit", textDecoration: "inherit" }}
           >
-            <Link
-              to={"/pacientes/new/"}
-              style={{ color: "inherit", textDecoration: "inherit" }}
+            <Button
+              variant="contained"
+              startIcon={<AddCircleOutlineTwoToneIcon />}
             >
               Agregar paciente
-            </Link>
-          </Button>
+            </Button>
+          </Link>
           <br></br>
 
           <br></br>
 
-          <TableContainer component={Paper} sx={{ maxHeight: 320, maxWidth: 1060 }}>
-            <Table
-              stickyHeader size="small" aria-label="sticky table"
-            >
+          <TableContainer
+            component={Paper}
+            sx={{ maxHeight: 320, maxWidth: 1060 }}
+          >
+            <Table stickyHeader size="small" aria-label="sticky table">
               <TableHead>
                 <TableRow>
                   <TableCell>Nombre</TableCell>

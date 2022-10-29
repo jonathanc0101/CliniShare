@@ -5,43 +5,48 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
-  IconButton,
   TextareaAutosize,
   TextField,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { api } from "../API backend/api";
 import { useParams } from "react-router-dom";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useNavigate } from "react-router-dom";
 import BotonVolver from "./botones/BotonVolver";
 
 function VerEvento() {
   const params = useParams();
-  let navigate = useNavigate();
-  const [titulo, setTitulo] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [importante, setImportante] = useState(false);
-  const [fecha, setFecha] = useState("");
-  const [pacienteNombre, setPacienteNombre] = useState("");
-  const [pacienteApellido, setPacienteApellido] = useState("");
-  const [pacienteDni, setPacienteDni] = useState("");
+
+  const [evento, setEvento] = useState({
+    titulo: "",
+    descripcion: "",
+    importante: false,
+    fecha: "",
+    fechaVencimiento: "",
+  });
+
+  const [paciente, setPaciente] = useState({
+    nombre: "",
+    apellido: "",
+    dni: "",
+  });
 
   useEffect(() => {
     (async () => {
-      const res = await api.obtenerEventoConPacienteYMedicoPorId(params.id);
-      setTitulo(res.titulo);
-      setImportante(res.importante);
-      setFecha(res.fecha);
-      setDescripcion(res.descripcion);
-      setPacienteNombre(res.paciente.nombre);
-      setPacienteApellido(res.paciente.apellido);
-      setPacienteDni(res.paciente.dni);
+      const eventoEncontrado = await api.obtenerEventoConPacienteYMedicoPorId(
+        params.id
+      );
+      const pacienteDelEvento = eventoEncontrado.paciente;
+      setEvento((estadoAnterior) => {
+        return { ...estadoAnterior, ...eventoEncontrado };
+      });
+      setPaciente((estadoAnterior) => {
+        return { ...estadoAnterior, ...pacienteDelEvento };
+      });
     })();
   }, [params.id]);
 
@@ -75,7 +80,7 @@ function VerEvento() {
                   label="Título"
                   type="text"
                   name="titulo"
-                  value={titulo}
+                  value={evento.titulo}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -90,8 +95,8 @@ function VerEvento() {
                       label="Fecha del evento"
                       inputFormat="DD/MM/YYYY"
                       name="fecha"
-                      value={fecha}
-                      onChange={(e) => setFecha(e.target.value)}
+                      value={evento.fecha}
+                      onChange={(e) => e.target.value}
                       renderInput={(params) => <TextField {...params} />}
                     />
                   </Stack>
@@ -103,12 +108,31 @@ function VerEvento() {
                 <FormControlLabel
                   disabled
                   name="importante"
-                  checked={importante}
+                  checked={evento.importante}
                   control={<Checkbox />}
                   label="Evento importante"
                 />
               </Grid>
+
+              <Grid item xs={4} sm={4}>
+                {evento.importante ? (
+                  <LocalizationProvider
+                    adapterLocale="es"
+                    dateAdapter={AdapterDayjs}
+                  >
+                    <DesktopDatePicker
+                      disabled
+                      label="Fecha de vencimiento"
+                      name="fechaVencimiento"
+                      value={evento.fechaVencimiento}
+                      onChange={(e) => e.target.value}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                ) : null}
+              </Grid>
             </Grid>
+
             {/* <br></br> */}
             {/* <Typography component="h2" variant="h5" align="left">
               Medico
@@ -171,7 +195,7 @@ function VerEvento() {
                   label="Nombre"
                   type="text"
                   name="nombre"
-                  value={pacienteNombre}
+                  value={paciente.nombre}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -183,7 +207,7 @@ function VerEvento() {
                   label="Apellido"
                   type="text"
                   name="apellido"
-                  value={pacienteApellido}
+                  value={paciente.apellido}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -195,7 +219,7 @@ function VerEvento() {
                   label="DNI"
                   type="text"
                   name="pacienteDni"
-                  value={pacienteDni}
+                  value={paciente.dni}
                   margin="dense"
                   fullWidth
                   variant="outlined"
@@ -213,15 +237,15 @@ function VerEvento() {
                   aria-label="maximum height"
                   placeholder="Descripción"
                   name="descripcion"
-                  value={descripcion}
+                  value={evento.descripcion}
                   style={{ width: 1249, height: 100 }}
                 />
               </Grid>
             </Grid>
             <br></br>
-              <Grid item>
-                <BotonVolver></BotonVolver>
-              </Grid>
+            <Grid item>
+              <BotonVolver></BotonVolver>
+            </Grid>
           </CardContent>
         </Card>
       </Box>

@@ -7,7 +7,8 @@ export const alertas = {
   alertaProblemas,
   alertaModificacionExitosa,
   alertaEmailInvalido,
-  contraseñasDiferentes
+  contraseñasDiferentes,
+  fechaErronea,
 };
 
 async function alertaPacienteExiste(pacienteDni) {
@@ -55,6 +56,14 @@ async function contraseñasDiferentes() {
   Swal.fire({
     title: "",
     text: "Las contraseñas no coinciden",
+    icon: "error",
+  });
+}
+
+async function fechaErronea(tipoFecha) {
+  Swal.fire({
+    title: "",
+    html: `<p>La <b>fecha de ${tipoFecha}</b> es inválida</p>`,
     icon: "error",
   });
 }

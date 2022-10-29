@@ -96,31 +96,30 @@ function VerPaciente() {
           <br></br>
           <Grid item xs={4} sm={4}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DesktopDatePicker
-                  disabled
-                  label="Fecha del evento"
-                  inputFormat="DD/MM/YYYY"
-                  name="fecha"
-                  value={fechaNacimiento}
-                  onChange={(e) => setFechaNacimiento(e.target.value)}
-
-                  renderInput={(params) => <TextField {...params} />}
-                />
+              <DesktopDatePicker
+                disabled
+                label="Fecha del evento"
+                inputFormat="DD/MM/YYYY"
+                name="fecha"
+                value={fechaNacimiento}
+                onChange={(e) => setFechaNacimiento(e.target.value)}
+                renderInput={(params) => <TextField {...params} />}
+              />
             </LocalizationProvider>
           </Grid>
           <br></br>
           <Grid item xs={8}>
-            <Button
-              variant="contained"
-              startIcon={<AddCircleOutlineTwoToneIcon />}
+            <Link
+              to={"/eventos/new/paciente/" + params.id}
+              style={{ color: "inherit", textDecoration: "inherit" }}
             >
-              <Link
-                to={"/eventos/new/paciente/" + params.id}
-                style={{ color: "inherit", textDecoration: "inherit" }}
+              <Button
+                variant="contained"
+                startIcon={<AddCircleOutlineTwoToneIcon />}
               >
                 Agregar evento
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </Grid>
           <br></br>
           <Grid container direction="row" spacing={2}>
