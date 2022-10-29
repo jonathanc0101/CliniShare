@@ -22,7 +22,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { alertas } from "./alertas";
 import moment from "moment";
 import validator from "validator";
-import el from "date-fns/esm/locale/el/index.js";
 
 function NuevoEvento() {
   const params = useParams();
@@ -73,7 +72,6 @@ function NuevoEvento() {
   const handleChangeFecha = async (e) => {
     if (e === null) {
       e = {};
-      console.log(e);
     } else {
       const value = e["$d"];
 
@@ -85,29 +83,36 @@ function NuevoEvento() {
 
   const handleSubmit = async (evento) => {
     try {
-      let fechaActual = new Date();
-      if (
-        !validator.isDate(evento.fechaVencimiento) ||
-        evento.fechaVencimiento.getFullYear() < fechaActual.getFullYear()
-      ) {
-        alertas.fechaErronea("vencimiento");
-        return;
-      } else {
-        console.log("fecha bien");
-      }
-
       if (evento.titulo.length === 0 || evento.descripcion.length === 0) {
         alertas.alertaCamposObligatorios();
         return;
+      } else {
+        let fechaActual = new Date();
+
+        if (evento.fechaVencimiento === "") {
+          evento.fechaVencimiento = null;
+        } else {
+          if (
+            !validator.isDate(evento.fechaVencimiento) ||
+            evento.fechaVencimiento.getFullYear() < fechaActual.getFullYear()
+          ) {
+            alertas.fechaErronea("vencimiento");
+            return;
+          }
+        }
       }
 
       evento.pacienteId = params.id;
       evento.medicoId = usuario.medico.medicoId;
-
+      console.log("evento_ ", evento);
       const response = await api.crearEvento(evento);
       if (!response) {
+        console.log("respuesta mal: ", response);
+
         alertas.alertaProblemas();
       } else {
+        console.log("respuesta: ", response);
+
         alertas.alertaExito("evento");
         navigate(-1);
       }
@@ -131,7 +136,7 @@ function NuevoEvento() {
         <Card>
           <CardContent>
             <Grid container direction="row" spacing={2}>
-              <Grid item xs={4} sm={4}>
+              <Grid item xs={4} sm={8}>
                 <TextField
                   required
                   label="Título"
@@ -160,8 +165,10 @@ function NuevoEvento() {
                 </LocalizationProvider>
               </Grid>
             </Grid>
-            <Grid container direction="row" spacing={40}>
-              <Grid item xs={4} sm={4}>
+            <br></br>
+            <Grid container direction="row" spacing={2}>
+              {/* IMPORTANTE */}
+              <Grid item xs={4} sm={2}>
                 <FormControlLabel
                   name="importante"
                   value={evento.importante}
@@ -170,7 +177,8 @@ function NuevoEvento() {
                   label="Evento importante"
                 />
               </Grid>
-              <Grid item xs={4} sm={4}>
+              {/* FECHA DE VENCIMIENTO */}
+              <Grid item xs={4} sm={10}>
                 <LocalizationProvider
                   adapterLocale="es"
                   dateAdapter={AdapterDayjs}
@@ -187,14 +195,14 @@ function NuevoEvento() {
                 </LocalizationProvider>
               </Grid>
             </Grid>
-
             <br></br>
+            {/* DATOS DEL PACIENTE */}
             <Typography component="h2" variant="h5" align="left">
               Paciente
             </Typography>
-
+            {/* NOMBRE DEL PACIENTE */}
             <Grid container direction="row" spacing={2}>
-              <Grid item xs={3} sm={3}>
+              <Grid item xs={4} sm={4}>
                 <TextField
                   disabled
                   label="Nombre"
@@ -206,7 +214,8 @@ function NuevoEvento() {
                   variant="outlined"
                 ></TextField>
               </Grid>
-              <Grid item xs={3} sm={3}>
+              {/* APELLIDO DEL PACIENTE */}
+              <Grid item xs={4} sm={4}>
                 <TextField
                   disabled
                   label="Apellido"
@@ -218,7 +227,8 @@ function NuevoEvento() {
                   variant="outlined"
                 ></TextField>
               </Grid>
-              <Grid item xs={3} sm={3}>
+              {/* DNI DEL PACIENTE */}
+              <Grid item xs={4} sm={4}>
                 <TextField
                   disabled
                   label="DNI"
@@ -232,6 +242,7 @@ function NuevoEvento() {
               </Grid>
             </Grid>
             <br></br>
+            {/* DESCRIPCIÓN */}
             <Grid container direction="row" spacing={2}>
               <Grid item xs={12} sm={12} lg={6}>
                 <Typography component="h2" variant="h6" align="left">
@@ -249,10 +260,11 @@ function NuevoEvento() {
             </Grid>
             <br></br>
             <Grid container direction="row" spacing={2}>
+              {/* VOLVER A ATRÁS */}
               <Grid item xs={10}>
                 <BotonVolver></BotonVolver>
               </Grid>
-
+              {/* GUARDAR */}
               <Grid item>
                 <Button
                   variant="contained"

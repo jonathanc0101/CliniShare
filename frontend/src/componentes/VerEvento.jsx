@@ -35,46 +35,45 @@ function VerEvento() {
     dni: "",
   });
 
+  const [medico, setMedico] = useState({
+    nombre: "",
+    apellido: "",
+    dni: "",
+    matricula: "",
+  });
+
   useEffect(() => {
     (async () => {
       const eventoEncontrado = await api.obtenerEventoConPacienteYMedicoPorId(
         params.id
       );
       const pacienteDelEvento = eventoEncontrado.paciente;
+      const medicoDelEvento = eventoEncontrado.medico;
+
       setEvento((estadoAnterior) => {
         return { ...estadoAnterior, ...eventoEncontrado };
       });
       setPaciente((estadoAnterior) => {
         return { ...estadoAnterior, ...pacienteDelEvento };
       });
+      setMedico((estadoAnterior) => {
+        return { ...estadoAnterior, ...medicoDelEvento };
+      });
     })();
   }, [params.id]);
 
   return (
     <>
-      <Grid container direction="row" spacing={40}>
-        <Grid item xs={4}>
-          <Typography component="h2" variant="h4" align="left">
-            Evento
-          </Typography>
-        </Grid>
-        {/* <Grid item xs={8}>
-          <Button variant="outlined" startIcon={<EditIcon />}>
-            <Link
-              to={"/eventos/id/" + params.id}
-              style={{ color: "inherit", textDecoration: "inherit" }}
-            >
-              Editar
-            </Link>
-          </Button>
-        </Grid> */}
-      </Grid>
-
+      <Typography component="h2" variant="h4" align="left">
+        Evento
+      </Typography>
       <Box sx={{ width: "100%" }}>
         <Card>
           <CardContent>
+            {/* DATOS DEL EVENTO */}
             <Grid container direction="row" spacing={2}>
-              <Grid item xs={4} sm={4}>
+              {/* TÍTULO */}
+              <Grid item xs={4} sm={8}>
                 <TextField
                   disabled
                   label="Título"
@@ -87,6 +86,7 @@ function VerEvento() {
                   helperText="Campo obligatorio"
                 ></TextField>
               </Grid>
+              {/* FECHA DE CREACIÓN */}
               <Grid item xs={4} sm={4}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Stack spacing={3}>
@@ -103,8 +103,9 @@ function VerEvento() {
                 </LocalizationProvider>
               </Grid>
             </Grid>
-            <Grid container direction="row" spacing={40}>
-              <Grid item xs={4}>
+            <Grid container direction="row" spacing={2}>
+              {/* IMPORTANTE */}
+              <Grid item xs={4} sm={2}>
                 <FormControlLabel
                   disabled
                   name="importante"
@@ -113,8 +114,8 @@ function VerEvento() {
                   label="Evento importante"
                 />
               </Grid>
-
-              <Grid item xs={4} sm={4}>
+              {/* FECHA DE VENCIMIENTO */}
+              <Grid item xs={4} sm={10}>
                 {evento.importante ? (
                   <LocalizationProvider
                     adapterLocale="es"
@@ -132,64 +133,14 @@ function VerEvento() {
                 ) : null}
               </Grid>
             </Grid>
-
-            {/* <br></br> */}
-            {/* <Typography component="h2" variant="h5" align="left">
-              Medico
-            </Typography>
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={3} sm={3}>
-                <TextField
-                  disabled
-                  label="Nombre"
-                  type="text"
-                  name="nombre"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <TextField
-                  disabled
-                  label="Apellido"
-                  type="text"
-                  name="apellido"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <TextField
-                  disabled
-                  label="DNI"
-                  type="text"
-                  name="medicoDni"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <TextField
-                  disabled
-                  label="Matricula"
-                  type="text"
-                  name="matricula"
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-            </Grid> */}
             <br></br>
+            {/* DATOS DEL PACIENTE */}
             <Typography component="h2" variant="h5" align="left">
               Paciente
             </Typography>
-
+            {/* NOMBRE DEL PACIENTE */}
             <Grid container direction="row" spacing={2}>
-              <Grid item xs={3} sm={3}>
+              <Grid item xs={4} sm={4}>
                 <TextField
                   disabled
                   label="Nombre"
@@ -201,7 +152,9 @@ function VerEvento() {
                   variant="outlined"
                 ></TextField>
               </Grid>
-              <Grid item xs={3} sm={3}>
+              {/* APELLIDO DEL PACIENTE */}
+
+              <Grid item xs={4} sm={4}>
                 <TextField
                   disabled
                   label="Apellido"
@@ -213,6 +166,7 @@ function VerEvento() {
                   variant="outlined"
                 ></TextField>
               </Grid>
+              {/* DNI DEL PACIENTE */}
               <Grid item xs={3} sm={3}>
                 <TextField
                   disabled
@@ -227,6 +181,40 @@ function VerEvento() {
               </Grid>
             </Grid>
             <br></br>
+            {/* DATOS DEL MÉDICO */}
+            <Typography component="h2" variant="h5" align="left">
+              Médico
+            </Typography>
+            {/* NOMBRE DEL MÉDICO */}
+            <Grid container direction="row" spacing={2}>
+              <Grid item xs={3} sm={3}>
+                <TextField
+                  disabled
+                  label="Nombre"
+                  type="text"
+                  name="nombre"
+                  value={medico.nombre}
+                  margin="dense"
+                  fullWidth
+                  variant="outlined"
+                ></TextField>
+              </Grid>
+              {/* APELLIDO DEL MÉDICO */}
+              <Grid item xs={3} sm={3}>
+                <TextField
+                  disabled
+                  label="Apellido"
+                  type="text"
+                  name="apellido"
+                  value={medico.apellido}
+                  margin="dense"
+                  fullWidth
+                  variant="outlined"
+                ></TextField>
+              </Grid>
+            </Grid>
+            <br></br>
+            {/* DESCRIPCIÓN */}
             <Grid container direction="row" spacing={2}>
               <Grid item xs={12} sm={12} lg={6}>
                 <Typography component="h2" variant="h6" align="left">
@@ -243,7 +231,8 @@ function VerEvento() {
               </Grid>
             </Grid>
             <br></br>
-            <Grid item>
+            {/* VOLVER A ATRÁS */}
+            <Grid item xs={10}>
               <BotonVolver></BotonVolver>
             </Grid>
           </CardContent>
