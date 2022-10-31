@@ -8,11 +8,14 @@ function BotonVolver() {
   return (
     <>
       <Button
+      style={{border:"2px solid"}}
         variant="outlined"
         startIcon={<ArrowBackIcon />}
         onClick={() => navigate(-1)}
       >
-        <Typography variant="h7">Volver</Typography>
+        <Typography 
+        // style={{fontWeight:"bold"}}
+        variant="h7">Volver</Typography>
       </Button>
     </>
   );

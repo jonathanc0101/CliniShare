@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardContent,
@@ -11,21 +12,28 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 import { api } from "../API backend/api";
 import { alertas } from "./alertas";
-import SaveIcon from "@mui/icons-material/Save";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import BotonVolver from "./botones/BotonVolver";
-import dayjs from "dayjs";
 import "dayjs/locale/es";
 import moment from "moment";
-
 
 function RegistroMedico() {
   const [registrado, setRegistrado] = useState(false);
   const [passwordAVerificar, setPasswordAVerificar] = useState("");
+  const [direccion, setDireccion] = useState("");
+  const [telefono, setTelefono] = useState("");
 
-  const onKeyDown = (e) => {
-    e.preventDefault();
-  };
+  const [genero, setGenero] = useState("");
+  const generos = [
+    {
+      value: "F",
+      label: "Femenino",
+    },
+    {
+      value: "M",
+      label: "Masculino",
+    },
+  ];
 
   const verificarPassword = (password) => password === medico.password;
 
@@ -40,6 +48,9 @@ function RegistroMedico() {
     email: "",
     password: "",
     fechaNacimiento: "",
+    // genero,
+    // telefono,
+    // direccion
   });
 
   const guardar = async function () {
@@ -82,6 +93,10 @@ function RegistroMedico() {
     });
   };
 
+  const handleChangeGenero = (event) => {
+    setGenero(event.target.value);
+  };
+
   const handleChangeVerificar = (event) => {
     let value = event.target.value;
 
@@ -90,15 +105,36 @@ function RegistroMedico() {
 
   const handleChangeDni = (event) => {
     let value = event.target.value.replace(/\D/g, "");
-
     setMedico((estadoAnterior) => {
       return { ...estadoAnterior, dni: value };
     });
   };
 
+  const handleChangeNombreYApellido = (event) => {
+    const value = event.target;
+    let regex = new RegExp("^[a-zA-Z ]+$");
+
+    if (regex.test(value)) {
+      if (event.target.name === "nombre") {
+        setMedico((estadoAnterior) => {
+          return { ...estadoAnterior, nombre: value };
+        });
+      } else if (event.target.name === "apellido") {
+        setMedico((estadoAnterior) => {
+          return { ...estadoAnterior, apellido: value };
+        });
+      }
+    }
+  };
+
+  const handleChangeTelefono = (event) => {
+    let value = event.target.value.replace(/\D/g, "");
+
+    setTelefono(value);
+  };
+
   const handleChangeFecha = (event) => {
     const value = event["$d"];
-    console.log(event);
     setMedico((estadoAnterior) => {
       return { ...estadoAnterior, fechaNacimiento: value };
     });
@@ -106,44 +142,65 @@ function RegistroMedico() {
 
   return (
     <>
+      <Typography component="h4" variant="h4">
+        Registrarse
+      </Typography>
       <Card>
-        <Typography component="h4" variant="h4">
-          Registrarse el médico
-        </Typography>
         <CardContent>
+          {/* DATOS DEL MÉDICO */}
           <Grid container direction="row" spacing={2}>
-            {/* REDIRECT
-    //   {this.state.redirect ? <Redirect to="/users" /> : null} */}
-
-            {/* Nombre y apellido */}
-            <Grid item xs={4} sm={4}>
+            {/* NOMBRE */}
+            <Grid item xs={4} sm={5}>
               <TextField
                 label="Nombre"
                 type="text"
                 name="nombre"
                 value={medico.nombre}
-                onChange={handleChange}
-                margin="dense"
+                onChange={handleChangeNombreYApellido}
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
               ></TextField>
             </Grid>
-            <Grid item xs={4} sm={4}>
+            {/* APELLIDO */}
+            <Grid item xs={4} sm={5}>
               <TextField
                 label="Apellido"
                 type="text"
                 name="apellido"
                 value={medico.apellido}
-                onChange={handleChange}
-                margin="dense"
+                onChange={handleChangeNombreYApellido}
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
               ></TextField>
             </Grid>
+            {/* GÉNERO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                id="outlined-select-genero-native"
+                select
+                label="Género"
+                value={genero}
+                margin="normal"
+                onChange={handleChangeGenero}
+                SelectProps={{
+                  native: true,
+                }}
+                helperText="Seleccione su género"
+              >
+                {generos.map((opcion) => (
+                  <option key={opcion.value} value={opcion.value}>
+                    {opcion.label}
+                  </option>
+                ))}
+              </TextField>
+            </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
+            {/* DNI */}
             <Grid item xs={4} sm={4}>
               <TextField
                 label="DNI"
@@ -151,12 +208,13 @@ function RegistroMedico() {
                 name="dni"
                 value={medico.dni}
                 onChange={handleChangeDni}
-                margin="dense"
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
               ></TextField>
             </Grid>
+            {/* MÁTRICULA */}
             <Grid item xs={4} sm={4}>
               <TextField
                 label="Mátricula habilitante"
@@ -164,15 +222,13 @@ function RegistroMedico() {
                 name="matricula"
                 value={medico.matricula}
                 onChange={handleChange}
-                margin="dense"
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
               ></TextField>
             </Grid>
-          </Grid>
-          <br></br>
-          <Grid container direction="row" spacing={2}>
+            {/* FECHA DE NACIMIENTO */}
             <Grid item xs={4} sm={4}>
               <LocalizationProvider
                 adapterLocale="es"
@@ -185,22 +241,58 @@ function RegistroMedico() {
                   onChange={handleChangeFecha}
                   maxDate={moment().subtract(18, "years").toDate()}
                   renderInput={(params) => (
-                    <TextField onKeyDown={onKeyDown} {...params} />
-                  )}                />
+                    <TextField
+                      margin="normal"
+                      fullWidth
+                      helperText="Campo obligatorio"
+                      {...params}
+                    />
+                  )}
+                />
               </LocalizationProvider>
             </Grid>
           </Grid>
-          <br></br>
+          <Grid container direction="row" spacing={2}>
+            {/* DIRECCIÓN */}
+            <Grid item xs={4} sm={8}>
+              <TextField
+                label="Dirección"
+                type="text"
+                name="direccion"
+                value={direccion}
+                onChange={({ target }) => setDireccion(target.value)}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+              ></TextField>
+            </Grid>
+            {/* TELÉFONO */}
+            <Grid item xs={4} sm={4}>
+              <TextField
+                label="Teléfono"
+                type="text"
+                name="telefono"
+                value={telefono}
+                onChange={handleChangeTelefono}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+              ></TextField>
+            </Grid>
+          </Grid>
 
           <Grid container direction="row" spacing={2}>
-            <Grid item xs={2} sm={6}>
+            {/* CORREO ELECTRÓNICO */}
+            <Grid item xs={4} sm={12}>
               <TextField
                 label="Correo electrónico"
                 type="text"
                 name="email"
                 value={medico.email}
                 onChange={handleChange}
-                margin="dense"
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
@@ -211,11 +303,11 @@ function RegistroMedico() {
             <Grid item xs={2} sm={6}>
               <TextField
                 label="Contraseña"
-                type="text"
+                type="password"
                 name="password"
                 value={medico.password}
                 onChange={handleChange}
-                margin="dense"
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
@@ -225,12 +317,12 @@ function RegistroMedico() {
           <Grid container direction="row" spacing={2}>
             <Grid item xs={2} sm={6}>
               <TextField
-                label="Verifique contraseña"
-                type="text"
+                label="Vuelva a escribir la contraseña"
+                type="password"
                 name="contraseñaVerificada"
                 value={passwordAVerificar}
                 onChange={handleChangeVerificar}
-                margin="dense"
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
@@ -239,20 +331,21 @@ function RegistroMedico() {
           </Grid>
           <br></br>
           <Grid container direction="row" spacing={2}>
-            <Grid item xs={10}>
+            <Grid item xs={4} sm={4}>
               <BotonVolver></BotonVolver>
             </Grid>
 
-            <Grid item xs={2}>
-              <Button
-                variant="contained"
-                endIcon={<SaveIcon />}
-                onClick={guardar}
-              >
-                <Typography color={"white"} variant="h7" align="left">
-                  &nbsp;Guardar
-                </Typography>
-              </Button>
+            <Grid item xs={4} sm={4}>
+              <Box textAlign="center">
+                <Button
+                  size="large"
+                  variant="contained"
+                  onClick={guardar}
+                  style={{ fontWeight: "bold" }}
+                >
+                  REGISTRARSE
+                </Button>
+              </Box>
               {registrado ? <Navigate to={"/"}></Navigate> : null}
             </Grid>
           </Grid>
