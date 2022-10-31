@@ -1,6 +1,8 @@
+const axios = require('axios');
 
 const { app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
+
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -12,9 +14,10 @@ const createWindow = () => {
   })
 
   
-  win.loadFile('index.html') 
+  win.loadURL("http://localhost:5000");
 }
 
+ 
 
 app.whenReady().then(() => {
   createWindow()
