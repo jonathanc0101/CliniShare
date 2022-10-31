@@ -33,11 +33,24 @@ export const Paciente = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false,
     },
-    fechaModificacion: {
-      //fecha de la ultima modificación por el medico que lo cargó
+    fechaDefuncion: {
       type: DataTypes.DATE,
-      defaultValue: Sequelize.fn('now'),
-      allowNull: false,
+      allowNull: true,
+    },
+    genero:{
+      type:DataTypes.STRING,
+    },
+    sexo:{
+      type:DataTypes.STRING,
+    },
+    telefono:{
+      type:DataTypes.STRING,
+    },
+    direccion:{
+      type:DataTypes.STRING,
+    },
+    email:{
+      type:DataTypes.STRING,
     },
   },
   {
