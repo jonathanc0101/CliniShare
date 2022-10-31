@@ -96,20 +96,23 @@ function NuevoPaciente() {
 
   return (
     <>
-      <Typography component="h4" variant="h5">
+      <Typography component="h2" variant="h4" align="left">
         Nuevo paciente
       </Typography>
       <br></br>
+      {/* DATOS DEL PACIENTE */}
       <Box sx={{ width: "100%" }}>
         <Card>
           <CardContent>
+            {/* DATOS DEL PACIENTE */}
             <Grid container direction="row" spacing={2}>
+              {/* NOMBRE */}
               <Grid item xs={4} sm={4}>
                 <TextField
                   label="Nombre"
                   type="text"
                   name="nombre"
-                  margin="dense"
+                  margin="normal"
                   fullWidth
                   variant="outlined"
                   helperText="Campo obligatorio"
@@ -117,12 +120,13 @@ function NuevoPaciente() {
                   onChange={handleChange}
                 ></TextField>
               </Grid>
+              {/* APELLIDO */}
               <Grid item xs={4} sm={4}>
                 <TextField
                   label="Apellido"
                   type="text"
                   name="apellido"
-                  margin="dense"
+                  margin="normal"
                   fullWidth
                   variant="outlined"
                   helperText="Campo obligatorio"
@@ -135,7 +139,7 @@ function NuevoPaciente() {
                   label="DNI"
                   type="text"
                   name="dni"
-                  margin="dense"
+                  margin="normal"
                   fullWidth
                   variant="outlined"
                   helperText="Campo obligatorio"
@@ -143,7 +147,9 @@ function NuevoPaciente() {
                   onChange={handleChangeDni}
                 ></TextField>
               </Grid>
-              <br></br>
+            </Grid>
+            <Grid container direction="row" spacing={2}>
+              {/* FECHA DE NACIMIENTO */}
               <Grid item xs={4} sm={4}>
                 <LocalizationProvider
                   adapterLocale="es"
@@ -154,10 +160,8 @@ function NuevoPaciente() {
                     name="fechaNacimiento"
                     value={Paciente.fechaNacimiento}
                     onChange={handleChangeFecha}
-                    maxDate={moment().subtract(18, "years").toDate()}
-                    renderInput={(params) => (
-                      <TextField onKeyDown={onKeyDown} {...params} />
-                    )}
+                    maxDate={moment()}
+                    renderInput={(params) => <TextField  margin="normal"{...params} />}
                   />
                 </LocalizationProvider>
               </Grid>

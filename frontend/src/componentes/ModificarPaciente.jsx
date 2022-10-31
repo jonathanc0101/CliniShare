@@ -8,7 +8,6 @@ import {
   Card,
   CardContent,
   Grid,
-  IconButton,
   TextField,
   Typography,
 } from "@mui/material";
@@ -33,10 +32,6 @@ function ModificarPaciente() {
     dni: "",
     fechaNacimiento: "",
   });
-
-  const onKeyDown = (e) => {
-    e.preventDefault();
-  };
 
   const handleChange = (event) => {
     let value = event.target.value;
@@ -84,12 +79,14 @@ function ModificarPaciente() {
 
   return (
     <>
-      <Typography component="h4" variant="h4">
+      <Typography component="h2" variant="h4">
         Paciente
       </Typography>
       <Card>
         <CardContent>
+          {/* DATOS DEL PACIENTE */}
           <Grid container direction="row" spacing={2}>
+            {/* NOMBRE */}
             <Grid item xs={3} sm={2}>
               <TextField
                 label="Nombre"
@@ -103,6 +100,7 @@ function ModificarPaciente() {
                 onChange={handleChange}
               ></TextField>
             </Grid>
+            {/* APELLIDO */}
             <Grid item xs={3} sm={2}>
               <TextField
                 label="Apellido"
@@ -116,6 +114,7 @@ function ModificarPaciente() {
                 onChange={handleChange}
               ></TextField>
             </Grid>
+            {/* DNI */}
             <Grid item xs={3} sm={2}>
               <TextField
                 label="DNI"
@@ -129,26 +128,27 @@ function ModificarPaciente() {
                 onChange={handleChangeDni}
               ></TextField>
             </Grid>
-
+            {/* EVENTOS IMPORTANTES */}
             <Grid item xs={6}>
               <EventosImportantes id={params.id}></EventosImportantes>
             </Grid>
           </Grid>
-          <hr></hr>
-          <br></br>
-          <Grid item xs={4} sm={4}>
-            <LocalizationProvider adapterLocale="es" dateAdapter={AdapterDayjs}>
-              <DesktopDatePicker
-                label="Fecha de nacimiento"
-                name="fechaNacimiento"
-                value={paciente.fechaNacimiento}
-                onChange={handleChangeFecha}
-                maxDate={moment().subtract(18, "years").toDate()}
-                renderInput={(params) => (
-                  <TextField onKeyDown={onKeyDown} {...params} />
-                )}
-              />
-            </LocalizationProvider>
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={4} sm={4}>
+              <LocalizationProvider
+                adapterLocale="es"
+                dateAdapter={AdapterDayjs}
+              >
+                <DesktopDatePicker
+                  label="Fecha de nacimiento"
+                  name="fechaNacimiento"
+                  value={paciente.fechaNacimiento}
+                  onChange={handleChangeFecha}
+                  maxDate={moment()}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </Grid>
           </Grid>
           <br></br>
           <Grid item xs={8}>
