@@ -15,6 +15,7 @@ import RegistroMedico from "./componentes/RegistroMedico";
 import LoginForm from "./componentes/LoginForm";
 import ModificarMedico from "./componentes/ModificarMedico";
 import StickyHeadTable from "./componentes/StickyHeadTable";
+import ListadoMedicos from "./componentes/menu/ListadoMedicos";
 
 const Rutas = () => {
   let routes = useRoutes([
@@ -30,6 +31,7 @@ const Rutas = () => {
     { path: "/home", element: <Home></Home> },
     { path: "/sa", element: <SweetAlert></SweetAlert> },
     { path: "/register/", element: <RegistroMedico></RegistroMedico> },
+    { path: "/medicos/all", element: <ListadoMedicos></ListadoMedicos> },
     { path: "/", element: <LoginForm></LoginForm> },
     {
       path: "/configuracion/cuenta/",

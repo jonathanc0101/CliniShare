@@ -38,7 +38,12 @@ function Menu() {
             >
               <MenuItem>Mis pacientes</MenuItem>
             </Link>
-
+            <Link
+              to={"/medicos/all"}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              <MenuItem>Médicos</MenuItem>
+            </Link>
             {/* <Link
               to={"/eventos/all"}
               style={{ color: "inherit", textDecoration: "inherit" }}

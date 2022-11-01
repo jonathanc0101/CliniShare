@@ -7,22 +7,20 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useEffect, useState } from "react";
-import { api } from "../API backend/api";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import Menu from "./Menu";
 import { styled } from "@mui/material/styles";
 import {
-  Button,
   FormControl,
   InputAdornment,
   OutlinedInput,
   TablePagination,
 } from "@mui/material";
-import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
-import MenuAppBar from "./MenuAppBar";
 import SearchIcon from "@mui/icons-material/Search";
+import { api } from "../../API backend/api";
+import MenuAppBar from "../MenuAppBar";
+import Menu from "../Menu";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -32,7 +30,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function ListadoPacientes() {
+function ListadoMedicos() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -45,17 +43,18 @@ function ListadoPacientes() {
     setPage(0);
   };
 
-  const [searchPacientes, setSearchPacientes] = useState("");
-  const [pacientes, setPacientes] = useState([]);
+  const [searchMedicos, setSearchMedicos] = useState("");
+  const [medicos, setMedicos] = useState([]);
 
   useEffect(() => {
-    obtenerPacientes();
+    obtenerMedicos();
   }, []);
 
-  const obtenerPacientes = async () => {
-    const response = await api.obtenerPacientes();
-    setPacientes(response.data);
+  const obtenerMedicos = async () => {
+    const medicosObtenidos = await api.obtenerMedicos();
+    setMedicos(medicosObtenidos.data);
   };
+
   return (
     <>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
@@ -74,7 +73,7 @@ function ListadoPacientes() {
               type="text"
               placeholder="Search..."
               onChange={(event) => {
-                setSearchPacientes(event.target.value);
+                setSearchMedicos(event.target.value);
               }}
             /> */}
           <div className="App-search">
@@ -82,37 +81,20 @@ function ListadoPacientes() {
               {/* <InputLabel>Search...</InputLabel> */}
 
               <OutlinedInput
-                id="outlined-adornment-password"
+                id="outlined-adornment-search"
                 endAdornment={
                   <InputAdornment position="end">
                     <SearchIcon></SearchIcon>
                   </InputAdornment>
                 }
                 onChange={(event) => {
-                  setSearchPacientes(event.target.value);
+                  setSearchMedicos(event.target.value);
                 }}
                 placeholder="Buscar..."
               />
             </FormControl>
           </div>
           <br></br>
-
-          <Link
-            to={"/pacientes/new/"}
-            style={{ color: "inherit", textDecoration: "inherit" }}
-          >
-            <Button
-              variant="contained"
-              startIcon={<AddCircleOutlineTwoToneIcon />}
-              style={{ fontWeight: "bold" }}
-            >
-              Agregar paciente
-            </Button>
-          </Link>
-          <br></br>
-
-          <br></br>
-
           <TableContainer
             component={Paper}
             sx={{ maxHeight: 320, maxWidth: 1060 }}
@@ -123,41 +105,36 @@ function ListadoPacientes() {
                   <TableCell>Nombre</TableCell>
                   <TableCell>Apellido</TableCell>
                   <TableCell>DNI</TableCell>
-                  <TableCell>Editar</TableCell>
                   <TableCell>Ver</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {pacientes
+                {medicos
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .filter((paciente) => {
-                    if (searchPacientes === "") {
-                      return paciente;
+                  .filter((medico) => {
+                    if (searchMedicos === "") {
+                      return medico;
                     } else if (
-                      paciente.nombre
+                      medico.nombre
                         .toLowerCase()
-                        .includes(searchPacientes.toLowerCase())
+                        .includes(searchMedicos.toLowerCase())
                     ) {
-                      return paciente;
+                      return medico;
                     }
                   })
-                  .map((paciente) => (
+                  .map((medico) => (
                     <TableRow
-                      key={paciente.id}
+                      key={medico.id}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell>{paciente.nombre}</TableCell>
-                      <TableCell>{paciente.apellido}</TableCell>
-                      <TableCell>{paciente.dni}</TableCell>
-                      <TableCell component="th" scope="row">
-                        <Link to={"/pacientes/id/" + paciente.id}>
-                          <EditIcon color="info"></EditIcon>
-                        </Link>
-                      </TableCell>
+                      <TableCell>{medico.nombre}</TableCell>
+                      <TableCell>{medico.apellido}</TableCell>
+                      <TableCell>{medico.dni}</TableCell>
+
                       <TableCell>
-                        <Link to={"/pacientes/ver/id/" + paciente.id}>
+                        {/* <Link to={"/medicos/ver/id/" + paciente.id}> */}
                           <VisibilityIcon color="info"></VisibilityIcon>
-                        </Link>
+                        {/* </Link> */}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -167,7 +144,7 @@ function ListadoPacientes() {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={pacientes.length}
+            count={medicos.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -179,4 +156,4 @@ function ListadoPacientes() {
   );
 }
 
-export default ListadoPacientes;
+export default ListadoMedicos;

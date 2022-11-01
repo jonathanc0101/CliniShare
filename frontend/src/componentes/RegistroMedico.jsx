@@ -111,7 +111,7 @@ function RegistroMedico() {
   };
 
   const handleChangeNombreYApellido = (event) => {
-    const value = event.target;
+    const { value } = event.target;
     let regex = new RegExp("^[a-zA-Z ]+$");
 
     if (regex.test(value)) {
@@ -334,7 +334,7 @@ function RegistroMedico() {
             <Grid item xs={4} sm={4}>
               <BotonVolver></BotonVolver>
             </Grid>
-
+            {/* BOTÓN REGISTRARSE */}
             <Grid item xs={4} sm={4}>
               <Box textAlign="center">
                 <Button

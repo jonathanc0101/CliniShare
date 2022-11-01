@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardContent,
@@ -20,6 +21,22 @@ import moment from "moment";
 function ModificarMedico() {
   const [guardado, setGuardado] = useState(false);
   const [passwordAVerificar, setPasswordAVerificar] = useState("");
+  const [passwordActual, setPasswordActual] = useState("");
+
+  const [direccion, setDireccion] = useState("");
+  const [telefono, setTelefono] = useState("");
+
+  const [genero, setGenero] = useState("");
+  const generos = [
+    {
+      value: "F",
+      label: "Femenino",
+    },
+    {
+      value: "M",
+      label: "Masculino",
+    },
+  ];
   const [medico, setMedico] = useState({
     nombre: "",
     apellido: "",
@@ -30,18 +47,14 @@ function ModificarMedico() {
     fechaNacimiento: "",
   });
 
-  const onKeyDown = (e) => {
-    e.preventDefault();
-  };
-
   const verificarPassword = (password) => password === medico.password;
 
   useEffect(() => {
-    (() => {
-      const usuario = JSON.parse(
+    (async () => {
+      const usuario = await JSON.parse(
         window.localStorage.getItem("loggedCliniShareAppUser")
       );
-
+      console.log(JSON.stringify(usuario));
       setMedico((estadoAnterior) => {
         return { ...estadoAnterior, ...usuario.medico };
       });
@@ -53,13 +66,40 @@ function ModificarMedico() {
       alertas.contraseñasDiferentes();
       return;
     }
-    // e.preventDefault();
     const respuesta = await api.modificarMedico({ ...medico });
     if (respuesta) {
       alertas.alertaModificacionExitosa("usuario");
       setGuardado(true);
     } else {
       alertas.alertaProblemas();
+    }
+  };
+
+  const handleChangeGenero = (event) => {
+    setGenero(event.target.value);
+  };
+
+  const handleChangeTelefono = (event) => {
+    let value = event.target.value.replace(/\D/g, "");
+
+    setTelefono(value);
+  };
+
+  const handleChangeNombreYApellido = (event) => {
+    const { value } = event.target;
+
+    let regex = new RegExp("^[a-zA-Z ]*$");
+
+    if (regex.test(value)) {
+      if (event.target.name === "nombre") {
+        setMedico((estadoAnterior) => {
+          return { ...estadoAnterior, nombre: value };
+        });
+      } else if (event.target.name === "apellido") {
+        setMedico((estadoAnterior) => {
+          return { ...estadoAnterior, apellido: value };
+        });
+      }
     }
   };
 
@@ -96,44 +136,76 @@ function ModificarMedico() {
 
   return (
     <>
+      <Typography
+        component="h6"
+        variant="h6"
+        style={{
+          backgroundColor: "#5090D3",
+          color: "white",
+          textAlign: "left",
+          fontWeight: "bold",
+          lineHeight: "2",
+        }}
+      >
+        &nbsp;&nbsp;&nbsp;Configuración general de la cuenta
+      </Typography>
       <Card>
-        <Typography component="h4" variant="h4">
-          Configuración general de la cuenta
-        </Typography>
         <CardContent>
+          {/* DATOS DEL MÉDICO USUARIO */}
           <Grid container direction="row" spacing={2}>
-            {/* REDIRECT
-      //   {this.state.redirect ? <Redirect to="/users" /> : null} */}
-
-            {/* Nombre y apellido */}
-            <Grid item xs={4} sm={4}>
+            {/* {this.state.redirect ? <Redirect to="/users" /> : null} */}
+            {/* NOMBRE */}
+            <Grid item xs={4} sm={5}>
               <TextField
-                label="Nombre"
+                label="Nombre/s"
                 type="text"
                 name="nombre"
                 value={medico.nombre}
-                onChange={handleChange}
-                margin="dense"
+                onChange={handleChangeNombreYApellido}
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
               ></TextField>
             </Grid>
-            <Grid item xs={4} sm={4}>
+            {/* APELLIDO */}
+            <Grid item xs={4} sm={5}>
               <TextField
-                label="Apellido"
+                label="Apellido/s"
                 type="text"
                 name="apellido"
                 value={medico.apellido}
-                onChange={handleChange}
-                margin="dense"
+                onChange={handleChangeNombreYApellido}
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
               ></TextField>
             </Grid>
+            {/* GÉNERO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                id="outlined-select-genero-native"
+                select
+                label="Género"
+                value={genero}
+                margin="normal"
+                onChange={handleChangeGenero}
+                SelectProps={{
+                  native: true,
+                }}
+                helperText="Seleccione su género"
+              >
+                {generos.map((opcion) => (
+                  <option key={opcion.value} value={opcion.value}>
+                    {opcion.label}
+                  </option>
+                ))}
+              </TextField>
+            </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
+            {/* DNI */}
             <Grid item xs={4} sm={4}>
               <TextField
                 label="DNI"
@@ -141,28 +213,27 @@ function ModificarMedico() {
                 name="dni"
                 value={medico.dni}
                 onChange={handleChangeDni}
-                margin="dense"
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
               ></TextField>
             </Grid>
+            {/* MÁTRICULA */}
             <Grid item xs={4} sm={4}>
               <TextField
                 label="Mátricula habilitante"
                 type="text"
                 name="matricula"
                 value={medico.matricula}
-                onChange={(e) => setMedico({ matricula: e.target.value })}
-                margin="dense"
+                onChange={handleChange}
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
               ></TextField>
             </Grid>
-          </Grid>
-          <br></br>
-          <Grid container direction="row" spacing={2}>
+            {/* FECHA DE NACIMIENTO */}
             <Grid item xs={4} sm={4}>
               <LocalizationProvider
                 adapterLocale="es"
@@ -175,73 +246,125 @@ function ModificarMedico() {
                   onChange={handleChangeFecha}
                   maxDate={moment().subtract(18, "years").toDate()}
                   renderInput={(params) => (
-                    <TextField onKeyDown={onKeyDown} {...params} />
+                    <TextField
+                      margin="normal"
+                      fullWidth
+                      helperText="Campo obligatorio"
+                      {...params}
+                    />
                   )}
                 />
               </LocalizationProvider>
             </Grid>
           </Grid>
-          <br></br>
           <Grid container direction="row" spacing={2}>
-            <Grid item xs={2} sm={6}>
+            {/* DIRECCIÓN */}
+            <Grid item xs={4} sm={8}>
+              <TextField
+                label="Dirección"
+                type="text"
+                name="direccion"
+                value={direccion}
+                onChange={({ target }) => setDireccion(target.value)}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+              ></TextField>
+            </Grid>
+            {/* TELÉFONO */}
+            <Grid item xs={4} sm={4}>
+              <TextField
+                label="Teléfono"
+                type="text"
+                name="telefono"
+                value={telefono}
+                onChange={handleChangeTelefono}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+              ></TextField>
+            </Grid>
+          </Grid>
+          <Grid container direction="row" spacing={2}>
+            {/* CORREO ELECTRÓNICO */}
+            <Grid item xs={4} sm={6}>
               <TextField
                 label="Correo electrónico"
                 type="text"
                 name="email"
                 value={medico.email}
                 onChange={handleChange}
-                margin="dense"
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 disabled
               ></TextField>
             </Grid>
+            {/* CONTRASEÑA ACTUAL */}
+            <Grid item xs={4} sm={6}>
+              <TextField
+                label="Contraseña actual"
+                type="password"
+                name="passwordActual"
+                value={passwordActual}
+                onChange={({ target }) => setPasswordActual(target.value)}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+              ></TextField>
+            </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
-            <Grid item xs={2} sm={6}>
+            {/* CONTRASEÑA NUEVA */}
+            <Grid item xs={4} sm={6}>
               <TextField
                 label="Nueva contraseña"
-                type="text"
+                type="password"
                 name="password"
                 value={medico.password}
                 onChange={handleChange}
-                margin="dense"
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
               ></TextField>
             </Grid>
-          </Grid>
-          <Grid container direction="row" spacing={2}>
-            <Grid item xs={2} sm={6}>
+            {/* CONTRASEÑA A VERIFICAR */}
+            <Grid item xs={4} sm={6}>
               <TextField
-                label="Verifique contraseña"
-                type="text"
-                name="contraseñaVerificada"
+                label="Vuelva a escribir la nueva contraseña"
+                type="password"
+                name="passwordVerificada"
                 value={passwordAVerificar}
                 onChange={handleChangeVerificar}
-                margin="dense"
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
               ></TextField>
             </Grid>
           </Grid>
-          <br></br>
           <Grid container direction="row" spacing={2}>
-            <Grid item xs={10}>
+            {/* VOLVER A ATRÁS */}
+            <Grid item xs={4} sm={8}>
               <BotonVolver></BotonVolver>
             </Grid>
-            <Grid item xs={2}>
-              <Button
-                variant="contained"
-                endIcon={<SaveIcon />}
-                onClick={update}
-              >
-                <Typography color={"white"} variant="h7" align="left">
-                  &nbsp;Guardar
-                </Typography>
-              </Button>
+            {/* BOTÓN GUARDAR CAMBIOS */}
+            <Grid item xs={4} sm={4}>
+              <Box textAlign="right">
+                <Button
+                  variant="contained"
+                  endIcon={<SaveIcon />}
+                  onClick={update}
+                  size="large"
+                  style={{ fontWeight: "bold" }}
+                >
+                  Guardar cambios
+                </Button>
+              </Box>
               {guardado ? <Navigate to={"/"}></Navigate> : null}
             </Grid>
           </Grid>
