@@ -23,7 +23,9 @@ function EventosImportantes(params) {
 
   return (
     <>
-      <Grid xs={5}>
+      <Grid xs={4} style={{ border: "2px solid #66B2FF" }}>
+        {/* <Box borderColor="red"> */}
+
         <ListItemText
           style={{
             textAlign: "center",
@@ -36,7 +38,7 @@ function EventosImportantes(params) {
           primaryTypographyProps={{
             fontSize: 20,
             fontWeight: "medium",
-            letterSpacing: 0,
+            letterSpacing: 1,
           }}
         />
         <List
@@ -46,18 +48,19 @@ function EventosImportantes(params) {
             bgcolor: "background.paper",
             position: "relative",
             overflow: "auto",
-            maxHeight: 100,
+            maxHeight: 85,
           }}
         >
           {eventosImportantes.map((evento) => (
             <ListItem style={{ textAlign: "center" }} key={`${evento.id}`}>
-              <ListItemText primary={`${evento.titulo}`} />
-              <Link to={"/eventos/ver/id/" + evento.id}> 
+              <ListItemText primary={`${evento.titulo}`}  />
+              <Link to={"/eventos/ver/id/" + evento.id}>
                 <VisibilityIcon color="info"></VisibilityIcon>
               </Link>
             </ListItem>
           ))}
         </List>
+        {/* </Box> */}
       </Grid>
     </>
   );

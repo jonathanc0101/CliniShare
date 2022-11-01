@@ -134,6 +134,7 @@ function ModificarPaciente() {
             </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
+            {/* FECHA DE NACIMIENTO */}
             <Grid item xs={4} sm={4}>
               <LocalizationProvider
                 adapterLocale="es"

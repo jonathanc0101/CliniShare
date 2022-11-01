@@ -28,7 +28,17 @@ function NuevoPaciente() {
       return element.dni === pacienteDni;
     });
   }
-
+  const [genero, setGenero] = useState("");
+  const generos = [
+    {
+      value: "F",
+      label: "Femenino",
+    },
+    {
+      value: "M",
+      label: "Masculino",
+    },
+  ];
   const usuario = JSON.parse(
     window.localStorage.getItem("loggedCliniShareAppUser")
   );
@@ -69,6 +79,10 @@ function NuevoPaciente() {
     }
   };
 
+  const handleChangeGenero = (event) => {
+    setGenero(event.target.value);
+  };
+
   const handleChange = (event) => {
     let value = event.target.value;
     let name = event.target.name;
@@ -96,97 +110,138 @@ function NuevoPaciente() {
 
   return (
     <>
-      <Typography component="h2" variant="h4" align="left">
-        Nuevo paciente
+      <Typography
+        component="h6"
+        variant="h6"
+        style={{
+          backgroundColor: "#5090D3",
+          color: "white",
+          textAlign: "left",
+          fontWeight: "bold",
+          lineHeight: "2",
+        }}
+      >
+        &nbsp;&nbsp;&nbsp;Nuevo paciente
       </Typography>
       <br></br>
       {/* DATOS DEL PACIENTE */}
-      <Box sx={{ width: "100%" }}>
-        <Card>
-          <CardContent>
-            {/* DATOS DEL PACIENTE */}
-            <Grid container direction="row" spacing={2}>
-              {/* NOMBRE */}
-              <Grid item xs={4} sm={4}>
-                <TextField
-                  label="Nombre"
-                  type="text"
-                  name="nombre"
-                  margin="normal"
-                  fullWidth
-                  variant="outlined"
-                  helperText="Campo obligatorio"
-                  value={Paciente.nombre}
-                  onChange={handleChange}
-                ></TextField>
-              </Grid>
-              {/* APELLIDO */}
-              <Grid item xs={4} sm={4}>
-                <TextField
-                  label="Apellido"
-                  type="text"
-                  name="apellido"
-                  margin="normal"
-                  fullWidth
-                  variant="outlined"
-                  helperText="Campo obligatorio"
-                  value={Paciente.apellido}
-                  onChange={handleChange}
-                ></TextField>
-              </Grid>
-              <Grid item xs={4} sm={4}>
-                <TextField
-                  label="DNI"
-                  type="text"
-                  name="dni"
-                  margin="normal"
-                  fullWidth
-                  variant="outlined"
-                  helperText="Campo obligatorio"
-                  value={Paciente.dni}
-                  onChange={handleChangeDni}
-                ></TextField>
-              </Grid>
+      <Card>
+        <CardContent>
+          {/* DATOS DEL PACIENTE */}
+          <Grid container direction="row" spacing={2}>
+            {/* NOMBRE */}
+            <Grid item xs={4} sm={6}>
+              <TextField
+                label="Nombre/s"
+                type="text"
+                name="nombre"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+                value={Paciente.nombre}
+                onChange={handleChange}
+              ></TextField>
             </Grid>
-            <Grid container direction="row" spacing={2}>
-              {/* FECHA DE NACIMIENTO */}
-              <Grid item xs={4} sm={4}>
-                <LocalizationProvider
-                  adapterLocale="es"
-                  dateAdapter={AdapterDayjs}
+            {/* APELLIDO */}
+            <Grid item xs={4} sm={6}>
+              <TextField
+                label="Apellido/s"
+                type="text"
+                name="apellido"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+                value={Paciente.apellido}
+                onChange={handleChange}
+              ></TextField>
+            </Grid>
+          </Grid>
+          <Grid container direction="row" spacing={2}>
+            {/* DNI */}
+            <Grid item xs={4} sm={5}>
+              <TextField
+                label="DNI"
+                type="text"
+                name="dni"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+                value={Paciente.dni}
+                onChange={handleChangeDni}
+              ></TextField>
+            </Grid>
+            {/* FECHA DE NACIMIENTO */}
+            <Grid item xs={4} sm={3}>
+              <LocalizationProvider
+                adapterLocale="es"
+                dateAdapter={AdapterDayjs}
+              >
+                <DesktopDatePicker
+                  label="Fecha de nacimiento"
+                  name="fechaNacimiento"
+                  value={Paciente.fechaNacimiento}
+                  onChange={handleChangeFecha}
+                  maxDate={moment()}
+                  renderInput={(params) => (
+                    <TextField
+                      margin="normal"
+                      fullWidth
+                      helperText="Campo obligatorio"
+                      {...params}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
+            </Grid>
+            {/* GÉNERO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                id="outlined-select-genero-native"
+                select
+                label="Género"
+                value={genero}
+                margin="normal"
+                onChange={handleChangeGenero}
+                SelectProps={{
+                  native: true,
+                }}
+                helperText="Seleccione su género"
+              >
+                {generos.map((opcion) => (
+                  <option key={opcion.value} value={opcion.value}>
+                    {opcion.label}
+                  </option>
+                ))}
+              </TextField>
+            </Grid>
+          </Grid>
+
+          <br></br>
+          <Grid container direction="row" spacing={2}>
+            {/* VOLVER A ATRÁS */}
+            <Grid item xs={4} sm={10}>
+              <BotonVolver></BotonVolver>
+            </Grid>
+{/* BOTÓN GUARDAR PACIENTE */}
+            <Grid item xs={4} sm={2}>
+              <Box textAlign="right">
+                <Button
+                  variant="contained"
+                  endIcon={<SaveIcon />}
+                  onClick={handleGuardar}
+                  size="large"
+                  style={{ fontWeight: "bold" }}
                 >
-                  <DesktopDatePicker
-                    label="Fecha de nacimiento"
-                    name="fechaNacimiento"
-                    value={Paciente.fechaNacimiento}
-                    onChange={handleChangeFecha}
-                    maxDate={moment()}
-                    renderInput={(params) => <TextField  margin="normal"{...params} />}
-                  />
-                </LocalizationProvider>
-              </Grid>
+                  Guardar
+                </Button>
+              </Box>
             </Grid>
-          </CardContent>
-        </Card>
-
-        <Grid container direction="row" spacing={2}>
-          <Grid item xs={10}>
-            <BotonVolver></BotonVolver>
           </Grid>
-
-          <Grid item xs={2}>
-            <Button
-              variant="contained"
-              endIcon={<SaveIcon />}
-              onClick={handleGuardar}
-            >
-              <Typography color={"white"} variant="h7" align="left">
-                &nbsp;Guardar
-              </Typography>
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
+        </CardContent>
+      </Card>
     </>
   );
 }
