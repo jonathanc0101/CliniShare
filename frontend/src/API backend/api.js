@@ -33,7 +33,6 @@ axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 async function guardarMedicoUsuario(Medico) {
   try {
     const response = await axios.post(rutas.nuevoMedicoUsuario, Medico);
-    console.log(response);
     const medicoRespuesta = response.data;
     return Object.keys(medicoRespuesta).length !== 0;
   } catch (error) {
@@ -84,7 +83,6 @@ async function guardarPaciente(Paciente) {
 async function crearEvento(evento) {
   try {
     const response = await axios.post(rutas.nuevoEvento, evento);
-    console.log(response.data);
 
     const eventoRespuesta = response.data;
     return Object.keys(eventoRespuesta).length !== 0;
@@ -119,7 +117,6 @@ async function guardarEventoObteniendoIds(Evento) {
 async function modificarMedico(Medico) {
   try {
     const response = await axios.put(rutas.modificarMedico, Medico);
-    console.log(response.data);
     const medicoRespuesta = response.data;
 
     return Object.keys(medicoRespuesta).length !== 0;

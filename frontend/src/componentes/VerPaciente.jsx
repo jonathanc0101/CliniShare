@@ -4,11 +4,9 @@ import {
   Card,
   CardContent,
   Grid,
-  IconButton,
   TextField,
   Typography,
 } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { api } from "../API backend/api";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,10 +16,10 @@ import { Link } from "react-router-dom";
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import BotonVolver from "./botones/BotonVolver";
 
 function VerPaciente() {
   const params = useParams();
-  let navigate = useNavigate();
 
   const [nombre, setNombre] = useState("");
   const [dni, setDni] = useState("");
@@ -52,37 +50,36 @@ function VerPaciente() {
       </Typography>
       <Card>
         <CardContent>
-          <Box sx={{ width: "100%" }}>
-            {/* DATOS DEL PACIENTE */}
-            <Grid container direction="row" spacing={2}>
-              {/* NOMBRE */}
-              <Grid item xs={4} sm={4}>
-                <TextField
-                  disabled
-                  label="Nombre completo"
-                  type="text"
-                  name="nombre"
-                  margin="normal"
-                  fullWidth
-                  variant="outlined"
-                  value={nombre}
-                ></TextField>
-              </Grid>
-              {/* GÉNERO */}
-              <Grid item xs={4} sm={2}>
-                <TextField
-                  disabled
-                  label="Género"
-                  type="text"
-                  name="genero"
-                  margin="normal"
-                  fullWidth
-                  variant="outlined"
-                  value={"F o M"}
-                ></TextField>
-              </Grid>
-              {/* APELLIDO */}
-              {/* <Grid item xs={4} sm={3}>
+          {/* DATOS DEL PACIENTE */}
+          <Grid container direction="row" spacing={2}>
+            {/* NOMBRE */}
+            <Grid item xs={4} sm={4}>
+              <TextField
+                disabled
+                label="Nombre completo"
+                type="text"
+                name="nombre"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={nombre}
+              ></TextField>
+            </Grid>
+            {/* GÉNERO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                disabled
+                label="Género"
+                type="text"
+                name="genero"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={"F o M"}
+              ></TextField>
+            </Grid>
+            {/* APELLIDO */}
+            {/* <Grid item xs={4} sm={3}>
                 <TextField
                   disabled
                   label="Apellido/s"
@@ -95,52 +92,50 @@ function VerPaciente() {
                   value={apellido}
                 ></TextField>
               </Grid> */}
-              {/* EVENTOS IMPORTANTES DEL PACIENTE */}
-              <Grid item xs={4} sm={6}>
-                <EventosImportantes id={params.id}></EventosImportantes>
-              </Grid>
+            {/* EVENTOS IMPORTANTES DEL PACIENTE */}
+            <Grid item xs={4} sm={6}>
+              <EventosImportantes id={params.id}></EventosImportantes>
             </Grid>
-            <Grid container direction="row" spacing={2}>
-              {/* DNI */}
-              <Grid item xs={3} sm={3}>
-                <TextField
+          </Grid>
+          <Grid container direction="row" spacing={2}>
+            {/* DNI */}
+            <Grid item xs={3} sm={3}>
+              <TextField
+                disabled
+                label="DNI"
+                type="text"
+                name="dni"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+                value={dni}
+              ></TextField>
+            </Grid>
+            {/* FECHA DE NACIMIENTO */}
+            <Grid item xs={4} sm={3}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DesktopDatePicker
                   disabled
-                  label="DNI"
-                  type="text"
-                  name="dni"
-                  margin="normal"
-                  fullWidth
-                  variant="outlined"
-                  helperText="Campo obligatorio"
-                  value={dni}
-                ></TextField>
-              </Grid>
-              {/* FECHA DE NACIMIENTO */}
-              <Grid item xs={4} sm={3}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DesktopDatePicker
-                    disabled
-                    label="Fecha de nacimiento"
-                    name="fechaNacimiento"
-                    value={fechaNacimiento}
-                    onChange={(e) => setFechaNacimiento(e.target.value)}
-                    renderInput={(params) => (
-                      <TextField
-                        margin="normal"
-                        fullWidth
-                        variant="outlined"
-                        {...params}
-                      />
-                    )}
-                  />
-                </LocalizationProvider>
-              </Grid>
+                  label="Fecha de nacimiento"
+                  name="fechaNacimiento"
+                  value={fechaNacimiento}
+                  onChange={(e) => setFechaNacimiento(e.target.value)}
+                  renderInput={(params) => (
+                    <TextField
+                      margin="normal"
+                      fullWidth
+                      variant="outlined"
+                      {...params}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
             </Grid>
-            <hr color="#5090D3"></hr>
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={4} sm={12}>
+          </Grid>
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={4} sm={12}>
               <Box textAlign="right">
-
                 <Link
                   to={"/eventos/new/paciente/" + params.id}
                   style={{ color: "inherit", textDecoration: "inherit" }}
@@ -154,26 +149,22 @@ function VerPaciente() {
                     Agregar evento
                   </Button>
                 </Link>
-                 </Box>
-              </Grid>
+              </Box>
             </Grid>
-            <Grid container direction="row" spacing={2}>
-              <Grid item>
-                <EventosDePaciente id={params.id} />
-              </Grid>
+          </Grid>
+          <br></br>
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={12}>
+              <EventosDePaciente id={params.id} />
             </Grid>
-            <br></br>
-          </Box>
+          </Grid>
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={4} sm={4}>
+              <BotonVolver></BotonVolver>
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
-      <Grid item>
-        <IconButton aria-label="save" size="large" onClick={() => navigate(-1)}>
-          <ArrowBackIcon color="info" fontSize="inherit" />
-          <Typography color={"black"} variant="h6" align="left">
-            &nbsp;Atrás
-          </Typography>
-        </IconButton>
-      </Grid>
     </>
   );
 }

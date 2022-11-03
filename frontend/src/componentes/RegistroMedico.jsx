@@ -112,7 +112,7 @@ function RegistroMedico() {
 
   const handleChangeNombreYApellido = (event) => {
     const { value } = event.target;
-    let regex = new RegExp("^[a-zA-Z ]+$");
+    let regex = new RegExp("^[a-zA-Z ]*$");
 
     if (regex.test(value)) {
       if (event.target.name === "nombre") {
@@ -134,10 +134,14 @@ function RegistroMedico() {
   };
 
   const handleChangeFecha = (event) => {
-    const value = event["$d"];
-    setMedico((estadoAnterior) => {
-      return { ...estadoAnterior, fechaNacimiento: value };
-    });
+    if (event === null) {
+      event = {};
+    } else {
+      const value = event["$d"];
+      setMedico((estadoAnterior) => {
+        return { ...estadoAnterior, fechaNacimiento: value };
+      });
+    }
   };
 
   return (

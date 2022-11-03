@@ -8,7 +8,7 @@ function BotonVolver() {
   return (
     <>
       <Button
-      style={{border:"2px solid"}}
+      style={{border:"1px solid"}}
         variant="outlined"
         startIcon={<ArrowBackIcon />}
         onClick={() => navigate(-1)}

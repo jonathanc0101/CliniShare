@@ -4,7 +4,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useEffect, useState } from "react";
 import { api } from "../API backend/api";
@@ -12,10 +11,8 @@ import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Menu from "./Menu";
-import { styled } from "@mui/material/styles";
 import {
   Button,
-  FormControl,
   InputAdornment,
   OutlinedInput,
   TablePagination,
@@ -23,14 +20,6 @@ import {
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
 import MenuAppBar from "./MenuAppBar";
 import SearchIcon from "@mui/icons-material/Search";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 function ListadoPacientes() {
   const [page, setPage] = useState(0);
@@ -47,6 +36,8 @@ function ListadoPacientes() {
 
   const [searchPacientes, setSearchPacientes] = useState("");
   const [pacientes, setPacientes] = useState([]);
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - pacientes.length) : 0;
 
   useEffect(() => {
     obtenerPacientes();
@@ -58,50 +49,36 @@ function ListadoPacientes() {
   };
   return (
     <>
-      <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
-        <Grid xs={12}>
-          <Item>
-            <MenuAppBar></MenuAppBar>
-          </Item>
+      <Grid container direction="row">
+        <Grid item xs={4} sm={12}>
+          <MenuAppBar></MenuAppBar>
         </Grid>
       </Grid>
-      <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <br></br>
+      <Grid container direction="row" spacing={2}>
         <Menu></Menu>
+        <Grid item xs={4} sm={4}>
+          <OutlinedInput
+            id="outlined-adornment-search"
+            endAdornment={
+              <InputAdornment position="end">
+                <SearchIcon></SearchIcon>
+              </InputAdornment>
+            }
+            onChange={(event) => {
+              setSearchPacientes(event.target.value);
+            }}
+            placeholder="Buscar paciente..."
+          />
+        </Grid>
 
-        <Grid xs={10}>
-          {/* <div className="App">
-            <input
-              type="text"
-              placeholder="Search..."
-              onChange={(event) => {
-                setSearchPacientes(event.target.value);
-              }}
-            /> */}
-          <div className="App-search">
-            <FormControl sx={{ m: 1, width: "40ch" }} variant="outlined">
-              {/* <InputLabel>Search...</InputLabel> */}
-
-              <OutlinedInput
-                id="outlined-adornment-password"
-                endAdornment={
-                  <InputAdornment position="end">
-                    <SearchIcon></SearchIcon>
-                  </InputAdornment>
-                }
-                onChange={(event) => {
-                  setSearchPacientes(event.target.value);
-                }}
-                placeholder="Buscar..."
-              />
-            </FormControl>
-          </div>
-          <br></br>
-
+        <Grid item xs={4} sm={4}>
           <Link
             to={"/pacientes/new/"}
             style={{ color: "inherit", textDecoration: "inherit" }}
           >
             <Button
+              size="large"
               variant="contained"
               startIcon={<AddCircleOutlineTwoToneIcon />}
               style={{ fontWeight: "bold" }}
@@ -109,22 +86,24 @@ function ListadoPacientes() {
               Agregar paciente
             </Button>
           </Link>
-          <br></br>
-
-          <br></br>
-
+        </Grid>
+      </Grid>
+      <Grid container direction="row" spacing={2}>
+        <Grid xs={2}></Grid>
+        <Grid xs={10}>
           <TableContainer
-            component={Paper}
-            sx={{ maxHeight: 320, maxWidth: 1060 }}
+            sx={{ maxHeight: 389, maxWidth: 1060 }}
+            style={{ border: "1px solid gray" }}
           >
             <Table stickyHeader size="small" aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Nombre</TableCell>
-                  <TableCell>Apellido</TableCell>
-                  <TableCell>DNI</TableCell>
-                  <TableCell>Editar</TableCell>
-                  <TableCell>Ver</TableCell>
+                  <TableCell style={{width:"20%"}}>Nombre</TableCell>
+                  <TableCell style={{width:"20%"}}>Apellido</TableCell>
+                  <TableCell style={{width:"20%"}}>DNI</TableCell>
+
+                  <TableCell style={{width:"2%"}}>Editar</TableCell>
+                  <TableCell style={{width:"2%"}}>Ver</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -144,7 +123,9 @@ function ListadoPacientes() {
                   .map((paciente) => (
                     <TableRow
                       key={paciente.id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
                     >
                       <TableCell>{paciente.nombre}</TableCell>
                       <TableCell>{paciente.apellido}</TableCell>
@@ -161,20 +142,25 @@ function ListadoPacientes() {
                       </TableCell>
                     </TableRow>
                   ))}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 53 * emptyRows }}>
+                    <TableCell colSpan={6}></TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={pacientes.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
         </Grid>
       </Grid>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={pacientes.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </>
   );
 }
