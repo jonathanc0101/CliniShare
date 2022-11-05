@@ -15,7 +15,7 @@ import { TablePagination } from "@mui/material";
 
 function EventosDePaciente(params) {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -59,10 +59,10 @@ function EventosDePaciente(params) {
       {eventosVacios ? (
         <div>No hay ningún evento</div>
       ) : (
-        <Grid item>
+        <Grid>
           <TableContainer
-            sx={{ maxHeight: 270, maxWidth: 1360 }}
-            style={{ border: "1px solid #B5B2B2" }}
+            sx={{ maxHeight: 260, maxWidth: 1360 }}
+            style={{ border: "1px solid #0c5774" }}
           >
             <Table stickyHeader size="small" aria-label="sticky table">
               <TableHead>
@@ -70,8 +70,9 @@ function EventosDePaciente(params) {
                   <TableCell
                     style={{
                       width: "2%",
-                      backgroundColor: "#66B2FF",
+                      backgroundColor: "#0c5774",
                       fontWeight: "bold",
+                      color: "white",
                     }}
                     align="center"
                   >
@@ -80,8 +81,9 @@ function EventosDePaciente(params) {
                   <TableCell
                     style={{
                       width: "20%",
-                      backgroundColor: "#66B2FF",
+                      backgroundColor: "#0c5774",
                       fontWeight: "bold",
+                      color: "white",
                     }}
                   >
                     Título
@@ -89,8 +91,9 @@ function EventosDePaciente(params) {
                   <TableCell
                     style={{
                       width: "8%",
-                      backgroundColor: "#66B2FF",
+                      backgroundColor: "#0c5774",
                       fontWeight: "bold",
+                      color: "white",
                     }}
                   >
                     Fecha
@@ -98,8 +101,9 @@ function EventosDePaciente(params) {
                   <TableCell
                     style={{
                       width: "30%",
-                      backgroundColor: "#66B2FF",
+                      backgroundColor: "#0c5774",
                       fontWeight: "bold",
+                      color: "white",
                     }}
                   >
                     Descripción
@@ -107,8 +111,9 @@ function EventosDePaciente(params) {
                   <TableCell
                     style={{
                       width: "15%",
-                      backgroundColor: "#66B2FF",
+                      backgroundColor: "#0c5774",
                       fontWeight: "bold",
+                      color: "white",
                     }}
                   >
                     Médico
@@ -116,8 +121,9 @@ function EventosDePaciente(params) {
                   <TableCell
                     style={{
                       width: "2%",
-                      backgroundColor: "#66B2FF",
+                      backgroundColor: "#0c5774",
                       fontWeight: "bold",
+                      color: "white",
                     }}
                     align="center"
                   >
@@ -126,8 +132,9 @@ function EventosDePaciente(params) {
                   <TableCell
                     style={{
                       width: "2%",
-                      backgroundColor: "#66B2FF",
+                      backgroundColor: "#0c5774",
                       fontWeight: "bold",
+                      color: "white",
                     }}
                     align="center"
                   >
@@ -176,8 +183,8 @@ function EventosDePaciente(params) {
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25, 100]}
+          <TablePagination size="small"
+            rowsPerPageOptions={[10, 25, 100]}
             component="div"
             count={eventos.length}
             rowsPerPage={rowsPerPage}

@@ -57,55 +57,81 @@ function ListadoMedicos() {
 
   return (
     <>
-      <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
-        <Grid xs={12}>
-          <Item>
-            <MenuAppBar></MenuAppBar>
-          </Item>
+      <Grid container direction="row">
+        <Grid item xs={4} sm={12}>
+          <MenuAppBar></MenuAppBar>
         </Grid>
       </Grid>
-      <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <br></br>
+      <Grid container direction="row" spacing={2}>
         <Menu></Menu>
+        {/* BUSCAR MÉDICO */}
+        <Grid item xs={4} sm={4}>
+          <OutlinedInput
+            id="outlined-adornment-search-medicos"
+            endAdornment={
+              <InputAdornment position="end">
+                <SearchIcon></SearchIcon>
+              </InputAdornment>
+            }
+            onChange={(event) => {
+              setSearchMedicos(event.target.value);
+            }}
+            placeholder="Buscar médico..."
+          />
+        </Grid>
+        <Grid item xs={4} sm={4}></Grid>
+      </Grid>
 
+      <Grid container direction="row" spacing={2}>
+        <Grid xs={2}></Grid>
+        {/* TABLA PACIENTES */}
         <Grid xs={10}>
-          {/* <div className="App">
-            <input
-              type="text"
-              placeholder="Search..."
-              onChange={(event) => {
-                setSearchMedicos(event.target.value);
-              }}
-            /> */}
-          <div className="App-search">
-            <FormControl sx={{ m: 1, width: "40ch" }} variant="outlined">
-              {/* <InputLabel>Search...</InputLabel> */}
-
-              <OutlinedInput
-                id="outlined-adornment-search"
-                endAdornment={
-                  <InputAdornment position="end">
-                    <SearchIcon></SearchIcon>
-                  </InputAdornment>
-                }
-                onChange={(event) => {
-                  setSearchMedicos(event.target.value);
-                }}
-                placeholder="Buscar..."
-              />
-            </FormControl>
-          </div>
-          <br></br>
           <TableContainer
-            component={Paper}
-            sx={{ maxHeight: 320, maxWidth: 1060 }}
+            sx={{ maxHeight: 389, maxWidth: 1060 }}
+            style={{ border: "1px solid gray" }}
           >
             <Table stickyHeader size="small" aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Nombre</TableCell>
-                  <TableCell>Apellido</TableCell>
-                  <TableCell>DNI</TableCell>
-                  <TableCell>Ver</TableCell>
+                  <TableCell
+                    style={{
+                      width: "20%",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Nombre
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "20%",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Apellido
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "20%",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    DNI
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "2%",
+                      textAlign: "center",
+
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Ver
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -131,9 +157,9 @@ function ListadoMedicos() {
                       <TableCell>{medico.apellido}</TableCell>
                       <TableCell>{medico.dni}</TableCell>
 
-                      <TableCell>
+                      <TableCell align="center">
                         {/* <Link to={"/medicos/ver/id/" + paciente.id}> */}
-                          <VisibilityIcon color="info"></VisibilityIcon>
+                        <VisibilityIcon color="info"></VisibilityIcon>
                         {/* </Link> */}
                       </TableCell>
                     </TableRow>
@@ -141,17 +167,17 @@ function ListadoMedicos() {
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={medicos.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
         </Grid>
       </Grid>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={medicos.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </>
   );
 }

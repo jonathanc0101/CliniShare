@@ -18,6 +18,7 @@ import { alertas } from "./alertas";
 import "dayjs/locale/es";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import validator from "validator";
 
 function NuevoPaciente() {
   let navigate = useNavigate();
@@ -55,30 +56,6 @@ function NuevoPaciente() {
     ownerId: usuario.medico.medicoId,
   });
 
-  const handleGuardar = async function () {
-    if (
-      Paciente.dni.length === 0 ||
-      Paciente.nombre.length === 0 ||
-      Paciente.apellido.length === 0 ||
-      Paciente.fechaNacimiento.length === 0
-    ) {
-      alertas.alertaCamposObligatorios();
-      return;
-    }
-
-    const existePaciente = await obtenerPacientesExistentes(Paciente.dni);
-    if (existePaciente) {
-      alertas.alertaPacienteExiste(Paciente.dni);
-      return;
-    } else {
-      const pacienteGuardado = await api.guardarPaciente(Paciente);
-      if (pacienteGuardado === true) {
-        alertas.alertaExito("paciente");
-        navigate(-1);
-      }
-    }
-  };
-
   const handleChangeGenero = (event) => {
     setGenero(event.target.value);
   };
@@ -93,10 +70,14 @@ function NuevoPaciente() {
   };
 
   const handleChangeFecha = (event) => {
-    const value = event["$d"];
-    setPaciente((estadoAnterior) => {
-      return { ...estadoAnterior, fechaNacimiento: value };
-    });
+    if (event === null) {
+      event = {};
+    } else {
+      const value = event["$d"];
+      setPaciente((estadoAnterior) => {
+        return { ...estadoAnterior, fechaNacimiento: value };
+      });
+    }
   };
 
   const handleChangeDni = (event) => {
@@ -106,6 +87,53 @@ function NuevoPaciente() {
     setPaciente((estadoAnterior) => {
       return { ...estadoAnterior, dni: value };
     });
+  };
+
+  const handleChangeNombreYApellido = (event) => {
+    const { value } = event.target;
+    let regex = new RegExp("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]*$");
+
+    // let regex = new RegExp("^[a-zA-Z ]*$");
+
+    if (regex.test(value)) {
+      if (event.target.name === "nombre") {
+        setPaciente((estadoAnterior) => {
+          return { ...estadoAnterior, nombre: value };
+        });
+      } else if (event.target.name === "apellido") {
+        setPaciente((estadoAnterior) => {
+          return { ...estadoAnterior, apellido: value };
+        });
+      }
+    }
+  };
+
+  const handleGuardar = async function () {
+    const existePaciente = await obtenerPacientesExistentes(Paciente.dni);
+
+    if (
+      Paciente.nombre.length === 0 ||
+      Paciente.apellido.length === 0 ||
+      Paciente.dni.length === 0 ||
+      Paciente.fechaNacimiento.length === 0
+    ) {
+      alertas.alertaCamposObligatorios();
+      return;
+    } else if (existePaciente) {
+      alertas.alertaPacienteExiste(Paciente.dni);
+      return;
+    } else if (!validator.isDate(Paciente.fechaNacimiento)) {
+      alertas.fechaErronea("nacimiento");
+      return;
+    } else if (Paciente.fechaNacimiento > moment()) {
+      alertas.fechaNacimientoPaciente();
+    } else {
+      const pacienteGuardado = await api.guardarPaciente(Paciente);
+      if (pacienteGuardado === true) {
+        alertas.alertaExito("paciente");
+        navigate(-1);
+      }
+    }
   };
 
   return (
@@ -140,7 +168,7 @@ function NuevoPaciente() {
                 variant="outlined"
                 helperText="Campo obligatorio"
                 value={Paciente.nombre}
-                onChange={handleChange}
+                onChange={handleChangeNombreYApellido}
               ></TextField>
             </Grid>
             {/* APELLIDO */}
@@ -154,7 +182,7 @@ function NuevoPaciente() {
                 variant="outlined"
                 helperText="Campo obligatorio"
                 value={Paciente.apellido}
-                onChange={handleChange}
+                onChange={handleChangeNombreYApellido}
               ></TextField>
             </Grid>
           </Grid>
@@ -225,15 +253,19 @@ function NuevoPaciente() {
             <Grid item xs={4} sm={10}>
               <BotonVolver></BotonVolver>
             </Grid>
-{/* BOTÓN GUARDAR PACIENTE */}
+            {/* BOTÓN GUARDAR PACIENTE */}
             <Grid item xs={4} sm={2}>
-              <Box textAlign="right">
+              <Box textAlign="center">
                 <Button
                   variant="contained"
-                  endIcon={<SaveIcon />}
+                  endIcon={<SaveIcon style={{ fontSize: 24 }} />}
                   onClick={handleGuardar}
                   size="large"
-                  style={{ fontWeight: "bold" }}
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 15,
+                    backgroundColor: "#007FFF",
+                  }}
                 >
                   Guardar
                 </Button>

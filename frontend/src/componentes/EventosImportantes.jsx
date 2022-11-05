@@ -23,22 +23,23 @@ function EventosImportantes(params) {
 
   return (
     <>
-      <Grid xs={4} style={{ border: "2px solid #66B2FF" }}>
+      <Grid xs={4} sm={6} style={{ border: "3px solid #007FFF", borderRadius:6}}>
         {/* <Box borderColor="red"> */}
 
         <ListItemText
           style={{
             textAlign: "center",
             color: "white",
-            background: "#66B2FF",
+            background: "#007FFF",
             fontStyle: "bold",
           }}
           sx={{ my: 0 }}
           primary="Eventos importantes"
           primaryTypographyProps={{
-            fontSize: 20,
+            fontSize: 19,
             fontWeight: "medium",
-            letterSpacing: 1,
+            letterSpacing: 0,
+            fontWeight:"bold"
           }}
         />
         <List

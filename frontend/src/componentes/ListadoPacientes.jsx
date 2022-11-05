@@ -20,6 +20,7 @@ import {
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
 import MenuAppBar from "./MenuAppBar";
 import SearchIcon from "@mui/icons-material/Search";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 
 function ListadoPacientes() {
   const [page, setPage] = useState(0);
@@ -57,6 +58,7 @@ function ListadoPacientes() {
       <br></br>
       <Grid container direction="row" spacing={2}>
         <Menu></Menu>
+        {/* BUSCAR PACIENTE */}
         <Grid item xs={4} sm={4}>
           <OutlinedInput
             id="outlined-adornment-search"
@@ -71,7 +73,7 @@ function ListadoPacientes() {
             placeholder="Buscar paciente..."
           />
         </Grid>
-
+        {/* BOTÓN AGREGAR PACIENTE */}
         <Grid item xs={4} sm={4}>
           <Link
             to={"/pacientes/new/"}
@@ -90,20 +92,73 @@ function ListadoPacientes() {
       </Grid>
       <Grid container direction="row" spacing={2}>
         <Grid xs={2}></Grid>
+        {/* TABLA PACIENTES */}
         <Grid xs={10}>
           <TableContainer
             sx={{ maxHeight: 389, maxWidth: 1060 }}
             style={{ border: "1px solid gray" }}
           >
             <Table stickyHeader size="small" aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  <TableCell style={{width:"20%"}}>Nombre</TableCell>
-                  <TableCell style={{width:"20%"}}>Apellido</TableCell>
-                  <TableCell style={{width:"20%"}}>DNI</TableCell>
-
-                  <TableCell style={{width:"2%"}}>Editar</TableCell>
-                  <TableCell style={{width:"2%"}}>Ver</TableCell>
+              <TableHead >
+                <TableRow >
+                  <TableCell
+                    style={{
+                      width: "20%",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                      
+                    }}
+                  >
+                    Nombre
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "20%",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Apellido
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "20%",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    DNI
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "2%",
+                      textAlign: "center",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Editar
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "2%",
+                      textAlign: "center",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Ver
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "2%",
+                      textAlign: "center",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Agregar evento
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -130,14 +185,19 @@ function ListadoPacientes() {
                       <TableCell>{paciente.nombre}</TableCell>
                       <TableCell>{paciente.apellido}</TableCell>
                       <TableCell>{paciente.dni}</TableCell>
-                      <TableCell component="th" scope="row">
+                      <TableCell component="th" scope="row" align="center">
                         <Link to={"/pacientes/id/" + paciente.id}>
                           <EditIcon color="info"></EditIcon>
                         </Link>
                       </TableCell>
-                      <TableCell>
+                      <TableCell align="center">
                         <Link to={"/pacientes/ver/id/" + paciente.id}>
                           <VisibilityIcon color="info"></VisibilityIcon>
+                        </Link>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Link to={"/eventos/new/paciente/" + paciente.id}>
+                          <PostAddIcon color="info"></PostAddIcon>
                         </Link>
                       </TableCell>
                     </TableRow>

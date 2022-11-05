@@ -196,6 +196,7 @@ async function obtenerPacienteById(pacienteId) {
 async function obtenerPacientes() {
   try {
     const pacientesObtenidos = await axios.get(rutas.getPacientes);
+    pacientesObtenidos.data.reverse();
 
     return pacientesObtenidos;
   } catch (error) {
@@ -205,8 +206,13 @@ async function obtenerPacientes() {
 
 async function obtenerMedicos() {
   try {
+    const usuario = await JSON.parse(
+      window.localStorage.getItem("loggedCliniShareAppUser")
+    );
+    console.log("usuarii: ", usuario);
     const medicosObtenidos = await axios.get(rutas.getMedicos);
-
+    medicosObtenidos.data = medicosObtenidos.data.filter(medico => medico.dni != usuario.medico.dni);
+    console.log("medicosObtenidos :", medicosObtenidos);
     return medicosObtenidos;
   } catch (error) {
     return "No se encontraron médicos";

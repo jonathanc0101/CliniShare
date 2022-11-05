@@ -39,103 +39,114 @@ function VerPaciente() {
         component="h6"
         variant="h6"
         style={{
-          backgroundColor: "#5090D3",
+          backgroundColor: "#0c5774",
           color: "white",
           textAlign: "left",
           fontWeight: "bold",
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Paciente
+        &nbsp;&nbsp;&nbsp;Datos del paciente
       </Typography>
       <Card>
         <CardContent>
-          {/* DATOS DEL PACIENTE */}
           <Grid container direction="row" spacing={2}>
-            {/* NOMBRE */}
-            <Grid item xs={4} sm={4}>
-              <TextField
-                disabled
-                label="Nombre completo"
-                type="text"
-                name="nombre"
-                margin="normal"
-                fullWidth
-                variant="outlined"
-                value={nombre}
-              ></TextField>
-            </Grid>
-            {/* GÉNERO */}
-            <Grid item xs={4} sm={2}>
-              <TextField
-                disabled
-                label="Género"
-                type="text"
-                name="genero"
-                margin="normal"
-                fullWidth
-                variant="outlined"
-                value={"F o M"}
-              ></TextField>
-            </Grid>
-            {/* APELLIDO */}
-            {/* <Grid item xs={4} sm={3}>
-                <TextField
-                  disabled
-                  label="Apellido/s"
-                  type="text"
-                  name="apellido"
-                  margin="normal"
-                  fullWidth
-                  variant="outlined"
-                  helperText="Campo obligatorio"
-                  value={apellido}
-                ></TextField>
-              </Grid> */}
-            {/* EVENTOS IMPORTANTES DEL PACIENTE */}
-            <Grid item xs={4} sm={6}>
-              <EventosImportantes id={params.id}></EventosImportantes>
-            </Grid>
-          </Grid>
-          <Grid container direction="row" spacing={2}>
-            {/* DNI */}
-            <Grid item xs={3} sm={3}>
-              <TextField
-                disabled
-                label="DNI"
-                type="text"
-                name="dni"
-                margin="normal"
-                fullWidth
-                variant="outlined"
-                helperText="Campo obligatorio"
-                value={dni}
-              ></TextField>
-            </Grid>
-            {/* FECHA DE NACIMIENTO */}
-            <Grid item xs={4} sm={3}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DesktopDatePicker
-                  disabled
-                  label="Fecha de nacimiento"
-                  name="fechaNacimiento"
-                  value={fechaNacimiento}
-                  onChange={(e) => setFechaNacimiento(e.target.value)}
-                  renderInput={(params) => (
-                    <TextField
-                      margin="normal"
-                      fullWidth
-                      variant="outlined"
-                      {...params}
+            <Grid item xs={6}>
+              {/* DATOS DEL PACIENTE */}
+              <Grid
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={2}
+              >
+                {/* NOMBRE */}
+                <Grid item xs={4} sm={8}>
+                  <TextField
+                    disabled
+                    label="Nombre completo"
+                    type="text"
+                    name="nombre"
+                    margin="normal"
+                    fullWidth
+                    variant="outlined"
+                    value={nombre}
+                  ></TextField>
+                </Grid>
+                {/* GÉNERO */}
+                <Grid item xs={4} sm={4}>
+                  <TextField
+                    disabled
+                    label="Género"
+                    type="text"
+                    name="genero"
+                    margin="normal"
+                    fullWidth
+                    variant="outlined"
+                    value={"Femenino"}
+                  ></TextField>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={2}
+              >
+                {/* DNI */}
+                <Grid item xs={4} sm={6}>
+                  <TextField
+                    disabled
+                    label="DNI"
+                    type="text"
+                    name="dni"
+                    margin="normal"
+                    fullWidth
+                    variant="outlined"
+                    value={dni}
+                  ></TextField>
+                </Grid>
+                {/* FECHA DE NACIMIENTO */}
+                <Grid item xs={4} sm={6}>
+                  <LocalizationProvider
+                    adapterLocale="es"
+                    dateAdapter={AdapterDayjs}
+                  >
+                    <DesktopDatePicker
+                      disabled
+                      label="Fecha de nacimiento"
+                      name="fechaNacimiento"
+                      value={fechaNacimiento}
+                      onChange={(e) => setFechaNacimiento(e.target.value)}
+                      renderInput={(params) => (
+                        <TextField
+                          margin="normal"
+                          fullWidth
+                          variant="outlined"
+                          {...params}
+                        />
+                      )}
                     />
-                  )}
-                />
-              </LocalizationProvider>
+                  </LocalizationProvider>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={6}>
+              <br></br>
+              <Grid container direction="row" justifyContent="flex-end">
+                {/* EVENTOS IMPORTANTES DEL PACIENTE */}
+                <Grid item xs={4} sm={12}>
+                  <EventosImportantes id={params.id}></EventosImportantes>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-          <Grid container direction="row" spacing={2}>
+          <br></br>
+
+          <Grid container direction="row" spacing={1}>
             <Grid item xs={4} sm={12}>
-              <Box textAlign="right">
+              <Box textAlign="left">
                 <Link
                   to={"/eventos/new/paciente/" + params.id}
                   style={{ color: "inherit", textDecoration: "inherit" }}
@@ -143,8 +154,12 @@ function VerPaciente() {
                   <Button
                     variant="contained"
                     size="medium"
-                    style={{ fontWeight: "bold" }}
-                    startIcon={<AddCircleOutlineTwoToneIcon />}
+                    style={{ fontWeight: "bold", backgroundColor: "#007FFF" }}
+                    startIcon={
+                      <AddCircleOutlineTwoToneIcon
+                        style={{ fontSize: 24 }}
+                      ></AddCircleOutlineTwoToneIcon>
+                    }
                   >
                     Agregar evento
                   </Button>
@@ -154,7 +169,7 @@ function VerPaciente() {
           </Grid>
           <br></br>
           <Grid container direction="row" spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={4} sm={12}>
               <EventosDePaciente id={params.id} />
             </Grid>
           </Grid>
