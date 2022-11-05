@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
 import EventosDePaciente from "./EventosDePaciente";
 import EventosImportantes from "./EventosImportantes";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/es";
@@ -62,6 +61,24 @@ function ModificarPaciente() {
       setPaciente((estadoAnterior) => {
         return { ...estadoAnterior, fechaNacimiento: value };
       });
+    }
+  };
+
+  const handleChangeNombreYApellido = (event) => {
+    const { value } = event.target;
+    let regex = new RegExp("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]*$");
+    // let regex = new RegExp("^[a-zA-Z ]*$");
+
+    if (regex.test(value)) {
+      if (event.target.name === "nombre") {
+        setPaciente((estadoAnterior) => {
+          return { ...estadoAnterior, nombre: value };
+        });
+      } else if (event.target.name === "apellido") {
+        setPaciente((estadoAnterior) => {
+          return { ...estadoAnterior, apellido: value };
+        });
+      }
     }
   };
 

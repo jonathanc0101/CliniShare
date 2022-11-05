@@ -53,6 +53,7 @@ function VerPaciente() {
           <Grid container direction="row" spacing={2}>
             <Grid item xs={6}>
               {/* DATOS DEL PACIENTE */}
+              <br></br>
               <Grid
                 container
                 direction="row"
@@ -154,7 +155,11 @@ function VerPaciente() {
                   <Button
                     variant="contained"
                     size="medium"
-                    style={{ fontWeight: "bold", backgroundColor: "#007FFF" }}
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: 15,
+                      backgroundColor: "#007FFF",
+                    }}
                     startIcon={
                       <AddCircleOutlineTwoToneIcon
                         style={{ fontSize: 24 }}
