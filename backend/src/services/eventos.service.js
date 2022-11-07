@@ -100,18 +100,6 @@ async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
         (elem) => JSON.stringify(objDNIyFecha) === JSON.stringify(elem)
       );
     });
-    
-    // separamos los registros particulares
-    const medicosRepetidos = eventosFiltrados.map((evento) => evento.medico);
-    const pacientesRepetidos = eventosFiltrados.map((evento) => evento.paciente);
-    //  const eventosEnteros = eventosFiltrados.map((evento) => evento.evento);
-
-    console.log("\n\n\n\neventos.service l:109\n\n\n\n");
-
-    //quitamos los duplicados
-    const medicos = [...new Set(medicosRepetidos)];
-    const pacientes  = [...new Set(pacientesRepetidos)];
-
 
     return eventosFiltrados;
   }
@@ -122,8 +110,11 @@ async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
   fecha
 ) {
   console.log("\n\n evento:entrando a buscar datos a enviar\n\n ");
-  console.log("\n\n evento:entrando a buscar datos a enviar, dnis y fechas, fecha\n\n ", dnisYFechas,
-  fecha);
+  console.log(
+    "\n\n evento:entrando a buscar datos a enviar, dnis y fechas, fecha\n\n ",
+    dnisYFechas,
+    fecha
+  );
   const eventos = await Evento.findAll({
     where: {
       [Op.or]: {
@@ -140,11 +131,9 @@ async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
     ],
   });
 
-  
   if (eventos.length === 0) {
     return [];
   } else {
-
     const eventosFiltrados = eventos.filter((evento) => {
       function obtenerObjDNIyFecha(x) {
         return {
@@ -159,7 +148,9 @@ async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
       );
     });
 
+
     return eventosFiltrados;
+    
   }
 }
 
