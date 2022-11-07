@@ -12,7 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import MedicalIcon from "@mui/icons-material/MedicalServices";
 import { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const pages = [];
 
@@ -129,7 +129,6 @@ function MenuAppBar() {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
                 <Avatar />
-
               </IconButton>
             </Tooltip>
             <Menu
@@ -148,6 +147,12 @@ function MenuAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+              <Link
+                to={"/ver/perfil"}
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                <MenuItem>Perfil</MenuItem>
+              </Link>
               <Link
                 to={"/configuracion/cuenta"}
                 style={{ color: "inherit", textDecoration: "inherit" }}

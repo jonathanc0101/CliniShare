@@ -62,6 +62,7 @@ function NuevoEvento() {
   };
 
   const handleOnchange = (e) => {
+    console.log(e.target.value);
     if (e.target.name === "importante") {
       setEvento({ ...evento, [e.target.name]: e.target.checked });
     } else {
@@ -123,163 +124,181 @@ function NuevoEvento() {
 
   return (
     <>
-      <Grid container direction="row" spacing={40}>
-        <Grid item xs={4}>
-          <Typography component="h2" variant="h4" align="right">
-            Nuevo evento
-          </Typography>
-        </Grid>
-        {/* <BotonEditar></BotonEditar> */}
-      </Grid>
+      <Typography
+        component="h6"
+        variant="h6"
+        style={{
+          backgroundColor: "#0c5774",
+          color: "white",
+          textAlign: "left",
+          fontWeight: "bold",
+          lineHeight: "2",
+        }}
+      >
+        &nbsp;&nbsp;&nbsp;Nuevo evento - Datos del evento
+      </Typography>
 
-      <Box sx={{ width: "100%" }}>
-        <Card>
-          <CardContent>
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={4} sm={8}>
-                <TextField
-                  required
-                  label="Título"
-                  type="text"
-                  name="titulo"
-                  value={evento.titulo}
-                  onChange={handleOnchange}
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                  helperText="Campo obligatorio"
-                ></TextField>
-              </Grid>
-              <Grid item xs={4} sm={4}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <Stack spacing={3}>
-                    <DesktopDatePicker
-                      disabled
-                      label="Fecha del evento"
-                      inputFormat="DD/MM/YYYY"
-                      name="fecha"
-                      onChange={handleOnchange}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </Stack>
-                </LocalizationProvider>
-              </Grid>
+      <Card>
+        <CardContent>
+          {/* DATOS DEL EVENTO */}
+          <Grid container direction="row" spacing={2}>
+            {/* TÍTULO */}
+
+            <Grid item xs={4} sm={10}>
+              <TextField
+                label="Título"
+                type="text"
+                name="titulo"
+                value={evento.titulo}
+                onChange={handleOnchange}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+              ></TextField>
             </Grid>
-            <br></br>
-            <Grid container direction="row" spacing={2}>
-              {/* IMPORTANTE */}
-              <Grid item xs={4} sm={2}>
-                <FormControlLabel
-                  name="importante"
-                  value={evento.importante}
+            <Grid item xs={4} sm={2}>
+              <LocalizationProvider
+                adapterLocale="es"
+                dateAdapter={AdapterDayjs}
+              >
+                <DesktopDatePicker
+                  disabled
+                  label="Fecha del evento"
+                  inputFormat="DD/MM/YYYY"
+                  name="fecha"
                   onChange={handleOnchange}
-                  control={<Checkbox />}
-                  label="Evento importante"
+                  renderInput={(params) => (
+                    <TextField margin="normal" {...params} />
+                  )}
                 />
-              </Grid>
-              {/* FECHA DE VENCIMIENTO */}
-              <Grid item xs={4} sm={10}>
-                <LocalizationProvider
-                  adapterLocale="es"
-                  dateAdapter={AdapterDayjs}
-                >
-                  <DesktopDatePicker
-                    disabled={!evento.importante}
-                    label="Fecha de vencimiento"
-                    name="fechaVencimiento"
-                    value={evento.fechaVencimiento}
-                    onChange={handleChangeFecha}
-                    minDate={moment().add(1, "days")}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
-              </Grid>
+              </LocalizationProvider>
             </Grid>
-            <br></br>
-            {/* DATOS DEL PACIENTE */}
-            <Typography component="h2" variant="h5" align="left">
-              Paciente
-            </Typography>
-            {/* NOMBRE DEL PACIENTE */}
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={4} sm={4}>
-                <TextField
-                  disabled
-                  label="Nombre"
-                  type="text"
-                  name="nombre"
-                  value={paciente.nombre}
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              {/* APELLIDO DEL PACIENTE */}
-              <Grid item xs={4} sm={4}>
-                <TextField
-                  disabled
-                  label="Apellido"
-                  type="text"
-                  name="apellido"
-                  value={paciente.apellido}
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              {/* DNI DEL PACIENTE */}
-              <Grid item xs={4} sm={4}>
-                <TextField
-                  disabled
-                  label="DNI"
-                  type="text"
-                  name="pacienteDni"
-                  value={paciente.dni}
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
+          </Grid>
+          <br></br>
+          <Grid container direction="row" spacing={2}>
+            {/* IMPORTANTE */}
+            <Grid item xs={4} sm={2}>
+              <FormControlLabel
+                name="importante"
+                value={evento.importante}
+                onChange={handleOnchange}
+                control={<Checkbox />}
+                label="Evento importante"
+              />
             </Grid>
-            <br></br>
-            {/* DESCRIPCIÓN */}
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={12} sm={12} lg={6}>
-                <Typography component="h2" variant="h6" align="left">
-                  Descripción
-                </Typography>
-                <TextareaAutosize
-                  aria-label="maximum height"
-                  placeholder="Descripción"
-                  name="descripcion"
-                  value={evento.descripcion}
-                  onChange={handleOnchange}
-                  style={{ width: 1249, height: 100 }}
+            {/* FECHA DE VENCIMIENTO */}
+            <Grid item xs={4} sm={10}>
+              <LocalizationProvider
+                adapterLocale="es"
+                dateAdapter={AdapterDayjs}
+              >
+                <DesktopDatePicker
+                  disabled={!evento.importante}
+                  label="Fecha de vencimiento"
+                  name="fechaVencimiento"
+                  value={evento.fechaVencimiento}
+                  onChange={handleChangeFecha}
+                  minDate={moment().add(1, "days")}
+                  renderInput={(params) => <TextField {...params} />}
                 />
-              </Grid>
+              </LocalizationProvider>
             </Grid>
-            <br></br>
-            <Grid container direction="row" spacing={2}>
-              {/* VOLVER A ATRÁS */}
-              <Grid item xs={10}>
-                <BotonVolver></BotonVolver>
-              </Grid>
-              {/* GUARDAR */}
-              <Grid item>
-                <Button
-                  variant="contained"
-                  endIcon={<SaveIcon />}
-                  onClick={() => handleSubmit(evento)}
-                >
-                  <Typography color={"white"} variant="h7" align="left">
-                    &nbsp;Guardar
-                  </Typography>
-                </Button>
-              </Grid>
+          </Grid>
+          <br></br>
+          {/* DATOS DEL PACIENTE */}
+          <Typography
+            component="h6"
+            variant="h6"
+            style={{
+              color: "#0c5774",
+              textAlign: "left",
+              fontWeight: "bold",
+            }}
+          >
+            &nbsp;Datos del paciente
+          </Typography>
+          {/* NOMBRE DEL PACIENTE */}
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={4} sm={4}>
+              <TextField
+                disabled
+                label="Nombre"
+                type="text"
+                name="nombre"
+                value={paciente.nombre}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+              ></TextField>
             </Grid>
-          </CardContent>
-        </Card>
-      </Box>
+            {/* APELLIDO DEL PACIENTE */}
+            <Grid item xs={4} sm={4}>
+              <TextField
+                disabled
+                label="Apellido"
+                type="text"
+                name="apellido"
+                value={paciente.apellido}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+              ></TextField>
+            </Grid>
+            {/* DNI DEL PACIENTE */}
+            <Grid item xs={4} sm={4}>
+              <TextField
+                disabled
+                label="DNI"
+                type="text"
+                name="pacienteDni"
+                value={paciente.dni}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+              ></TextField>
+            </Grid>
+          </Grid>
+          {/* DESCRIPCIÓN */}
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                label="Descripción"
+                multiline
+                margin="normal"
+                fullWidth
+                name="descripcion"
+                onChange={handleOnchange}
+                rows={8}
+                value={evento.descripcion}
+              />
+            </Grid>
+          </Grid>
+          <br></br>
+          <Grid container direction="row" spacing={2}>
+            {/* VOLVER A ATRÁS */}
+            <Grid item xs={10}>
+              <BotonVolver></BotonVolver>
+            </Grid>
+            {/* GUARDAR */}
+            <Grid item>
+              <Button
+                variant="contained"
+                size="large"
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 15,
+                  backgroundColor: "#007FFF",
+                }}
+                endIcon={<SaveIcon style={{ fontSize: 24 }} />}
+                onClick={() => handleSubmit(evento)}
+              >
+                Guardar
+              </Button>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
     </>
   );
 }

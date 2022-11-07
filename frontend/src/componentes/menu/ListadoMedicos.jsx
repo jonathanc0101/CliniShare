@@ -4,25 +4,33 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useEffect, useState } from "react";
-import { api } from "../API backend/api";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import Menu from "./Menu";
+import { styled } from "@mui/material/styles";
 import {
-  Button,
+  FormControl,
   InputAdornment,
   OutlinedInput,
   TablePagination,
 } from "@mui/material";
-import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
-import MenuAppBar from "./MenuAppBar";
 import SearchIcon from "@mui/icons-material/Search";
-import PostAddIcon from "@mui/icons-material/PostAdd";
+import { api } from "../../API backend/api";
+import MenuAppBar from "../MenuAppBar";
+import Menu from "../Menu";
 
-function ListadoPacientes() {
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
+
+function ListadoMedicos() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -35,19 +43,18 @@ function ListadoPacientes() {
     setPage(0);
   };
 
-  const [searchPacientes, setSearchPacientes] = useState("");
-  const [pacientes, setPacientes] = useState([]);
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - pacientes.length) : 0;
+  const [searchMedicos, setSearchMedicos] = useState("");
+  const [medicos, setMedicos] = useState([]);
 
   useEffect(() => {
-    obtenerPacientes();
+    obtenerMedicos();
   }, []);
 
-  const obtenerPacientes = async () => {
-    const response = await api.obtenerPacientes();
-    setPacientes(response.data);
+  const obtenerMedicos = async () => {
+    const medicosObtenidos = await api.obtenerMedicos();
+    setMedicos(medicosObtenidos.data);
   };
+
   return (
     <>
       <Grid container direction="row">
@@ -58,38 +65,24 @@ function ListadoPacientes() {
       <br></br>
       <Grid container direction="row" spacing={2}>
         <Menu></Menu>
-        {/* BUSCAR PACIENTE */}
+        {/* BUSCAR MÉDICO */}
         <Grid item xs={4} sm={4}>
           <OutlinedInput
-            id="outlined-adornment-search"
+            id="outlined-adornment-search-medicos"
             endAdornment={
               <InputAdornment position="end">
                 <SearchIcon></SearchIcon>
               </InputAdornment>
             }
             onChange={(event) => {
-              setSearchPacientes(event.target.value);
+              setSearchMedicos(event.target.value);
             }}
-            placeholder="Buscar paciente..."
+            placeholder="Buscar médico..."
           />
         </Grid>
-        {/* BOTÓN AGREGAR PACIENTE */}
-        <Grid item xs={4} sm={4}>
-          <Link
-            to={"/pacientes/new/"}
-            style={{ color: "inherit", textDecoration: "inherit" }}
-          >
-            <Button
-              size="large"
-              variant="contained"
-              startIcon={<AddCircleOutlineTwoToneIcon />}
-              style={{ fontWeight: "bold" }}
-            >
-              Agregar paciente
-            </Button>
-          </Link>
-        </Grid>
+        <Grid item xs={4} sm={4}></Grid>
       </Grid>
+
       <Grid container direction="row" spacing={2}>
         <Grid xs={2}></Grid>
         {/* TABLA PACIENTES */}
@@ -99,14 +92,13 @@ function ListadoPacientes() {
             style={{ border: "1px solid gray" }}
           >
             <Table stickyHeader size="small" aria-label="sticky table">
-              <TableHead >
-                <TableRow >
+              <TableHead>
+                <TableRow>
                   <TableCell
                     style={{
                       width: "20%",
                       backgroundColor: "#E9E9E9",
                       fontWeight: "bold",
-                      
                     }}
                   >
                     Nombre
@@ -133,80 +125,45 @@ function ListadoPacientes() {
                     style={{
                       width: "2%",
                       textAlign: "center",
-                      backgroundColor: "#E9E9E9",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Editar
-                  </TableCell>
-                  <TableCell
-                    style={{
-                      width: "2%",
-                      textAlign: "center",
+
                       backgroundColor: "#E9E9E9",
                       fontWeight: "bold",
                     }}
                   >
                     Ver
                   </TableCell>
-                  <TableCell
-                    style={{
-                      width: "2%",
-                      textAlign: "center",
-                      backgroundColor: "#E9E9E9",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Agregar evento
-                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {pacientes
+                {medicos
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .filter((paciente) => {
-                    if (searchPacientes === "") {
-                      return paciente;
+                  .filter((medico) => {
+                    if (searchMedicos === "") {
+                      return medico;
                     } else if (
-                      paciente.nombre
+                      medico.nombre
                         .toLowerCase()
-                        .includes(searchPacientes.toLowerCase())
+                        .includes(searchMedicos.toLowerCase())
                     ) {
-                      return paciente;
+                      return medico;
                     }
                   })
-                  .map((paciente) => (
+                  .map((medico) => (
                     <TableRow
-                      key={paciente.id}
-                      sx={{
-                        "&:last-child td, &:last-child th": { border: 0 },
-                      }}
+                      key={medico.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell>{paciente.nombre}</TableCell>
-                      <TableCell>{paciente.apellido}</TableCell>
-                      <TableCell>{paciente.dni}</TableCell>
-                      <TableCell component="th" scope="row" align="center">
-                        <Link to={"/pacientes/id/" + paciente.id}>
-                          <EditIcon color="info"></EditIcon>
-                        </Link>
-                      </TableCell>
+                      <TableCell>{medico.nombre}</TableCell>
+                      <TableCell>{medico.apellido}</TableCell>
+                      <TableCell>{medico.dni}</TableCell>
+
                       <TableCell align="center">
-                        <Link to={"/pacientes/ver/id/" + paciente.id}>
-                          <VisibilityIcon color="info"></VisibilityIcon>
-                        </Link>
-                      </TableCell>
-                      <TableCell align="center">
-                        <Link to={"/eventos/new/paciente/" + paciente.id}>
-                          <PostAddIcon color="info"></PostAddIcon>
-                        </Link>
+                        {/* <Link to={"/medicos/ver/id/" + paciente.id}> */}
+                        <VisibilityIcon color="info"></VisibilityIcon>
+                        {/* </Link> */}
                       </TableCell>
                     </TableRow>
                   ))}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={6}></TableCell>
-                  </TableRow>
-                )}
               </TableBody>
             </Table>
           </TableContainer>
@@ -215,7 +172,7 @@ function ListadoPacientes() {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={pacientes.length}
+        count={medicos.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -225,4 +182,4 @@ function ListadoPacientes() {
   );
 }
 
-export default ListadoPacientes;
+export default ListadoMedicos;

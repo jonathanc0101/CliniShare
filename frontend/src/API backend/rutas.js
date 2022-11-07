@@ -1,31 +1,31 @@
 const puertoServidorBackend = 3000;
 
 const rutas = {
-  getMedicoByDni: "medicos/dni/",
+  nuevoMedicoUsuario: "register",
+  LoginMedicoUsuario: "login",
+
+  nuevoMedico: "medicos/new",
   nuevoPaciente: "pacientes/new",
   nuevoEvento: "eventos/new",
+
+  modificarMedico: "modify",
+  modificarPaciente: "pacientes/id/",
+  modificarEvento: "eventos/id/",
+
+  getMedicoByDni: "medicos/dni/",
+  getMedicoById: "medicos/id/",
+  getMedicos: "medicos/all/",
   getPaciente: "pacientes/id/",
   getPacienteByDni: "pacientes/dni/",
   getPacienteById: "pacientes/id/",
-  modificarEvento: "eventos/id/",
+  getPacientes: "pacientes/all",
   getEventoConPacienteYMedicoPorId: "eventos/completo/id/",
   getEventos: "eventos/all",
-  getEventosPorPacienteId: "eventos/paciente/id/",
-  getPacientes: "pacientes/all",
-  modificarPaciente: "pacientes/id/",
-  getMedicoById: "medicos/id/",
-  getEventosCompletosImportantesPorPacienteId: "eventos/importantes/paciente/id/",
   getEventosCompletos: "eventos/all/completos",
-  nuevoMedico: "medicos/new",
-  nuevoMedicoUsuario: "register",
-  LoginMedicoUsuario: "login",
-  modificarMedico: "modify",
-  getEventosCompletosPorPacienteId: "eventos/all/completos/idPaciente/"
-
-
-
-
-
+  getEventosPorPacienteId: "eventos/paciente/id/",
+  getEventosCompletosPorPacienteId: "eventos/all/completos/idPaciente/",
+  getEventosCompletosImportantesPorPacienteId:
+    "eventos/importantes/paciente/id/",
 };
 
 for (let ruta in rutas) {
