@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import Sequelize from "sequelize";
 
-export const Computadora  = sequelize.define("computadoras",{
+export const ComputadoraLocal = sequelize.define("computadoraLocal",{
     id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
