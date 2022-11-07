@@ -40,7 +40,12 @@ export async function actualizarDatos(datos) {
       }
 
       for (const evento of datos.eventos) {
-        await Evento.upsert(evento,{transaction: t});
+        const eventoAux = {
+          ...evento,
+          pacienteId: await PacientesService.getIdPorDniYNacimiento(evento.paciente),
+          medicoId: evento.medicoId,
+        };
+        await Evento.upsert(eventoAux,{transaction: t});
       }
 
     });
