@@ -47,6 +47,18 @@ export const Medico = sequelize.define(
         type: DataTypes.DATE,
         allowNull: false,
       },
+      genero:{
+        type:DataTypes.STRING,
+      },
+      sexo:{
+        type:DataTypes.STRING,
+      },
+      telefono:{
+        type:DataTypes.STRING,
+      },
+      direccion:{
+        type:DataTypes.STRING,
+      }
     },
     {
       timestamps: true,
@@ -54,19 +66,6 @@ export const Medico = sequelize.define(
     },
   
   );
-
-//ownership de paciente
-Medico.hasMany(Paciente, {
-  foreignKey: "ownerId",
-  sourceKey: "id",
-  allowNull:false,
-});
-
-Paciente.belongsTo(Medico, {
-  foreignKey: "ownerId",
-  sourceKey: "id",
-  allowNull:false,
-});
 
 //relacionando con evento
 Medico.hasMany(Evento, {

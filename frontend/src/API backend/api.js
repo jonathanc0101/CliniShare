@@ -124,6 +124,7 @@ async function guardarEventoObteniendoIds(Evento) {
 async function crearEvento(evento) {
   try {
     const response = await axios.post(rutas.nuevoEvento, evento);
+    console.log(response.data);
 
     const eventoRespuesta = response.data;
     return Object.keys(eventoRespuesta).length !== 0;
@@ -236,6 +237,7 @@ async function obtenerEventosCompletosImportantesPorPacienteId(pacienteId) {
     const eventosImportantesObtenidos = await axios.get(
       rutas.getEventosCompletosImportantesPorPacienteId + pacienteId
     );
+
     return eventosImportantesObtenidos;
   } catch (error) {
     return "El evento no existe";

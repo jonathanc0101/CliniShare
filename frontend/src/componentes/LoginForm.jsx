@@ -1,26 +1,21 @@
 import {
   Avatar,
   Button,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
   Grid,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
   Paper,
-  TextField,
-  Typography,
 } from "@mui/material";
 import { Link, Navigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useEffect, useState } from "react";
 import { api } from "../API backend/api";
-import Home from "./Home";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import { alertas } from "./alertas";
 
 function LoginForm() {
   const [correoElectronico, setCorreoElectronico] = useState("");
@@ -61,16 +56,18 @@ function LoginForm() {
 
     try {
       const usuario = await api.login(correoElectronico, password);
-      // console.log(usuario);
       if (Object.keys(usuario).length !== 0) {
         setDatosValidos(true);
-
         window.localStorage.setItem(
           "loggedCliniShareAppUser",
           JSON.stringify(usuario)
         );
         setUsuario(usuario);
         setCorreoElectronico("");
+        setPassword("");
+        alertas.bienvenida(usuario.medico.nombre);
+      } else {
+        alertas.errorLogin();
         setPassword("");
       }
     } catch (error) {
@@ -85,9 +82,9 @@ function LoginForm() {
     margin: "20px auto",
   };
   const avatarStyle = { backgroundColor: "blue" };
-  const btnstyle = { margin: "8px 0" };
   return (
     <>
+      {/* Si los datos son válidos se accede a la pantalla principal, sino permanece acá */}
       {datosValidos ? (
         <Navigate to="/home" />
       ) : (
@@ -99,7 +96,7 @@ function LoginForm() {
               </Avatar>
               <h2>Login</h2>
             </Grid>
-
+            <br></br>
             <InputLabel>Correo electrónico</InputLabel>
             <OutlinedInput
               id="outlined-adornment-email"
@@ -114,10 +111,9 @@ function LoginForm() {
               placeholder="Correo electrónico"
               required
             />
-
             <br></br>
             <br></br>
-            <InputLabel>Password</InputLabel>
+            <InputLabel>Contraseña</InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               type={values.mostrarPassword ? "text" : "password"}
@@ -155,12 +151,13 @@ function LoginForm() {
               onClick={handleLogin}
               color="primary"
               variant="contained"
-              style={btnstyle}
               fullWidth
+              size="large"
+              style={{ fontWeight: "bold" }}
             >
               INICIAR SESIÓN
             </Button>
-
+            <br></br>
             <br></br>
             <Link
               to={"/register"}
@@ -169,8 +166,9 @@ function LoginForm() {
               <Button
                 color="secondary"
                 variant="contained"
-                style={btnstyle}
                 fullWidth
+                size="large"
+                style={{ fontWeight: "bold" }}
               >
                 REGISTRARSE
               </Button>

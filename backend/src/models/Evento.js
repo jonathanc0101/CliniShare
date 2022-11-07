@@ -1,6 +1,8 @@
 import { DataTypes ,Sequelize} from "sequelize";
 import { sequelize } from "../database/database.js";
 
+const descripcionLength = 1000; 
+
 export const Evento = sequelize.define("eventos",{
     id:{
         type: Sequelize.UUID,
@@ -18,7 +20,7 @@ export const Evento = sequelize.define("eventos",{
         allowNull: false,
     },
     descripcion:{
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(descripcionLength),
         allowNull:false,
     },
     importante:{
@@ -26,12 +28,6 @@ export const Evento = sequelize.define("eventos",{
         defaultValue:false,
         allowNull: false,
     },
-    fechaModificacion: {
-        //fecha de la ultima modificación por el medico que lo cargó
-        type: DataTypes.DATE,
-        defaultValue: Sequelize.fn('now'),
-        allowNull: false,
-      },
     fechaVencimiento: {
         type: DataTypes.DATE,
         allowNull: true,

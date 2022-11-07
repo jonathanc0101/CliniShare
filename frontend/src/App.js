@@ -14,6 +14,7 @@ import SweetAlert from "./componentes/SweetAlert";
 import RegistroMedico from "./componentes/RegistroMedico";
 import LoginForm from "./componentes/LoginForm";
 import ModificarMedico from "./componentes/ModificarMedico";
+import StickyHeadTable from "./componentes/StickyHeadTable";
 
 const Rutas = () => {
   let routes = useRoutes([
@@ -28,10 +29,17 @@ const Rutas = () => {
     { path: "/pacientes/ver/id/:id", element: <VerPaciente /> },
     { path: "/home", element: <Home></Home> },
     { path: "/sa", element: <SweetAlert></SweetAlert> },
-    { path: "/register/", element: <RegistroMedico></RegistroMedico>},
-    { path: "/", element: <LoginForm></LoginForm>},
-    { path: "/configuracion/cuenta/", element: <ModificarMedico></ModificarMedico>}
+    { path: "/register/", element: <RegistroMedico></RegistroMedico> },
+    { path: "/", element: <LoginForm></LoginForm> },
+    {
+      path: "/configuracion/cuenta/",
+      element: <ModificarMedico></ModificarMedico>,
+    },
 
+    {
+      path: "/ejemplo/tabla/",
+      element: <StickyHeadTable></StickyHeadTable>,
+    },
 
     // ...
   ]);

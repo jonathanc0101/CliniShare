@@ -26,7 +26,12 @@ function Menu() {
       <Grid xs={2}>
         <Paper square={true}>
           <MenuList>
-            <MenuItem>Menú</MenuItem>
+            <Link
+              to={"/ejemplo/tabla"}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              <MenuItem>Menú</MenuItem>
+            </Link>
             <Link
               to={"/pacientes/all"}
               style={{ color: "inherit", textDecoration: "inherit" }}
