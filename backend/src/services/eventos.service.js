@@ -108,7 +108,6 @@ async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
     );
     const eventosDepurados = eventosFiltrados.map((evento) => {
       let nuevoEvento = evento;
-      delete nuevoEvento.medico;
       return nuevoEvento;
     });
 
@@ -116,7 +115,7 @@ async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
     const medicos = [...new Set(medicosRepetidos)];
     const pacientes = [...new Set(pacientesRepetidos)];
 
-    return { medicos, pacientes, eventos };
+    return { medicos, pacientes, eventos:eventosDepurados };
   }
 }
 
@@ -178,7 +177,7 @@ async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
     const medicos = [...new Set(medicosRepetidos)];
     const pacientes = [...new Set(pacientesRepetidos)];
 
-    return { medicos, pacientes, eventos };
+    return { medicos, pacientes, eventos:eventosDepurados };
     
   }
 }
