@@ -175,6 +175,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
             {/* APELLIDO */}
@@ -189,6 +191,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
             {/* GÉNERO */}
@@ -204,6 +208,8 @@ function RegistroMedico() {
                   native: true,
                 }}
                 helperText="Seleccione su género"
+                size="small"
+
               >
                 {generos.map((opcion) => (
                   <option key={opcion.value} value={opcion.value}>
@@ -226,6 +232,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
             {/* MÁTRICULA */}
@@ -240,6 +248,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
             {/* FECHA DE NACIMIENTO */}
@@ -259,6 +269,8 @@ function RegistroMedico() {
                       margin="normal"
                       fullWidth
                       helperText="Campo obligatorio"
+                      size="small"
+
                       {...params}
                     />
                   )}
@@ -279,6 +291,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
             {/* TELÉFONO */}
@@ -293,6 +307,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
           </Grid>
@@ -310,6 +326,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
           </Grid>
@@ -325,6 +343,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
           </Grid>
@@ -340,6 +360,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
           </Grid>

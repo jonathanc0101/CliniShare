@@ -6,12 +6,10 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
-  TextareaAutosize,
   TextField,
   Typography,
 } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState, useEffect } from "react";
@@ -155,6 +153,7 @@ function NuevoEvento() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="normal"
               ></TextField>
             </Grid>
             <Grid item xs={4} sm={2}>
@@ -169,7 +168,7 @@ function NuevoEvento() {
                   name="fecha"
                   onChange={handleOnchange}
                   renderInput={(params) => (
-                    <TextField margin="normal" {...params} />
+                    <TextField margin="normal" size="normal" {...params} />
                   )}
                 />
               </LocalizationProvider>
@@ -185,6 +184,7 @@ function NuevoEvento() {
                 onChange={handleOnchange}
                 control={<Checkbox />}
                 label="Evento importante"
+                size="normal"
               />
             </Grid>
             {/* FECHA DE VENCIMIENTO */}
@@ -200,7 +200,9 @@ function NuevoEvento() {
                   value={evento.fechaVencimiento}
                   onChange={handleChangeFecha}
                   minDate={moment().add(1, "days")}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => (
+                    <TextField size="small" margin="normal" {...params} />
+                  )}
                 />
               </LocalizationProvider>
             </Grid>
@@ -230,6 +232,7 @@ function NuevoEvento() {
                 margin="normal"
                 fullWidth
                 variant="outlined"
+                size="normal"
               ></TextField>
             </Grid>
             {/* APELLIDO DEL PACIENTE */}
@@ -242,6 +245,7 @@ function NuevoEvento() {
                 value={paciente.apellido}
                 margin="normal"
                 fullWidth
+                size="normal"
                 variant="outlined"
               ></TextField>
             </Grid>
@@ -256,6 +260,7 @@ function NuevoEvento() {
                 margin="normal"
                 fullWidth
                 variant="outlined"
+                size="normal"
               ></TextField>
             </Grid>
           </Grid>
@@ -271,6 +276,7 @@ function NuevoEvento() {
                 onChange={handleOnchange}
                 rows={8}
                 value={evento.descripcion}
+                size="normal"
               />
             </Grid>
           </Grid>

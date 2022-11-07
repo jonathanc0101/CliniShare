@@ -83,7 +83,7 @@ function VerEvento() {
           <Grid container direction="row" spacing={2}>
             {/* TÍTULO */}
             <Grid item xs={4} sm={10}>
-              <TextField 
+              <TextField
                 disabled
                 label="Título"
                 type="text"
@@ -97,29 +97,30 @@ function VerEvento() {
             </Grid>
             {/* FECHA DE CREACIÓN */}
             <Grid item xs={4} sm={2}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <Stack spacing={3}>
-                  <DesktopDatePicker
-                    disabled
-                    label="Fecha del evento"
-                    inputFormat="DD/MM/YYYY"
-                    name="fecha"
-                    value={evento.fecha}
-                    onChange={(e) => e.target.value}
-                    renderInput={(params) => (
-                      <TextField margin="normal" size="small" {...params} />
-                    )}
-                  />
-                </Stack>
+              <LocalizationProvider
+                adapterLocale="es"
+                dateAdapter={AdapterDayjs}
+              >
+                <DesktopDatePicker
+                  disabled
+                  label="Fecha del evento"
+                  inputFormat="DD/MM/YYYY"
+                  name="fecha"
+                  value={evento.fecha}
+                  onChange={(e) => e.target.value}
+                  renderInput={(params) => (
+                    <TextField margin="normal" size="small" {...params} />
+                  )}
+                />
               </LocalizationProvider>
             </Grid>
           </Grid>
-          <br></br>
           <br></br>
 
           <Grid container direction="row" spacing={2}>
             {/* IMPORTANTE */}
             <Grid item xs={4} sm={2}>
+              <br></br>
               <FormControlLabel
                 disabled
                 name="importante"
@@ -143,7 +144,7 @@ function VerEvento() {
                     value={evento.fechaVencimiento}
                     onChange={(e) => e.target.value}
                     renderInput={(params) => (
-                      <TextField size="small" {...params} />
+                      <TextField size="small" margin="normal" {...params} />
                     )}
                   />
                 </LocalizationProvider>
