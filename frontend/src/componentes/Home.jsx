@@ -16,33 +16,15 @@ const Item = styled(Paper)(({ theme }) => ({
 function Home() {
   return (
     <>
-      <Box sx={{ width: "100%" }}>
-        <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
-          <Grid xs={12}>
-            <Item>
-              <MenuAppBar></MenuAppBar>
-              {/* <ButtonGroup
-              variant="contained"
-              aria-label="outlined primary button group"
-            >
-              <Button>
-                <Link to="/eventos/new" className="btn btn-dark">
-                  Agregar
-                </Link>
-              </Button>
-              <Button>
-                <Link to="/eventos/id" className="btn btn-dark">
-                  Modificar
-                </Link>
-              </Button>
-            </ButtonGroup> */}
-            </Item>
-          </Grid>
+      <Grid container direction="row">
+        <Grid item xs={4} sm={12}>
+          <MenuAppBar></MenuAppBar>
         </Grid>
-        <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Menu></Menu>
-        </Grid>
-      </Box>
+      </Grid>
+      <br></br>
+      <Grid container direction="row" spacing={2}>
+        <Menu></Menu>
+      </Grid>
     </>
   );
 }

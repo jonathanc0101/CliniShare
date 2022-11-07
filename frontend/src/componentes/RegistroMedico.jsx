@@ -16,6 +16,7 @@ import { Navigate } from "react-router-dom";
 import BotonVolver from "./botones/BotonVolver";
 import "dayjs/locale/es";
 import moment from "moment";
+import validator from "validator";
 
 function RegistroMedico() {
   const [registrado, setRegistrado] = useState(false);
@@ -48,39 +49,38 @@ function RegistroMedico() {
     email: "",
     password: "",
     fechaNacimiento: "",
-    // genero,
-    // telefono,
-    // direccion
   });
 
   const guardar = async function () {
-    if (!verificarPassword(passwordAVerificar)) {
-      alertas.contraseñasDiferentes();
-      return;
-    }
-
-    if (!isEmail(medico.email)) {
-      alertas.alertaEmailInvalido();
-      return;
-    }
-
     if (
       medico.nombre.length === 0 ||
-      medico.dni.length === 0 ||
       medico.apellido.length === 0 ||
+      medico.dni.length === 0 ||
+      medico.matricula.length === 0 ||
       medico.email.length === 0 ||
-      medico.password.length === 0
+      medico.password.length === 0 ||
+      passwordAVerificar.length === 0
     ) {
       alertas.alertaCamposObligatorios();
       return;
-    }
-    const medicoGuardado = await api.guardarMedicoUsuario(medico);
-    if (medicoGuardado) {
-      alertas.alertaExito("médico");
-      setRegistrado(true);
-    } else {
-      alertas.alertaProblemas();
+    } else if (!validator.isDate(medico.fechaNacimiento)) {
+      alertas.fechaErronea("nacimiento");
       return;
+    } else if (!isEmail(medico.email)) {
+      alertas.alertaEmailInvalido();
+      return;
+    } else if (!verificarPassword(passwordAVerificar)) {
+      alertas.contraseñasDiferentes();
+      return;
+    } else {
+      const medicoGuardado = await api.guardarMedicoUsuario(medico);
+      if (medicoGuardado) {
+        alertas.alertaExito("médico");
+        setRegistrado(true);
+      } else {
+        alertas.alertaProblemas();
+        return;
+      }
     }
   };
 
@@ -111,8 +111,8 @@ function RegistroMedico() {
   };
 
   const handleChangeNombreYApellido = (event) => {
-    const value = event.target;
-    let regex = new RegExp("^[a-zA-Z ]+$");
+    const { value } = event.target;
+    let regex = new RegExp("^[a-zA-Z ]*$");
 
     if (regex.test(value)) {
       if (event.target.name === "nombre") {
@@ -134,16 +134,30 @@ function RegistroMedico() {
   };
 
   const handleChangeFecha = (event) => {
-    const value = event["$d"];
-    setMedico((estadoAnterior) => {
-      return { ...estadoAnterior, fechaNacimiento: value };
-    });
+    if (event === null) {
+      event = {};
+    } else {
+      const value = event["$d"];
+      setMedico((estadoAnterior) => {
+        return { ...estadoAnterior, fechaNacimiento: value };
+      });
+    }
   };
 
   return (
     <>
-      <Typography component="h4" variant="h4">
-        Registrarse
+      <Typography
+        component="h6"
+        variant="h6"
+        style={{
+          backgroundColor: "#4D4C4C",
+          color: "white",
+          textAlign: "left",
+          fontWeight: "bold",
+          lineHeight: "2",
+        }}
+      >
+        &nbsp;&nbsp;&nbsp;Registrarse
       </Typography>
       <Card>
         <CardContent>
@@ -152,7 +166,7 @@ function RegistroMedico() {
             {/* NOMBRE */}
             <Grid item xs={4} sm={5}>
               <TextField
-                label="Nombre"
+                label="Nombre/s"
                 type="text"
                 name="nombre"
                 value={medico.nombre}
@@ -161,12 +175,14 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
             {/* APELLIDO */}
             <Grid item xs={4} sm={5}>
               <TextField
-                label="Apellido"
+                label="Apellido/s"
                 type="text"
                 name="apellido"
                 value={medico.apellido}
@@ -175,6 +191,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
             {/* GÉNERO */}
@@ -190,6 +208,8 @@ function RegistroMedico() {
                   native: true,
                 }}
                 helperText="Seleccione su género"
+                size="small"
+
               >
                 {generos.map((opcion) => (
                   <option key={opcion.value} value={opcion.value}>
@@ -212,6 +232,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
             {/* MÁTRICULA */}
@@ -226,6 +248,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
             {/* FECHA DE NACIMIENTO */}
@@ -245,6 +269,8 @@ function RegistroMedico() {
                       margin="normal"
                       fullWidth
                       helperText="Campo obligatorio"
+                      size="small"
+
                       {...params}
                     />
                   )}
@@ -265,6 +291,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
             {/* TELÉFONO */}
@@ -279,6 +307,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
           </Grid>
@@ -296,6 +326,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
           </Grid>
@@ -311,6 +343,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
           </Grid>
@@ -326,6 +360,8 @@ function RegistroMedico() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
+
               ></TextField>
             </Grid>
           </Grid>
@@ -334,7 +370,7 @@ function RegistroMedico() {
             <Grid item xs={4} sm={4}>
               <BotonVolver></BotonVolver>
             </Grid>
-
+            {/* BOTÓN REGISTRARSE */}
             <Grid item xs={4} sm={4}>
               <Box textAlign="center">
                 <Button

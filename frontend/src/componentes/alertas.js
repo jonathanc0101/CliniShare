@@ -10,7 +10,9 @@ export const alertas = {
   contraseñasDiferentes,
   fechaErronea,
   errorLogin,
-  bienvenida
+  bienvenida,
+  medicoExiste,
+  fechaNacimientoPaciente,
 };
 
 async function alertaPacienteExiste(pacienteDni) {
@@ -62,10 +64,19 @@ async function contraseñasDiferentes() {
   });
 }
 
+// ALERTAS FECHAS
+
 async function fechaErronea(tipoFecha) {
   Swal.fire({
     title: "",
     html: `<p>La <b>fecha de ${tipoFecha}</b> es inválida</p>`,
+    icon: "error",
+  });
+}
+
+async function fechaNacimientoPaciente() {
+  Swal.fire({
+    html: `<p>La fecha de nacimiento es superior al día de hoy</p>`,
     icon: "error",
   });
 }
@@ -95,4 +106,24 @@ async function bienvenida(nombreMedico) {
     timer: "3000",
     position: "center",
   });
+}
+
+// ALERTAS REGISTRO MÉDICO
+async function medicoExiste(nombreCampo, dni, matricula) {
+  if (nombreCampo === "matricula") {
+    Swal.fire({
+      icon: "warning",
+      html: `<p>Ya existe un médico con la mátricula <b>${matricula}</b></p>`,
+    });
+  } else if (nombreCampo === "dni") {
+    Swal.fire({
+      icon: "warning",
+      html: `<p>Ya existe un médico con el DNI <b>${dni}</b></p>`,
+    });
+  } else {
+    Swal.fire({
+      icon: "warning",
+      html: `<p>Ya existe un médico con la mátricula <b>${matricula}</b> y DNI <b>${dni}</b></p>`,
+    });
+  }
 }

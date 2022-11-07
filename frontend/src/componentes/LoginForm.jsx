@@ -140,8 +140,6 @@ function LoginForm() {
             />
             <br></br>
             <br></br>
-            {/* </FormControl> */}
-
             {/* Recordar contraseña */}
             {/* <FormControlLabel
             control={<Checkbox name="checkedB" color="primary" />}

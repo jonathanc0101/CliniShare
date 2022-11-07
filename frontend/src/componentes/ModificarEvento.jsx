@@ -6,12 +6,10 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
-  TextareaAutosize,
   TextField,
   Typography,
 } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState, useEffect } from "react";
@@ -22,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import BotonVolver from "./botones/BotonVolver";
 import { alertas } from "./alertas";
 import moment from "moment";
+import validator from "validator";
 
 function ModificarEvento() {
   const params = useParams();
@@ -54,13 +53,28 @@ function ModificarEvento() {
       setPaciente((estadoAnterior) => {
         return { ...estadoAnterior, ...pacienteDelEvento };
       });
-
     })();
   }, [params.id]);
 
   const update = async () => {
-    const respuesta = await api.modificarEvento(params.id, {...evento
-    });
+    if (evento.titulo.length === 0 || evento.descripcion.length === 0) {
+      alertas.alertaCamposObligatorios();
+      return;
+    } else if (evento.importante === "true") {
+      let fechaActual = new Date();
+      if (evento.fechaVencimiento === "") {
+        evento.fechaVencimiento = null;
+      } else {
+        if (
+          !validator.isDate(evento.fechaVencimiento) ||
+          evento.fechaVencimiento.getFullYear() < fechaActual.getFullYear()
+        ) {
+          alertas.fechaErronea("vencimiento");
+          return;
+        }
+      }
+    }
+    const respuesta = await api.modificarEvento(params.id, { ...evento });
     if (respuesta) {
       alertas.alertaModificacionExitosa("evento");
       navigate(-1);
@@ -91,161 +105,193 @@ function ModificarEvento() {
 
   return (
     <>
-      <Typography component="h2" variant="h4" align="left">
-        Evento a modificar
+      <Typography
+        component="h6"
+        variant="h6"
+        style={{
+          backgroundColor: "#0c5774",
+          color: "white",
+          textAlign: "left",
+          fontWeight: "bold",
+          lineHeight: "2",
+        }}
+      >
+        &nbsp;&nbsp;&nbsp;Modificar evento / Datos del evento
       </Typography>
-      <Box sx={{ width: "100%" }}>
-        <Card>
-          <CardContent>
-            {/* DATOS DEL EVENTO */}
-            <Grid container direction="row" spacing={2}>
-              {/* TÍTULO */}
-              <Grid item xs={4} sm={8}>
-                <TextField
-                  label="Título"
-                  type="text"
-                  name="titulo"
-                  value={evento.titulo}
-                  onChange={handleOnchange}
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                  helperText="Campo obligatorio"
-                ></TextField>
-              </Grid>
-              {/* FECHA DE CREACIÓN */}
-              <Grid item xs={4} sm={4}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <Stack spacing={3}>
-                    <DesktopDatePicker
-                      disabled
-                      label="Fecha del evento"
-                      inputFormat="DD/MM/YYYY"
-                      name="fecha"
-                      value={evento.fecha}
-                      onChange={handleOnchange}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </Stack>
-                </LocalizationProvider>
-              </Grid>
+      <Card>
+        <CardContent>
+          {/* DATOS DEL EVENTO */}
+          <Grid container direction="row" spacing={2}>
+            {/* TÍTULO */}
+            <Grid item xs={4} sm={10}>
+              <TextField
+                label="Título"
+                type="text"
+                name="titulo"
+                value={evento.titulo}
+                onChange={handleOnchange}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                helperText="Campo obligatorio"
+                size="small"
+              ></TextField>
             </Grid>
-            <br></br>
-            <Grid container direction="row" spacing={2}>
-              {/* IMPORTANTE */}
-              <Grid item xs={4} sm={2}>
-                <FormControlLabel
-                  name="importante"
-                  checked={evento.importante}
+            {/* FECHA DE CREACIÓN */}
+            <Grid item xs={4} sm={2}>
+              <LocalizationProvider
+                adapterLocale="es"
+                dateAdapter={AdapterDayjs}
+              >
+                <DesktopDatePicker
+                  disabled
+                  label="Fecha del evento"
+                  inputFormat="DD/MM/YYYY"
+                  name="fecha"
+                  value={evento.fecha}
                   onChange={handleOnchange}
-                  control={<Checkbox />}
-                  label="Evento importante"
+                  renderInput={(params) => (
+                    <TextField margin="normal" size="small" {...params} />
+                  )}
                 />
-              </Grid>
-              {/* FECHA DE VENCIMIENTO */}
-              <Grid item xs={4} sm={10}>
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+
+          <Grid container direction="row" spacing={2}>
+            {/* IMPORTANTE */}
+            <Grid item xs={4} sm={2}>
+              <br></br>
+              <FormControlLabel
+                size="small"
+                name="importante"
+                checked={evento.importante}
+                onChange={handleOnchange}
+                control={<Checkbox />}
+                label="Evento importante"
+              />
+            </Grid>
+            {/* FECHA DE VENCIMIENTO */}
+            <Grid item xs={4} sm={4}>
+              {evento.importante ? (
                 <LocalizationProvider
                   adapterLocale="es"
                   dateAdapter={AdapterDayjs}
                 >
                   <DesktopDatePicker
-                    disabled={!evento.importante}
                     label="Fecha de vencimiento"
                     name="fechaVencimiento"
                     value={evento.fechaVencimiento}
                     onChange={handleChangeFecha}
                     minDate={moment().add(1, "days")}
-                    renderInput={(params) => <TextField {...params} />}
+                    renderInput={(params) => (
+                      <TextField size="small" margin="normal" {...params} />
+                    )}
                   />
                 </LocalizationProvider>
-              </Grid>
+              ) : null}
             </Grid>
-            <br></br>
-            {/* DATOS DEL PACIENTE */}
-            <Typography component="h2" variant="h5" align="left">
-              Paciente
-            </Typography>
-            {/* NOMBRE DEL PACIENTE */}
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={4} sm={4}>
-                <TextField
-                  disabled
-                  label="Nombre"
-                  type="text"
-                  name="nombre"
-                  value={paciente.nombre}
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              {/* APELLIDO DEL PACIENTE */}
-              <Grid item xs={4} sm={4}>
-                <TextField
-                  disabled
-                  label="Apellido"
-                  type="text"
-                  name="apellido"
-                  value={paciente.apellido}
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
-              {/* DNI DEL PACIENTE */}
-              <Grid item xs={4} sm={4}>
-                <TextField
-                  disabled
-                  label="DNI"
-                  type="text"
-                  name="pacienteDni"
-                  value={paciente.dni}
-                  margin="dense"
-                  fullWidth
-                  variant="outlined"
-                ></TextField>
-              </Grid>
+          </Grid>
+          <br></br>
+          {/* DATOS DEL PACIENTE */}
+          <Typography
+            component="h6"
+            variant="h6"
+            style={{
+              color: "#0c5774",
+              textAlign: "left",
+              fontWeight: "bold",
+            }}
+          >
+            &nbsp;Datos del paciente
+          </Typography>
+          {/* NOMBRE DEL PACIENTE */}
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={4} sm={4}>
+              <TextField
+                disabled
+                label="Nombre"
+                type="text"
+                name="nombre"
+                value={paciente.nombre}
+                margin="normal"
+                size="small"
+                fullWidth
+                variant="outlined"
+              ></TextField>
             </Grid>
-            <br></br>
-            {/* DESCRIPCIÓN */}
-            <Grid container direction="row" spacing={2}>
-              <Grid item xs={12} sm={12} lg={6}>
-                <Typography component="h2" variant="h6" align="left">
-                  Descripción
+            {/* APELLIDO DEL PACIENTE */}
+            <Grid item xs={4} sm={4}>
+              <TextField
+                disabled
+                label="Apellido"
+                type="text"
+                name="apellido"
+                value={paciente.apellido}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                size="small"
+              ></TextField>
+            </Grid>
+            {/* DNI DEL PACIENTE */}
+            <Grid item xs={4} sm={4}>
+              <TextField
+                disabled
+                label="DNI"
+                type="text"
+                name="pacienteDni"
+                value={paciente.dni}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                size="small"
+              ></TextField>
+            </Grid>
+          </Grid>
+          {/* ACÁ VENDRÍAN LOS DATOS DEL MÉDICO */}
+
+          {/* DESCRIPCIÓN */}
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={4} sm={12}>
+              <TextField
+                label="Descripción"
+                multiline
+                size="small"
+                margin="normal"
+                fullWidth
+                rows={8}
+                name="descripcion"
+                value={evento.descripcion}
+                onChange={handleOnchange}
+              />
+            </Grid>
+          </Grid>
+
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <Grid container direction="row" spacing={2}>
+            {/* VOLVER A ATRÁS */}
+            <Grid item xs={10}>
+              <BotonVolver></BotonVolver>
+            </Grid>
+            {/* GUARDAR */}
+            <Grid item>
+              <Button
+                variant="contained"
+                endIcon={<SaveIcon />}
+                onClick={update}
+              >
+                <Typography color={"white"} variant="h7" align="left">
+                  &nbsp;Guardar
                 </Typography>
-                <TextareaAutosize
-                  aria-label="maximum height"
-                  placeholder="Descripción"
-                  name="descripcion"
-                  value={evento.descripcion}
-                  onChange={handleOnchange}
-                  // onChange={handleOnchange}
-                  style={{ width: 1249, height: 100 }}
-                />
-              </Grid>
+              </Button>
             </Grid>
-            <br></br>
-            <Grid container direction="row" spacing={2}>
-              {/* VOLVER A ATRÁS */}
-              <Grid item xs={10}>
-                <BotonVolver></BotonVolver>
-              </Grid>
-              {/* GUARDAR */}
-              <Grid item>
-                <Button
-                  variant="contained"
-                  endIcon={<SaveIcon />}
-                  onClick={update}
-                >
-                  <Typography color={"white"} variant="h7" align="left">
-                    &nbsp;Guardar
-                  </Typography>
-                </Button>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
-      </Box>
+          </Grid>
+        </CardContent>
+      </Card>
     </>
   );
 }
