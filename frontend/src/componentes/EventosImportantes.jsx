@@ -7,7 +7,6 @@ import { api } from "../API backend/api";
 import Grid from "@mui/material/Unstable_Grid2";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link } from "react-router-dom";
-import { ListSubheader } from "@mui/material";
 
 function EventosImportantes(params) {
   const [eventosImportantes, setEventosImportantes] = useState([]);
