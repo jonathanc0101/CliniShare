@@ -101,22 +101,7 @@ async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
       );
     });
 
-    // separamos los registros particulares
-    const medicosRepetidos = eventosFiltrados.map((evento) => evento.medico);
-    const pacientesRepetidos = eventosFiltrados.map(
-      (evento) => evento.paciente
-    );
-    const eventosDepurados = eventosFiltrados.map((evento) => {
-      let nuevoEvento = {...evento};
-      delete nuevoEvento.medico;
-      return nuevoEvento;
-    });
-
-    //quitamos los duplicados
-    const medicos = [...new Set(medicosRepetidos)];
-    const pacientes = [...new Set(pacientesRepetidos)];
-
-    return { medicos, pacientes, eventos:eventosDepurados };
+    return eventosFiltrados;
   }
 }
 
@@ -163,22 +148,8 @@ async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
       );
     });
 
-    // separamos los registros particulares
-    const medicosRepetidos = eventosFiltrados.map((evento) => evento.medico);
-    const pacientesRepetidos = eventosFiltrados.map(
-      (evento) => evento.paciente
-    );
-    const eventosDepurados = eventosFiltrados.map((evento) => {
-      let nuevoEvento = {...evento};
-      delete nuevoEvento.medico;
-      return nuevoEvento;
-    });
 
-    //quitamos los duplicados
-    const medicos = [...new Set(medicosRepetidos)];
-    const pacientes = [...new Set(pacientesRepetidos)];
-
-    return { medicos, pacientes, eventos:eventosDepurados };
+    return eventosFiltrados;
     
   }
 }
