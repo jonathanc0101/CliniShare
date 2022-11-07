@@ -4,6 +4,7 @@ import { sequelize } from "../database/database.js";
 import { Medico } from "../models/Medico.js";
 import { Evento } from "../models/Evento.js";
 import { SincronizacionService } from "../services/sincronizacion.service.js";
+import { Paciente } from "../models/Paciente.js";
 
 export async function handleSincronizarPostRequest(req, res, next) {
   res.send(await getDatosParaSincronizar(req.body.medicoId,req.body.dnisyFechasASincronizar));
@@ -32,17 +33,11 @@ export async function actualizarDatos(datos) {
       }
 
       for(const paciente of datos.pacientes){
-        await PacientesService.upsertarPorDNIyNacimiento(paciente,t);
+        await Paciente.upsert(paciente,{transaction: t});
       }
 
-
       for (const evento of datos.eventos) {
-        const eventoAux = {
-          ...evento,
-          pacienteId: await PacientesService.getIdPorDniYNacimiento(evento.paciente),
-          medicoId: evento.medicoId,
-        };
-        await Evento.upsert(eventoAux,{transaction: t});
+        await Evento.upsert(evento,{transaction: t});
       }
 
     });
