@@ -27,9 +27,16 @@ export async function actualizarDatos(datos) {
   //hay que resolver el tema de sincronizar los pacientes, que quede almacenada la version mas actualizada del paciente
   try {
     await sequelize.transaction(async (t) => {
-      for (const evento of datos) {
-        await Medico.upsert(evento.medico,{transaction: t});
-        await PacientesService.upsertarPorDNIyNacimiento(evento.paciente,t);
+      for(const medico of datos.medicos){
+        await Medico.upsert(medico,{transaction: t});
+      }
+
+      for(const paciente of datos.pacientes){
+        await PacientesService.upsertarPorDNIyNacimiento(paciente,t);
+      }
+
+
+      for (const evento of datos.eventos) {
         const eventoAux = {
           ...evento,
           pacienteId: await PacientesService.getIdPorDniYNacimiento(evento.paciente),
