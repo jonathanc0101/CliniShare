@@ -1,5 +1,10 @@
 import app from "./app.js";
+
 import { ConexionActiva } from "./models/ConexionActiva.js";
+import { ComputadoraLocal } from "./models/ComputadoraLocal.js";
+import { Computadora } from "./models/Computadora.js";
+
+
 import { sequelize } from "./database/database.js";
 import { SERVER_BD_PORT } from "./UDP/constants.js";
 
