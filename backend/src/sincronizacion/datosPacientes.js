@@ -4,7 +4,6 @@ import { sequelize } from "../database/database.js";
 import { Medico } from "../models/Medico.js";
 import { Evento } from "../models/Evento.js";
 import { SincronizacionService } from "../services/sincronizacion.service.js";
-import { Paciente } from "../models/Paciente.js";
 
 export async function handleSincronizarPostRequest(req, res, next) {
   res.send(await getDatosParaSincronizar(req.body.medicoId,req.body.dnisyFechasASincronizar));
@@ -25,21 +24,12 @@ export async function getDatosParaSincronizar(idMedico,dnisYFechas) {
 
 export async function actualizarDatos(datos) {
   console.log("\n\nevento:datos a actualizar\n\n",datos);
-  if(datos.length === 0){
-    return {};
-  }
   //hay que resolver el tema de sincronizar los pacientes, que quede almacenada la version mas actualizada del paciente
   try {
     await sequelize.transaction(async (t) => {
-      for(const medico of datos.medicos){
-        await Medico.upsert(medico,{transaction: t});
-      }
-
-      for(const paciente of datos.pacientes){
-        await Paciente.upsert(paciente,{transaction: t});
-      }
-
-      for (const evento of datos.eventos) {
+      for (const evento of datos) {
+        await Medico.upsert(evento.medico,{transaction: t});
+        await PacientesService.upsertarPorDNIyNacimiento(evento.paciente,t);
         const eventoAux = {
           ...evento,
           pacienteId: await PacientesService.getIdPorDniYNacimiento(evento.paciente),
