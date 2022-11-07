@@ -151,6 +151,7 @@ function ModificarPaciente() {
                 spacing={2}
               >
                 {/* NOMBRE */}
+
                 <Grid item xs={4} sm={6}>
                   <TextField
                     label="Nombre"
@@ -201,7 +202,7 @@ function ModificarPaciente() {
                   ></TextField>
                 </Grid>
                 {/* FECHA DE NACIMIENTO */}
-                <Grid item xs={4} sm={4}>
+                <Grid item xs={4} sm={5}>
                   <LocalizationProvider
                     adapterLocale="es"
                     dateAdapter={AdapterDayjs}
@@ -225,26 +226,27 @@ function ModificarPaciente() {
                   </LocalizationProvider>
                 </Grid>
                 {/* GÉNERO */}
-                <Grid item xs={4} sm={4}>
+                {/* <Grid item xs={4} sm={3}>
                   {/* <TextField
                     disabled
                     id="outlined-select-genero-native"
                     select
-                    label="Femenino"
-                    // value={"paciente.genero"}
+                    // label="Género"
+                    label="Masculino"
+                    value={"Masculino"}
                     margin="normal"
                     SelectProps={{
                       native: true,
                     }}
-                    helperText="Seleccione su género"
-                  >
-                    {generos.map((opcion) => (
+                    helperText="Campo obligatorio"
+                  > */}
+                    {/* {generos.map((opcion) => (
                   <option key={opcion.value} value={opcion.value}>
                     {opcion.label}
                   </option>
-                ))}
-                  </TextField> */}
-                </Grid>
+                ))} */}
+                  {/* </TextField> */}
+                {/* </Grid> /*} */}
               </Grid>
             </Grid>
             <Grid item xs={6}>

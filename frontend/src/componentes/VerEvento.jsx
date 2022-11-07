@@ -83,7 +83,7 @@ function VerEvento() {
           <Grid container direction="row" spacing={2}>
             {/* TÍTULO */}
             <Grid item xs={4} sm={10}>
-              <TextField 
+              <TextField
                 disabled
                 label="Título"
                 type="text"
@@ -97,29 +97,30 @@ function VerEvento() {
             </Grid>
             {/* FECHA DE CREACIÓN */}
             <Grid item xs={4} sm={2}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <Stack spacing={3}>
-                  <DesktopDatePicker
-                    disabled
-                    label="Fecha del evento"
-                    inputFormat="DD/MM/YYYY"
-                    name="fecha"
-                    value={evento.fecha}
-                    onChange={(e) => e.target.value}
-                    renderInput={(params) => (
-                      <TextField margin="normal" size="small" {...params} />
-                    )}
-                  />
-                </Stack>
+              <LocalizationProvider
+                adapterLocale="es"
+                dateAdapter={AdapterDayjs}
+              >
+                <DesktopDatePicker
+                  disabled
+                  label="Fecha del evento"
+                  inputFormat="DD/MM/YYYY"
+                  name="fecha"
+                  value={evento.fecha}
+                  onChange={(e) => e.target.value}
+                  renderInput={(params) => (
+                    <TextField margin="normal" size="small" {...params} />
+                  )}
+                />
               </LocalizationProvider>
             </Grid>
           </Grid>
-          <br></br>
           <br></br>
 
           <Grid container direction="row" spacing={2}>
             {/* IMPORTANTE */}
             <Grid item xs={4} sm={2}>
+              <br></br>
               <FormControlLabel
                 disabled
                 name="importante"
@@ -130,7 +131,7 @@ function VerEvento() {
               />
             </Grid>
             {/* FECHA DE VENCIMIENTO */}
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={4} sm={4}>
               {evento.importante ? (
                 <LocalizationProvider
                   adapterLocale="es"
@@ -143,16 +144,15 @@ function VerEvento() {
                     value={evento.fechaVencimiento}
                     onChange={(e) => e.target.value}
                     renderInput={(params) => (
-                      <TextField size="small" {...params} />
+                      <TextField size="small" margin="normal" {...params} />
                     )}
                   />
                 </LocalizationProvider>
               ) : null}
             </Grid>
           </Grid>
-          <br></br>
           {/* DATOS DEL PACIENTE */}
-
+          <br></br>
           <Typography
             component="h6"
             variant="h6"
@@ -209,7 +209,6 @@ function VerEvento() {
               ></TextField>
             </Grid>
           </Grid>
-          <br></br>
           {/* DATOS DEL MÉDICO */}
           <Typography
             component="h6"
@@ -252,7 +251,6 @@ function VerEvento() {
               ></TextField>
             </Grid>
           </Grid>
-          <br></br>
           {/* DESCRIPCIÓN */}
           <Grid container direction="row" spacing={2}>
             <Grid item xs={4} sm={12}>
@@ -263,11 +261,12 @@ function VerEvento() {
                 size="small"
                 margin="normal"
                 fullWidth
-                rows={5}
+                rows={6}
                 value={evento.descripcion}
               />
             </Grid>
           </Grid>
+          <br></br>
           <br></br>
           {/* VOLVER A ATRÁS */}
           <Grid item xs={10}>

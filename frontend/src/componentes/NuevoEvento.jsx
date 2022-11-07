@@ -6,12 +6,10 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
-  TextareaAutosize,
   TextField,
   Typography,
 } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState, useEffect } from "react";
@@ -135,7 +133,7 @@ function NuevoEvento() {
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Nuevo evento - Datos del evento
+        &nbsp;&nbsp;&nbsp;Nuevo evento / Datos del evento
       </Typography>
 
       <Card>
@@ -155,6 +153,7 @@ function NuevoEvento() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
+                size="small"
               ></TextField>
             </Grid>
             <Grid item xs={4} sm={2}>
@@ -169,22 +168,24 @@ function NuevoEvento() {
                   name="fecha"
                   onChange={handleOnchange}
                   renderInput={(params) => (
-                    <TextField margin="normal" {...params} />
+                    <TextField margin="normal" size="small" {...params} />
                   )}
                 />
               </LocalizationProvider>
             </Grid>
           </Grid>
-          <br></br>
           <Grid container direction="row" spacing={2}>
             {/* IMPORTANTE */}
             <Grid item xs={4} sm={2}>
+              <br></br>
+
               <FormControlLabel
                 name="importante"
                 value={evento.importante}
                 onChange={handleOnchange}
                 control={<Checkbox />}
                 label="Evento importante"
+                size="small"
               />
             </Grid>
             {/* FECHA DE VENCIMIENTO */}
@@ -200,7 +201,9 @@ function NuevoEvento() {
                   value={evento.fechaVencimiento}
                   onChange={handleChangeFecha}
                   minDate={moment().add(1, "days")}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => (
+                    <TextField size="small" margin="normal" {...params} />
+                  )}
                 />
               </LocalizationProvider>
             </Grid>
@@ -230,6 +233,7 @@ function NuevoEvento() {
                 margin="normal"
                 fullWidth
                 variant="outlined"
+                size="small"
               ></TextField>
             </Grid>
             {/* APELLIDO DEL PACIENTE */}
@@ -242,6 +246,7 @@ function NuevoEvento() {
                 value={paciente.apellido}
                 margin="normal"
                 fullWidth
+                size="small"
                 variant="outlined"
               ></TextField>
             </Grid>
@@ -256,6 +261,7 @@ function NuevoEvento() {
                 margin="normal"
                 fullWidth
                 variant="outlined"
+                size="small"
               ></TextField>
             </Grid>
           </Grid>
@@ -271,10 +277,13 @@ function NuevoEvento() {
                 onChange={handleOnchange}
                 rows={8}
                 value={evento.descripcion}
+                size="small"
+                helperText="Campo obligatorio"
               />
             </Grid>
           </Grid>
-          <br></br>
+          <br></br> 
+          <br></br> <br></br>
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
             <Grid item xs={10}>

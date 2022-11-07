@@ -81,9 +81,12 @@ function EventosImportantes(params) {
                     mb: '2px',
                     padding:0
                   }}
-                  secondary={`Fecha de vencimiento: ${formatearFecha(
+                  secondary={evento.fechaVencimiento!==null?`Fecha de vencimiento: ${formatearFecha(
                     evento.fechaVencimiento
-                  )}`}
+                  )}`:`Sin fecha de vencimiento`}
+                  // secondary={`Fecha de vencimiento: ${formatearFecha(
+                  //   evento.fechaVencimiento
+                  // )}`}
                   secondaryTypographyProps={{
                     noWrap: true,
                     fontSize: 15,
