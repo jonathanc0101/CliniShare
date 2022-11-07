@@ -100,6 +100,18 @@ async function getEventosCompletosPorDnisYFechas(dnisYFechas) {
         (elem) => JSON.stringify(objDNIyFecha) === JSON.stringify(elem)
       );
     });
+    
+    // separamos los registros particulares
+    const medicosRepetidos = eventosFiltrados.map((evento) => evento.medico);
+    const pacientesRepetidos = eventosFiltrados.map((evento) => evento.paciente);
+    //  const eventosEnteros = eventosFiltrados.map((evento) => evento.evento);
+
+    console.log("\n\n\n\neventos.service l:109\n\n\n\n");
+
+    //quitamos los duplicados
+    const medicos = [...new Set(medicosRepetidos)];
+    const pacientes  = [...new Set(pacientesRepetidos)];
+
 
     return eventosFiltrados;
   }
