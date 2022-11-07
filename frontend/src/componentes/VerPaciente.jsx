@@ -75,7 +75,7 @@ function VerPaciente() {
                   ></TextField>
                 </Grid>
                 {/* GÉNERO */}
-                <Grid item xs={4} sm={4}>
+                {/* <Grid item xs={4} sm={4}>
                   <TextField
                     disabled
                     label="Género"
@@ -86,7 +86,7 @@ function VerPaciente() {
                     variant="outlined"
                     value={"Femenino"}
                   ></TextField>
-                </Grid>
+                </Grid> */}
               </Grid>
               <Grid
                 container

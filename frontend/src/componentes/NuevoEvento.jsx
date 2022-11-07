@@ -133,7 +133,7 @@ function NuevoEvento() {
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Nuevo evento - Datos del evento
+        &nbsp;&nbsp;&nbsp;Nuevo evento / Datos del evento
       </Typography>
 
       <Card>
@@ -153,7 +153,7 @@ function NuevoEvento() {
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
-                size="normal"
+                size="small"
               ></TextField>
             </Grid>
             <Grid item xs={4} sm={2}>
@@ -168,23 +168,24 @@ function NuevoEvento() {
                   name="fecha"
                   onChange={handleOnchange}
                   renderInput={(params) => (
-                    <TextField margin="normal" size="normal" {...params} />
+                    <TextField margin="normal" size="small" {...params} />
                   )}
                 />
               </LocalizationProvider>
             </Grid>
           </Grid>
-          <br></br>
           <Grid container direction="row" spacing={2}>
             {/* IMPORTANTE */}
             <Grid item xs={4} sm={2}>
+              <br></br>
+
               <FormControlLabel
                 name="importante"
                 value={evento.importante}
                 onChange={handleOnchange}
                 control={<Checkbox />}
                 label="Evento importante"
-                size="normal"
+                size="small"
               />
             </Grid>
             {/* FECHA DE VENCIMIENTO */}
@@ -232,7 +233,7 @@ function NuevoEvento() {
                 margin="normal"
                 fullWidth
                 variant="outlined"
-                size="normal"
+                size="small"
               ></TextField>
             </Grid>
             {/* APELLIDO DEL PACIENTE */}
@@ -245,7 +246,7 @@ function NuevoEvento() {
                 value={paciente.apellido}
                 margin="normal"
                 fullWidth
-                size="normal"
+                size="small"
                 variant="outlined"
               ></TextField>
             </Grid>
@@ -260,7 +261,7 @@ function NuevoEvento() {
                 margin="normal"
                 fullWidth
                 variant="outlined"
-                size="normal"
+                size="small"
               ></TextField>
             </Grid>
           </Grid>
@@ -276,11 +277,13 @@ function NuevoEvento() {
                 onChange={handleOnchange}
                 rows={8}
                 value={evento.descripcion}
-                size="normal"
+                size="small"
+                helperText="Campo obligatorio"
               />
             </Grid>
           </Grid>
-          <br></br>
+          <br></br> 
+          <br></br> <br></br>
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
             <Grid item xs={10}>

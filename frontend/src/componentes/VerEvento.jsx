@@ -131,7 +131,7 @@ function VerEvento() {
               />
             </Grid>
             {/* FECHA DE VENCIMIENTO */}
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={4} sm={4}>
               {evento.importante ? (
                 <LocalizationProvider
                   adapterLocale="es"
@@ -151,9 +151,8 @@ function VerEvento() {
               ) : null}
             </Grid>
           </Grid>
-          <br></br>
           {/* DATOS DEL PACIENTE */}
-
+          <br></br>
           <Typography
             component="h6"
             variant="h6"
@@ -210,7 +209,6 @@ function VerEvento() {
               ></TextField>
             </Grid>
           </Grid>
-          <br></br>
           {/* DATOS DEL MÉDICO */}
           <Typography
             component="h6"
@@ -253,7 +251,6 @@ function VerEvento() {
               ></TextField>
             </Grid>
           </Grid>
-          <br></br>
           {/* DESCRIPCIÓN */}
           <Grid container direction="row" spacing={2}>
             <Grid item xs={4} sm={12}>
@@ -264,11 +261,12 @@ function VerEvento() {
                 size="small"
                 margin="normal"
                 fullWidth
-                rows={5}
+                rows={6}
                 value={evento.descripcion}
               />
             </Grid>
           </Grid>
+          <br></br>
           <br></br>
           {/* VOLVER A ATRÁS */}
           <Grid item xs={10}>
