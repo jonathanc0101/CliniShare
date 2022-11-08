@@ -58,6 +58,7 @@ export default function loadListeners(emitter) {
     console.log("\n\nevento:datos_recibidos\n\n");
     await actualizarDatos(obj.datosPacientes);
     console.log("\n\n evento: ya se actualizaron los datos \n\n");
+    console.log("\n\n evento: computadora recibida \n\n", obj.computadora);
     await responderBroadcast(obj.computadora);
   });
   
