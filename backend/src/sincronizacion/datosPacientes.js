@@ -4,13 +4,9 @@ import { sequelize } from "../database/database.js";
 import { Medico } from "../models/Medico.js";
 import { Evento } from "../models/Evento.js";
 import { SincronizacionService } from "../services/sincronizacion.service.js";
-import { getComputadora } from "../UDP/constants.js";
 
 export async function handleSincronizarPostRequest(req, res, next) {
-  const datosPacientes = await getDatosParaSincronizar(req.body.computadora.medicoId,req.body.dnisyFechasASincronizar);
-  const computadora = await getComputadora();
-
-  res.send({datosPacientes,computadora});
+  res.send(await getDatosParaSincronizar(req.body.computadora.medicoId,req.body.dnisyFechasASincronizar));
 }
 
 export async function getDatosParaSincronizar(idMedico,dnisYFechas) {
