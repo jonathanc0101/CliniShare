@@ -4,7 +4,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: "node main.js"
+    command: "node ./src/main.js"
     ports:
       - "3000:3000"
     depends_on:
