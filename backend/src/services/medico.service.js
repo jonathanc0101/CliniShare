@@ -6,6 +6,7 @@ export const MedicosService = {
   createMedico: (medico) => createMedicoFromModel(medico),
   getMedicoById: (id) => getMedicoByIdFromModel(id),
   obtenerMedicoIdAPartirDeMedicoUser,
+  getMedicoAPartirDeUser,
 };
 
 async function getMedicosFromModel() {
@@ -15,6 +16,16 @@ async function getMedicosFromModel() {
     return [];
   } else {
     return medicos;
+  }
+}
+async function getMedicoAPartirDeUser(medicoUser){
+  const medicoFound =  await Medico.findOne({ where: {
+    dni:medicoUser.dni,
+    email:medicoUser.email,
+  } });
+
+  if(medicoFound){
+    return medicoFound;
   }
 }
 

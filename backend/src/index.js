@@ -1,6 +1,6 @@
 import app from "./app.js";
 
-import { ConexionActiva } from "./models/ConexionActiva.js";
+
 import { ComputadoraLocal } from "./models/ComputadoraLocal.js";
 import { Computadora } from "./models/Computadora.js";
 

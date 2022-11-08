@@ -8,15 +8,15 @@ export const SincronizacionService = {
   getUltimaFechaDeSincronizacionConMedicoId,
 };
 
-async function registrarSincronizacion(medicoId) {
-  const sincronizacionNueva = { medicoId };
+async function registrarSincronizacion(computadoraId) {
+  const sincronizacionNueva = { computadoraId };
   await createSincronizacionFromModel(sincronizacionNueva);
 }
 
-async function getSincronizacionMasRecienteFromModel(medicoId) {
+async function getSincronizacionMasRecienteFromModel(computadoraId) {
   const fechasDeSincronizaciones = await Sincronizacion.findAll({
     attributes: ["fecha"],
-    where:{medicoId}
+    where:{computadoraId}
   });
 
   if(fechasDeSincronizaciones.length === 0){
@@ -44,9 +44,9 @@ async function getSincronizacionMasRecienteFromModel(medicoId) {
   }
 }
 
-async function getUltimaFechaDeSincronizacionConMedicoId(medicoId){
+async function getUltimaFechaDeSincronizacionConMedicoId(computadoraId){
 
-  const ultima = await getSincronizacionMasRecienteFromModel(medicoId);
+  const ultima = await getSincronizacionMasRecienteFromModel(computadoraId);
   
   if(!ultima){
     return false;

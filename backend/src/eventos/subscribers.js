@@ -3,7 +3,6 @@ import {
   handleNewComputerNonLooping,
 } from "../sincronizacion/handshake.js";
 import { sincronizar,sincronizarNonLooping } from "../sincronizacion/sincronizar.js";
-import { registrarConexionActiva } from "../sincronizacion/conexionesActivas.js";
 import { SincronizacionService } from "../services/sincronizacion.service.js";
 import { actualizarDatos } from "../sincronizacion/datosPacientes.js";
 import { listenForBroadcasts } from "../UDP/broadcastListener.js";
@@ -37,13 +36,10 @@ export default function loadListeners(emitter) {
 
   emitter.on("new_valid_computer", async (computer) => {
     console.log("\n\nnew_valid_computer\n\n");
-    registrarConexionActiva(computer);
-
     await sincronizar(computer);  
   });
 
   emitter.on("new_valid_computer_non_looping", async (computer) => {
-    registrarConexionActiva(computer);
 
     console.log("\n\nevento:new_valid_computer_non_looping\n\n",computer);
 
@@ -51,14 +47,14 @@ export default function loadListeners(emitter) {
   });
 
   emitter.on("datos_enviados",async(obj) => {
-    SincronizacionService.registrarSincronizacion(obj.medicoId);
   });
-
+  
   emitter.on("datos_recibidos", async (obj) => {
     console.log("\n\nevento:datos_recibidos\n\n",obj);
     await actualizarDatos(obj.datosPacientes);
     console.log("\n\n evento: ya se actualizaron los datos \n\n");
-    console.log("\n\n evento: computadora recibida \n\n", obj.computadora);
+
+    SincronizacionService.registrarSincronizacion(obj.computadora.computadoraId);
     await responderBroadcast(obj.computadora);
   });
   

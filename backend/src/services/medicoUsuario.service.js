@@ -1,4 +1,6 @@
+import { Medico } from "../models/Medico.js";
 import { MedicoUsuario } from "../models/MedicoUsuario.js";
+import { MedicosService } from "./medico.service.js";
 
 export const MedicosUsuariosService = {
   getMedicos: () => getMedicosFromModel(),
@@ -33,11 +35,12 @@ async function getMedicoByEmailFromModel(email) {
       email,
     },
   });
-  
   if (!medico) {
     return {};
   } else {
-    return medico;
+    let medicoNoUsuario = await MedicosService.getMedicoAPartirDeUser(medico);
+    delete medicoNoUsuario.id;
+    return {...medico,...medicoNoUsuario};
   }
 }
 
