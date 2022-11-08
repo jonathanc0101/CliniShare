@@ -45,6 +45,8 @@ function EventosDePaciente(params) {
       const response = await api.obtenerEventosCompletosPorPacienteId(
         params.id
       );
+      console.log(response.data);
+
       if (response.data.length !== 0) {
         setEventos(response.data);
       } else {
@@ -163,6 +165,7 @@ function EventosDePaciente(params) {
                       <TableCell>
                         {evento.medico.nombre} {evento.medico.apellido}
                       </TableCell>
+                          {/* {evento.medico.id === } */}
                       <TableCell align="center" component="th" scope="row">
                         <Link to={"/eventos/id/" + evento.id}>
                           <EditIcon color="info"></EditIcon>
@@ -183,7 +186,8 @@ function EventosDePaciente(params) {
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination size="small"
+          <TablePagination
+            size="small"
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
             count={eventos.length}
