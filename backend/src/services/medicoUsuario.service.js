@@ -41,7 +41,7 @@ async function getMedicoByEmailFromModel(email) {
     let medicoNoUsuario = await MedicosService.getMedicoAPartirDeUser(medico);
     delete medicoNoUsuario.id;
     const obj = {...medicoNoUsuario.dataValues,...medico.dataValues};
-    console.log("\n\nobj\n\n",obj);
+
     return obj;
   }
 }
