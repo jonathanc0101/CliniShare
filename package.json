@@ -16,6 +16,7 @@
     "all": "concurrently -k \" npm run rc\" \"npm:electron\" \"npm:dev\"",
     "prod":"concurrently -k \" npm run rc\" \"npm:electron\" \"npm:backend\"",
     "docker":"concurrently -k \"npm:electron\" \"docker-compose build && docker-compose up\"",
+    "after-docker":"concurrently -k \"npm:electron\" \"docker-compose up\"",
     "electron": "wait-on tcp:5000 && electron ."
   },
   "author": "",
