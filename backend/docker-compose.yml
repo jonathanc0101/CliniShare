@@ -16,3 +16,13 @@ services:
       POSTGRES_USER: clinishare
 
       POSTGRES_DB: clinisharedb
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    command: "npx serve build -l 5000"
+    depends_on:
+      - backend
