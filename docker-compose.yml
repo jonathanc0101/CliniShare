@@ -1,8 +1,10 @@
 version: '2'
 services:     
   backend:
-    build: .
-    command: "npm run dev"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: "node main.js"
     ports:
       - "3000:3000"
     depends_on:
@@ -19,7 +21,7 @@ services:
 
   frontend:
     build:
-      context: ../frontend
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
