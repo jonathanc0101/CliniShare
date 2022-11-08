@@ -6,7 +6,7 @@ import { Evento } from "../models/Evento.js";
 import { SincronizacionService } from "../services/sincronizacion.service.js";
 
 export async function handleSincronizarPostRequest(req, res, next) {
-  res.send(await getDatosParaSincronizar(req.body.medicoId,req.body.dnisyFechasASincronizar));
+  res.send(await getDatosParaSincronizar(req.body.computadora.medicoId,req.body.dnisyFechasASincronizar));
 }
 
 export async function getDatosParaSincronizar(idMedico,dnisYFechas) {

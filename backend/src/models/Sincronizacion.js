@@ -13,10 +13,6 @@ export const Sincronizacion = sequelize.define("sincronizaciones",{
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: Sequelize.fn("now")
-    },
-    medicoId:{
-        type:Sequelize.UUID,
-        allowNull:false,
     }
 },{
     freezeTableName: true,

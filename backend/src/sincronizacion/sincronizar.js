@@ -6,7 +6,9 @@ import { getComputadora } from "../UDP/constants.js";
 
 export async function sincronizar(computadora) {
   console.log("\n\nsincronizando looping \n\n");
+
   const computadoraLocal = await getComputadora();
+
   const postSincronicemosString =
     "http://" +
     computadora.ip.toString().trim() +
@@ -50,7 +52,7 @@ export async function sincronizar(computadora) {
 
   await axios
     .post(postSincronicemosString, {
-      medicoId: computadoraLocal.medicoId,
+      computadora:computadoraLocal,
       dnisyFechasASincronizar,
     })
     .then((res) => {
@@ -112,7 +114,7 @@ export async function sincronizarNonLooping(computadora) {
   //obtener los datos a sincronizar
   await axios
     .post(postSincronicemosString, {
-      medicoId: computadoraLocal.medicoId,
+      computadora: computadoraLocal,
       dnisyFechasASincronizar,
     })
     .then((res) => {
