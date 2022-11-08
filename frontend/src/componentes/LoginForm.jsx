@@ -30,6 +30,9 @@ function LoginForm() {
   });
   const [datosValidos, setDatosValidos] = useState(false);
 
+  const isEmail = (email) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+
   useEffect(() => {
     const loggedCliniShareUserJSON = window.localStorage.getItem(
       "loggedCliniShareAppUser"
@@ -65,6 +68,7 @@ function LoginForm() {
         setUsuario(usuario);
         setCorreoElectronico("");
         setPassword("");
+        console.log(usuario);
         alertas.bienvenida(usuario.medico.nombre);
       } else {
         alertas.errorLogin();
