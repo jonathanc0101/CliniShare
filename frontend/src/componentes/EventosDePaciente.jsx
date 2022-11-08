@@ -12,6 +12,7 @@ import { api } from "../API backend/api";
 import Grid from "@mui/material/Unstable_Grid2";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import { TablePagination } from "@mui/material";
+import EditOffIcon from "@mui/icons-material/EditOff";
 
 function EventosDePaciente(params) {
   const [page, setPage] = useState(0);
@@ -31,6 +32,10 @@ function EventosDePaciente(params) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - eventos.length) : 0;
 
+  const usuario = JSON.parse(
+    window.localStorage.getItem("loggedCliniShareAppUser")
+  );
+
   const formatearFecha = (fechaDeEvento) => {
     let fecha = new Date(fechaDeEvento);
     let dia = `${fecha.getDate()}`.padStart(2, "0");
@@ -41,11 +46,11 @@ function EventosDePaciente(params) {
   };
 
   useEffect(() => {
+    console.log(usuario);
     const obtenerEventosPorPacienteId = async () => {
       const response = await api.obtenerEventosCompletosPorPacienteId(
         params.id
       );
-      console.log(response.data);
 
       if (response.data.length !== 0) {
         setEventos(response.data);
@@ -165,12 +170,19 @@ function EventosDePaciente(params) {
                       <TableCell>
                         {evento.medico.nombre} {evento.medico.apellido}
                       </TableCell>
-                          {/* {evento.medico.id === } */}
-                      <TableCell align="center" component="th" scope="row">
-                        <Link to={"/eventos/id/" + evento.id}>
-                          <EditIcon color="info"></EditIcon>
-                        </Link>
-                      </TableCell>
+
+                      {evento.medico.id === usuario.medico.medicoId ? (
+                        <TableCell align="center" component="th" scope="row">
+                          <Link to={"/eventos/id/" + evento.id}>
+                            <EditIcon color="info"></EditIcon>
+                          </Link>
+                        </TableCell>
+                      ) : (
+                        <TableCell align="center" component="th" scope="row">
+                          <EditOffIcon color="disabled"></EditOffIcon>
+                        </TableCell>
+                      )}
+
                       <TableCell align="center" component="th" scope="row">
                         <Link to={"/eventos/ver/id/" + evento.id}>
                           <VisibilityIcon color="info"></VisibilityIcon>
