@@ -70,6 +70,9 @@ function RegistroMedico() {
     } else if (!isEmail(medico.email)) {
       alertas.alertaEmailInvalido();
       return;
+    } else if (medico.password.length < 4) {
+      alertas.passwordMinimaInvalida();
+      return;
     } else if (!verificarPassword(passwordAVerificar)) {
       alertas.contraseñasDiferentes();
       return;
@@ -94,16 +97,6 @@ function RegistroMedico() {
     });
   };
 
-  // const handleChangeSexo = (event) => {
-
-  //   console.log(event);
-  //   let name = event.target.name;
-
-  //   setMedico((estadoAnterior) => {
-  //     return { ...estadoAnterior, [name]: value };
-  //   });
-  // };
-
   const handleChangeVerificar = (event) => {
     let value = event.target.value;
 
@@ -116,23 +109,6 @@ function RegistroMedico() {
       return { ...estadoAnterior, dni: value };
     });
   };
-
-  // const handleChangeNombreYApellido = (event) => {
-  //   const { value } = event.target;
-  //   let regex = new RegExp("^[a-zA-Z ]*$");
-
-  //   if (regex.test(value)) {
-  //     if (event.target.name === "nombre") {
-  //       setMedico((estadoAnterior) => {
-  //         return { ...estadoAnterior, nombre: value };
-  //       });
-  //     } else if (event.target.name === "apellido") {
-  //       setMedico((estadoAnterior) => {
-  //         return { ...estadoAnterior, apellido: value };
-  //       });
-  //     }
-  //   }
-  // };
 
   const handleChangeTelefono = (event) => {
     let value = event.target.value.replace(/\D/g, "");
@@ -201,19 +177,28 @@ function RegistroMedico() {
                 size="small"
               ></TextField>
             </Grid>
-            {/* GÉNERO */}
+            {/* SEXO */}
             <Grid item xs={4} sm={2}>
               <TextField
-                label="Género"
-                type="text"
-                name="genero"
-                value={medico.genero}
-                onChange={handleChange}
+                id="outlined-select-genero-native"
+                select
+                label="Sexo"
+                name="sexo"
+                value={medico.sexo}
                 margin="normal"
-                fullWidth
-                variant="outlined"
+                onChange={handleChange}
+                SelectProps={{
+                  native: true,
+                }}
+                helperText="Seleccione su sexo"
                 size="small"
-              ></TextField>
+              >
+                {sexos.map((opcion) => (
+                  <option key={opcion.value} value={opcion.value}>
+                    {opcion.label}
+                  </option>
+                ))}
+              </TextField>
             </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
@@ -271,27 +256,19 @@ function RegistroMedico() {
                 />
               </LocalizationProvider>
             </Grid>
+            {/* SEXO */}
             <Grid item xs={4} sm={2}>
               <TextField
-                id="outlined-select-genero-native"
-                select
-                label="Sexo"
-                name="sexo"
-                value={medico.sexo}
-                margin="normal"
+                label="Género"
+                type="text"
+                name="genero"
+                value={medico.genero}
                 onChange={handleChange}
-                SelectProps={{
-                  native: true,
-                }}
-                helperText="Seleccione su sexo"
+                margin="normal"
+                fullWidth
+                variant="outlined"
                 size="small"
-              >
-                {sexos.map((opcion) => (
-                  <option key={opcion.value} value={opcion.value}>
-                    {opcion.label}
-                  </option>
-                ))}
-              </TextField>
+              ></TextField>
             </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
@@ -382,8 +359,8 @@ function RegistroMedico() {
               <BotonVolver></BotonVolver>
             </Grid>
             {/* BOTÓN REGISTRARSE */}
-            <Grid item xs={4} sm={4}>
-              <Box textAlign="center">
+            <Grid item xs={4} sm={8}>
+              <Box textAlign="right">
                 <Button
                   size="large"
                   variant="contained"

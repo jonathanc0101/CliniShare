@@ -25,6 +25,7 @@ function VerPaciente() {
   const [dni, setDni] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
 
+
   useEffect(() => {
     (async () => {
       const res = await api.obtenerPacienteById(params.id);

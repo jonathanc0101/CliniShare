@@ -13,6 +13,7 @@ export const alertas = {
   bienvenida,
   medicoExiste,
   fechaNacimientoPaciente,
+  passwordMinimaInvalida,
 };
 
 async function alertaPacienteExiste(pacienteDni) {
@@ -126,4 +127,11 @@ async function medicoExiste(nombreCampo, dni, matricula) {
       html: `<p>Ya existe un médico con la mátricula <b>${matricula}</b> y DNI <b>${dni}</b></p>`,
     });
   }
+}
+
+async function passwordMinimaInvalida() {
+  Swal.fire({
+    html: `<p>La contraseña debe ser mayor a 4 carácteres</p>`,
+    icon: "error",
+  });
 }
