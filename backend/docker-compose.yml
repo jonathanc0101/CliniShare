@@ -1,0 +1,18 @@
+version: '2'
+services:     
+  backend:
+    build: .
+    command: "npm run dev"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://clinishare:password@postgres/clinisharedb
+  
+  postgres:
+    image: postgres:9.6.2-alpine
+    environment:
+      POSTGRES_USER: clinishare
+
+      POSTGRES_DB: clinisharedb
