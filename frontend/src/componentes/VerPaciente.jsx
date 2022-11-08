@@ -24,7 +24,7 @@ function VerPaciente() {
   const [nombre, setNombre] = useState("");
   const [dni, setDni] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
-
+  const [sexo, setSexo] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -32,6 +32,7 @@ function VerPaciente() {
       setNombre(res.nombre + " " + res.apellido);
       setDni(res.dni);
       setFechaNacimiento(res.fechaNacimiento);
+      setSexo(res.sexo);
     })();
   }, [params.id]);
   return (
@@ -75,19 +76,19 @@ function VerPaciente() {
                     value={nombre}
                   ></TextField>
                 </Grid>
-                {/* GÉNERO */}
-                {/* <Grid item xs={4} sm={4}>
+                {/* SEXO */}
+                <Grid item xs={4} sm={4}>
                   <TextField
                     disabled
-                    label="Género"
+                    label="Sexo"
                     type="text"
-                    name="genero"
+                    name="sexo"
                     margin="normal"
                     fullWidth
                     variant="outlined"
-                    value={"Femenino"}
+                    value={sexo}
                   ></TextField>
-                </Grid> */}
+                </Grid>
               </Grid>
               <Grid
                 container

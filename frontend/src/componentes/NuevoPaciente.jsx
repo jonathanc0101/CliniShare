@@ -29,8 +29,7 @@ function NuevoPaciente() {
       return element.dni === pacienteDni;
     });
   }
-  const [genero, setGenero] = useState("");
-  const generos = [
+  const sexos = [
     {
       value: "F",
       label: "Femenino",
@@ -53,12 +52,12 @@ function NuevoPaciente() {
     apellido: "",
     dni: "",
     fechaNacimiento: "",
-    ownerId: usuario.medico.medicoId,
+    sexo: "F",
+    genero: "",
+    direccion: "",
+    telefono: "",
+    correo: "",
   });
-
-  const handleChangeGenero = (event) => {
-    setGenero(event.target.value);
-  };
 
   const handleChange = (event) => {
     let value = event.target.value;
@@ -89,24 +88,33 @@ function NuevoPaciente() {
     });
   };
 
-  const handleChangeNombreYApellido = (event) => {
-    const { value } = event.target;
-    let regex = new RegExp("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]*$");
+  const handleChangeTelefono = (event) => {
+    // quitamos los valores no numericos
+    let value = event.target.value.replace(/\D/g, "");
 
-    // let regex = new RegExp("^[a-zA-Z ]*$");
-
-    if (regex.test(value)) {
-      if (event.target.name === "nombre") {
-        setPaciente((estadoAnterior) => {
-          return { ...estadoAnterior, nombre: value };
-        });
-      } else if (event.target.name === "apellido") {
-        setPaciente((estadoAnterior) => {
-          return { ...estadoAnterior, apellido: value };
-        });
-      }
-    }
+    setPaciente((estadoAnterior) => {
+      return { ...estadoAnterior, telefono: value };
+    });
   };
+
+  // const handleChangeNombreYApellido = (event) => {
+  //   const { value } = event.target;
+  //   let regex = new RegExp("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]*$");
+
+  //   // let regex = new RegExp("^[a-zA-Z ]*$");
+
+  //   if (regex.test(value)) {
+  //     if (event.target.name === "nombre") {
+  //       setPaciente((estadoAnterior) => {
+  //         return { ...estadoAnterior, nombre: value };
+  //       });
+  //     } else if (event.target.name === "apellido") {
+  //       setPaciente((estadoAnterior) => {
+  //         return { ...estadoAnterior, apellido: value };
+  //       });
+  //     }
+  //   }
+  // };
 
   const handleGuardar = async function () {
     const existePaciente = await obtenerPacientesExistentes(Paciente.dni);
@@ -158,7 +166,7 @@ function NuevoPaciente() {
           {/* DATOS DEL PACIENTE */}
           <Grid container direction="row" spacing={2}>
             {/* NOMBRE */}
-            <Grid item xs={4} sm={6}>
+            <Grid item xs={4} sm={5}>
               <TextField
                 label="Nombre/s"
                 type="text"
@@ -168,11 +176,11 @@ function NuevoPaciente() {
                 variant="outlined"
                 helperText="Campo obligatorio"
                 value={Paciente.nombre}
-                onChange={handleChangeNombreYApellido}
+                onChange={handleChange}
               ></TextField>
             </Grid>
             {/* APELLIDO */}
-            <Grid item xs={4} sm={6}>
+            <Grid item xs={4} sm={5}>
               <TextField
                 label="Apellido/s"
                 type="text"
@@ -182,13 +190,34 @@ function NuevoPaciente() {
                 variant="outlined"
                 helperText="Campo obligatorio"
                 value={Paciente.apellido}
-                onChange={handleChangeNombreYApellido}
+                onChange={handleChange}
               ></TextField>
+            </Grid>
+            {/* SEXO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                id="outlined-select-sexo-native"
+                select
+                label="Sexo"
+                value={Paciente.sexo}
+                margin="normal"
+                onChange={handleChange}
+                SelectProps={{
+                  native: true,
+                }}
+                helperText="Seleccione el sexo"
+              >
+                {sexos.map((opcion) => (
+                  <option key={opcion.value} value={opcion.value}>
+                    {opcion.label}
+                  </option>
+                ))}
+              </TextField>
             </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
             {/* DNI */}
-            <Grid item xs={4} sm={5}>
+            <Grid item xs={4} sm={4}>
               <TextField
                 label="DNI"
                 type="text"
@@ -202,7 +231,7 @@ function NuevoPaciente() {
               ></TextField>
             </Grid>
             {/* FECHA DE NACIMIENTO */}
-            <Grid item xs={4} sm={3}>
+            <Grid item xs={4} sm={4}>
               <LocalizationProvider
                 adapterLocale="es"
                 dateAdapter={AdapterDayjs}
@@ -224,29 +253,64 @@ function NuevoPaciente() {
                 />
               </LocalizationProvider>
             </Grid>
+
             {/* GÉNERO */}
             <Grid item xs={4} sm={2}>
               <TextField
-                id="outlined-select-genero-native"
-                select
                 label="Género"
-                value={genero}
+                type="text"
+                name="genero"
                 margin="normal"
-                onChange={handleChangeGenero}
-                SelectProps={{
-                  native: true,
-                }}
-                helperText="Seleccione su género"
-              >
-                {generos.map((opcion) => (
-                  <option key={opcion.value} value={opcion.value}>
-                    {opcion.label}
-                  </option>
-                ))}
-              </TextField>
+                fullWidth
+                variant="outlined"
+                value={Paciente.genero}
+                onChange={handleChange}
+              ></TextField>
             </Grid>
           </Grid>
-
+          <Grid container direction="row" spacing={2}>
+            {/* DOMICILIO */}
+            <Grid item xs={4} sm={9}>
+              <TextField
+                label="Domicilio"
+                type="text"
+                name="direccion"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={Paciente.direccion}
+                onChange={handleChange}
+              ></TextField>
+            </Grid>
+            {/* TELÉFONO */}
+            <Grid item xs={4} sm={3}>
+              <TextField
+                label="Teléfono"
+                type="text"
+                name="telefono"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={Paciente.telefono}
+                onChange={handleChangeTelefono}
+              ></TextField>
+            </Grid>
+          </Grid>
+          <Grid container direction="row" spacing={2}>
+            {/* CORREO */}
+            <Grid item xs={4} sm={8}>
+              <TextField
+                label="Correo"
+                type="text"
+                name="correo"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={Paciente.correo}
+                onChange={handleChange}
+              ></TextField>
+            </Grid>
+          </Grid>
           <br></br>
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
