@@ -3,9 +3,12 @@ import { SERVER_BD_PORT } from "../UDP/constants.js";
 import { PacientesService } from "../services/paciente.service.js";
 import emitter from "../eventos/eventEmitter.js";
 import { getComputadora } from "../UDP/constants.js";
+import { SincronizacionService } from "../services/sincronizacion.service.js";
 
 export async function sincronizar(computadora) {
   console.log("\n\nsincronizando looping \n\n");
+
+  const fechaUltimaSincronizacion = SincronizacionService.getUltimaFechaDeSincronizacionConComputadoraId(computadora.computadoraId);
 
   const computadoraLocal = await getComputadora();
 
@@ -52,6 +55,7 @@ export async function sincronizar(computadora) {
 
   await axios
     .post(postSincronicemosString, {
+      fecha:fechaUltimaSincronizacion,
       computadora:computadoraLocal,
       dnisyFechasASincronizar,
     })
@@ -75,7 +79,9 @@ export async function sincronizar(computadora) {
 
 export async function sincronizarNonLooping(computadora) {
 
+  const fechaUltimaSincronizacion = SincronizacionService.getUltimaFechaDeSincronizacionConComputadoraId(computadora.computadoraId);
   const computadoraLocal = await getComputadora();
+  
   const postSincronicemosString =
     "http://" +
     computadora.ip.toString().trim() +
@@ -114,6 +120,7 @@ export async function sincronizarNonLooping(computadora) {
   //obtener los datos a sincronizar
   await axios
     .post(postSincronicemosString, {
+      fecha:fechaUltimaSincronizacion,
       computadora: computadoraLocal,
       dnisyFechasASincronizar,
     })
