@@ -34,6 +34,12 @@ function MenuAppBar() {
     setAnchorElUser(null);
   };
 
+  const usuario = JSON.parse(
+    window.localStorage.getItem("loggedCliniShareAppUser")
+  );
+  
+  console.log(usuario);
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">

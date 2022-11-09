@@ -211,7 +211,7 @@ async function obtenerMedicos() {
     );
     console.log("usuarii: ", usuario);
     const medicosObtenidos = await axios.get(rutas.getMedicos);
-    medicosObtenidos.data = medicosObtenidos.data.filter(medico => medico.dni != usuario.medico.dni);
+    medicosObtenidos.data = medicosObtenidos.data.filter(medico => medico.dni !== usuario.medico.dni);
     console.log("medicosObtenidos :", medicosObtenidos);
     return medicosObtenidos;
   } catch (error) {

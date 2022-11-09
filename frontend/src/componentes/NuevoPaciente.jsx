@@ -59,6 +59,9 @@ function NuevoPaciente() {
     correo: "",
   });
 
+  const isEmail = (email) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+
   const handleChange = (event) => {
     let value = event.target.value;
     let name = event.target.name;
@@ -123,7 +126,11 @@ function NuevoPaciente() {
       Paciente.nombre.length === 0 ||
       Paciente.apellido.length === 0 ||
       Paciente.dni.length === 0 ||
-      Paciente.fechaNacimiento.length === 0
+      Paciente.fechaNacimiento.length === 0 ||
+      Paciente.sexo === 0 ||
+      Paciente.domicilio === 0 ||
+      Paciente.telefono === 0 ||
+      Paciente.correo === 0
     ) {
       alertas.alertaCamposObligatorios();
       return;
@@ -135,6 +142,9 @@ function NuevoPaciente() {
       return;
     } else if (Paciente.fechaNacimiento > moment()) {
       alertas.fechaNacimientoPaciente();
+    } else if (!isEmail(Paciente.correo)) {
+      alertas.alertaEmailInvalido();
+      return;
     } else {
       const pacienteGuardado = await api.guardarPaciente(Paciente);
       if (pacienteGuardado === true) {
@@ -150,16 +160,15 @@ function NuevoPaciente() {
         component="h6"
         variant="h6"
         style={{
-          backgroundColor: "#5090D3",
+          backgroundColor: "#0c5774",
           color: "white",
           textAlign: "left",
           fontWeight: "bold",
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Nuevo paciente
+        &nbsp;&nbsp;&nbsp;Modificar - Datos del paciente
       </Typography>
-      <br></br>
       {/* DATOS DEL PACIENTE */}
       <Card>
         <CardContent>
@@ -280,6 +289,7 @@ function NuevoPaciente() {
                 variant="outlined"
                 value={Paciente.direccion}
                 onChange={handleChange}
+                helperText="Campo obligatorio"
               ></TextField>
             </Grid>
             {/* TELÉFONO */}
@@ -293,6 +303,7 @@ function NuevoPaciente() {
                 variant="outlined"
                 value={Paciente.telefono}
                 onChange={handleChangeTelefono}
+                helperText="Campo obligatorio"
               ></TextField>
             </Grid>
           </Grid>
@@ -300,7 +311,7 @@ function NuevoPaciente() {
             {/* CORREO */}
             <Grid item xs={4} sm={8}>
               <TextField
-                label="Correo"
+                label="Correo electrónico"
                 type="text"
                 name="correo"
                 margin="normal"
@@ -308,18 +319,24 @@ function NuevoPaciente() {
                 variant="outlined"
                 value={Paciente.correo}
                 onChange={handleChange}
+                helperText="Campo obligatorio"
               ></TextField>
             </Grid>
           </Grid>
- 
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
-            <Grid item xs={4} sm={10}>
+            <Grid item xs={4} sm={4}>
               <BotonVolver></BotonVolver>
             </Grid>
             {/* BOTÓN GUARDAR PACIENTE */}
-            <Grid item xs={4} sm={2} >
-              <Box textAlign="center">
+            <Grid item xs={4} sm={8}>
+              <Box textAlign="right">
                 <Button
                   variant="contained"
                   endIcon={<SaveIcon style={{ fontSize: 24 }} />}
