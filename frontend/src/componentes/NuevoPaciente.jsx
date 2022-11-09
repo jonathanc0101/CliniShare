@@ -167,7 +167,7 @@ function NuevoPaciente() {
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Modificar - Datos del paciente
+        &nbsp;&nbsp;&nbsp;Nuevo paciente - Datos del paciente
       </Typography>
       {/* DATOS DEL PACIENTE */}
       <Card>

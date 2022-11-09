@@ -63,9 +63,7 @@ function EventosDePaciente(params) {
 
   return (
     <>
-      {eventosVacios ? (
-        <div>No hay ningún evento</div>
-      ) : (
+      {eventos?.length ? (
         <Grid>
           <TableContainer
             sx={{ maxHeight: 260, maxWidth: 1360 }}
@@ -209,7 +207,9 @@ function EventosDePaciente(params) {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Grid>
-      )}
+      ) : 
+        <p style={{ color: "GrayText" }}>No hay ningún evento</p>
+      }
     </>
   );
 }

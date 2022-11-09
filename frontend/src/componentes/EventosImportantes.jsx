@@ -67,6 +67,8 @@ function EventosImportantes(params) {
           }}
           subheader={<li />}
         >
+                      {eventosImportantes?.length ? (
+
           <ul>
             {/* <ListSubheader>{`TÍTULO`} {`FECHA DE VENCIMIENTO`}</ListSubheader> */}
             {eventosImportantes.map((evento) => (
@@ -102,6 +104,7 @@ function EventosImportantes(params) {
               </ListItem>
             ))}
           </ul>
+          ) : <p style={{textAlign:"center", color:"GrayText"}}>Sin eventos</p>}
         </List>
         {/* </Box> */}
       </Grid>
