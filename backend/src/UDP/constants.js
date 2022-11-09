@@ -9,12 +9,11 @@ export const SERVER_BD_PORT = 3000;
 export const INITIAL_RESPONSE = "HOLA";
 
 export const getComputadora = async () => {
-  const id = await ComputadoraLocalService.obtenerUUIDActual();
+  const computadoraId = await ComputadoraLocalService.obtenerUUIDActual();
   return {
     nombre: os.userInfo().username,
     IPS: ipsGetter(),
     MAGIC_STRING: MAGIC_STRING,
-    medicoId,
-    id,
+    computadoraId,
   };
 };

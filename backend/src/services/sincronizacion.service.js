@@ -1,11 +1,11 @@
 import { Sincronizacion } from "../models/Sincronizacion.js";
 
 export const SincronizacionService = {
-  getSincronizacionReciente:  getSincronizacionMasRecienteFromModel,
+  getSincronizacionReciente:  getSincronizacionMasRecientePorComputadoraId,
   createSincronizacion: (sincronizacion) =>
     createSincronizacionFromModel(sincronizacion),
   registrarSincronizacion,
-  getUltimaFechaDeSincronizacionConMedicoId,
+  getUltimaFechaDeSincronizacionConComputadoraId,
 };
 
 async function registrarSincronizacion(computadoraId) {
@@ -13,7 +13,7 @@ async function registrarSincronizacion(computadoraId) {
   await createSincronizacionFromModel(sincronizacionNueva);
 }
 
-async function getSincronizacionMasRecienteFromModel(computadoraId) {
+async function getSincronizacionMasRecientePorComputadoraId(computadoraId) {
   const fechasDeSincronizaciones = await Sincronizacion.findAll({
     attributes: ["fecha"],
     where:{computadoraId}
@@ -33,7 +33,7 @@ async function getSincronizacionMasRecienteFromModel(computadoraId) {
   const sincronizacion = await Sincronizacion.findOne({
     where: {
       fecha: maxFecha,
-      medicoId
+      computadoraId
     },
   });
 
@@ -44,9 +44,9 @@ async function getSincronizacionMasRecienteFromModel(computadoraId) {
   }
 }
 
-async function getUltimaFechaDeSincronizacionConMedicoId(computadoraId){
+async function getUltimaFechaDeSincronizacionConComputadoraId(computadoraId){
 
-  const ultima = await getSincronizacionMasRecienteFromModel(computadoraId);
+  const ultima = await getSincronizacionMasRecientePorComputadoraId(computadoraId);
   
   if(!ultima){
     return false;
