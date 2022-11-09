@@ -50,12 +50,14 @@ async function login(email, password) {
       const medico = await MedicosService.getMedicoAPartirDeUser(user);
 
       let dataValues = {...medico.dataValues,...user.dataValues};
+      delete dataValues.id;
 
       user.medicoId = medico.id;
-      user.dataValues = dataValues;
 
-      console.log("\n\nuser\n\n",user);
-      return { token, medico:user};
+      const userARetornar = {...user,...dataValues}
+
+      console.log("\n\nuser\n\n",userARetornar);
+      return { token, medico:userARetornar};
     }
   } catch (error) {
     console.log("No se pudo logear médico usuario, error: " + error);
