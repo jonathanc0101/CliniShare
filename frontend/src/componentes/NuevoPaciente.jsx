@@ -311,14 +311,14 @@ function NuevoPaciente() {
               ></TextField>
             </Grid>
           </Grid>
-          <br></br>
+ 
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
             <Grid item xs={4} sm={10}>
               <BotonVolver></BotonVolver>
             </Grid>
             {/* BOTÓN GUARDAR PACIENTE */}
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={4} sm={2} >
               <Box textAlign="center">
                 <Button
                   variant="contained"
