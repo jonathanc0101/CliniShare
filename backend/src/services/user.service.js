@@ -5,6 +5,7 @@ import { sequelize } from "../database/database.js";
 import { Medico } from "../models/Medico.js";
 import { MedicosService } from "./medico.service.js";
 import { MedicoUsuario } from "../models/MedicoUsuario.js";
+import { serialize } from "pg-protocol";
 
 export const userService = {
   login,
@@ -36,16 +37,25 @@ async function login(email, password) {
       medicoEncontrado.password
     );
 
+    
     if (passwordIsValid) {
+      console.log("\n\npassword is valid\n\n");
       token = await sesionActivaService.nueva(medicoEncontrado);
     }
 
     if (!token) {
       return {};
     } else {
-      let medico = quitarPassword(medicoEncontrado);
-      medico.medicoId = await MedicosService.obtenerMedicoIdAPartirDeMedicoUser(medico);
-      return { token, medico };
+      let user = quitarPassword(medicoEncontrado);
+      const medico = await MedicosService.getMedicoAPartirDeUser(user);
+
+      let dataValues = {...medico.dataValues,...user.dataValues};
+
+      user.medicoId = medico.id;
+      user.dataValues = dataValues;
+
+      console.log("\n\nuser\n\n",user);
+      return { token, medico:user};
     }
   } catch (error) {
     console.log("No se pudo logear médico usuario, error: " + error);

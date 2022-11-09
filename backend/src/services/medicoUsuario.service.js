@@ -38,11 +38,7 @@ async function getMedicoByEmailFromModel(email) {
   if (!medico) {
     return {};
   } else {
-    let medicoNoUsuario = await MedicosService.getMedicoAPartirDeUser(medico);
-    delete medicoNoUsuario.id;
-    const obj = {...medicoNoUsuario.dataValues,...medico.dataValues};
-
-    return obj;
+    return medico;
   }
 }
 

@@ -31,12 +31,6 @@ export const MedicoUsuario = sequelize.define(
       unique: true,
       allowNull: false,
     },
-    fechaModificacion: {
-      //fecha de la ultima modificación por si mismo
-      type: DataTypes.DATE,
-      defaultValue: Sequelize.fn("now"),
-      allowNull: false,
-    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
