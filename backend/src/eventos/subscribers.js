@@ -7,6 +7,7 @@ import { SincronizacionService } from "../services/sincronizacion.service.js";
 import { actualizarDatos } from "../sincronizacion/datosPacientes.js";
 import { listenForBroadcasts } from "../UDP/broadcastListener.js";
 import { broadcastComputerData,responderBroadcast } from "../UDP/broadcastSender.js";
+import { ComputadoraService } from "../services/computadora.service.js";
 
 // Import other listeners
 
@@ -36,14 +37,14 @@ export default function loadListeners(emitter) {
 
   emitter.on("new_valid_computer", async (computer) => {
     console.log("\n\nnew_valid_computer\n\n");
-    // await ComputadoraService.
+    await ComputadoraService.upsertarComputadora(computer);
     await sincronizar(computer);  
   });
 
   emitter.on("new_valid_computer_non_looping", async (computer) => {
 
     console.log("\n\nevento:new_valid_computer_non_looping\n\n",computer);
-
+    await ComputadoraService.upsertarComputadora(computer);
     await sincronizarNonLooping(computer);
   });
 

@@ -10,13 +10,13 @@ export const INITIAL_RESPONSE = "HOLA";
 
 export const getComputadora = async () => {
   const medicoId = await obtenerUUIDMedico();
-  const computadoraId = await ComputadoraLocalService.obtenerUUIDActual();
+  const id = await ComputadoraLocalService.obtenerUUIDActual();
   return {
     nombre: os.userInfo().username,
     IPS: ipsGetter(),
     MAGIC_STRING: MAGIC_STRING,
     medicoId,
-    computadoraId,
+    id,
   };
 };
 
