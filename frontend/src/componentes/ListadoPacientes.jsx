@@ -51,7 +51,7 @@ function ListadoPacientes() {
   return (
     <>
       <Grid container direction="row">
-        <Grid item xs={4} sm={12}>
+        <Grid item xs={10} sm={12}>
           <MenuAppBar></MenuAppBar>
         </Grid>
       </Grid>
@@ -99,14 +99,13 @@ function ListadoPacientes() {
             style={{ border: "1px solid gray" }}
           >
             <Table stickyHeader size="small" aria-label="sticky table">
-              <TableHead >
-                <TableRow >
+              <TableHead>
+                <TableRow>
                   <TableCell
                     style={{
                       width: "20%",
                       backgroundColor: "#E9E9E9",
                       fontWeight: "bold",
-                      
                     }}
                   >
                     Nombre

@@ -37,8 +37,7 @@ function MenuAppBar() {
   const usuario = JSON.parse(
     window.localStorage.getItem("loggedCliniShareAppUser")
   );
-  
-  console.log(usuario);
+  console.log(usuario.medico.nombre + " " + usuario.medico.apellido);
 
   return (
     <AppBar position="static">
@@ -64,16 +63,6 @@ function MenuAppBar() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -129,7 +118,24 @@ function MenuAppBar() {
               </Button>
             ))}
           </Box>
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            sx={{
+              mr: 2,
 
+              fontFamily: "cursive",
+              fontWeight: 700,
+              color: "inherit",
+              textDecoration: "none",
+            }}
+            style={{
+              lineHeight: "2",
+            }}
+          >
+            {usuario.medico.nombre} {usuario.medico.apellido}
+          </Typography>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

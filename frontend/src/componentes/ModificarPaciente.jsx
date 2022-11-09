@@ -34,6 +34,7 @@ function ModificarPaciente() {
     apellido: "",
     dni: "",
     fechaNacimiento: "",
+    
   });
 
   const handleChange = (event) => {
@@ -135,10 +136,10 @@ function ModificarPaciente() {
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Datos del paciente
+        &nbsp;&nbsp;&nbsp;Modificar / Datos del paciente
       </Typography>
       <Card>
-        <CardContent>
+        <CardContent >
           {/* DATOS DEL PACIENTE */}
           <Grid container direction="row" spacing={2}>
             <Grid item xs={6}>
@@ -154,7 +155,7 @@ function ModificarPaciente() {
 
                 <Grid item xs={4} sm={6}>
                   <TextField
-                    label="Nombre"
+                    label="Nombre/s"
                     type="text"
                     name="nombre"
                     margin="normal"
@@ -163,12 +164,13 @@ function ModificarPaciente() {
                     helperText="Campo obligatorio"
                     value={paciente.nombre}
                     onChange={handleChange}
+                    size="small"
                   ></TextField>
                 </Grid>
                 {/* APELLIDO */}
                 <Grid item xs={4} sm={6}>
                   <TextField
-                    label="Apellido"
+                    label="Apellido/s"
                     type="text"
                     name="apellido"
                     margin="normal"
@@ -177,6 +179,8 @@ function ModificarPaciente() {
                     helperText="Campo obligatorio"
                     value={paciente.apellido}
                     onChange={handleChange}
+                    size="small"
+
                   ></TextField>
                 </Grid>
               </Grid>
@@ -199,6 +203,8 @@ function ModificarPaciente() {
                     helperText="Campo obligatorio"
                     value={paciente.dni}
                     onChange={handleChangeDni}
+                    size="small"
+
                   ></TextField>
                 </Grid>
                 {/* FECHA DE NACIMIENTO */}
@@ -219,6 +225,8 @@ function ModificarPaciente() {
                           fullWidth
                           variant="outlined"
                           helperText="Campo obligatorio"
+                          size="small"
+
                           {...params}
                         />
                       )}
@@ -240,12 +248,12 @@ function ModificarPaciente() {
                     }}
                     helperText="Campo obligatorio"
                   > */}
-                    {/* {generos.map((opcion) => (
+                {/* {generos.map((opcion) => (
                   <option key={opcion.value} value={opcion.value}>
                     {opcion.label}
                   </option>
                 ))} */}
-                  {/* </TextField> */}
+                {/* </TextField> */}
                 {/* </Grid> /*} */}
               </Grid>
             </Grid>
@@ -263,7 +271,7 @@ function ModificarPaciente() {
 
           <Grid container direction="row" spacing={1}>
             <Grid item xs={4} sm={12}>
-              <Box textAlign="left">
+              <Box textAlign="right">
                 <Link
                   to={"/eventos/new/paciente/" + params.id}
                   style={{ color: "inherit", textDecoration: "inherit" }}
@@ -288,23 +296,22 @@ function ModificarPaciente() {
               </Box>
             </Grid>
           </Grid>
-          <br></br>
-
+          <hr></hr>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={4} sm={12}>
               <EventosDePaciente id={params.id} />
             </Grid>
           </Grid>
 
-          <Grid container direction="row" spacing={2}>
-            <Grid item xs={4} sm={4}>
+          <Grid container direction="row" spacing={2} >
+            <Grid   item xs={4} sm={4}>
               <BotonVolver></BotonVolver>
             </Grid>
 
-            <Grid item xs={4} sm={4}>
-              <Box textAlign="center">
+            <Grid  item xs={4} sm={8}>
+              <Box textAlign="right">
                 <Button
-                  size="medium"
+                  size="large"
                   variant="contained"
                   style={{
                     fontWeight: "bold",
