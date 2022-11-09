@@ -16,8 +16,24 @@ services:
     image: postgres:9.6.2-alpine
     environment:
       POSTGRES_USER: clinishare
-
       POSTGRES_DB: clinisharedb
+
+  backend2:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: "node ./src/main.js"
+    depends_on:
+      - postgres2
+    environment:
+      DATABASE_URL: postgres://clinishare:password@postgres2/clinisharedb
+  
+  postgres2:
+    image: postgres:9.6.2-alpine
+    environment:
+      POSTGRES_USER: clinishare
+      POSTGRES_DB: clinisharedb
+
 
   frontend:
     build:
