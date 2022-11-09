@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import Sequelize from "sequelize";
-import { Sincronizacion } from "./Sincronizacion.js";
 
 export const Computadora  = sequelize.define("computadoras",{
     id: {
@@ -18,18 +17,4 @@ export const Computadora  = sequelize.define("computadoras",{
     freezeTableName: true,
     timestamps: false
 });
-
-
-//relacionando con evento
-Computadora.hasMany(Sincronizacion,{
-  foreignKey: 'computadoraId',
-  sourceKey: 'id',
-  allowNull:false,
-})
-
-Sincronizacion.belongsTo(Computadora,{
-  foreignKey: 'computadoraId',
-  targetId: 'id',
-  allowNull:false,
-})
 
