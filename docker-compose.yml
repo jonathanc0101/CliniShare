@@ -17,6 +17,7 @@ services:
     environment:
       POSTGRES_USER: clinishare
       POSTGRES_DB: clinisharedb
+      POSTGRES_PASSWORD: password
 
   backend2:
     build:
@@ -26,13 +27,14 @@ services:
     depends_on:
       - postgres2
     environment:
-      DATABASE_URL: postgres://clinishare:password@postgres2/clinisharedb
+      DATABASE_URL: postgres://clinishare:password@postgres/clinisharedb
   
   postgres2:
     image: postgres:9.6.2-alpine
     environment:
       POSTGRES_USER: clinishare
       POSTGRES_DB: clinisharedb
+      POSTGRES_PASSWORD: password
 
 
   frontend:
