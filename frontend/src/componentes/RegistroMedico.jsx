@@ -256,7 +256,7 @@ function RegistroMedico() {
                 />
               </LocalizationProvider>
             </Grid>
-            {/* SEXO */}
+            {/* GÉNERO */}
             <Grid item xs={4} sm={2}>
               <TextField
                 label="Género"

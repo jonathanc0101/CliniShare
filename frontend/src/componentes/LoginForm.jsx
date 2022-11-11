@@ -54,9 +54,13 @@ function LoginForm() {
     event.preventDefault();
   };
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  const handleKeyPress = (event) => {
+    if(event.key === 'Enter'){
+      handleLogin();
+    }
+  }
 
+  const handleLogin = async (event) => {
     try {
       const usuario = await api.login(correoElectronico, password);
       if (Object.keys(usuario).length !== 0) {
@@ -92,7 +96,8 @@ function LoginForm() {
       {datosValidos ? (
         <Navigate to="/home" />
       ) : (
-        <Grid>
+        <Grid onKeyDown={handleKeyPress}>
+          
           <Paper elevation={10} style={paperStyle}>
             <Grid align="center">
               <Avatar style={avatarStyle}>

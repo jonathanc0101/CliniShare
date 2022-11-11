@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 
 export const alertas = {
-  alertaPacienteExiste,
+  pacienteConDniExistente,
   alertaCamposObligatorios,
   alertaExito,
   alertaProblemas,
@@ -14,15 +14,25 @@ export const alertas = {
   medicoExiste,
   fechaNacimientoPaciente,
   passwordMinimaInvalida,
+  pacienteConCorreoExistente
 };
 
-async function alertaPacienteExiste(pacienteDni) {
+async function pacienteConDniExistente(pacienteDni) {
   Swal.fire({
     icon: "warning",
     title: "",
     html: `<p>Ya existe el paciente con <b>DNI ${pacienteDni}</b></p>`,
   });
 }
+
+async function pacienteConCorreoExistente(email) {
+  Swal.fire({
+    icon: "warning",
+    title: "",
+    html: `<p>Ya existe un paciente con ese correo electrónico</p>`,
+  });
+}
+
 async function alertaCamposObligatorios() {
   Swal.fire({
     icon: "warning",

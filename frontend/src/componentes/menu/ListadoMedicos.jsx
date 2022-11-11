@@ -84,7 +84,7 @@ function ListadoMedicos() {
       </Grid>
 
       <Grid container direction="row" spacing={2}>
-        <Grid xs={2}></Grid>
+        <Grid xs={2} ></Grid>
         {/* TABLA PACIENTES */}
         <Grid xs={10}>
           <TableContainer

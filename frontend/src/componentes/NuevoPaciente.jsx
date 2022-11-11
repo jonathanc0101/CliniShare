@@ -22,47 +22,58 @@ import validator from "validator";
 
 function NuevoPaciente() {
   let navigate = useNavigate();
-  async function obtenerPacientesExistentes(pacienteDni) {
-    const pacientesExistentes = await api.obtenerPacientes();
-
-    return pacientesExistentes.data.some((element) => {
-      return element.dni === pacienteDni;
-    });
-  }
   const sexos = [
     {
-      value: "F",
+      value: "Femenino",
       label: "Femenino",
     },
     {
-      value: "M",
+      value: "Masculino",
       label: "Masculino",
     },
   ];
   const usuario = JSON.parse(
     window.localStorage.getItem("loggedCliniShareAppUser")
   );
-
-  const onKeyDown = (e) => {
-    e.preventDefault();
-  };
-
   const [Paciente, setPaciente] = useState({
     nombre: "",
     apellido: "",
     dni: "",
     fechaNacimiento: "",
-    sexo: "F",
+    sexo: "Femenino",
     genero: "",
     direccion: "",
     telefono: "",
-    correo: "",
+    email: "",
   });
+
+  async function pacientePorDni(pacienteDni) {
+    const pacientesExistentes = await api.obtenerPacientes();
+
+    return pacientesExistentes.data.some((element) => {
+      return element.dni === pacienteDni;
+    });
+  }
+
+  async function pacientePorEmail(email) {
+    const pacientesExistentes = await api.obtenerPacientes();
+
+    return pacientesExistentes.data.some((element) => {
+      return element.email === email;
+    });
+  }
 
   const isEmail = (email) =>
     /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleGuardar();
+    }
+  };
+
   const handleChange = (event) => {
+    console.log(event.target.value);
     let value = event.target.value;
     let name = event.target.name;
 
@@ -83,7 +94,6 @@ function NuevoPaciente() {
   };
 
   const handleChangeDni = (event) => {
-    // quitamos los valores no numericos
     let value = event.target.value.replace(/\D/g, "");
 
     setPaciente((estadoAnterior) => {
@@ -92,7 +102,6 @@ function NuevoPaciente() {
   };
 
   const handleChangeTelefono = (event) => {
-    // quitamos los valores no numericos
     let value = event.target.value.replace(/\D/g, "");
 
     setPaciente((estadoAnterior) => {
@@ -100,49 +109,33 @@ function NuevoPaciente() {
     });
   };
 
-  // const handleChangeNombreYApellido = (event) => {
-  //   const { value } = event.target;
-  //   let regex = new RegExp("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]*$");
-
-  //   // let regex = new RegExp("^[a-zA-Z ]*$");
-
-  //   if (regex.test(value)) {
-  //     if (event.target.name === "nombre") {
-  //       setPaciente((estadoAnterior) => {
-  //         return { ...estadoAnterior, nombre: value };
-  //       });
-  //     } else if (event.target.name === "apellido") {
-  //       setPaciente((estadoAnterior) => {
-  //         return { ...estadoAnterior, apellido: value };
-  //       });
-  //     }
-  //   }
-  // };
-
   const handleGuardar = async function () {
-    const existePaciente = await obtenerPacientesExistentes(Paciente.dni);
+    const dniExistente = await pacientePorDni(Paciente.dni);
+    const emailExistente = await pacientePorEmail(Paciente.email);
 
     if (
       Paciente.nombre.length === 0 ||
       Paciente.apellido.length === 0 ||
       Paciente.dni.length === 0 ||
       Paciente.fechaNacimiento.length === 0 ||
-      Paciente.sexo === 0 ||
-      Paciente.domicilio === 0 ||
-      Paciente.telefono === 0 ||
-      Paciente.correo === 0
+      Paciente.sexo.length === 0 ||
+      Paciente.direccion.length === 0 ||
+      Paciente.telefono.length === 0 ||
+      Paciente.email.length === 0
     ) {
       alertas.alertaCamposObligatorios();
       return;
-    } else if (existePaciente) {
-      alertas.alertaPacienteExiste(Paciente.dni);
+    } else if (dniExistente) {
+      alertas.pacienteConDniExistente(Paciente.dni);
       return;
     } else if (!validator.isDate(Paciente.fechaNacimiento)) {
       alertas.fechaErronea("nacimiento");
       return;
     } else if (Paciente.fechaNacimiento > moment()) {
       alertas.fechaNacimientoPaciente();
-    } else if (!isEmail(Paciente.correo)) {
+    } else if (emailExistente) {
+      alertas.pacienteConCorreoExistente();
+    } else if (!isEmail(Paciente.email)) {
       alertas.alertaEmailInvalido();
       return;
     } else {
@@ -155,7 +148,7 @@ function NuevoPaciente() {
   };
 
   return (
-    <>
+    <div onKeyDown={handleKeyPress}>
       <Typography
         component="h6"
         variant="h6"
@@ -170,7 +163,7 @@ function NuevoPaciente() {
         &nbsp;&nbsp;&nbsp;Nuevo paciente - Datos del paciente
       </Typography>
       {/* DATOS DEL PACIENTE */}
-      <Card>
+      <Card style={{ height: "94vh" }}>
         <CardContent>
           {/* DATOS DEL PACIENTE */}
           <Grid container direction="row" spacing={2}>
@@ -208,6 +201,7 @@ function NuevoPaciente() {
                 id="outlined-select-sexo-native"
                 select
                 label="Sexo"
+                name="sexo"
                 value={Paciente.sexo}
                 margin="normal"
                 onChange={handleChange}
@@ -313,16 +307,18 @@ function NuevoPaciente() {
               <TextField
                 label="Correo electrónico"
                 type="text"
-                name="correo"
+                name="email"
                 margin="normal"
                 fullWidth
                 variant="outlined"
-                value={Paciente.correo}
+                value={Paciente.email}
                 onChange={handleChange}
                 helperText="Campo obligatorio"
               ></TextField>
             </Grid>
           </Grid>
+          <br></br>
+          <br></br>
           <br></br>
           <br></br>
           <br></br>
@@ -341,7 +337,7 @@ function NuevoPaciente() {
                   variant="contained"
                   endIcon={<SaveIcon style={{ fontSize: 24 }} />}
                   onClick={handleGuardar}
-                  size="large"
+                  size="medium"
                   style={{
                     fontWeight: "bold",
                     fontSize: 15,
@@ -355,7 +351,7 @@ function NuevoPaciente() {
           </Grid>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 }
 

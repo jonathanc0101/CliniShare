@@ -20,21 +20,40 @@ import BotonVolver from "./botones/BotonVolver";
 
 function VerPaciente() {
   const params = useParams();
+  const [nombreCompleto, setNombreCompleto] = useState("");
+  const [paciente, setPaciente] = useState({
+    nombre: "",
+    apellido: "",
+    dni: "",
+    fechaNacimiento: "",
+    sexo: "",
+    genero: "",
+    direccion: "",
+    telefono: "",
+    email: "",
+  });
 
-  const [nombre, setNombre] = useState("");
-  const [dni, setDni] = useState("");
-  const [fechaNacimiento, setFechaNacimiento] = useState("");
-  const [sexo, setSexo] = useState("");
+  const handleChangeFecha = (event) => {
+    if (event === null) {
+      event = {};
+    } else {
+      const value = event["$d"];
+      setPaciente((estadoAnterior) => {
+        return { ...estadoAnterior, fechaNacimiento: value };
+      });
+    }
+  };
 
   useEffect(() => {
     (async () => {
-      const res = await api.obtenerPacienteById(params.id);
-      setNombre(res.nombre + " " + res.apellido);
-      setDni(res.dni);
-      setFechaNacimiento(res.fechaNacimiento);
-      setSexo(res.sexo);
+      const paciente = await api.obtenerPacienteById(params.id);
+      setNombreCompleto(paciente.nombre + " " + paciente.apellido);
+      setPaciente((estadoAnterior) => {
+        return { ...estadoAnterior, ...paciente };
+      });
     })();
   }, [params.id]);
+
   return (
     <>
       <Typography
@@ -48,14 +67,13 @@ function VerPaciente() {
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Datos del paciente
+        &nbsp;&nbsp;&nbsp;Ver / Datos del paciente
       </Typography>
       <Card>
         <CardContent>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={6}>
               {/* DATOS DEL PACIENTE */}
-              <br></br>
               <Grid
                 container
                 direction="row"
@@ -63,8 +81,8 @@ function VerPaciente() {
                 alignItems="center"
                 spacing={2}
               >
-                {/* NOMBRE */}
-                <Grid item xs={4} sm={8}>
+                {/* NOMBRE Y APELLIDO*/}
+                <Grid item xs={4} sm={12}>
                   <TextField
                     disabled
                     label="Nombre completo"
@@ -73,20 +91,8 @@ function VerPaciente() {
                     margin="normal"
                     fullWidth
                     variant="outlined"
-                    value={nombre}
-                  ></TextField>
-                </Grid>
-                {/* SEXO */}
-                <Grid item xs={4} sm={4}>
-                  <TextField
-                    disabled
-                    label="Sexo"
-                    type="text"
-                    name="sexo"
-                    margin="normal"
-                    fullWidth
-                    variant="outlined"
-                    value={sexo}
+                    value={nombreCompleto}
+                    size="small"
                   ></TextField>
                 </Grid>
               </Grid>
@@ -107,7 +113,8 @@ function VerPaciente() {
                     margin="normal"
                     fullWidth
                     variant="outlined"
-                    value={dni}
+                    value={paciente.dni}
+                    size="small"
                   ></TextField>
                 </Grid>
                 {/* FECHA DE NACIMIENTO */}
@@ -120,13 +127,14 @@ function VerPaciente() {
                       disabled
                       label="Fecha de nacimiento"
                       name="fechaNacimiento"
-                      value={fechaNacimiento}
-                      onChange={(e) => setFechaNacimiento(e.target.value)}
+                      value={paciente.fechaNacimiento}
+                      onChange={handleChangeFecha}
                       renderInput={(params) => (
                         <TextField
                           margin="normal"
                           fullWidth
                           variant="outlined"
+                          size="small"
                           {...params}
                         />
                       )}
@@ -145,18 +153,103 @@ function VerPaciente() {
               </Grid>
             </Grid>
           </Grid>
-          <br></br>
-
           <Grid container direction="row" spacing={1}>
-            <Grid item xs={4} sm={12}>
-              <Box textAlign="left">
+            {/* DOMICILIO */}
+            <Grid item xs={4} sm={3}>
+              <TextField
+                disabled
+                label="Domicilio"
+                type="text"
+                name="direccion"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                size="small"
+                value={paciente.direccion}
+              ></TextField>
+            </Grid>
+            {/* DOMICILIO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                disabled
+                label="Teléfono"
+                type="text"
+                name="telefono"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                size="small"
+                value={paciente.telefono}
+              ></TextField>
+            </Grid>
+            {/* CORREO ELECTRÓNICO */}
+            <Grid item xs={4} sm={3}>
+              <TextField
+                disabled
+                label="Correo electróncio"
+                type="text"
+                name="email"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={paciente.email}
+                size="small"
+              ></TextField>
+            </Grid>
+            {/* GÉNERO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+              disabled
+                label="Género"
+                type="text"
+                name="genero"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={paciente.genero}
+                size="small"
+              ></TextField>
+            </Grid>
+            {/* SEXO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                disabled
+                type="text"
+                label="Sexo"
+                name="sexo"
+                fullWidth
+                value={paciente.sexo}
+                variant="outlined"
+                margin="normal"
+                size="small"
+              ></TextField>
+            </Grid>
+          </Grid>
+          <br></br>
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={2} sm={6}>
+              <p
+                style={{
+                  color: "black",
+                  textAlign: "left",
+                  fontWeight: "bold",
+                  lineHeight: 1,
+                }}
+              >
+                <u>
+                  <h3>Historia clínica</h3>
+                </u>
+              </p>
+            </Grid>
+            <Grid item xs={2} sm={6}>
+              <Box textAlign="right">
                 <Link
                   to={"/eventos/new/paciente/" + params.id}
                   style={{ color: "inherit", textDecoration: "inherit" }}
                 >
                   <Button
                     variant="contained"
-                    size="medium"
+                    size="small"
                     style={{
                       fontWeight: "bold",
                       fontSize: 15,
@@ -174,7 +267,6 @@ function VerPaciente() {
               </Box>
             </Grid>
           </Grid>
-          <br></br>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={4} sm={12}>
               <EventosDePaciente id={params.id} />

@@ -49,14 +49,14 @@ function ListadoPacientes() {
     setPacientes(response.data);
   };
   return (
-    <>
+    < >
       <Grid container direction="row">
         <Grid item xs={10} sm={12}>
           <MenuAppBar></MenuAppBar>
         </Grid>
       </Grid>
       <br></br>
-      <Grid container direction="row" spacing={2}>
+      <Grid container direction="row" spacing={2} >
         <Menu></Menu>
         {/* BUSCAR PACIENTE */}
         <Grid item xs={4} sm={4}>
@@ -90,10 +90,11 @@ function ListadoPacientes() {
           </Link>
         </Grid>
       </Grid>
+
       <Grid container direction="row" spacing={2}>
-        <Grid xs={2}></Grid>
+        <Grid xs={2} ></Grid>
         {/* TABLA PACIENTES */}
-        <Grid xs={10}>
+        <Grid xs={10} >
           <TableContainer
             sx={{ maxHeight: 389, maxWidth: 1060 }}
             style={{ border: "1px solid gray" }}

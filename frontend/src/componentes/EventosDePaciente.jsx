@@ -66,7 +66,7 @@ function EventosDePaciente(params) {
       {eventos?.length ? (
         <Grid>
           <TableContainer
-            sx={{ maxHeight: 260, maxWidth: 1360 }}
+            sx={{ maxHeight: 248, maxWidth: 1360 }}
             style={{ border: "1px solid #0c5774" }}
           >
             <Table stickyHeader size="small" aria-label="sticky table">
@@ -207,9 +207,12 @@ function EventosDePaciente(params) {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Grid>
-      ) : 
-        <p style={{ color: "GrayText" }}>No hay ningún evento</p>
-      }
+      ) : (
+        <>
+          <p style={{ color: "GrayText" }}>No hay ningún evento</p>
+          <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+        </>
+      )}
     </>
   );
 }

@@ -41,7 +41,7 @@ function MenuAppBar() {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" >
         <Toolbar disableGutters>
           <MedicalIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
