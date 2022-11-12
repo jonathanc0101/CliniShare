@@ -50,31 +50,19 @@ export async function actualizarDatos(datos) {
   
   datos.eventos = await actualizarIdsPacientes(datos);
 
-  console.log("\n\n\n");
-  console.log("datosdespues",JSON.stringify(datos,null,10));
-  console.log("\n\n\n");
-
   try {
     await sequelize.transaction(async (t) => {
       for (const medico of datos.medicos) {
-        console.log("medicoAUpsertar",medico)
-        
-        console.log("medicoUpsertado",await Medico.upsert(medico, { transaction: t }));
+        await Medico.upsert(medico, { transaction: t });
       }
-
-      console.log("here");
       
       for (const paciente of datos.pacientes) {
         await PacientesService.upsertarPorDNIyNacimiento(paciente, t);
       }
-
-      console.log("here2");
       
       for (const evento of datos.eventos) {
         await Evento.upsert(evento, { transaction: t });
       }
-
-      console.log("here3");
 
     });
 
@@ -87,10 +75,6 @@ export async function actualizarDatos(datos) {
 
 async function actualizarIdsPacientes(datos) {
 
-  console.log("\n\n\n");
-  console.log("datosAntes",JSON.stringify(datos,null,10));
-  console.log("\n\n\n");
-
   for (const pacienteViejo of datos.pacientes) {
  
     //buscamos el evento que tenga el pacienteId del viejo y lo cambiamos
@@ -100,7 +84,6 @@ async function actualizarIdsPacientes(datos) {
       console.log(JSON.stringify(pacienteViejo.id));
 
       if(JSON.stringify(datos.eventos[i].pacienteId) === JSON.stringify(pacienteViejo.id)){
-        console.log("\n\n\nENTRA AL IF\n\n");
         datos.eventos[i].pacienteId =  await PacientesService.getIdPorDniYNacimiento(pacienteViejo);
       }
     }
