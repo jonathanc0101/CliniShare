@@ -80,31 +80,13 @@ async function actualizarIdsPacientes(datos) {
   console.log("\n\n\n");
 
   for (const pacienteViejo of datos.pacientes) {
-    //actualizamos el id
-
-    console.log("\n\n\n");
-    console.log("idViejo",pacienteViejo.id);
-    console.log("\n\n\n");
-
-    const pacienteNuevo = {
-      ...pacienteViejo
-    };
-
-    pacienteNuevo.id = await PacientesService.getIdPorDniYNacimiento(pacienteViejo);
-
-
-    console.log("\n\n\n");
-    console.log("pacienteNuevo",JSON.stringify(pacienteNuevo,null,8));
-    console.log("\n\n\n");
-
  
     //buscamos el evento que tenga el pacienteId del viejo y lo cambiamos
     for(let i = 0; i<datos.eventos.length;i++){
-      console.log("datos.eventos[i].pacienteId",datos.eventos[i].pacienteId);
-      console.log("pacienteViejo.id",pacienteViejo.id);
+
       if(JSON.stringify(datos.eventos[i].pacienteId) === JSON.stringify(pacienteViejo.id)){
         console.log("\n\n\nENTRA AL IF\n\n");
-        datos.eventos[i].pacienteId = pacienteNuevo.id;
+        datos.eventos[i].pacienteId =  await PacientesService.getIdPorDniYNacimiento(pacienteViejo);
       }
     }
   }
@@ -112,5 +94,6 @@ async function actualizarIdsPacientes(datos) {
   console.log("\n\n\n");
   console.log("datosdespues",JSON.stringify(datos,null,10));
   console.log("\n\n\n");
+  
   return datos.eventos;
 }
