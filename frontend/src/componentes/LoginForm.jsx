@@ -94,7 +94,7 @@ function LoginForm() {
     <>
       {/* Si los datos son válidos se accede a la pantalla principal, sino permanece acá */}
       {datosValidos ? (
-        <Navigate to="/home" />
+        <Navigate to="/pacientes/all" />
       ) : (
         <Grid onKeyDown={handleKeyPress}>
           

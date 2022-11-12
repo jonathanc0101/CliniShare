@@ -45,6 +45,10 @@ function ModificarMedico() {
     matricula: "",
     password: "",
     fechaNacimiento: "",
+    sexo: "",
+    genero: "",
+    direccion: "",
+    telefono: "",
   });
 
   const verificarPassword = (password) => password === medico.password;
@@ -83,24 +87,6 @@ function ModificarMedico() {
     let value = event.target.value.replace(/\D/g, "");
 
     setTelefono(value);
-  };
-
-  const handleChangeNombreYApellido = (event) => {
-    const { value } = event.target;
-
-    let regex = new RegExp("^[a-zA-Z ]*$");
-
-    if (regex.test(value)) {
-      if (event.target.name === "nombre") {
-        setMedico((estadoAnterior) => {
-          return { ...estadoAnterior, nombre: value };
-        });
-      } else if (event.target.name === "apellido") {
-        setMedico((estadoAnterior) => {
-          return { ...estadoAnterior, apellido: value };
-        });
-      }
-    }
   };
 
   const handleChangeVerificar = (event) => {
@@ -149,7 +135,7 @@ function ModificarMedico() {
       >
         &nbsp;&nbsp;&nbsp;Configuración general de la cuenta
       </Typography>
-      <Card>
+      <Card style={{ height: "94vh" }}>
         <CardContent>
           {/* DATOS DEL MÉDICO USUARIO */}
           <Grid container direction="row" spacing={2}>
@@ -161,7 +147,7 @@ function ModificarMedico() {
                 type="text"
                 name="nombre"
                 value={medico.nombre}
-                onChange={handleChangeNombreYApellido}
+                onChange={handleChange}
                 margin="normal"
                 fullWidth
                 variant="outlined"
@@ -175,26 +161,27 @@ function ModificarMedico() {
                 type="text"
                 name="apellido"
                 value={medico.apellido}
-                onChange={handleChangeNombreYApellido}
+                onChange={handleChange}
                 margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
               ></TextField>
             </Grid>
-            {/* GÉNERO */}
+            {/* SEXO */}
             <Grid item xs={4} sm={2}>
               <TextField
-                id="outlined-select-genero-native"
+                id="outlined-select-sexo-native"
                 select
-                label="Género"
-                value={genero}
+                label="Sexo"
+                name="sexo"
+                value={medico.sexo}
                 margin="normal"
-                onChange={handleChangeGenero}
+                onChange={handleChange}
                 SelectProps={{
                   native: true,
                 }}
-                helperText="Seleccione su género"
+                helperText="Seleccione su sexo"
               >
                 {generos.map((opcion) => (
                   <option key={opcion.value} value={opcion.value}>

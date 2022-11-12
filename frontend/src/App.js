@@ -16,6 +16,7 @@ import LoginForm from "./componentes/LoginForm";
 import ModificarMedico from "./componentes/ModificarMedico";
 import StickyHeadTable from "./componentes/StickyHeadTable";
 import ListadoMedicos from "./componentes/menu/ListadoMedicos";
+import BotonSincronizar from "./componentes/botones/BotonSincronizar";
 
 const Rutas = () => {
   let routes = useRoutes([
@@ -50,9 +51,12 @@ const Rutas = () => {
 
 function App() {
   return (
-    <Router>
-      <Rutas></Rutas>
-    </Router>
+    <>
+      <Router>
+        <Rutas></Rutas>
+      </Router>
+      {/* <BotonSincronizar></BotonSincronizar> */}
+    </>
   );
 }
 export default App;
