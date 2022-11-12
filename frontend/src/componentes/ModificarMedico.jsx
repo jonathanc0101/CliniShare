@@ -27,13 +27,13 @@ function ModificarMedico() {
   const [telefono, setTelefono] = useState("");
 
   const [genero, setGenero] = useState("");
-  const generos = [
+  const sexos = [
     {
-      value: "F",
+      value: "Femenino",
       label: "Femenino",
     },
     {
-      value: "M",
+      value: "Masculino",
       label: "Masculino",
     },
   ];
@@ -58,7 +58,6 @@ function ModificarMedico() {
       const usuario = await JSON.parse(
         window.localStorage.getItem("loggedCliniShareAppUser")
       );
-      console.log(JSON.stringify(usuario));
       setMedico((estadoAnterior) => {
         return { ...estadoAnterior, ...usuario.medico };
       });
@@ -66,11 +65,23 @@ function ModificarMedico() {
   }, []);
 
   const update = async () => {
-    if (!verificarPassword(passwordAVerificar)) {
-      alertas.contraseñasDiferentes();
-      return;
-    }
+    if (
+      medico.nombre.length === 0 ||
+      medico.apellido.length === 0 ||
+      medico.dni.length === 0 ||
+      medico.matricula.length === 0 ||
+      medico.fechaNacimiento.length === 0 ||
+      medico.matricula.length === 0 ||
+      medico.direccion.length === 0 ||
+      medico.telefono.length === 0
+    ) {
+      alertas.alertaCamposObligatorios();
+    } else if (medico.password.length === 0) {
+      delete medico.password;
+    } 
+    console.log("Usuario a enviar: ", medico);
     const respuesta = await api.modificarMedico({ ...medico });
+    console.log("Respuesta del api: ", respuesta);
     if (respuesta) {
       alertas.alertaModificacionExitosa("usuario");
       setGuardado(true);
@@ -79,14 +90,12 @@ function ModificarMedico() {
     }
   };
 
-  const handleChangeGenero = (event) => {
-    setGenero(event.target.value);
-  };
-
   const handleChangeTelefono = (event) => {
     let value = event.target.value.replace(/\D/g, "");
 
-    setTelefono(value);
+    setMedico((estadoAnterior) => {
+      return { ...estadoAnterior, telefono: value };
+    });
   };
 
   const handleChangeVerificar = (event) => {
@@ -113,11 +122,14 @@ function ModificarMedico() {
   };
 
   const handleChangeFecha = (event) => {
-    const value = event["$d"];
-    console.log(event);
-    setMedico((estadoAnterior) => {
-      return { ...estadoAnterior, fechaNacimiento: value };
-    });
+    if (event === null) {
+      event = {};
+    } else {
+      const value = event["$d"];
+      setMedico((estadoAnterior) => {
+        return { ...estadoAnterior, fechaNacimiento: value };
+      });
+    }
   };
 
   return (
@@ -183,7 +195,7 @@ function ModificarMedico() {
                 }}
                 helperText="Seleccione su sexo"
               >
-                {generos.map((opcion) => (
+                {sexos.map((opcion) => (
                   <option key={opcion.value} value={opcion.value}>
                     {opcion.label}
                   </option>
@@ -207,7 +219,7 @@ function ModificarMedico() {
               ></TextField>
             </Grid>
             {/* MÁTRICULA */}
-            <Grid item xs={4} sm={4}>
+            <Grid item xs={4} sm={3}>
               <TextField
                 label="Mátricula habilitante"
                 type="text"
@@ -221,7 +233,7 @@ function ModificarMedico() {
               ></TextField>
             </Grid>
             {/* FECHA DE NACIMIENTO */}
-            <Grid item xs={4} sm={4}>
+            <Grid item xs={4} sm={3}>
               <LocalizationProvider
                 adapterLocale="es"
                 dateAdapter={AdapterDayjs}
@@ -243,6 +255,19 @@ function ModificarMedico() {
                 />
               </LocalizationProvider>
             </Grid>
+            {/* GÉNERO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                label="Género"
+                type="text"
+                name="genero"
+                value={medico.genero}
+                onChange={handleChange}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+              ></TextField>
+            </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
             {/* DIRECCIÓN */}
@@ -251,8 +276,8 @@ function ModificarMedico() {
                 label="Dirección"
                 type="text"
                 name="direccion"
-                value={direccion}
-                onChange={({ target }) => setDireccion(target.value)}
+                value={medico.direccion}
+                onChange={handleChange}
                 margin="normal"
                 fullWidth
                 variant="outlined"
@@ -265,7 +290,7 @@ function ModificarMedico() {
                 label="Teléfono"
                 type="text"
                 name="telefono"
-                value={telefono}
+                value={medico.telefono}
                 onChange={handleChangeTelefono}
                 margin="normal"
                 fullWidth
@@ -278,6 +303,7 @@ function ModificarMedico() {
             {/* CORREO ELECTRÓNICO */}
             <Grid item xs={4} sm={6}>
               <TextField
+                disabled
                 label="Correo electrónico"
                 type="text"
                 name="email"
@@ -286,11 +312,11 @@ function ModificarMedico() {
                 margin="normal"
                 fullWidth
                 variant="outlined"
-                disabled
+                helperText="Campo obligatorio"
               ></TextField>
             </Grid>
             {/* CONTRASEÑA ACTUAL */}
-            <Grid item xs={4} sm={6}>
+            {/* <Grid item xs={4} sm={6}>
               <TextField
                 label="Contraseña actual"
                 type="password"
@@ -302,7 +328,7 @@ function ModificarMedico() {
                 variant="outlined"
                 helperText="Campo obligatorio"
               ></TextField>
-            </Grid>
+            </Grid> */}
           </Grid>
           <Grid container direction="row" spacing={2}>
             {/* CONTRASEÑA NUEVA */}
@@ -334,13 +360,16 @@ function ModificarMedico() {
               ></TextField>
             </Grid>
           </Grid>
+          <br></br>
+          <br></br>
+
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
-            <Grid item xs={4} sm={8}>
+            <Grid item xs={4} sm={4}>
               <BotonVolver></BotonVolver>
             </Grid>
             {/* BOTÓN GUARDAR CAMBIOS */}
-            <Grid item xs={4} sm={4}>
+            <Grid item xs={4} sm={8}>
               <Box textAlign="right">
                 <Button
                   variant="contained"
