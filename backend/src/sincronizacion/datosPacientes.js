@@ -49,7 +49,11 @@ export async function actualizarDatos(datos) {
   }
   
   datos.eventos = await actualizarIdsPacientes(datos);
-  
+
+  console.log("\n\n\n");
+  console.log("datosdespues",JSON.stringify(datos,null,10));
+  console.log("\n\n\n");
+
   try {
     await sequelize.transaction(async (t) => {
       for (const medico of datos.medicos) {
@@ -93,10 +97,6 @@ async function actualizarIdsPacientes(datos) {
       }
     }
   }
-
-  console.log("\n\n\n");
-  console.log("datosdespues",JSON.stringify(datos,null,10));
-  console.log("\n\n\n");
 
   return datos.eventos;
 }

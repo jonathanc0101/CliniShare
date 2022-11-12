@@ -139,9 +139,6 @@ async function getIdPorDniYNacimiento(paciente){
     }
   });
 
-  console.log("\n\n\n");
-  console.log("pacienteFound",JSON.stringify(pacienteFound,null,8));
-  console.log("\n\n\n");
 
   if (!pacienteFound) {
     return {};
