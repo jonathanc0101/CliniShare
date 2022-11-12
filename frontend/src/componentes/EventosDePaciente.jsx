@@ -11,7 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { api } from "../API backend/api";
 import Grid from "@mui/material/Unstable_Grid2";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
-import { TablePagination } from "@mui/material";
+import { TablePagination, Tooltip } from "@mui/material";
 import EditOffIcon from "@mui/icons-material/EditOff";
 
 function EventosDePaciente(params) {
@@ -28,7 +28,6 @@ function EventosDePaciente(params) {
   };
 
   const [eventos, setEventos] = useState([]);
-  const [eventosVacios, setEventosVacios] = useState(false);
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - eventos.length) : 0;
 
@@ -53,9 +52,7 @@ function EventosDePaciente(params) {
 
       if (response.data.length !== 0) {
         setEventos(response.data);
-      } else {
-        setEventosVacios(true);
-      }
+      } 
     };
     obtenerEventosPorPacienteId();
   }, [params.id]);
@@ -65,7 +62,7 @@ function EventosDePaciente(params) {
       {eventos?.length ? (
         <Grid>
           <TableContainer
-            sx={{ maxHeight: 248, maxWidth: 1360 }}
+            sx={{ maxHeight: 225, maxWidth: 1360 }}
             style={{ border: "1px solid #0c5774" }}
           >
             <Table stickyHeader size="small" aria-label="sticky table">
@@ -171,7 +168,9 @@ function EventosDePaciente(params) {
                       {evento.medico.id === usuario.medico.medicoId ? (
                         <TableCell align="center" component="th" scope="row">
                           <Link to={"/eventos/id/" + evento.id}>
-                            <EditIcon color="info"></EditIcon>
+                            <Tooltip title="Editar evento">
+                              <EditIcon color="info"></EditIcon>
+                            </Tooltip>
                           </Link>
                         </TableCell>
                       ) : (
@@ -182,7 +181,9 @@ function EventosDePaciente(params) {
 
                       <TableCell align="center" component="th" scope="row">
                         <Link to={"/eventos/ver/id/" + evento.id}>
-                          <VisibilityIcon color="info"></VisibilityIcon>
+                          <Tooltip title="Ver evento">
+                            <VisibilityIcon color="info"></VisibilityIcon>
+                          </Tooltip>
                         </Link>
                       </TableCell>
                     </TableRow>
@@ -209,7 +210,20 @@ function EventosDePaciente(params) {
       ) : (
         <>
           <p style={{ color: "GrayText" }}>No hay ningún evento</p>
-          <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
         </>
       )}
     </>

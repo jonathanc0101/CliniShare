@@ -10,6 +10,7 @@ import {
   CardContent,
   Grid,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -360,22 +361,24 @@ function ModificarPaciente() {
                   to={"/eventos/new/paciente/" + params.id}
                   style={{ color: "inherit", textDecoration: "inherit" }}
                 >
-                  <Button
-                    variant="contained"
-                    size="small"
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: 15,
-                      backgroundColor: "#007FFF",
-                    }}
-                    startIcon={
-                      <AddCircleOutlineTwoToneIcon
-                        style={{ fontSize: 24 }}
-                      ></AddCircleOutlineTwoToneIcon>
-                    }
-                  >
-                    Agregar evento
-                  </Button>
+                  <Tooltip title="Agregar evento">
+                    <Button
+                      variant="contained"
+                      size="small"
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: 15,
+                        backgroundColor: "#007FFF",
+                      }}
+                      startIcon={
+                        <AddCircleOutlineTwoToneIcon
+                          style={{ fontSize: 24 }}
+                        ></AddCircleOutlineTwoToneIcon>
+                      }
+                    >
+                      Agregar evento
+                    </Button>
+                  </Tooltip>
                 </Link>
               </Box>
             </Grid>

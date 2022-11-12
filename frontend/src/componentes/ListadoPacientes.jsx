@@ -16,6 +16,7 @@ import {
   InputAdornment,
   OutlinedInput,
   TablePagination,
+  Tooltip,
 } from "@mui/material";
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
 import MenuAppBar from "./MenuAppBar";
@@ -49,14 +50,14 @@ function ListadoPacientes() {
     setPacientes(response.data);
   };
   return (
-    < >
+    <>
       <Grid container direction="row">
         <Grid item xs={10} sm={12}>
           <MenuAppBar></MenuAppBar>
         </Grid>
       </Grid>
       <br></br>
-      <Grid container direction="row" spacing={2} >
+      <Grid container direction="row" spacing={2}>
         <Menu></Menu>
         {/* BUSCAR PACIENTE */}
         <Grid item xs={4} sm={4}>
@@ -79,22 +80,24 @@ function ListadoPacientes() {
             to={"/pacientes/new/"}
             style={{ color: "inherit", textDecoration: "inherit" }}
           >
-            <Button
-              size="large"
-              variant="contained"
-              startIcon={<AddCircleOutlineTwoToneIcon />}
-              style={{ fontWeight: "bold" }}
-            >
-              Agregar paciente
-            </Button>
+            <Tooltip title="Agregar paciente">
+              <Button
+                size="large"
+                variant="contained"
+                startIcon={<AddCircleOutlineTwoToneIcon />}
+                style={{ fontWeight: "bold" }}
+              >
+                Agregar paciente
+              </Button>
+            </Tooltip>
           </Link>
         </Grid>
       </Grid>
 
       <Grid container direction="row" spacing={2}>
-        <Grid xs={2} ></Grid>
+        <Grid xs={2}></Grid>
         {/* TABLA PACIENTES */}
-        <Grid xs={10} >
+        <Grid xs={10}>
           <TableContainer
             sx={{ maxHeight: 380, maxWidth: 1060 }}
             style={{ border: "1px solid gray" }}
@@ -163,7 +166,6 @@ function ListadoPacientes() {
               </TableHead>
               <TableBody>
                 {pacientes
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .filter((paciente) => {
                     if (searchPacientes === "") {
                       return paciente;
@@ -175,6 +177,7 @@ function ListadoPacientes() {
                       return paciente;
                     }
                   })
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((paciente) => (
                     <TableRow
                       key={paciente.id}
@@ -187,17 +190,23 @@ function ListadoPacientes() {
                       <TableCell>{paciente.dni}</TableCell>
                       <TableCell component="th" scope="row" align="center">
                         <Link to={"/pacientes/id/" + paciente.id}>
-                          <EditIcon color="info"></EditIcon>
+                          <Tooltip title="Editar paciente">
+                            <EditIcon color="info"></EditIcon>
+                          </Tooltip>
                         </Link>
                       </TableCell>
                       <TableCell align="center">
                         <Link to={"/pacientes/ver/id/" + paciente.id}>
-                          <VisibilityIcon color="info"></VisibilityIcon>
+                          <Tooltip title="Ver paciente">
+                            <VisibilityIcon color="info"></VisibilityIcon>
+                          </Tooltip>
                         </Link>
                       </TableCell>
                       <TableCell align="center">
                         <Link to={"/eventos/new/paciente/" + paciente.id}>
-                          <PostAddIcon color="info"></PostAddIcon>
+                          <Tooltip title="Agregar evento">
+                            <PostAddIcon color="info"></PostAddIcon>
+                          </Tooltip>
                         </Link>
                       </TableCell>
                     </TableRow>

@@ -8,6 +8,7 @@ import {
   CardContent,
   Grid,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import "../App.css";
@@ -73,7 +74,6 @@ function NuevoPaciente() {
   };
 
   const handleChange = (event) => {
-    console.log(event.target.value);
     let value = event.target.value;
     let name = event.target.name;
 
@@ -333,19 +333,21 @@ function NuevoPaciente() {
             {/* BOTÓN GUARDAR PACIENTE */}
             <Grid item xs={4} sm={8}>
               <Box textAlign="right">
-                <Button
-                  variant="contained"
-                  endIcon={<SaveIcon style={{ fontSize: 24 }} />}
-                  onClick={handleGuardar}
-                  size="medium"
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: 15,
-                    backgroundColor: "#007FFF",
-                  }}
-                >
-                  Guardar
-                </Button>
+                <Tooltip title="Guardar">
+                  <Button
+                    variant="contained"
+                    endIcon={<SaveIcon style={{ fontSize: 24 }} />}
+                    onClick={handleGuardar}
+                    size="medium"
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: 15,
+                      backgroundColor: "#007FFF",
+                    }}
+                  >
+                    Guardar
+                  </Button>
+                </Tooltip>
               </Box>
             </Grid>
           </Grid>

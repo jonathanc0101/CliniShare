@@ -5,11 +5,12 @@ import {
   CardContent,
   Grid,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { api } from "../API backend/api";
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import EventosImportantes from "./EventosImportantes";
 import EventosDePaciente from "./EventosDePaciente";
 import { Link } from "react-router-dom";
@@ -199,7 +200,7 @@ function VerPaciente() {
             {/* GÉNERO */}
             <Grid item xs={4} sm={2}>
               <TextField
-              disabled
+                disabled
                 label="Género"
                 type="text"
                 name="genero"
@@ -228,18 +229,18 @@ function VerPaciente() {
           <br></br>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={2} sm={6}>
-              <p
-                style={{
-                  color: "black",
-                  textAlign: "left",
-                  fontWeight: "bold",
-                  lineHeight: 1,
-                }}
-              >
-                <u>
-                  <h3>Historia clínica</h3>
-                </u>
-              </p>
+              <u>
+                <h3
+                  style={{
+                    color: "black",
+                    textAlign: "left",
+                    fontWeight: "bold",
+                    lineHeight: 1,
+                  }}
+                >
+                  Historia clínica
+                </h3>
+              </u>
             </Grid>
             <Grid item xs={2} sm={6}>
               <Box textAlign="right">
@@ -247,22 +248,24 @@ function VerPaciente() {
                   to={"/eventos/new/paciente/" + params.id}
                   style={{ color: "inherit", textDecoration: "inherit" }}
                 >
-                  <Button
-                    variant="contained"
-                    size="small"
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: 15,
-                      backgroundColor: "#007FFF",
-                    }}
-                    startIcon={
-                      <AddCircleOutlineTwoToneIcon
-                        style={{ fontSize: 24 }}
-                      ></AddCircleOutlineTwoToneIcon>
-                    }
-                  >
-                    Agregar evento
-                  </Button>
+                  <Tooltip title="Agregar evento">
+                    <Button
+                      variant="contained"
+                      size="small"
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: 15,
+                        backgroundColor: "#007FFF",
+                      }}
+                      startIcon={
+                        <AddCircleOutlineTwoToneIcon
+                          style={{ fontSize: 24 }}
+                        ></AddCircleOutlineTwoToneIcon>
+                      }
+                    >
+                      Agregar evento
+                    </Button>
+                  </Tooltip>
                 </Link>
               </Box>
             </Grid>

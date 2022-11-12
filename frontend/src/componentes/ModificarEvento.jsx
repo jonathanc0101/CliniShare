@@ -61,36 +61,49 @@ function ModificarEvento() {
     if (evento.titulo.length === 0 || evento.descripcion.length === 0) {
       alertas.alertaCamposObligatorios();
       return;
-    } else if (
-      evento.importante &&
-      JSON.stringify(evento.fechaVencimiento) === "null"
-    ) {
-      console.log("EVENTO IMPORTANTE CON FECHA VACÍA");
-      console.log(evento.fechaVencimiento);
-    } else if (evento.importante && evento.fechaVencimiento !== null) {
-      console.log("EVENTO IMPORTANTE Y FECHA DE VENCIMIENTO != NULL");
-      console.log("Fecha de vencimiento: ", evento.fechaVencimiento);
-      if (!validator.isDate(evento.fechaVencimiento)) {
-        console.log("FECHA INVÁLIDA");
-        alertas.fechaErronea("vencimiento");
-        return;
+    } else if (evento.importante) {
+      if (evento.fechaVencimiento !== null) {
+        if (!validator.isDate(evento.fechaVencimiento)) {
+          alertas.fechaErronea("vencimiento");
+          return;
+        } else if (evento.fechaVencimiento < fechaActual) {
+          alertas.fechaInvalidaMenor("vencimiento");
+          return;
+        }
       }
-      if (
-        evento.fechaVencimiento < fechaActual &&
-        JSON.stringify(evento.fechaVencimiento) !== "null"
-      ) {
-        console.log("FECHA MENOR A HOY");
-        alertas.fechaInvalidaMenor("vencimiento");
-        return;
-      }
-    } else if (!evento.importante) {
-      console.log("FECHA NO IMPORTANTE");
-      console.log(
-        "Fecha de vencimiento: ",
-        JSON.stringify(evento.fechaVencimiento)
-      );
+    }else if(!evento.importante){
       evento.fechaVencimiento = null;
     }
+    //else if (
+    //   evento.importante &&
+    //   JSON.stringify(evento.fechaVencimiento) === "null"
+    // ) {
+    //   console.log("EVENTO IMPORTANTE CON FECHA VACÍA");
+    //   console.log(evento.fechaVencimiento);
+    // } else if (evento.importante && evento.fechaVencimiento !== null) {
+    //   console.log("EVENTO IMPORTANTE Y FECHA DE VENCIMIENTO != NULL");
+    //   console.log("Fecha de vencimiento: ", evento.fechaVencimiento);
+    //   if (!validator.isDate(evento.fechaVencimiento)) {
+    //     console.log("FECHA INVÁLIDA");
+    //     alertas.fechaErronea("vencimiento");
+    //     return;
+    //   }
+    //   if (
+    //     evento.fechaVencimiento < fechaActual &&
+    //     JSON.stringify(evento.fechaVencimiento) !== "null"
+    //   ) {
+    //     console.log("FECHA MENOR A HOY");
+    //     alertas.fechaInvalidaMenor("vencimiento");
+    //     return;
+    //   }
+    // } else if (!evento.importante) {
+    //   console.log("FECHA NO IMPORTANTE");
+    //   console.log(
+    //     "Fecha de vencimiento: ",
+    //     JSON.stringify(evento.fechaVencimiento)
+    //   );
+    //   evento.fechaVencimiento = null;
+    // }
     const respuesta = await api.modificarEvento(params.id, { ...evento });
     if (respuesta) {
       alertas.alertaModificacionExitosa("evento");

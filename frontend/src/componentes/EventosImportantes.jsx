@@ -7,6 +7,7 @@ import { api } from "../API backend/api";
 import Grid from "@mui/material/Unstable_Grid2";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link } from "react-router-dom";
+import { Tooltip } from "@mui/material";
 
 function EventosImportantes(params) {
   const [eventosImportantes, setEventosImportantes] = useState([]);
@@ -50,7 +51,6 @@ function EventosImportantes(params) {
           primary="Eventos importantes"
           primaryTypographyProps={{
             fontSize: 19,
-            fontWeight: "medium",
             letterSpacing: 0,
             fontWeight: "bold",
           }}
@@ -62,7 +62,7 @@ function EventosImportantes(params) {
             bgcolor: "background.paper",
             position: "relative",
             overflow: "auto",
-            maxHeight: 117,
+            maxHeight: 100,
             "& ul": { padding: 0 },
           }}
           subheader={<li />}
@@ -99,7 +99,9 @@ function EventosImportantes(params) {
                   }}
                 />
                 <Link to={"/eventos/ver/id/" + evento.id}>
-                  <VisibilityIcon color="info"></VisibilityIcon>
+                <Tooltip title="Ver evento">
+                  <VisibilityIcon color="info" fontSize="medium" ></VisibilityIcon>
+                </Tooltip>
                 </Link>
               </ListItem>
             ))}
