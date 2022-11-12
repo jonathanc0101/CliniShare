@@ -48,18 +48,19 @@ export async function actualizarDatos(datos) {
     return;
   }
 
-  datos = await actualizarIdsPacientes(datos);
-
+  
   try {
     await sequelize.transaction(async (t) => {
       for (const medico of datos.medicos) {
         await Medico.upsert(medico, { transaction: t });
       }
-
+      
       for (const paciente of datos.pacientes) {
         await PacientesService.upsertarPorDNIyNacimiento(paciente, t);
       }
-
+      
+      datos = await actualizarIdsPacientes(datos);
+      
       for (const evento of datos.eventos) {
         await Evento.upsert(evento, { transaction: t });
       }
