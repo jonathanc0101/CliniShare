@@ -28,9 +28,7 @@ export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
     );
   }
 
-  if ( Object.keys(eventos).length === 0) {
-    return {};
-  }
+return eventos;
   //filtramos por los medicos que tiene la maquina, los datos fluyen en una sola direccion
   return EventosService.excluirPorIdsMedicos(eventos, computadora.medicosIds);
 }
