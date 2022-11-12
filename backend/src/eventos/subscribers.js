@@ -16,9 +16,8 @@ import {
 import { ComputadoraService } from "../services/computadora.service.js";
 
 // Import other listeners
-
 export default function loadListeners(emitter) {
-  emitter.on("db_connected", () => {
+  emitter.on("db_connected", async () => {
     const treintaMinutos = 1000 * 60 * 30;
 
     //starting broadcast listener

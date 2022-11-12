@@ -8,7 +8,7 @@ import { SincronizacionService } from "../services/sincronizacion.service.js";
 export async function sincronizar(computadora) {
   console.log("\n\nsincronizando looping \n\n");
 
-  const fechaUltimaSincronizacion = SincronizacionService.getUltimaFechaDeSincronizacionConComputadoraId(computadora.computadoraId);
+  const fechaUltimaSincronizacion = await SincronizacionService.getUltimaFechaDeSincronizacionConComputadoraId(computadora.computadoraId);
 
   const computadoraLocal = await getComputadora();
 
@@ -79,7 +79,7 @@ export async function sincronizar(computadora) {
 
 export async function sincronizarNonLooping(computadora) {
 
-  const fechaUltimaSincronizacion = SincronizacionService.getUltimaFechaDeSincronizacionConComputadoraId(computadora.computadoraId);
+  const fechaUltimaSincronizacion = await SincronizacionService.getUltimaFechaDeSincronizacionConComputadoraId(computadora.computadoraId);
   const computadoraLocal = await getComputadora();
   
   const postSincronicemosString =

@@ -20,6 +20,7 @@ export const EventosService = {
     getEventosImportantesCompletosPorIdPacienteFromModel,
   getEventosCompletosPorDnisYFechas,
   getEventosCompletosPorDnisYFechasAPartirDeFecha,
+  excluirPorIdsMedicos,
 };
 
 async function getEventosFromModel() {
@@ -148,9 +149,7 @@ async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
       );
     });
 
-
     return eventosFiltrados;
-    
   }
 }
 
@@ -285,4 +284,16 @@ async function getEventosPorPacienteIdFromModel(pacienteId) {
   } else {
     return eventos;
   }
+}
+
+function excluirPorIdsMedicos(eventos, idsMedicos) {
+
+  const eventosFiltrados = eventos.filter((evento) => {
+    // MUY IMPORTANTE EL ! PARA NEGAR ANTES DE FILTRAR
+    return !idsMedicos.some(
+      (elem) => JSON.stringify(elem.id) === JSON.stringify(evento.medicoId)
+    );
+  })
+
+  return eventosFiltrados;
 }

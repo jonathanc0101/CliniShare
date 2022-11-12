@@ -16,8 +16,9 @@ async function registrarSincronizacion(computadoraId) {
 async function getSincronizacionMasRecientePorComputadoraId(computadoraId) {
   const fechasDeSincronizaciones = await Sincronizacion.findAll({
     attributes: ["fecha"],
-    where:{computadoraId}
+    where:{computadoraId:computadoraId}
   });
+  
 
   if(fechasDeSincronizaciones.length === 0){
     return false
@@ -27,6 +28,8 @@ async function getSincronizacionMasRecientePorComputadoraId(computadoraId) {
   let arrayFechas = fechasDeSincronizaciones.map(
     (fechaActual) => new Date(fechaActual.fecha)
   );
+
+
 
   var maxFecha = new Date(Math.max(...arrayFechas));
 
@@ -44,15 +47,25 @@ async function getSincronizacionMasRecientePorComputadoraId(computadoraId) {
   }
 }
 
-async function getUltimaFechaDeSincronizacionConComputadoraId(computadoraId){
-
-  const ultima = await getSincronizacionMasRecientePorComputadoraId(computadoraId);
+async function getUltimaFechaDeSincronizacionConComputadoraId(computadoraId) {
+    const fechasDeSincronizaciones = await Sincronizacion.findAll({
+      attributes: ["fecha"],
+      where:{computadoraId:computadoraId}
+    });
+    
   
-  if(!ultima){
-    return false;
-  }else{
-    return ultima.fecha;
-  }
+    if(fechasDeSincronizaciones.length === 0){
+      return false
+    }
+  
+    //obtener fecha mas reciente
+    let arrayFechas = fechasDeSincronizaciones.map(
+      (fechaActual) => new Date(fechaActual.fecha)
+    );
+  
+    const maxFecha = new Date(Math.max(...arrayFechas));
+
+    return maxFecha;
 
 }
 
