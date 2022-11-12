@@ -59,15 +59,21 @@ export async function actualizarDatos(datos) {
       for (const medico of datos.medicos) {
         await Medico.upsert(medico, { transaction: t });
       }
+
+      console.log("here");
       
       for (const paciente of datos.pacientes) {
         await PacientesService.upsertarPorDNIyNacimiento(paciente, t);
       }
 
+      console.log("here2");
       
       for (const evento of datos.eventos) {
         await Evento.upsert(evento, { transaction: t });
       }
+
+      console.log("here3");
+
     });
 
     return true;
