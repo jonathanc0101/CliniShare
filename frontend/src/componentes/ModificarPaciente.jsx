@@ -342,18 +342,15 @@ function ModificarPaciente() {
 
           <Grid container direction="row" spacing={2}>
             <Grid item xs={2} sm={6}>
-              <p
-                style={{
+              
+                <u                 style={{
                   color: "black",
                   textAlign: "left",
                   fontWeight: "bold",
                   lineHeight: 1,
-                }}
-              >
-                <u>
+                }}>
                   <h3>Historia clínica</h3>
                 </u>
-              </p>
             </Grid>
             <Grid item xs={2} sm={6}>
               <Box textAlign="right">
