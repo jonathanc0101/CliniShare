@@ -16,7 +16,7 @@ export async function handleSincronizarPostRequest(req, res, next) {
 
 export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
   let eventos = [];
-  if (Object.keys({}).length === 0) {
+  if (Object.keys(fecha).length === 0) {
     //primera sincronizacion
     eventos = await EventosService.getEventosCompletosPorDnisYFechas(
       dnisYFechas
@@ -36,14 +36,14 @@ export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
 
   const eventosDesarmados = EventosService.desarmarEventos(eventosFiltrados);
 
-  return eventosFiltrados;
+  return eventosDesarmados;
 }
 
 export async function actualizarDatos(datos) {
   console.log("\n\nevento:datos a actualizar\n\n", datos);
 
-  console.log("datos",JSON.stringify(datos));
-  
+  console.log("datos",JSON.stringify(datos,null,20));
+
   if (Object.keys(datos).length === 0) {
     return;
   }
