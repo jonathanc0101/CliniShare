@@ -134,10 +134,11 @@ async function getDnisYNacimientosDePacientes() {
 async function getIdPorDniYNacimiento(paciente){
   const pacienteFound = await Paciente.findOne({
     where:{
-      id:paciente.id,
+      dni:paciente.dni,
       fechaNacimiento:paciente.fechaNacimiento
     }
   });
+
 
   if (!pacienteFound) {
     return {};

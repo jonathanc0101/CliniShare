@@ -21,6 +21,7 @@ export const EventosService = {
   getEventosCompletosPorDnisYFechas,
   getEventosCompletosPorDnisYFechasAPartirDeFecha,
   excluirPorIdsMedicos,
+  desarmarEventos,
 };
 
 async function getEventosFromModel() {
@@ -296,4 +297,31 @@ function excluirPorIdsMedicos(eventos, idsMedicos) {
   })
 
   return eventosFiltrados;
+}
+
+function desarmarEventos(eventosADesarmar){
+  const medicos = [];
+  const pacientes = [];
+  const eventos = [];
+
+  eventosADesarmar.forEach(evento => {
+    
+    pacientes.push(evento.paciente.dataValues);
+    medicos.push(evento.medico.dataValues);
+    
+    const eventoNew = {...evento.dataValues};
+    delete eventoNew.medico;
+    delete eventoNew.paciente;
+
+    eventos.push(eventoNew);
+  });
+
+  return {medicos:removeDuplicates(medicos),pacientes:removeDuplicates(pacientes),eventos};
+}
+
+function removeDuplicates(a) {
+  var seen = {};
+  return a.filter(function(item) {
+      return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+  });
 }
