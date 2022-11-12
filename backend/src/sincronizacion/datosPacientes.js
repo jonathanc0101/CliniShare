@@ -100,6 +100,8 @@ async function actualizarIdsPacientes(datos) {
  
     //buscamos el evento que tenga el pacienteId del viejo y lo cambiamos
     for(let i = 0; i<datos.eventos.length;i++){
+      console.log("datos.eventos[i].pacienteId",datos.eventos[i].pacienteId);
+      console.log("pacienteViejo.id",pacienteViejo.id);
       if(JSON.stringify(datos.eventos[i].pacienteId) === JSON.stringify(pacienteViejo.id)){
         console.log("\n\n\nENTRA AL IF\n\n");
         datos.eventos[i].pacienteId = pacienteNuevo.id;
