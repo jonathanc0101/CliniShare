@@ -5,11 +5,13 @@ import { sequelize } from "../database/database.js";
 import { Medico } from "../models/Medico.js";
 import { MedicosService } from "./medico.service.js";
 import { MedicoUsuario } from "../models/MedicoUsuario.js";
+import { QueryTypes } from "sequelize";
 
 export const userService = {
   login,
   register,
   modify,
+  getAllMedicosUUIDSDeUsers,
 };
 
 async function generateHash(password) {
@@ -37,15 +39,25 @@ async function login(email, password) {
     );
 
     if (passwordIsValid) {
+      console.log("\n\npassword is valid\n\n");
       token = await sesionActivaService.nueva(medicoEncontrado);
     }
 
     if (!token) {
       return {};
     } else {
-      let medico = quitarPassword(medicoEncontrado);
-      medico.medicoId = await MedicosService.obtenerMedicoIdAPartirDeMedicoUser(medico);
-      return { token, medico };
+      let user = quitarPassword(medicoEncontrado);
+      const medico = await MedicosService.getMedicoAPartirDeUser(user);
+
+      let dataValues = { ...medico.dataValues, ...user.dataValues };
+      delete dataValues.id;
+
+      user.medicoId = medico.id;
+
+      const userARetornar = { ...user, ...dataValues };
+
+      console.log("\n\nuser\n\n", userARetornar);
+      return { token, medico: userARetornar };
     }
   } catch (error) {
     console.log("No se pudo logear médico usuario, error: " + error);
@@ -96,7 +108,10 @@ async function modify(medico) {
         where: { email: medicoNew.email },
         transaction: t,
       });
-      await Medico.update(medicoNew, { where: { email: medicoNew.email }, transaction: t });
+      await Medico.update(medicoNew, {
+        where: { email: medicoNew.email },
+        transaction: t,
+      });
     });
 
     if (response) {
@@ -107,5 +122,16 @@ async function modify(medico) {
   } catch (error) {
     console.log(error);
     return {};
+  }
+}
+
+async function getAllMedicosUUIDSDeUsers() {
+  try {
+    const users = await sequelize.query('SELECT medicos.id as id FROM medicos JOIN "medicosUsuarios" on medicos.email = "medicosUsuarios".email;',{
+      type: QueryTypes.SELECT,
+    });
+    return users;
+  } catch (error) {
+    console.log("Error getAllUsersUUIDS ", error);
   }
 }

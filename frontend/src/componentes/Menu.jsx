@@ -21,26 +21,21 @@ function Menu() {
 
   return (
     <>
-      <Grid xs={4} sm={2}>
+      <Grid item xs={4} sm={2} style={{backgroundColor:"#007FFF", border: "3px solid #007FFF"}}>
         <Paper square={true}>
           <MenuList>
-            <Link
-              to={"/ejemplo/tabla"}
-              style={{ color: "inherit", textDecoration: "inherit" }}
-            >
-              <MenuItem>Menú</MenuItem>
-            </Link>
+              <MenuItem style={{fontWeight:"bold", fontSize:17}}>Menú</MenuItem>
             <Link
               to={"/pacientes/all"}
               style={{ color: "inherit", textDecoration: "inherit" }}
             >
-              <MenuItem>Mis pacientes</MenuItem>
+              <MenuItem style={{color:"#007FFF", fontSize:15}} >Mis pacientes</MenuItem>
             </Link>
             <Link
               to={"/medicos/all"}
               style={{ color: "inherit", textDecoration: "inherit" }}
             >
-              <MenuItem>Médicos</MenuItem>
+              <MenuItem style={{color:"#007FFF", fontSize:15}}>Médicos</MenuItem>
             </Link>
             {/* <Link
               to={"/eventos/all"}

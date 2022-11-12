@@ -20,6 +20,7 @@ export const EventosService = {
     getEventosImportantesCompletosPorIdPacienteFromModel,
   getEventosCompletosPorDnisYFechas,
   getEventosCompletosPorDnisYFechasAPartirDeFecha,
+  excluirPorIdsMedicos,
 };
 
 async function getEventosFromModel() {
@@ -110,8 +111,11 @@ async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
   fecha
 ) {
   console.log("\n\n evento:entrando a buscar datos a enviar\n\n ");
-  console.log("\n\n evento:entrando a buscar datos a enviar, dnis y fechas, fecha\n\n ", dnisYFechas,
-  fecha);
+  console.log(
+    "\n\n evento:entrando a buscar datos a enviar, dnis y fechas, fecha\n\n ",
+    dnisYFechas,
+    fecha
+  );
   const eventos = await Evento.findAll({
     where: {
       [Op.or]: {
@@ -128,11 +132,9 @@ async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
     ],
   });
 
-  
   if (eventos.length === 0) {
     return [];
   } else {
-
     const eventosFiltrados = eventos.filter((evento) => {
       function obtenerObjDNIyFecha(x) {
         return {
@@ -282,4 +284,16 @@ async function getEventosPorPacienteIdFromModel(pacienteId) {
   } else {
     return eventos;
   }
+}
+
+function excluirPorIdsMedicos(eventos, idsMedicos) {
+
+  const eventosFiltrados = eventos.filter((evento) => {
+    // MUY IMPORTANTE EL ! PARA NEGAR ANTES DE FILTRAR
+    return !idsMedicos.some(
+      (elem) => JSON.stringify(elem.id) === JSON.stringify(evento.medicoId)
+    );
+  })
+
+  return eventosFiltrados;
 }

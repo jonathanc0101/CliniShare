@@ -209,10 +209,9 @@ async function obtenerMedicos() {
     const usuario = await JSON.parse(
       window.localStorage.getItem("loggedCliniShareAppUser")
     );
-    console.log("usuarii: ", usuario);
+
     const medicosObtenidos = await axios.get(rutas.getMedicos);
-    medicosObtenidos.data = medicosObtenidos.data.filter(medico => medico.dni != usuario.medico.dni);
-    console.log("medicosObtenidos :", medicosObtenidos);
+    medicosObtenidos.data = medicosObtenidos.data.filter(medico => medico.dni !== usuario.medico.dni);
     return medicosObtenidos;
   } catch (error) {
     return "No se encontraron médicos";
@@ -269,7 +268,9 @@ async function obtenerEventosCompletosPorPacienteId(pacienteId) {
     const eventosObtenidos = await axios.get(
       rutas.getEventosCompletosPorPacienteId + pacienteId
     );
-    eventosObtenidos.data.sort((a, b) => a.fecha < b.fecha);
+    eventosObtenidos.data.reverse();
+
+    // eventosObtenidos.data.sort((a, b) => a.fecha < b.fecha);
 
     return eventosObtenidos;
   } catch (error) {

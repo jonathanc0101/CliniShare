@@ -8,6 +8,7 @@ import {
   CardContent,
   Grid,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import "../App.css";
@@ -22,42 +23,54 @@ import validator from "validator";
 
 function NuevoPaciente() {
   let navigate = useNavigate();
-  async function obtenerPacientesExistentes(pacienteDni) {
-    const pacientesExistentes = await api.obtenerPacientes();
-
-    return pacientesExistentes.data.some((element) => {
-      return element.dni === pacienteDni;
-    });
-  }
-  const [genero, setGenero] = useState("");
-  const generos = [
+  const sexos = [
     {
-      value: "F",
+      value: "Femenino",
       label: "Femenino",
     },
     {
-      value: "M",
+      value: "Masculino",
       label: "Masculino",
     },
   ];
   const usuario = JSON.parse(
     window.localStorage.getItem("loggedCliniShareAppUser")
   );
-
-  const onKeyDown = (e) => {
-    e.preventDefault();
-  };
-
   const [Paciente, setPaciente] = useState({
     nombre: "",
     apellido: "",
     dni: "",
     fechaNacimiento: "",
-    ownerId: usuario.medico.medicoId,
+    sexo: "Femenino",
+    genero: "",
+    direccion: "",
+    telefono: "",
+    email: "",
   });
 
-  const handleChangeGenero = (event) => {
-    setGenero(event.target.value);
+  async function pacientePorDni(pacienteDni) {
+    const pacientesExistentes = await api.obtenerPacientes();
+
+    return pacientesExistentes.data.some((element) => {
+      return element.dni === pacienteDni;
+    });
+  }
+
+  async function pacientePorEmail(email) {
+    const pacientesExistentes = await api.obtenerPacientes();
+
+    return pacientesExistentes.data.some((element) => {
+      return element.email === email;
+    });
+  }
+
+  const isEmail = (email) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleGuardar();
+    }
   };
 
   const handleChange = (event) => {
@@ -81,7 +94,6 @@ function NuevoPaciente() {
   };
 
   const handleChangeDni = (event) => {
-    // quitamos los valores no numericos
     let value = event.target.value.replace(/\D/g, "");
 
     setPaciente((estadoAnterior) => {
@@ -89,44 +101,43 @@ function NuevoPaciente() {
     });
   };
 
-  const handleChangeNombreYApellido = (event) => {
-    const { value } = event.target;
-    let regex = new RegExp("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]*$");
+  const handleChangeTelefono = (event) => {
+    let value = event.target.value.replace(/\D/g, "");
 
-    // let regex = new RegExp("^[a-zA-Z ]*$");
-
-    if (regex.test(value)) {
-      if (event.target.name === "nombre") {
-        setPaciente((estadoAnterior) => {
-          return { ...estadoAnterior, nombre: value };
-        });
-      } else if (event.target.name === "apellido") {
-        setPaciente((estadoAnterior) => {
-          return { ...estadoAnterior, apellido: value };
-        });
-      }
-    }
+    setPaciente((estadoAnterior) => {
+      return { ...estadoAnterior, telefono: value };
+    });
   };
 
   const handleGuardar = async function () {
-    const existePaciente = await obtenerPacientesExistentes(Paciente.dni);
+    const dniExistente = await pacientePorDni(Paciente.dni);
+    const emailExistente = await pacientePorEmail(Paciente.email);
 
     if (
       Paciente.nombre.length === 0 ||
       Paciente.apellido.length === 0 ||
       Paciente.dni.length === 0 ||
-      Paciente.fechaNacimiento.length === 0
+      Paciente.fechaNacimiento.length === 0 ||
+      Paciente.sexo.length === 0 ||
+      Paciente.direccion.length === 0 ||
+      Paciente.telefono.length === 0 ||
+      Paciente.email.length === 0
     ) {
       alertas.alertaCamposObligatorios();
       return;
-    } else if (existePaciente) {
-      alertas.alertaPacienteExiste(Paciente.dni);
+    } else if (dniExistente) {
+      alertas.pacienteConDniExistente(Paciente.dni);
       return;
     } else if (!validator.isDate(Paciente.fechaNacimiento)) {
       alertas.fechaErronea("nacimiento");
       return;
     } else if (Paciente.fechaNacimiento > moment()) {
       alertas.fechaNacimientoPaciente();
+    } else if (emailExistente) {
+      alertas.pacienteConCorreoExistente();
+    } else if (!isEmail(Paciente.email)) {
+      alertas.alertaEmailInvalido();
+      return;
     } else {
       const pacienteGuardado = await api.guardarPaciente(Paciente);
       if (pacienteGuardado === true) {
@@ -137,28 +148,27 @@ function NuevoPaciente() {
   };
 
   return (
-    <>
+    <div onKeyDown={handleKeyPress}>
       <Typography
         component="h6"
         variant="h6"
         style={{
-          backgroundColor: "#5090D3",
+          backgroundColor: "#0c5774",
           color: "white",
           textAlign: "left",
           fontWeight: "bold",
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Nuevo paciente
+        &nbsp;&nbsp;&nbsp;Nuevo paciente - Datos del paciente
       </Typography>
-      <br></br>
       {/* DATOS DEL PACIENTE */}
-      <Card>
+      <Card style={{ height: "94vh" }}>
         <CardContent>
           {/* DATOS DEL PACIENTE */}
           <Grid container direction="row" spacing={2}>
             {/* NOMBRE */}
-            <Grid item xs={4} sm={6}>
+            <Grid item xs={4} sm={5}>
               <TextField
                 label="Nombre/s"
                 type="text"
@@ -168,11 +178,11 @@ function NuevoPaciente() {
                 variant="outlined"
                 helperText="Campo obligatorio"
                 value={Paciente.nombre}
-                onChange={handleChangeNombreYApellido}
+                onChange={handleChange}
               ></TextField>
             </Grid>
             {/* APELLIDO */}
-            <Grid item xs={4} sm={6}>
+            <Grid item xs={4} sm={5}>
               <TextField
                 label="Apellido/s"
                 type="text"
@@ -182,13 +192,35 @@ function NuevoPaciente() {
                 variant="outlined"
                 helperText="Campo obligatorio"
                 value={Paciente.apellido}
-                onChange={handleChangeNombreYApellido}
+                onChange={handleChange}
               ></TextField>
+            </Grid>
+            {/* SEXO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                id="outlined-select-sexo-native"
+                select
+                label="Sexo"
+                name="sexo"
+                value={Paciente.sexo}
+                margin="normal"
+                onChange={handleChange}
+                SelectProps={{
+                  native: true,
+                }}
+                helperText="Seleccione el sexo"
+              >
+                {sexos.map((opcion) => (
+                  <option key={opcion.value} value={opcion.value}>
+                    {opcion.label}
+                  </option>
+                ))}
+              </TextField>
             </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
             {/* DNI */}
-            <Grid item xs={4} sm={5}>
+            <Grid item xs={4} sm={4}>
               <TextField
                 label="DNI"
                 type="text"
@@ -202,7 +234,7 @@ function NuevoPaciente() {
               ></TextField>
             </Grid>
             {/* FECHA DE NACIMIENTO */}
-            <Grid item xs={4} sm={3}>
+            <Grid item xs={4} sm={4}>
               <LocalizationProvider
                 adapterLocale="es"
                 dateAdapter={AdapterDayjs}
@@ -224,57 +256,104 @@ function NuevoPaciente() {
                 />
               </LocalizationProvider>
             </Grid>
+
             {/* GÉNERO */}
             <Grid item xs={4} sm={2}>
               <TextField
-                id="outlined-select-genero-native"
-                select
                 label="Género"
-                value={genero}
+                type="text"
+                name="genero"
                 margin="normal"
-                onChange={handleChangeGenero}
-                SelectProps={{
-                  native: true,
-                }}
-                helperText="Seleccione su género"
-              >
-                {generos.map((opcion) => (
-                  <option key={opcion.value} value={opcion.value}>
-                    {opcion.label}
-                  </option>
-                ))}
-              </TextField>
+                fullWidth
+                variant="outlined"
+                value={Paciente.genero}
+                onChange={handleChange}
+              ></TextField>
             </Grid>
           </Grid>
-
+          <Grid container direction="row" spacing={2}>
+            {/* DOMICILIO */}
+            <Grid item xs={4} sm={9}>
+              <TextField
+                label="Domicilio"
+                type="text"
+                name="direccion"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={Paciente.direccion}
+                onChange={handleChange}
+                helperText="Campo obligatorio"
+              ></TextField>
+            </Grid>
+            {/* TELÉFONO */}
+            <Grid item xs={4} sm={3}>
+              <TextField
+                label="Teléfono"
+                type="text"
+                name="telefono"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={Paciente.telefono}
+                onChange={handleChangeTelefono}
+                helperText="Campo obligatorio"
+              ></TextField>
+            </Grid>
+          </Grid>
+          <Grid container direction="row" spacing={2}>
+            {/* CORREO */}
+            <Grid item xs={4} sm={8}>
+              <TextField
+                label="Correo electrónico"
+                type="text"
+                name="email"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={Paciente.email}
+                onChange={handleChange}
+                helperText="Campo obligatorio"
+              ></TextField>
+            </Grid>
+          </Grid>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
           <br></br>
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
-            <Grid item xs={4} sm={10}>
+            <Grid item xs={4} sm={4}>
               <BotonVolver></BotonVolver>
             </Grid>
             {/* BOTÓN GUARDAR PACIENTE */}
-            <Grid item xs={4} sm={2}>
-              <Box textAlign="center">
-                <Button
-                  variant="contained"
-                  endIcon={<SaveIcon style={{ fontSize: 24 }} />}
-                  onClick={handleGuardar}
-                  size="large"
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: 15,
-                    backgroundColor: "#007FFF",
-                  }}
-                >
-                  Guardar
-                </Button>
+            <Grid item xs={4} sm={8}>
+              <Box textAlign="right">
+                <Tooltip title="Guardar">
+                  <Button
+                    variant="contained"
+                    endIcon={<SaveIcon style={{ fontSize: 24 }} />}
+                    onClick={handleGuardar}
+                    size="medium"
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: 15,
+                      backgroundColor: "#007FFF",
+                    }}
+                  >
+                    Guardar
+                  </Button>
+                </Tooltip>
               </Box>
             </Grid>
           </Grid>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 }
 

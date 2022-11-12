@@ -57,23 +57,53 @@ function ModificarEvento() {
   }, [params.id]);
 
   const update = async () => {
+    let fechaActual = new Date();
     if (evento.titulo.length === 0 || evento.descripcion.length === 0) {
       alertas.alertaCamposObligatorios();
       return;
-    } else if (evento.importante === "true") {
-      let fechaActual = new Date();
-      if (evento.fechaVencimiento === "") {
-        evento.fechaVencimiento = null;
-      } else {
-        if (
-          !validator.isDate(evento.fechaVencimiento) ||
-          evento.fechaVencimiento.getFullYear() < fechaActual.getFullYear()
-        ) {
+    } else if (evento.importante) {
+      if (evento.fechaVencimiento !== null) {
+        if (!validator.isDate(evento.fechaVencimiento)) {
           alertas.fechaErronea("vencimiento");
+          return;
+        } else if (evento.fechaVencimiento < fechaActual) {
+          alertas.fechaInvalidaMenor("vencimiento");
           return;
         }
       }
+    }else if(!evento.importante){
+      evento.fechaVencimiento = null;
     }
+    //else if (
+    //   evento.importante &&
+    //   JSON.stringify(evento.fechaVencimiento) === "null"
+    // ) {
+    //   console.log("EVENTO IMPORTANTE CON FECHA VACÍA");
+    //   console.log(evento.fechaVencimiento);
+    // } else if (evento.importante && evento.fechaVencimiento !== null) {
+    //   console.log("EVENTO IMPORTANTE Y FECHA DE VENCIMIENTO != NULL");
+    //   console.log("Fecha de vencimiento: ", evento.fechaVencimiento);
+    //   if (!validator.isDate(evento.fechaVencimiento)) {
+    //     console.log("FECHA INVÁLIDA");
+    //     alertas.fechaErronea("vencimiento");
+    //     return;
+    //   }
+    //   if (
+    //     evento.fechaVencimiento < fechaActual &&
+    //     JSON.stringify(evento.fechaVencimiento) !== "null"
+    //   ) {
+    //     console.log("FECHA MENOR A HOY");
+    //     alertas.fechaInvalidaMenor("vencimiento");
+    //     return;
+    //   }
+    // } else if (!evento.importante) {
+    //   console.log("FECHA NO IMPORTANTE");
+    //   console.log(
+    //     "Fecha de vencimiento: ",
+    //     JSON.stringify(evento.fechaVencimiento)
+    //   );
+    //   evento.fechaVencimiento = null;
+    // }
     const respuesta = await api.modificarEvento(params.id, { ...evento });
     if (respuesta) {
       alertas.alertaModificacionExitosa("evento");
@@ -96,7 +126,6 @@ function ModificarEvento() {
       e = {};
     } else {
       const value = e["$d"];
-
       setEvento((estadoAnterior) => {
         return { ...estadoAnterior, fechaVencimiento: value };
       });
@@ -118,12 +147,12 @@ function ModificarEvento() {
       >
         &nbsp;&nbsp;&nbsp;Modificar evento / Datos del evento
       </Typography>
-      <Card>
+      <Card style={{ height: "94vh" }}>
         <CardContent>
           {/* DATOS DEL EVENTO */}
           <Grid container direction="row" spacing={2}>
             {/* TÍTULO */}
-            <Grid item xs={4} sm={10}>
+            <Grid item xs={4} sm={9}>
               <TextField
                 label="Título"
                 type="text"
@@ -138,7 +167,7 @@ function ModificarEvento() {
               ></TextField>
             </Grid>
             {/* FECHA DE CREACIÓN */}
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={4} sm={3}>
               <LocalizationProvider
                 adapterLocale="es"
                 dateAdapter={AdapterDayjs}
@@ -253,7 +282,7 @@ function ModificarEvento() {
 
           {/* DESCRIPCIÓN */}
           <Grid container direction="row" spacing={2}>
-            <Grid item xs={4} sm={12}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 label="Descripción"
                 multiline
@@ -272,22 +301,29 @@ function ModificarEvento() {
           <br></br>
           <br></br>
           <br></br>
+
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
-            <Grid item xs={10}>
+            <Grid item xs={4} sm={4}>
               <BotonVolver></BotonVolver>
             </Grid>
             {/* GUARDAR */}
-            <Grid item>
-              <Button
-                variant="contained"
-                endIcon={<SaveIcon />}
-                onClick={update}
-              >
-                <Typography color={"white"} variant="h7" align="left">
-                  &nbsp;Guardar
-                </Typography>
-              </Button>
+            <Grid item xs={4} sm={8}>
+              <Box textAlign="right">
+                <Button
+                  variant="contained"
+                  size="medium"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 15,
+                    backgroundColor: "#007FFF",
+                  }}
+                  endIcon={<SaveIcon style={{ fontSize: 24 }} />}
+                  onClick={update}
+                >
+                  Guardar
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         </CardContent>

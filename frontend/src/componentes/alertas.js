@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 
 export const alertas = {
-  alertaPacienteExiste,
+  pacienteConDniExistente,
   alertaCamposObligatorios,
   alertaExito,
   alertaProblemas,
@@ -13,15 +13,27 @@ export const alertas = {
   bienvenida,
   medicoExiste,
   fechaNacimientoPaciente,
+  passwordMinimaInvalida,
+  pacienteConCorreoExistente,
+  fechaInvalidaMenor
 };
 
-async function alertaPacienteExiste(pacienteDni) {
+async function pacienteConDniExistente(pacienteDni) {
   Swal.fire({
     icon: "warning",
     title: "",
     html: `<p>Ya existe el paciente con <b>DNI ${pacienteDni}</b></p>`,
   });
 }
+
+async function pacienteConCorreoExistente(email) {
+  Swal.fire({
+    icon: "warning",
+    title: "",
+    html: `<p>Ya existe un paciente con ese correo electrónico</p>`,
+  });
+}
+
 async function alertaCamposObligatorios() {
   Swal.fire({
     icon: "warning",
@@ -66,10 +78,18 @@ async function contraseñasDiferentes() {
 
 // ALERTAS FECHAS
 
-async function fechaErronea(tipoFecha) {
+async function fechaErronea(tipo) {
   Swal.fire({
     title: "",
-    html: `<p>La <b>fecha de ${tipoFecha}</b> es inválida</p>`,
+    html: `<p>La <b>fecha de ${tipo}</b> es inválida</p>`,
+    icon: "error",
+  });
+}
+
+async function fechaInvalidaMenor(tipo) {
+  Swal.fire({
+    title: "",
+    html: `<p>La <b>fecha de ${tipo}</b> es menor al día de hoy.</p>`,
     icon: "error",
   });
 }
@@ -99,13 +119,22 @@ async function alertaModificacionExitosa(entidad) {
   });
 }
 
-async function bienvenida(nombreMedico) {
-  Swal.fire({
-    html: `<p>¡Bienvenido/a Dr./Dra. <b>${nombreMedico}</b>!</p>`,
-    icon: "success",
-    timer: "3000",
-    position: "center",
-  });
+async function bienvenida(nombreMedico, sexo) {
+  if (sexo === "Femenino"){
+    Swal.fire({
+      html: `<p>¡Bienvenida Dra. <b>${nombreMedico}</b>!</p>`,
+      icon: "success",
+      timer: "3000",
+      position: "center",
+    });
+  }else if (sexo === "Masculino"){
+    Swal.fire({
+      html: `<p>¡Bienvenido Dr. <b>${nombreMedico}</b>!</p>`,
+      icon: "success",
+      timer: "3000",
+      position: "center",
+    });
+  }
 }
 
 // ALERTAS REGISTRO MÉDICO
@@ -126,4 +155,11 @@ async function medicoExiste(nombreCampo, dni, matricula) {
       html: `<p>Ya existe un médico con la mátricula <b>${matricula}</b> y DNI <b>${dni}</b></p>`,
     });
   }
+}
+
+async function passwordMinimaInvalida() {
+  Swal.fire({
+    html: `<p>La contraseña debe ser mayor a 4 carácteres</p>`,
+    icon: "error",
+  });
 }

@@ -30,6 +30,9 @@ function LoginForm() {
   });
   const [datosValidos, setDatosValidos] = useState(false);
 
+  const isEmail = (email) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+
   useEffect(() => {
     const loggedCliniShareUserJSON = window.localStorage.getItem(
       "loggedCliniShareAppUser"
@@ -51,9 +54,13 @@ function LoginForm() {
     event.preventDefault();
   };
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  const handleKeyPress = (event) => {
+    if(event.key === 'Enter'){
+      handleLogin();
+    }
+  }
 
+  const handleLogin = async (event) => {
     try {
       const usuario = await api.login(correoElectronico, password);
       if (Object.keys(usuario).length !== 0) {
@@ -65,7 +72,8 @@ function LoginForm() {
         setUsuario(usuario);
         setCorreoElectronico("");
         setPassword("");
-        alertas.bienvenida(usuario.medico.nombre);
+        console.log(usuario);
+        alertas.bienvenida(usuario.medico.nombre, usuario.medico.sexo);
       } else {
         alertas.errorLogin();
         setPassword("");
@@ -88,7 +96,8 @@ function LoginForm() {
       {datosValidos ? (
         <Navigate to="/home" />
       ) : (
-        <Grid>
+        <Grid onKeyDown={handleKeyPress}>
+          
           <Paper elevation={10} style={paperStyle}>
             <Grid align="center">
               <Avatar style={avatarStyle}>

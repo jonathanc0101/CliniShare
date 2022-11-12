@@ -14,9 +14,9 @@ export const Sincronizacion = sequelize.define("sincronizaciones",{
         allowNull: false,
         defaultValue: Sequelize.fn("now")
     },
-    medicoId:{
-        type:Sequelize.UUID,
-        allowNull:false,
+    computadoraId:{
+        type: Sequelize.UUID,
+        allowNull: false,
     }
 },{
     freezeTableName: true,

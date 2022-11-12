@@ -10,6 +10,7 @@ import {
   CardContent,
   Grid,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -27,13 +28,28 @@ import validator from "validator";
 function ModificarPaciente() {
   const params = useParams();
   let navigate = useNavigate();
-
+  const sexos = [
+    {
+      value: "Femenino",
+      label: "Femenino",
+    },
+    {
+      value: "Masculino",
+      label: "Masculino",
+    },
+  ];
   const [fechaAuxiliar, setFechaAuxiliar] = useState("");
   const [paciente, setPaciente] = useState({
     nombre: "",
     apellido: "",
     dni: "",
     fechaNacimiento: "",
+    fechaDefuncion: "",
+    sexo: "",
+    genero: "",
+    direccion: "",
+    telefono: "",
+    email: "",
   });
 
   const handleChange = (event) => {
@@ -53,6 +69,14 @@ function ModificarPaciente() {
     });
   };
 
+  const handleChangeTelefono = (event) => {
+    let value = event.target.value.replace(/[-]\D/g, "");
+
+    setPaciente((estadoAnterior) => {
+      return { ...estadoAnterior, telefono: value };
+    });
+  };
+
   const handleChangeFecha = (event) => {
     if (event === null) {
       event = {};
@@ -64,53 +88,8 @@ function ModificarPaciente() {
     }
   };
 
-  const handleChangeNombreYApellido = (event) => {
-    const { value } = event.target;
-    let regex = new RegExp("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]*$");
-    // let regex = new RegExp("^[a-zA-Z ]*$");
-
-    if (regex.test(value)) {
-      if (event.target.name === "nombre") {
-        setPaciente((estadoAnterior) => {
-          return { ...estadoAnterior, nombre: value };
-        });
-      } else if (event.target.name === "apellido") {
-        setPaciente((estadoAnterior) => {
-          return { ...estadoAnterior, apellido: value };
-        });
-      }
-    }
-  };
-
-  const update = async () => {
-    if (
-      paciente.nombre.length === 0 ||
-      paciente.apellido.length === 0 ||
-      paciente.dni.length === 0 ||
-      paciente.fechaNacimiento.length === 0
-    ) {
-      alertas.alertaCamposObligatorios();
-      return;
-    } else if (
-      !validator.isDate(paciente.fechaNacimiento) &&
-      paciente.fechaNacimiento !== fechaAuxiliar
-    ) {
-      console.log(validator.isDate(paciente.fechaNacimiento));
-      alertas.fechaErronea("nacimiento");
-      return;
-    } else if (paciente.fechaNacimiento > moment()) {
-      console.log(paciente.fechaNacimiento);
-      alertas.fechaNacimientoPaciente();
-    } else {
-      const respuesta = await api.modificarPaciente(params.id, { ...paciente });
-      if (respuesta) {
-        alertas.alertaModificacionExitosa("paciente");
-        navigate(-1);
-      } else {
-        alertas.alertaProblemas();
-      }
-    }
-  };
+  const isEmail = (email) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
   useEffect(() => {
     (async () => {
@@ -122,8 +101,42 @@ function ModificarPaciente() {
     })();
   }, [params.id]);
 
+  const update = async () => {
+    if (
+      paciente.nombre.length === 0 ||
+      paciente.apellido.length === 0 ||
+      paciente.dni.length === 0 ||
+      paciente.fechaNacimiento.length === 0 ||
+      paciente.direccion.length === 0 ||
+      paciente.telefono.length === 0 ||
+      paciente.email.length === 0
+    ) {
+      alertas.alertaCamposObligatorios();
+      return;
+    } else if (
+      !validator.isDate(paciente.fechaNacimiento) &&
+      paciente.fechaNacimiento !== fechaAuxiliar
+    ) {
+      alertas.fechaErronea("nacimiento");
+      return;
+    } else if (paciente.fechaNacimiento > moment()) {
+      alertas.fechaNacimientoPaciente();
+      return;
+    } else if (!isEmail(paciente.email)) {
+      alertas.alertaEmailInvalido();
+      return;
+    } else {
+      const respuesta = await api.modificarPaciente(params.id, { ...paciente });
+      if (respuesta) {
+        alertas.alertaModificacionExitosa("paciente");
+        navigate(-1);
+      } else {
+        alertas.alertaProblemas();
+      }
+    }
+  };
   return (
-    <>
+    <div>
       <Typography
         component="h6"
         variant="h6"
@@ -135,9 +148,9 @@ function ModificarPaciente() {
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Datos del paciente
+        &nbsp;&nbsp;&nbsp;Modificar / Datos del paciente
       </Typography>
-      <Card>
+      <Card style={{ height: "94vh" }}>
         <CardContent>
           {/* DATOS DEL PACIENTE */}
           <Grid container direction="row" spacing={2}>
@@ -154,7 +167,7 @@ function ModificarPaciente() {
 
                 <Grid item xs={4} sm={6}>
                   <TextField
-                    label="Nombre"
+                    label="Nombre/s"
                     type="text"
                     name="nombre"
                     margin="normal"
@@ -163,12 +176,13 @@ function ModificarPaciente() {
                     helperText="Campo obligatorio"
                     value={paciente.nombre}
                     onChange={handleChange}
+                    size="small"
                   ></TextField>
                 </Grid>
                 {/* APELLIDO */}
                 <Grid item xs={4} sm={6}>
                   <TextField
-                    label="Apellido"
+                    label="Apellido/s"
                     type="text"
                     name="apellido"
                     margin="normal"
@@ -177,6 +191,7 @@ function ModificarPaciente() {
                     helperText="Campo obligatorio"
                     value={paciente.apellido}
                     onChange={handleChange}
+                    size="small"
                   ></TextField>
                 </Grid>
               </Grid>
@@ -188,7 +203,7 @@ function ModificarPaciente() {
                 spacing={2}
               >
                 {/* DNI */}
-                <Grid item xs={4} sm={4}>
+                <Grid item xs={4} sm={6}>
                   <TextField
                     label="DNI"
                     type="text"
@@ -199,10 +214,11 @@ function ModificarPaciente() {
                     helperText="Campo obligatorio"
                     value={paciente.dni}
                     onChange={handleChangeDni}
+                    size="small"
                   ></TextField>
                 </Grid>
                 {/* FECHA DE NACIMIENTO */}
-                <Grid item xs={4} sm={5}>
+                <Grid item xs={4} sm={6}>
                   <LocalizationProvider
                     adapterLocale="es"
                     dateAdapter={AdapterDayjs}
@@ -219,36 +235,16 @@ function ModificarPaciente() {
                           fullWidth
                           variant="outlined"
                           helperText="Campo obligatorio"
+                          size="small"
                           {...params}
                         />
                       )}
                     />
                   </LocalizationProvider>
                 </Grid>
-                {/* GÉNERO */}
-                {/* <Grid item xs={4} sm={3}>
-                  {/* <TextField
-                    disabled
-                    id="outlined-select-genero-native"
-                    select
-                    // label="Género"
-                    label="Masculino"
-                    value={"Masculino"}
-                    margin="normal"
-                    SelectProps={{
-                      native: true,
-                    }}
-                    helperText="Campo obligatorio"
-                  > */}
-                    {/* {generos.map((opcion) => (
-                  <option key={opcion.value} value={opcion.value}>
-                    {opcion.label}
-                  </option>
-                ))} */}
-                  {/* </TextField> */}
-                {/* </Grid> /*} */}
               </Grid>
             </Grid>
+
             <Grid item xs={6}>
               <br></br>
               <Grid container direction="row" justifyContent="flex-end">
@@ -259,37 +255,131 @@ function ModificarPaciente() {
               </Grid>
             </Grid>
           </Grid>
-          <br></br>
+          <Grid container direction="row" spacing={2}>
+            {/* DOMICILIO */}
+            <Grid item xs={4} sm={3}>
+              <TextField
+                label="Domicilio"
+                type="text"
+                name="direccion"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={paciente.direccion}
+                onChange={handleChange}
+                size="small"
+                helperText="Campo obligatorio"
+              ></TextField>
+            </Grid>
+            {/* TELÉFONO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                label="Teléfono"
+                type="text"
+                name="telefono"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={paciente.telefono}
+                onChange={handleChangeTelefono}
+                size="small"
+                helperText="Campo obligatorio"
+              ></TextField>
+            </Grid>
+            {/* CORREO ELECTRÓNICO */}
+            <Grid item xs={4} sm={3}>
+              <TextField
+                label="Correo electróncio"
+                type="text"
+                name="email"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={paciente.email}
+                onChange={handleChange}
+                helperText="Campo obligatorio"
+                size="small"
+              ></TextField>
+            </Grid>
+            {/* GÉNERO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                label="Género"
+                type="text"
+                name="genero"
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                value={paciente.genero}
+                onChange={handleChange}
+                size="small"
+              ></TextField>
+            </Grid>
+            {/* SEXO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                id="outlined-select-sexo-native"
+                select
+                label="Sexo"
+                name="sexo"
+                value={paciente.sexo}
+                margin="normal"
+                size="small"
+                onChange={handleChange}
+                SelectProps={{
+                  native: true,
+                }}
+                helperText="Seleccione el sexo"
+              >
+                {sexos.map((opcion) => (
+                  <option key={opcion.value} value={opcion.value}>
+                    {opcion.label}
+                  </option>
+                ))}
+              </TextField>
+            </Grid>
+          </Grid>
 
-          <Grid container direction="row" spacing={1}>
-            <Grid item xs={4} sm={12}>
-              <Box textAlign="left">
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={2} sm={6}>
+              
+                <u                 style={{
+                  color: "black",
+                  textAlign: "left",
+                  fontWeight: "bold",
+                  lineHeight: 1,
+                }}>
+                  <h3>Historia clínica</h3>
+                </u>
+            </Grid>
+            <Grid item xs={2} sm={6}>
+              <Box textAlign="right">
                 <Link
                   to={"/eventos/new/paciente/" + params.id}
                   style={{ color: "inherit", textDecoration: "inherit" }}
                 >
-                  <Button
-                    variant="contained"
-                    size="medium"
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: 15,
-                      backgroundColor: "#007FFF",
-                    }}
-                    startIcon={
-                      <AddCircleOutlineTwoToneIcon
-                        style={{ fontSize: 24 }}
-                      ></AddCircleOutlineTwoToneIcon>
-                    }
-                  >
-                    Agregar evento
-                  </Button>
+                  <Tooltip title="Agregar evento">
+                    <Button
+                      variant="contained"
+                      size="small"
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: 15,
+                        backgroundColor: "#007FFF",
+                      }}
+                      startIcon={
+                        <AddCircleOutlineTwoToneIcon
+                          style={{ fontSize: 24 }}
+                        ></AddCircleOutlineTwoToneIcon>
+                      }
+                    >
+                      Agregar evento
+                    </Button>
+                  </Tooltip>
                 </Link>
               </Box>
             </Grid>
           </Grid>
-          <br></br>
-
           <Grid container direction="row" spacing={2}>
             <Grid item xs={4} sm={12}>
               <EventosDePaciente id={params.id} />
@@ -301,8 +391,8 @@ function ModificarPaciente() {
               <BotonVolver></BotonVolver>
             </Grid>
 
-            <Grid item xs={4} sm={4}>
-              <Box textAlign="center">
+            <Grid item xs={4} sm={8}>
+              <Box textAlign="right">
                 <Button
                   size="medium"
                   variant="contained"
@@ -321,7 +411,7 @@ function ModificarPaciente() {
           </Grid>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 }
 

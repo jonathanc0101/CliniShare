@@ -21,17 +21,14 @@ import validator from "validator";
 function RegistroMedico() {
   const [registrado, setRegistrado] = useState(false);
   const [passwordAVerificar, setPasswordAVerificar] = useState("");
-  const [direccion, setDireccion] = useState("");
-  const [telefono, setTelefono] = useState("");
 
-  const [genero, setGenero] = useState("");
-  const generos = [
+  const sexos = [
     {
-      value: "F",
+      value: "Femenino",
       label: "Femenino",
     },
     {
-      value: "M",
+      value: "Masculino",
       label: "Masculino",
     },
   ];
@@ -49,6 +46,10 @@ function RegistroMedico() {
     email: "",
     password: "",
     fechaNacimiento: "",
+    genero: "",
+    sexo: "Femenino",
+    telefono: "",
+    direccion: "",
   });
 
   const guardar = async function () {
@@ -68,6 +69,9 @@ function RegistroMedico() {
       return;
     } else if (!isEmail(medico.email)) {
       alertas.alertaEmailInvalido();
+      return;
+    } else if (medico.password.length < 4) {
+      alertas.passwordMinimaInvalida();
       return;
     } else if (!verificarPassword(passwordAVerificar)) {
       alertas.contraseñasDiferentes();
@@ -93,10 +97,6 @@ function RegistroMedico() {
     });
   };
 
-  const handleChangeGenero = (event) => {
-    setGenero(event.target.value);
-  };
-
   const handleChangeVerificar = (event) => {
     let value = event.target.value;
 
@@ -110,27 +110,11 @@ function RegistroMedico() {
     });
   };
 
-  const handleChangeNombreYApellido = (event) => {
-    const { value } = event.target;
-    let regex = new RegExp("^[a-zA-Z ]*$");
-
-    if (regex.test(value)) {
-      if (event.target.name === "nombre") {
-        setMedico((estadoAnterior) => {
-          return { ...estadoAnterior, nombre: value };
-        });
-      } else if (event.target.name === "apellido") {
-        setMedico((estadoAnterior) => {
-          return { ...estadoAnterior, apellido: value };
-        });
-      }
-    }
-  };
-
   const handleChangeTelefono = (event) => {
     let value = event.target.value.replace(/\D/g, "");
-
-    setTelefono(value);
+    setMedico((estadoAnterior) => {
+      return { ...estadoAnterior, telefono: value };
+    });
   };
 
   const handleChangeFecha = (event) => {
@@ -170,13 +154,12 @@ function RegistroMedico() {
                 type="text"
                 name="nombre"
                 value={medico.nombre}
-                onChange={handleChangeNombreYApellido}
+                onChange={handleChange}
                 margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
                 size="small"
-
               ></TextField>
             </Grid>
             {/* APELLIDO */}
@@ -186,32 +169,31 @@ function RegistroMedico() {
                 type="text"
                 name="apellido"
                 value={medico.apellido}
-                onChange={handleChangeNombreYApellido}
+                onChange={handleChange}
                 margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
                 size="small"
-
               ></TextField>
             </Grid>
-            {/* GÉNERO */}
+            {/* SEXO */}
             <Grid item xs={4} sm={2}>
               <TextField
                 id="outlined-select-genero-native"
                 select
-                label="Género"
-                value={genero}
+                label="Sexo"
+                name="sexo"
+                value={medico.sexo}
                 margin="normal"
-                onChange={handleChangeGenero}
+                onChange={handleChange}
                 SelectProps={{
                   native: true,
                 }}
-                helperText="Seleccione su género"
+                helperText="Seleccione su sexo"
                 size="small"
-
               >
-                {generos.map((opcion) => (
+                {sexos.map((opcion) => (
                   <option key={opcion.value} value={opcion.value}>
                     {opcion.label}
                   </option>
@@ -233,11 +215,10 @@ function RegistroMedico() {
                 variant="outlined"
                 helperText="Campo obligatorio"
                 size="small"
-
               ></TextField>
             </Grid>
             {/* MÁTRICULA */}
-            <Grid item xs={4} sm={4}>
+            <Grid item xs={4} sm={3}>
               <TextField
                 label="Mátricula habilitante"
                 type="text"
@@ -249,11 +230,10 @@ function RegistroMedico() {
                 variant="outlined"
                 helperText="Campo obligatorio"
                 size="small"
-
               ></TextField>
             </Grid>
             {/* FECHA DE NACIMIENTO */}
-            <Grid item xs={4} sm={4}>
+            <Grid item xs={4} sm={3}>
               <LocalizationProvider
                 adapterLocale="es"
                 dateAdapter={AdapterDayjs}
@@ -270,12 +250,25 @@ function RegistroMedico() {
                       fullWidth
                       helperText="Campo obligatorio"
                       size="small"
-
                       {...params}
                     />
                   )}
                 />
               </LocalizationProvider>
+            </Grid>
+            {/* GÉNERO */}
+            <Grid item xs={4} sm={2}>
+              <TextField
+                label="Género"
+                type="text"
+                name="genero"
+                value={medico.genero}
+                onChange={handleChange}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+                size="small"
+              ></TextField>
             </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
@@ -285,14 +278,13 @@ function RegistroMedico() {
                 label="Dirección"
                 type="text"
                 name="direccion"
-                value={direccion}
-                onChange={({ target }) => setDireccion(target.value)}
+                value={medico.direccion}
+                onChange={handleChange}
                 margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
                 size="small"
-
               ></TextField>
             </Grid>
             {/* TELÉFONO */}
@@ -301,14 +293,13 @@ function RegistroMedico() {
                 label="Teléfono"
                 type="text"
                 name="telefono"
-                value={telefono}
+                value={medico.telefono}
                 onChange={handleChangeTelefono}
                 margin="normal"
                 fullWidth
                 variant="outlined"
                 helperText="Campo obligatorio"
                 size="small"
-
               ></TextField>
             </Grid>
           </Grid>
@@ -327,7 +318,6 @@ function RegistroMedico() {
                 variant="outlined"
                 helperText="Campo obligatorio"
                 size="small"
-
               ></TextField>
             </Grid>
           </Grid>
@@ -344,7 +334,6 @@ function RegistroMedico() {
                 variant="outlined"
                 helperText="Campo obligatorio"
                 size="small"
-
               ></TextField>
             </Grid>
           </Grid>
@@ -361,7 +350,6 @@ function RegistroMedico() {
                 variant="outlined"
                 helperText="Campo obligatorio"
                 size="small"
-
               ></TextField>
             </Grid>
           </Grid>
@@ -371,8 +359,8 @@ function RegistroMedico() {
               <BotonVolver></BotonVolver>
             </Grid>
             {/* BOTÓN REGISTRARSE */}
-            <Grid item xs={4} sm={4}>
-              <Box textAlign="center">
+            <Grid item xs={4} sm={8}>
+              <Box textAlign="right">
                 <Button
                   size="large"
                   variant="contained"

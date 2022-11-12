@@ -1,7 +1,8 @@
 import app from "./app.js";
-import { ConexionActiva } from "./models/ConexionActiva.js";
 import { sequelize } from "./database/database.js";
 import { SERVER_BD_PORT } from "./UDP/constants.js";
+import emitter from "./eventos/eventEmitter.js";
+
 
 export async function main() {
   try {
@@ -10,6 +11,9 @@ export async function main() {
     console.log("Connection has been established successfully.");
     app.listen(SERVER_BD_PORT, () => {
       console.log("Server is listening on port", SERVER_BD_PORT);
+
+      emitter.emit("db_connected");
+
     });
     
   } catch (error) {

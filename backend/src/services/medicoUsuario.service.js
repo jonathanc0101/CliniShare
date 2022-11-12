@@ -1,20 +1,40 @@
+import { Medico } from "../models/Medico.js";
 import { MedicoUsuario } from "../models/MedicoUsuario.js";
+import { MedicosService } from "./medico.service.js";
 
 export const MedicosUsuariosService = {
   getMedicos: () => getMedicosFromModel(),
   getMedicoByDni: (dniABuscar) => getMedicoByDniFromModel(dniABuscar),
   getMedicoById: (id) => getMedicoByIdFromModel(id),
-  getMedicoByEmail:getMedicoByEmailFromModel,
+  getMedicoByEmail: getMedicoByEmailFromModel,
   create,
   modificar,
 };
 
-async function create(medico){
-  return await MedicoUsuario.create(medico);
+async function create(user) {
+  const userCreado = {};
+
+  await sequelize.transaction(async (t) => {
+    userCreado = await MedicoUsuario.create(user, {
+      where: { id: user.id },
+    });
+    
+    await MedicosService.createMedico(userCreado);
+  });
+
+  return quitarPassword(userCreado);
 }
 
-async function modificar(medico){
-  return await MedicoUsuario.update(medico,{where:{id:medico.id}})
+async function modificar(user) {
+  await sequelize.transaction(async (t) => {
+    const newUser = await MedicoUsuario.update(user, {
+      where: { id: user.id },
+    });
+    newUser.id = await MedicosService.obtenerMedicoIdAPartirDeMedicoUser(user);
+    await Medico.update(newUser, { where: { id: newUser.id } });
+  });
+
+  return true;
 }
 
 async function getMedicosFromModel() {
@@ -33,7 +53,6 @@ async function getMedicoByEmailFromModel(email) {
       email,
     },
   });
-  
   if (!medico) {
     return {};
   } else {
@@ -41,14 +60,13 @@ async function getMedicoByEmailFromModel(email) {
   }
 }
 
-
 async function getMedicoByDniFromModel(dniABuscar) {
   const medico = await Medico.findOne({
     where: {
       dni: dniABuscar,
     },
   });
-  
+
   if (!medico) {
     return {};
   } else {
@@ -62,12 +80,10 @@ async function getMedicoByIdFromModel(id) {
       id,
     },
   });
-  
+
   if (!medico) {
     return {};
   } else {
     return medico;
   }
 }
-
-

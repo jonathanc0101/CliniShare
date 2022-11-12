@@ -22,9 +22,10 @@ function Home() {
         </Grid>
       </Grid>
       <br></br>
-      <Grid container direction="row" spacing={2}>
+      <Grid container direction="row" spacing={2} >
         <Menu></Menu>
       </Grid>
+      
     </>
   );
 }

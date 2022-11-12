@@ -77,7 +77,7 @@ function VerEvento() {
       >
         &nbsp;&nbsp;&nbsp;Datos del evento
       </Typography>
-      <Card>
+      <Card style={{ height: "94vh" }}>
         <CardContent>
           {/* DATOS DEL EVENTO */}
           <Grid container direction="row" spacing={2}>
@@ -266,8 +266,7 @@ function VerEvento() {
               />
             </Grid>
           </Grid>
-          <br></br>
-          <br></br>
+          <br></br><br></br>
           {/* VOLVER A ATRÁS */}
           <Grid item xs={10}>
             <BotonVolver></BotonVolver>

@@ -1,0 +1,48 @@
+version: '2'
+services:     
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: "node ./src/main.js"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://clinishare:password@postgres/clinisharedb
+  
+  postgres:
+    image: postgres:9.6.2-alpine
+    environment:
+      POSTGRES_USER: clinishare
+      POSTGRES_DB: clinisharedb
+      POSTGRES_PASSWORD: password
+
+  backend2:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: "node ./src/main.js"
+    depends_on:
+      - postgres2
+    environment:
+      DATABASE_URL: postgres://clinishare:password@postgres/clinisharedb
+  
+  postgres2:
+    image: postgres:9.6.2-alpine
+    environment:
+      POSTGRES_USER: clinishare
+      POSTGRES_DB: clinisharedb
+      POSTGRES_PASSWORD: password
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    command: "npx serve build -l 5000"
+    depends_on:
+      - backend
