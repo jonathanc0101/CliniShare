@@ -3,7 +3,6 @@ import { PacientesService } from "../services/paciente.service.js";
 import { sequelize } from "../database/database.js";
 import { Medico } from "../models/Medico.js";
 import { Evento } from "../models/Evento.js";
-import { JSON } from "sequelize";
 
 export async function handleSincronizarPostRequest(req, res, next) {
   res.send(
@@ -17,39 +16,46 @@ export async function handleSincronizarPostRequest(req, res, next) {
 
 export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
   let eventos = [];
-  if (Object.keys(fecha).length === 0) {
+  if (Object.keys({}).length === 0) {
     //primera sincronizacion
-    console.log("\n\n\nno hay fecha");
     eventos = await EventosService.getEventosCompletosPorDnisYFechas(
       dnisYFechas
     );
   } else {
-    eventos = await EventosService.getEventosCompletosPorDnisYFechasAPartirDeFecha(
-      dnisYFechas,
-      fecha
-    );
+    eventos =
+      await EventosService.getEventosCompletosPorDnisYFechasAPartirDeFecha(
+        dnisYFechas,
+        fecha
+      );
   }
-
   //filtramos por los medicos que tiene la maquina, los datos fluyen en una sola direccion
-  return EventosService.excluirPorIdsMedicos(eventos, computadora.medicosIds);
+  const eventosFiltrados = EventosService.excluirPorIdsMedicos(
+    eventos,
+    computadora.medicosIds
+  );
+
+  const eventosDesarmados = EventosService.desarmarEventos(eventosFiltrados);
+  
+  return eventosFiltrados;
 }
 
 export async function actualizarDatos(datos) {
   console.log("\n\nevento:datos a actualizar\n\n", datos);
-  //hay que resolver el tema de sincronizar los pacientes, que quede almacenada la version mas actualizada del paciente
+
+  datos = await actualizarIdsPacientes(datos);
+
   try {
     await sequelize.transaction(async (t) => {
-      for (const evento of datos) {
-        await Medico.upsert(evento.medico, { transaction: t });
+      for (const medico of datos.medicos) {
+        await Medico.upsert(medico, { transaction: t });
+      }
+
+      for (const paciente of datos.pacientes) {
         await PacientesService.upsertarPorDNIyNacimiento(evento.paciente, t);
-        const eventoAux = {
-          ...evento,
-          pacienteId: await PacientesService.getIdPorDniYNacimiento(
-            evento.paciente
-          ),
-          medicoId: evento.medicoId,
-        };
-        await Evento.upsert(eventoAux, { transaction: t });
+      }
+
+      for (const evento of datos.eventos) {
+        await Evento.upsert(evento, { transaction: t });
       }
     });
 
@@ -58,4 +64,20 @@ export async function actualizarDatos(datos) {
     console.log("No se pudo actualizar el evento compartido: " + error);
     return {};
   }
+}
+
+async function actualizarIdsPacientes(datos) {
+  datos.pacientes.forEach(async (pacienteViejo) => {
+    //actualizamos el id
+    const pacienteNuevo = {
+      ...pacienteViejo,
+      id: await PacientesService.getIdPorDniYNacimiento(evento.paciente),
+    };
+
+    //buscamos el evento que tenga el pacienteId del viejo y lo cambiamos
+    const indice = datos.eventos.findIndex(
+      (evento) => evento.pacienteId == pacienteViejo.id
+    );
+    datos.eventos[indice] = { ...datos.eventos[indice], id: pacienteNuevo.id };
+  });
 }
