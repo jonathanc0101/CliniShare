@@ -40,9 +40,6 @@ export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
 }
 
 export async function actualizarDatos(datos) {
-  console.log("\n\nevento:datos a actualizar\n\n", datos);
-
-  console.log("datos",JSON.stringify(datos,null,20));
 
   if (Object.keys(datos).length === 0) {
     return;
@@ -89,4 +86,7 @@ async function actualizarIdsPacientes(datos) {
     );
     datos.eventos[indice] = { ...datos.eventos[indice], id: pacienteNuevo.id };
   }
+
+  return datos;
+  
 }
