@@ -48,7 +48,7 @@ async function getUltimaFechaDeSincronizacionConComputadoraId(computadoraId){
 
   const ultima = await getSincronizacionMasRecientePorComputadoraId(computadoraId);
   
-  if(!ultima){
+  if(Object.keys(ultima).length === 0){
     return false;
   }else{
     return ultima.fecha;
