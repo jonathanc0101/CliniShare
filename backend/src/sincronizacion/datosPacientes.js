@@ -42,8 +42,8 @@ export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
 export async function actualizarDatos(datos) {
   console.log("\n\nevento:datos a actualizar\n\n", datos);
 
-  if(Object.keys(datos).length === 0){
-    return
+  if (Object.keys(datos).length === 0) {
+    return;
   }
 
   datos = await actualizarIdsPacientes(datos);
@@ -55,7 +55,7 @@ export async function actualizarDatos(datos) {
       }
 
       for (const paciente of datos.pacientes) {
-        await PacientesService.upsertarPorDNIyNacimiento(evento.paciente, t);
+        await PacientesService.upsertarPorDNIyNacimiento(paciente, t);
       }
 
       for (const evento of datos.eventos) {
@@ -71,11 +71,11 @@ export async function actualizarDatos(datos) {
 }
 
 async function actualizarIdsPacientes(datos) {
-  datos.pacientes.forEach(async (pacienteViejo) => {
+  for (const pacienteViejo of datos.pacientes) {
     //actualizamos el id
     const pacienteNuevo = {
       ...pacienteViejo,
-      id: await PacientesService.getIdPorDniYNacimiento(evento.paciente),
+      id: await PacientesService.getIdPorDniYNacimiento(pacienteViejo),
     };
 
     //buscamos el evento que tenga el pacienteId del viejo y lo cambiamos
@@ -83,5 +83,5 @@ async function actualizarIdsPacientes(datos) {
       (evento) => evento.pacienteId == pacienteViejo.id
     );
     datos.eventos[indice] = { ...datos.eventos[indice], id: pacienteNuevo.id };
-  });
+  }
 }
