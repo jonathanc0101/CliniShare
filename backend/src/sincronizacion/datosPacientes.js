@@ -35,12 +35,16 @@ export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
   );
 
   const eventosDesarmados = EventosService.desarmarEventos(eventosFiltrados);
-  
+
   return eventosFiltrados;
 }
 
 export async function actualizarDatos(datos) {
   console.log("\n\nevento:datos a actualizar\n\n", datos);
+
+  if(Object.keys(datos).length === 0){
+    return
+  }
 
   datos = await actualizarIdsPacientes(datos);
 
