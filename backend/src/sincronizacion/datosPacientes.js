@@ -30,10 +30,6 @@ export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
     );
   }
 
-  console.log("\n\n\nfecha\n\n",fecha);
-  console.log("\n\n\nEVENTOS A ENVIAR\n\n");
-  console.log(JSON.toString(eventos,null,4));
-
   //filtramos por los medicos que tiene la maquina, los datos fluyen en una sola direccion
   return EventosService.excluirPorIdsMedicos(eventos, computadora.medicosIds);
 }
