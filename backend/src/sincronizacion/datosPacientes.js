@@ -59,7 +59,7 @@ export async function actualizarDatos(datos) {
         await PacientesService.upsertarPorDNIyNacimiento(paciente, t);
       }
 
-      datos = await actualizarIdsPacientes(datos);
+      datos.eventos = await actualizarIdsPacientes(datos);
       
       for (const evento of datos.eventos) {
         await Evento.upsert(evento, { transaction: t });
@@ -109,5 +109,5 @@ async function actualizarIdsPacientes(datos) {
   console.log("\n\n\n");
   console.log("datosdespues",JSON.stringify(datos,null,10));
   console.log("\n\n\n");
-  return datos;
+  return datos.eventos;
 }
