@@ -57,7 +57,9 @@ export async function actualizarDatos(datos) {
   try {
     await sequelize.transaction(async (t) => {
       for (const medico of datos.medicos) {
-        await Medico.upsert(medico, { transaction: t });
+        console.log("medicoAUpsertar",medico)
+        
+        console.log("medicoUpsertado",await Medico.upsert(medico, { transaction: t }));
       }
 
       console.log("here");
