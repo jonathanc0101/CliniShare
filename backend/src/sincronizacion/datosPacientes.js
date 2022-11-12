@@ -3,6 +3,7 @@ import { PacientesService } from "../services/paciente.service.js";
 import { sequelize } from "../database/database.js";
 import { Medico } from "../models/Medico.js";
 import { Evento } from "../models/Evento.js";
+import { JSON } from "sequelize";
 
 export async function handleSincronizarPostRequest(req, res, next) {
   res.send(
@@ -22,11 +23,14 @@ export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
       dnisYFechas
     );
   } else {
-    eventos = EventosService.getEventosCompletosPorDnisYFechasAPartirDeFecha(
+    eventos = await EventosService.getEventosCompletosPorDnisYFechasAPartirDeFecha(
       dnisYFechas,
       fecha
     );
   }
+
+  console.log("\n\n\nEVENTOS A ENVIAR\n\n");
+  console.log(JSON.toString(eventos,null,4));
 
 return eventos;
   //filtramos por los medicos que tiene la maquina, los datos fluyen en una sola direccion
