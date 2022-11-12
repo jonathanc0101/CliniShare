@@ -73,6 +73,11 @@ export async function actualizarDatos(datos) {
 }
 
 async function actualizarIdsPacientes(datos) {
+
+  console.log("\n\n\n");
+  console.log("datosAntes",JSON.stringify(datos,null,10));
+  console.log("\n\n\n");
+
   for (const pacienteViejo of datos.pacientes) {
     //actualizamos el id
     const pacienteNuevo = {
@@ -84,9 +89,11 @@ async function actualizarIdsPacientes(datos) {
     const indice = datos.eventos.findIndex(
       (evento) => evento.pacienteId == pacienteViejo.id
     );
-    datos.eventos[indice] = { ...datos.eventos[indice], id: pacienteNuevo.id };
+    datos.eventos[indice] = { ...datos.eventos[indice], pacienteId: pacienteNuevo.id };
   }
 
+  console.log("\n\n\n");
+  console.log("datosdespues",JSON.stringify(datos,null,10));
+  console.log("\n\n\n");
   return datos;
-  
 }
