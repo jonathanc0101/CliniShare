@@ -42,7 +42,7 @@ export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
 export async function actualizarDatos(datos) {
   console.log("\n\nevento:datos a actualizar\n\n", datos);
 
-  if (Object.keys(datos).length === 0) {
+  if (Object.keys(datos).length === 0 || datos.pacientes.length === 0 || datos.medicos.length === 0 || datos.eventos.length === 0) {
     return;
   }
 
