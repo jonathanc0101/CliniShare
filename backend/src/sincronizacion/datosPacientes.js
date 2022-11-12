@@ -80,16 +80,27 @@ async function actualizarIdsPacientes(datos) {
 
   for (const pacienteViejo of datos.pacientes) {
     //actualizamos el id
+
+    console.log("\n\n\n");
+    console.log("idViejo",pacienteViejo.id);
+    console.log("\n\n\n");
+
+
+    console.log("\n\n\n");
+    console.log("idnuevo",await PacientesService.getIdPorDniYNacimiento(pacienteViejo));
+    console.log("\n\n\n");
+
     const pacienteNuevo = {
       ...pacienteViejo,
       id: await PacientesService.getIdPorDniYNacimiento(pacienteViejo),
     };
-
+ 
     //buscamos el evento que tenga el pacienteId del viejo y lo cambiamos
-    const indice = datos.eventos.findIndex(
-      (evento) => evento.pacienteId == pacienteViejo.id
-    );
-    datos.eventos[indice] = { ...datos.eventos[indice], pacienteId: pacienteNuevo.id };
+    for(let i = 0; i<datos.eventos.length;i++){
+      if(datos.eventos[i].pacienteId === pacienteViejo.id){
+        datos.eventos[i].pacienteId = pacienteNuevo.id;
+      }
+    }
   }
 
   console.log("\n\n\n");
