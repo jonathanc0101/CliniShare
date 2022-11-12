@@ -17,7 +17,7 @@ export async function handleSincronizarPostRequest(req, res, next) {
 
 export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
   let eventos = [];
-  if (!fecha) {
+  if (Object.keys(fecha).length === 0) {
     //primera sincronizacion
     console.log("\n\n\nno hay fecha");
     eventos = await EventosService.getEventosCompletosPorDnisYFechas(
