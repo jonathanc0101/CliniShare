@@ -58,7 +58,7 @@ export async function actualizarDatos(datos) {
       for (const paciente of datos.pacientes) {
         await PacientesService.upsertarPorDNIyNacimiento(paciente, t);
       }
-      
+
       datos = await actualizarIdsPacientes(datos);
       
       for (const evento of datos.eventos) {
@@ -86,15 +86,17 @@ async function actualizarIdsPacientes(datos) {
     console.log("idViejo",pacienteViejo.id);
     console.log("\n\n\n");
 
-
-    console.log("\n\n\n");
-    console.log("idnuevo",await PacientesService.getIdPorDniYNacimiento(pacienteViejo));
-    console.log("\n\n\n");
-
     const pacienteNuevo = {
-      ...pacienteViejo,
-      id: await PacientesService.getIdPorDniYNacimiento(pacienteViejo),
+      ...pacienteViejo
     };
+
+    pacienteNuevo.id = await PacientesService.getIdPorDniYNacimiento(pacienteViejo);
+
+
+    console.log("\n\n\n");
+    console.log("pacienteNuevo",JSON.stringify(pacienteNuevo,null,8));
+    console.log("\n\n\n");
+
  
     //buscamos el evento que tenga el pacienteId del viejo y lo cambiamos
     for(let i = 0; i<datos.eventos.length;i++){
