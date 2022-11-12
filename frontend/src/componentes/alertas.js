@@ -14,7 +14,8 @@ export const alertas = {
   medicoExiste,
   fechaNacimientoPaciente,
   passwordMinimaInvalida,
-  pacienteConCorreoExistente
+  pacienteConCorreoExistente,
+  fechaInvalidaMenor
 };
 
 async function pacienteConDniExistente(pacienteDni) {
@@ -77,10 +78,18 @@ async function contraseñasDiferentes() {
 
 // ALERTAS FECHAS
 
-async function fechaErronea(tipoFecha) {
+async function fechaErronea(tipo) {
   Swal.fire({
     title: "",
-    html: `<p>La <b>fecha de ${tipoFecha}</b> es inválida</p>`,
+    html: `<p>La <b>fecha de ${tipo}</b> es inválida</p>`,
+    icon: "error",
+  });
+}
+
+async function fechaInvalidaMenor(tipo) {
+  Swal.fire({
+    title: "",
+    html: `<p>La <b>fecha de ${tipo}</b> es menor al día de hoy.</p>`,
     icon: "error",
   });
 }
@@ -110,13 +119,22 @@ async function alertaModificacionExitosa(entidad) {
   });
 }
 
-async function bienvenida(nombreMedico) {
-  Swal.fire({
-    html: `<p>¡Bienvenido/a Dr./Dra. <b>${nombreMedico}</b>!</p>`,
-    icon: "success",
-    timer: "3000",
-    position: "center",
-  });
+async function bienvenida(nombreMedico, sexo) {
+  if (sexo === "Femenino"){
+    Swal.fire({
+      html: `<p>¡Bienvenida Dra. <b>${nombreMedico}</b>!</p>`,
+      icon: "success",
+      timer: "3000",
+      position: "center",
+    });
+  }else if (sexo === "Masculino"){
+    Swal.fire({
+      html: `<p>¡Bienvenido Dr. <b>${nombreMedico}</b>!</p>`,
+      icon: "success",
+      timer: "3000",
+      position: "center",
+    });
+  }
 }
 
 // ALERTAS REGISTRO MÉDICO

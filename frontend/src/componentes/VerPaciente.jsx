@@ -69,7 +69,7 @@ function VerPaciente() {
       >
         &nbsp;&nbsp;&nbsp;Ver / Datos del paciente
       </Typography>
-      <Card>
+      <Card style={{ height: "94vh" }}>
         <CardContent>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={6}>

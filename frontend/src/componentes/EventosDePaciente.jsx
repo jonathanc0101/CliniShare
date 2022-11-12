@@ -46,7 +46,6 @@ function EventosDePaciente(params) {
   };
 
   useEffect(() => {
-    console.log(usuario);
     const obtenerEventosPorPacienteId = async () => {
       const response = await api.obtenerEventosCompletosPorPacienteId(
         params.id

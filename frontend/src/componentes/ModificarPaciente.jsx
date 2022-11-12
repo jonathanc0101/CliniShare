@@ -149,7 +149,7 @@ function ModificarPaciente() {
       >
         &nbsp;&nbsp;&nbsp;Modificar / Datos del paciente
       </Typography>
-      <Card style={{ heigth: "94vh" }}>
+      <Card style={{ height: "94vh" }}>
         <CardContent>
           {/* DATOS DEL PACIENTE */}
           <Grid container direction="row" spacing={2}>

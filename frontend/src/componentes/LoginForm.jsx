@@ -73,7 +73,7 @@ function LoginForm() {
         setCorreoElectronico("");
         setPassword("");
         console.log(usuario);
-        alertas.bienvenida(usuario.medico.nombre);
+        alertas.bienvenida(usuario.medico.nombre, usuario.medico.sexo);
       } else {
         alertas.errorLogin();
         setPassword("");

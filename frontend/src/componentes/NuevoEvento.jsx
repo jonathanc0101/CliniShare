@@ -60,7 +60,6 @@ function NuevoEvento() {
   };
 
   const handleOnchange = (e) => {
-    console.log(e.target.value);
     if (e.target.name === "importante") {
       setEvento({ ...evento, [e.target.name]: e.target.checked });
     } else {
@@ -103,15 +102,10 @@ function NuevoEvento() {
 
       evento.pacienteId = params.id;
       evento.medicoId = usuario.medico.medicoId;
-      console.log("evento_ ", evento);
       const response = await api.crearEvento(evento);
       if (!response) {
-        console.log("respuesta mal: ", response);
-
         alertas.alertaProblemas();
       } else {
-        console.log("respuesta: ", response);
-
         alertas.alertaExito("evento");
         navigate(-1);
       }
@@ -136,13 +130,12 @@ function NuevoEvento() {
         &nbsp;&nbsp;&nbsp;Nuevo evento / Datos del evento
       </Typography>
 
-      <Card>
+      <Card style={{ height: "94vh" }}>
         <CardContent>
           {/* DATOS DEL EVENTO */}
           <Grid container direction="row" spacing={2}>
             {/* TÍTULO */}
-
-            <Grid item xs={4} sm={10}>
+            <Grid item xs={4} sm={9}>
               <TextField
                 label="Título"
                 type="text"
@@ -156,7 +149,8 @@ function NuevoEvento() {
                 size="small"
               ></TextField>
             </Grid>
-            <Grid item xs={4} sm={2}>
+            {/* FECHA DE CREACIÓN */}
+            <Grid item xs={4} sm={3}>
               <LocalizationProvider
                 adapterLocale="es"
                 dateAdapter={AdapterDayjs}
@@ -178,7 +172,6 @@ function NuevoEvento() {
             {/* IMPORTANTE */}
             <Grid item xs={4} sm={2}>
               <br></br>
-
               <FormControlLabel
                 name="importante"
                 value={evento.importante}
@@ -189,23 +182,25 @@ function NuevoEvento() {
               />
             </Grid>
             {/* FECHA DE VENCIMIENTO */}
-            <Grid item xs={4} sm={10}>
-              <LocalizationProvider
-                adapterLocale="es"
-                dateAdapter={AdapterDayjs}
-              >
-                <DesktopDatePicker
-                  disabled={!evento.importante}
-                  label="Fecha de vencimiento"
-                  name="fechaVencimiento"
-                  value={evento.fechaVencimiento}
-                  onChange={handleChangeFecha}
-                  minDate={moment().add(1, "days")}
-                  renderInput={(params) => (
-                    <TextField size="small" margin="normal" {...params} />
-                  )}
-                />
-              </LocalizationProvider>
+            <Grid item xs={4} sm={4}>
+              {evento.importante ? (
+                <LocalizationProvider
+                  adapterLocale="es"
+                  dateAdapter={AdapterDayjs}
+                >
+                  <DesktopDatePicker
+                    disabled={!evento.importante}
+                    label="Fecha de vencimiento"
+                    name="fechaVencimiento"
+                    value={evento.fechaVencimiento}
+                    onChange={handleChangeFecha}
+                    minDate={moment().add(1, "days")}
+                    renderInput={(params) => (
+                      <TextField size="small" margin="normal" {...params} />
+                    )}
+                  />
+                </LocalizationProvider>
+              ) : null}
             </Grid>
           </Grid>
           <br></br>
@@ -282,28 +277,29 @@ function NuevoEvento() {
               />
             </Grid>
           </Grid>
-          <br></br> 
-          <br></br> 
+          <br></br><br></br><br></br>
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
-            <Grid item xs={10}>
+            <Grid item xs={4} sm={4}>
               <BotonVolver></BotonVolver>
             </Grid>
             {/* GUARDAR */}
-            <Grid item>
-              <Button
-                variant="contained"
-                size="large"
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 15,
-                  backgroundColor: "#007FFF",
-                }}
-                endIcon={<SaveIcon style={{ fontSize: 24 }} />}
-                onClick={() => handleSubmit(evento)}
-              >
-                Guardar
-              </Button>
+            <Grid item xs={4} sm={8}>
+              <Box textAlign="right">
+                <Button
+                  variant="contained"
+                  size="medium"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 15,
+                    backgroundColor: "#007FFF",
+                  }}
+                  endIcon={<SaveIcon style={{ fontSize: 24 }} />}
+                  onClick={() => handleSubmit(evento)}
+                >
+                  Guardar
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         </CardContent>

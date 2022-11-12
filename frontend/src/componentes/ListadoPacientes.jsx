@@ -96,7 +96,7 @@ function ListadoPacientes() {
         {/* TABLA PACIENTES */}
         <Grid xs={10} >
           <TableContainer
-            sx={{ maxHeight: 389, maxWidth: 1060 }}
+            sx={{ maxHeight: 380, maxWidth: 1060 }}
             style={{ border: "1px solid gray" }}
           >
             <Table stickyHeader size="small" aria-label="sticky table">
