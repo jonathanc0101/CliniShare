@@ -101,15 +101,11 @@ async function modify(medico) {
     let medicoNew = {...medico };
     let hash = "";
   
-    console.log("\n\n\nmedicoAModificar\n\n\n",JSON.stringify(medico,null,8));
 
     if(medico.password){
-      console.log("\n\n\n entramos a medico.password \n\n\n");
       hash = await generateHash(medico.password);
       medicoNew = { ...medicoNew, password: hash };
     }
-
-    console.log("\n\n\nmedicoNew\n\n\n",JSON.stringify(medicoNew,null,8));
 
     if (await MedicosUsuariosService.modificar(medicoNew)){
       return true;
