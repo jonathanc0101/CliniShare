@@ -21,12 +21,7 @@ import moment from "moment";
 function ModificarMedico() {
   const [guardado, setGuardado] = useState(false);
   const [passwordAVerificar, setPasswordAVerificar] = useState("");
-  const [passwordActual, setPasswordActual] = useState("");
 
-  const [direccion, setDireccion] = useState("");
-  const [telefono, setTelefono] = useState("");
-
-  const [genero, setGenero] = useState("");
   const sexos = [
     {
       value: "Femenino",
@@ -77,8 +72,11 @@ function ModificarMedico() {
     ) {
       alertas.alertaCamposObligatorios();
     } else if (medico.password.length === 0) {
-      delete medico.password;
-    } 
+      alertas.passwordVacia();
+      return;
+    } else if (!verificarPassword){
+      alertas.contraseñasDiferentes();
+    }
     console.log("Usuario a enviar: ", medico);
     const respuesta = await api.modificarMedico({ ...medico });
     console.log("Respuesta del api: ", respuesta);

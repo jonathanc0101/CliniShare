@@ -118,8 +118,7 @@ async function modificarMedico(Medico) {
   try {
     const response = await axios.put(rutas.modificarMedico, Medico);
     const medicoRespuesta = response.data;
-    console.log(response.data);
-    return Object.keys(medicoRespuesta).length !== 0;
+    return medicoRespuesta;
   } catch (error) {
     console.error(error);
     return false;

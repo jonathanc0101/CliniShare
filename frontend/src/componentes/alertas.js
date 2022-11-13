@@ -15,7 +15,8 @@ export const alertas = {
   fechaNacimientoPaciente,
   passwordMinimaInvalida,
   pacienteConCorreoExistente,
-  fechaInvalidaMenor
+  fechaInvalidaMenor,
+  passwordVacia
 };
 
 async function pacienteConDniExistente(pacienteDni) {
@@ -160,6 +161,13 @@ async function medicoExiste(nombreCampo, dni, matricula) {
 async function passwordMinimaInvalida() {
   Swal.fire({
     html: `<p>La contraseña debe ser mayor a 4 carácteres</p>`,
+    icon: "error",
+  });
+}
+
+async function passwordVacia() {
+  Swal.fire({
+    html: `<p>Debe ingresar una nueva contraseña o la misma</p>`,
     icon: "error",
   });
 }
