@@ -21,7 +21,6 @@ async function getMedicosFromModel() {
 }
 async function getMedicoAPartirDeUser(medicoUser){
   const medicoFound =  await Medico.findOne({ where: {
-    dni:medicoUser.dni,
     email:medicoUser.email,
   } });
 
@@ -32,7 +31,6 @@ async function getMedicoAPartirDeUser(medicoUser){
 
 async function obtenerMedicoIdAPartirDeMedicoUser(medicoUser) {
   const medicoFound =  await Medico.findOne({ where: {
-    dni:medicoUser.dni,
     email:medicoUser.email,
   } });
 
@@ -43,7 +41,6 @@ async function obtenerMedicoIdAPartirDeMedicoUser(medicoUser) {
 
 async function obtenerMedicoAPartirDeMedicoUser(medicoUser) {
   const medicoFound =  await Medico.findOne({ where: {
-    dni:medicoUser.dni,
     email:medicoUser.email,
   } });
 

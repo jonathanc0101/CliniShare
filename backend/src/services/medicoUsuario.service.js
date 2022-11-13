@@ -29,6 +29,8 @@ async function create(user) {
 
 async function modificar(user) {
   await sequelize.transaction(async (t) => {
+    delete user.email;
+    
     const newUser = await MedicoUsuario.update(user, {
       where: { id: user.id },
     });
