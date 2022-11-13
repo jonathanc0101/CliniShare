@@ -71,10 +71,15 @@ function ModificarMedico() {
       medico.telefono.length === 0
     ) {
       alertas.alertaCamposObligatorios();
-    } else if (medico.password.length === 0) {
+    } else if (medico.password.length === 0){
       alertas.passwordVacia();
       return;
-    } else if (!verificarPassword){
+    } 
+    // else if{(passwordAVerificar.length === 0){
+      
+    // }
+
+    else if (!verificarPassword){
       alertas.contraseñasDiferentes();
     }
     console.log("Usuario a enviar: ", medico);

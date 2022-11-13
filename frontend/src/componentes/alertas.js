@@ -171,3 +171,10 @@ async function passwordVacia() {
     icon: "error",
   });
 }
+
+// async function passwordAVerificarVacia() {
+//   Swal.fire({
+//     html: `<p>Debe </p>`,
+//     icon: "error",
+//   });
+// }
