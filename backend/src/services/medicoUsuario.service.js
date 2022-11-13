@@ -1,6 +1,8 @@
 import { Medico } from "../models/Medico.js";
 import { MedicoUsuario } from "../models/MedicoUsuario.js";
 import { MedicosService } from "./medico.service.js";
+import { sequelize } from "../database/database.js";
+
 
 export const MedicosUsuariosService = {
   getMedicos: () => getMedicosFromModel(),
@@ -30,8 +32,15 @@ async function modificar(user) {
     const newUser = await MedicoUsuario.update(user, {
       where: { id: user.id },
     });
-    newUser.id = await MedicosService.obtenerMedicoIdAPartirDeMedicoUser(user);
-    await Medico.update(newUser, { where: { id: newUser.id } });
+
+    const medicoViejo = await MedicosService.obtenerMedicoAPartirDeMedicoUser(user);
+
+    delete user.id;
+    delete user.password;
+
+    const medicoNuevo = {...medicoViejo.dataValues, ...user};
+
+    await Medico.update(medicoNuevo, { where: { id: medicoViejo.id } });
   });
 
   return true;

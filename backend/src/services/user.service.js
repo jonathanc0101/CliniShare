@@ -56,7 +56,6 @@ async function login(email, password) {
 
       const userARetornar = { ...user, ...dataValues };
 
-      console.log("\n\nuser\n\n", userARetornar);
       return { token, medico: userARetornar };
     }
   } catch (error) {
@@ -99,26 +98,20 @@ async function register(medico) {
 
 async function modify(medico) {
   try {
-    let response = {};
-    const hash = await generateHash(medico.password);
-    const medicoNew = { ...medico, password: hash };
+    let medicoNew = {...medico };
+    let hash = "";
 
-    await sequelize.transaction(async (t) => {
-      response = await MedicoUsuario.update(medicoNew, {
-        where: { email: medicoNew.email },
-        transaction: t,
-      });
-      await Medico.update(medicoNew, {
-        where: { email: medicoNew.email },
-        transaction: t,
-      });
-    });
-
-    if (response) {
-      return response;
-    } else {
-      return {};
+    if(medico.password){
+      hash = await generateHash(medico.password);
+      medicoNew = { ...medicoNew, password: hash };
     }
+
+    if (await MedicosUsuariosService.modificar(medico)){
+      return true;
+    }else{
+      return false;
+    }
+
   } catch (error) {
     console.log(error);
     return {};
