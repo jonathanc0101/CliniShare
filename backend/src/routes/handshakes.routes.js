@@ -13,4 +13,9 @@ router.post("/sincronizar", async (req, res, next) => {
   emitter.emit("datos_enviados",req.body);
 });
 
+router.post("/broadcast", async (req,res,next) => {
+  emitter.emit("broadcast_to_network");
+  res.send(true);
+})
+
 export default router;

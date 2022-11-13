@@ -26,6 +26,7 @@ const rutas = {
   getEventosCompletosPorPacienteId: "eventos/all/completos/idPaciente/",
   getEventosCompletosImportantesPorPacienteId:
     "eventos/importantes/paciente/id/",
+  postBroadcast: "broadcast"
 };
 
 for (let ruta in rutas) {

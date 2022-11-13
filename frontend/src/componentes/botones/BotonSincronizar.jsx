@@ -1,4 +1,5 @@
 import { Button, Grid, Typography } from "@mui/material";
+import { api } from "../../API backend/api"
 
 function BotonSincronizar() {
   return (
@@ -7,17 +8,17 @@ function BotonSincronizar() {
         <Button
           style={{ border: "1px solid #0c5774" }}
           variant="outlined"
+          onClick={() => api.sincronizar()}
           // startIcon={
           //   <ArrowBackIcon
           //     style={{ color: "#0c5774", fontWeight: "bold" }}
           //   ></ArrowBackIcon>
           // }
-          // onClick={() => navigate(-1)}
         >
           <Typography variant="h7" color={"#0c5774"} fontWeight={"bold"}>
             SINCRONIZAR
           </Typography>
-        </Button>
+        </Button >
       </Grid>
     </>
   );
