@@ -60,6 +60,8 @@ function ModificarMedico() {
   }, []);
 
   const update = async () => {
+    let newMedico = { ...medico };
+
     if (
       medico.nombre.length === 0 ||
       medico.apellido.length === 0 ||
@@ -71,19 +73,18 @@ function ModificarMedico() {
       medico.telefono.length === 0
     ) {
       alertas.alertaCamposObligatorios();
-    } else if (medico.password.length === 0){
-      alertas.passwordVacia();
+    } else if (medico.password.length === 0) {
+      delete newMedico.password;
+    } else if (passwordAVerificar.length === 0) {
+      alertas.passwordAVerificarVacia();
       return;
-    } 
-    // else if{(passwordAVerificar.length === 0){
-      
-    // }
-
-    else if (!verificarPassword){
+    } else if (!verificarPassword) {
       alertas.contraseñasDiferentes();
+      return;
     }
-    console.log("Usuario a enviar: ", medico);
-    const respuesta = await api.modificarMedico({ ...medico });
+    console.log("Usuario nuevo a enviar: ", newMedico);
+
+    const respuesta = await api.modificarMedico(newMedico);
     console.log("Respuesta del api: ", respuesta);
     if (respuesta) {
       alertas.alertaModificacionExitosa("usuario");
@@ -306,7 +307,6 @@ function ModificarMedico() {
             {/* CORREO ELECTRÓNICO */}
             <Grid item xs={4} sm={6}>
               <TextField
-                disabled
                 label="Correo electrónico"
                 type="text"
                 name="email"

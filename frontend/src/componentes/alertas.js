@@ -16,7 +16,8 @@ export const alertas = {
   passwordMinimaInvalida,
   pacienteConCorreoExistente,
   fechaInvalidaMenor,
-  passwordVacia
+  passwordVacia,
+  passwordAVerificarVacia
 };
 
 async function pacienteConDniExistente(pacienteDni) {
@@ -172,9 +173,9 @@ async function passwordVacia() {
   });
 }
 
-// async function passwordAVerificarVacia() {
-//   Swal.fire({
-//     html: `<p>Debe </p>`,
-//     icon: "error",
-//   });
-// }
+async function passwordAVerificarVacia() {
+  Swal.fire({
+    html: `<p>Debe verificar la contraseña</p>`,
+    icon: "error",
+  });
+}
