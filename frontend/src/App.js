@@ -55,7 +55,7 @@ function App() {
       <Router>
         <Rutas></Rutas>
       </Router>
-      {/* <BotonSincronizar></BotonSincronizar> */}
+      <BotonSincronizar />
     </>
   );
 }

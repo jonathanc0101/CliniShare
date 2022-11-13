@@ -23,6 +23,7 @@ export const api = {
   obtenerEventosCompletosPorPacienteId,
   obtenerEventosCompletosImportantesPorPacienteId,
   modificarEvento,
+  sincronizar,
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -286,5 +287,14 @@ async function obtenerEventosCompletosImportantesPorPacienteId(pacienteId) {
     return eventosImportantesObtenidos;
   } catch (error) {
     return "El evento no existe";
+  }
+}
+
+async function sincronizar(){
+  try {
+    const response = await axios.post(rutas.postBroadcast);
+    return response;
+  } catch (error) {
+    console.log("error ",error);
   }
 }

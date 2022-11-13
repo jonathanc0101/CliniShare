@@ -30,6 +30,8 @@ export default function loadListeners(emitter) {
 
   emitter.on("logged_in", () => {});
 
+  emitter.on("broadcast_to_network",() => {broadcastComputerData();});
+
   emitter.on("new_computer", (computer) => {
     console.log("\n\nevento:ew_computer\n\n");
     handleNewComputer(computer);
