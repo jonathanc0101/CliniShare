@@ -15,10 +15,32 @@ import {
 } from "../UDP/broadcastSender.js";
 import { ComputadoraService } from "../services/computadora.service.js";
 
+import { dataInsert1 } from "../../datos de prueba/dataInsert1.js";
+import { dataInsert2 } from "../../datos de prueba/dataInsert2.js";
+import { dataInsert3 } from "../../datos de prueba/dataInsert3.js";
+
 // Import other listeners
 export default function loadListeners(emitter) {
   emitter.on("db_connected", async () => {
     const treintaMinutos = 1000 * 60 * 30;
+
+    if (process.env.TESTING) {
+      switch (process.env.TESTING_DATA) {
+        case "1":
+          await dataInsert1();
+          break;
+        case "2":
+          await dataInsert2();
+          break;
+
+        case "3":
+          await dataInsert3();
+          break;
+
+        default:
+          break;
+      }
+    }
 
     //starting broadcast listener
     listenForBroadcasts();
@@ -30,7 +52,9 @@ export default function loadListeners(emitter) {
 
   emitter.on("logged_in", () => {});
 
-  emitter.on("broadcast_to_network",() => {broadcastComputerData();});
+  emitter.on("broadcast_to_network", () => {
+    broadcastComputerData();
+  });
 
   emitter.on("new_computer", (computer) => {
     console.log("\n\nevento:ew_computer\n\n");

@@ -1,40 +1,49 @@
 version: '2'
-services:     
-  backend:
+services:  
+
+  postgres:
+    build:
+      context: ./backend/dbDocker
+
+  backend1:
     build:
       context: ./backend
       dockerfile: Dockerfile
     command: "node ./src/main.js"
-    ports:
-      - "3000:3000"
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: postgres://clinishare:password@postgres/clinisharedb
+      DATABASE_URL: postgres://clinishare:password@postgres/clinisharedb1
+      TESTING: "true"
+      TESTING_DATA: "1"
   
-  postgres:
-    image: postgres:9.6.2-alpine
-    environment:
-      POSTGRES_USER: clinishare
-      POSTGRES_DB: clinisharedb
-      POSTGRES_PASSWORD: password
 
   backend2:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
     command: "node ./src/main.js"
     depends_on:
-      - postgres2
+      - postgres
     environment:
-      DATABASE_URL: postgres://clinishare:password@postgres/clinisharedb
-  
-  postgres2:
-    image: postgres:9.6.2-alpine
+      DATABASE_URL: postgres://clinishare:password@postgres/clinisharedb2
+      TESTING: "true"
+      TESTING_DATA: "2"
+      
+  backend3:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: "node ./src/main.js"
+    depends_on:
+      - postgres
     environment:
-      POSTGRES_USER: clinishare
-      POSTGRES_DB: clinisharedb
-      POSTGRES_PASSWORD: password
+      DATABASE_URL: postgres://clinishare:password@postgres/clinisharedb3
+      TESTING: "true"
+      TESTING_DATA: "3"
+
 
 
   frontend:
@@ -45,4 +54,4 @@ services:
       - "5000:5000"
     command: "npx serve build -l 5000"
     depends_on:
-      - backend
+      - backend1
