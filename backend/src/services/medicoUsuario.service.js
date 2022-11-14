@@ -29,18 +29,18 @@ async function create(user) {
 
 async function modificar(user) {
   await sequelize.transaction(async (t) => {
-    delete user.email;
+    const medicoViejo = await MedicosService.obtenerMedicoAPartirDeMedicoUser(user);
     
     const newUser = await MedicoUsuario.update(user, {
       where: { id: user.id },
     });
 
-    const medicoViejo = await MedicosService.obtenerMedicoAPartirDeMedicoUser(user);
-
     delete user.id;
     delete user.password;
 
     const medicoNuevo = {...medicoViejo.dataValues, ...user};
+
+    console.log("\n\n\nmedico nuevo\n\n\n",medicoNuevo);
 
     await Medico.update(medicoNuevo, { where: { id: medicoViejo.id } });
   });
