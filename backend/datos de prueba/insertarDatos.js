@@ -1,27 +1,24 @@
-import {eventos} from "./eventos1Procesados.js";
+import { Paciente } from "../src/models/Paciente.js";
+import { Medico } from "../src/models/Medico.js";
+import { Evento } from "../src/models/Evento.js";
 
-import {medicos} from "./medicos.js";
-import {pacientes} from "./pacientes.js";
-
-async function insertarDatos(){
+export async function insertarDatos(eventos,medicos,pacientes){
 
     for(const paciente of pacientes){
-
-        
+        // insertarPaciente
+        await Paciente.upsert(paciente);
     }
 
     for(const medico of medicos){
-        
+        // insertarMedico
+        await Medico.upsert(medico);
     }
 
     for(const evento of eventos){
-
+        // insertarEvento
+        await Evento.upsert(evento);
     }
 
 }
 
-function randomIndex(arr){
-    return Math.floor(Math.random() * arr.length);
-}
 
-insertarDatos();

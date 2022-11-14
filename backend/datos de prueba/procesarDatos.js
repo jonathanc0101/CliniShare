@@ -5,13 +5,24 @@ import {medicos} from "./medicos.js";
 import {pacientes} from "./pacientes.js";
 import fs from "fs";
 
+const pacientesIds = pacientes.map((p)=>p.id);
+const medicosIds = medicos.map((p)=>p.id);
+
 async function procesarDatos(){
 
-    const eventos = [...eventos1,...eventos2,...eventos3];
-    const pacientesIds = pacientes.map((p)=>p.id);
-    const medicosIds = medicos.map((p)=>p.id);
+    const eventos1Procesados = filtrarEventos(eventos1);
+    const eventos2Procesados = filtrarEventos(eventos2);
+    const eventos3Procesados = filtrarEventos(eventos3);
 
-    
+    const eventosProcesados = {eventos1Procesados,eventos2Procesados,eventos3Procesados};
+
+    for(const key of Object.keys(eventosProcesados)){
+        fs.writeFileSync("./" + key + ".js", "export const eventos = "+ JSON.stringify(eventosProcesados[key],null,4));
+    }
+
+}
+
+function filtrarEventos(eventos){
     for(const evento of eventos){
         const randomMedicoId = medicosIds[randomIndex(medicosIds)];
         const randomPacienteId = pacientesIds[randomIndex(pacientesIds)];
@@ -22,16 +33,7 @@ async function procesarDatos(){
         evento.pacienteId = randomPacienteId;        
     }
 
-    const eventos1Procesados = eventos.filter((e) => eventos.indexOf(e) < eventos1.length );
-    const eventos2Procesados = eventos.filter((e) => eventos.indexOf(e) < eventos2.length );
-    const eventos3Procesados = eventos.filter((e) => eventos.indexOf(e) < eventos3.length );
-
-    const eventosProcesados = {eventos1Procesados,eventos2Procesados,eventos3Procesados};
-
-    for(const key of Object.keys(eventosProcesados)){
-        fs.writeFileSync(key + ".js",JSON.stringify(eventosProcesados[key],null,4));
-    }
-
+    return eventos;
 }
 
 function randomIndex(arr){
