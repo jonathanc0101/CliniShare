@@ -307,6 +307,7 @@ function ModificarMedico() {
             {/* CORREO ELECTRÓNICO */}
             <Grid item xs={4} sm={6}>
               <TextField
+                disabled
                 label="Correo electrónico"
                 type="text"
                 name="email"

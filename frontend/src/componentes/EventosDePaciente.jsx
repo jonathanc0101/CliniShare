@@ -205,6 +205,16 @@ function EventosDePaciente(params) {
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
+            labelRowsPerPage={"Registros por página:"}
+            labelDisplayedRows={() => {
+              return `Registros: ${page * rowsPerPage + 1} – ${
+                page * rowsPerPage + rowsPerPage
+              } de ${
+                eventos.length !== -1
+                  ? eventos.length
+                  : `more than ${rowsPerPage}`
+              }`;
+            }}
           />
         </Grid>
       ) : (

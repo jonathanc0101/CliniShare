@@ -229,6 +229,16 @@ function ListadoPacientes() {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        labelRowsPerPage={"Registros por página:"}
+        labelDisplayedRows={() => {
+          return `Registros: ${page * rowsPerPage + 1} – ${
+            page * rowsPerPage + rowsPerPage
+          } de ${
+            pacientes.length !== -1
+              ? pacientes.length
+              : `more than ${rowsPerPage}`
+          }`;
+        }}
       />
     </>
   );

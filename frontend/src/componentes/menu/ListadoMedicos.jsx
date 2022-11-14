@@ -177,6 +177,16 @@ function ListadoMedicos() {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        labelRowsPerPage={"Registros por página:"}
+        labelDisplayedRows={() => {
+          return `Registros: ${page * rowsPerPage + 1} – ${
+            page * rowsPerPage + rowsPerPage
+          } de ${
+            medicos.length !== -1
+              ? medicos.length
+              : `more than ${rowsPerPage}`
+          }`;
+        }}
       />
     </>
   );
