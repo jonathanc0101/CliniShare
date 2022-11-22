@@ -7,20 +7,17 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { styled } from "@mui/material/styles";
 import {
-  FormControl,
   InputAdornment,
   OutlinedInput,
   TablePagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { api } from "../../API backend/api";
-import MenuAppBar from "../MenuAppBar";
-import Menu from "../Menu";
+import MenuAppBar from "../Menu/MenuAppBar";
+import Menu from "../Menu/Menu";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",

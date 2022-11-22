@@ -1,37 +1,32 @@
 import {
   Box,
-  Button,
   Card,
   CardContent,
   Checkbox,
   FormControlLabel,
   Grid,
+  TextareaAutosize,
   TextField,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import { api } from "../../API backend/api";
+import { useParams } from "react-router-dom";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useState, useEffect } from "react";
-import SaveIcon from "@mui/icons-material/Save";
-import { api } from "../API backend/api";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import BotonVolver from "./botones/BotonVolver";
-import { alertas } from "./alertas";
-import moment from "moment";
-import validator from "validator";
+import BotonVolver from "../Botones/BotonVolver";
 
-function ModificarEvento() {
+function VerEvento() {
   const params = useParams();
-  let navigate = useNavigate();
 
   const [evento, setEvento] = useState({
     titulo: "",
+    descripcion: "",
     importante: false,
     fecha: "",
     fechaVencimiento: "",
-    descripcion: "",
   });
 
   const [paciente, setPaciente] = useState({
@@ -40,97 +35,32 @@ function ModificarEvento() {
     dni: "",
   });
 
+  const [medico, setMedico] = useState({
+    nombre: "",
+    apellido: "",
+    dni: "",
+    matricula: "",
+  });
+
   useEffect(() => {
     (async () => {
       const eventoEncontrado = await api.obtenerEventoConPacienteYMedicoPorId(
         params.id
       );
+      const pacienteDelEvento = eventoEncontrado.paciente;
+      const medicoDelEvento = eventoEncontrado.medico;
+
       setEvento((estadoAnterior) => {
         return { ...estadoAnterior, ...eventoEncontrado };
       });
-
-      const pacienteDelEvento = eventoEncontrado.paciente;
       setPaciente((estadoAnterior) => {
         return { ...estadoAnterior, ...pacienteDelEvento };
       });
+      setMedico((estadoAnterior) => {
+        return { ...estadoAnterior, ...medicoDelEvento };
+      });
     })();
   }, [params.id]);
-
-  const update = async () => {
-    let fechaActual = new Date();
-    if (evento.titulo.length === 0 || evento.descripcion.length === 0) {
-      alertas.alertaCamposObligatorios();
-      return;
-    } else if (evento.importante) {
-      if (evento.fechaVencimiento !== null) {
-        if (!validator.isDate(evento.fechaVencimiento)) {
-          alertas.fechaErronea("vencimiento");
-          return;
-        } else if (evento.fechaVencimiento < fechaActual) {
-          alertas.fechaInvalidaMenor("vencimiento");
-          return;
-        }
-      }
-    }else if(!evento.importante){
-      evento.fechaVencimiento = null;
-    }
-    //else if (
-    //   evento.importante &&
-    //   JSON.stringify(evento.fechaVencimiento) === "null"
-    // ) {
-    //   console.log("EVENTO IMPORTANTE CON FECHA VACÍA");
-    //   console.log(evento.fechaVencimiento);
-    // } else if (evento.importante && evento.fechaVencimiento !== null) {
-    //   console.log("EVENTO IMPORTANTE Y FECHA DE VENCIMIENTO != NULL");
-    //   console.log("Fecha de vencimiento: ", evento.fechaVencimiento);
-    //   if (!validator.isDate(evento.fechaVencimiento)) {
-    //     console.log("FECHA INVÁLIDA");
-    //     alertas.fechaErronea("vencimiento");
-    //     return;
-    //   }
-    //   if (
-    //     evento.fechaVencimiento < fechaActual &&
-    //     JSON.stringify(evento.fechaVencimiento) !== "null"
-    //   ) {
-    //     console.log("FECHA MENOR A HOY");
-    //     alertas.fechaInvalidaMenor("vencimiento");
-    //     return;
-    //   }
-    // } else if (!evento.importante) {
-    //   console.log("FECHA NO IMPORTANTE");
-    //   console.log(
-    //     "Fecha de vencimiento: ",
-    //     JSON.stringify(evento.fechaVencimiento)
-    //   );
-    //   evento.fechaVencimiento = null;
-    // }
-    const respuesta = await api.modificarEvento(params.id, { ...evento });
-    if (respuesta) {
-      alertas.alertaModificacionExitosa("evento");
-      navigate(-1);
-    } else {
-      alertas.alertaProblemas();
-    }
-  };
-
-  const handleOnchange = (e) => {
-    if (e.target.name === "importante") {
-      setEvento({ ...evento, [e.target.name]: e.target.checked });
-    } else {
-      setEvento({ ...evento, [e.target.name]: e.target.value });
-    }
-  };
-
-  const handleChangeFecha = async (e) => {
-    if (e === null) {
-      e = {};
-    } else {
-      const value = e["$d"];
-      setEvento((estadoAnterior) => {
-        return { ...estadoAnterior, fechaVencimiento: value };
-      });
-    }
-  };
 
   return (
     <>
@@ -145,29 +75,28 @@ function ModificarEvento() {
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Modificar evento / Datos del evento
+        &nbsp;&nbsp;&nbsp;Datos del evento
       </Typography>
       <Card style={{ height: "94vh" }}>
         <CardContent>
           {/* DATOS DEL EVENTO */}
           <Grid container direction="row" spacing={2}>
             {/* TÍTULO */}
-            <Grid item xs={4} sm={9}>
+            <Grid item xs={4} sm={10}>
               <TextField
+                disabled
                 label="Título"
                 type="text"
+                size="small"
                 name="titulo"
                 value={evento.titulo}
-                onChange={handleOnchange}
                 margin="normal"
                 fullWidth
                 variant="outlined"
-                helperText="Campo obligatorio"
-                size="small"
               ></TextField>
             </Grid>
             {/* FECHA DE CREACIÓN */}
-            <Grid item xs={4} sm={3}>
+            <Grid item xs={4} sm={2}>
               <LocalizationProvider
                 adapterLocale="es"
                 dateAdapter={AdapterDayjs}
@@ -178,7 +107,7 @@ function ModificarEvento() {
                   inputFormat="DD/MM/YYYY"
                   name="fecha"
                   value={evento.fecha}
-                  onChange={handleOnchange}
+                  onChange={(e) => e.target.value}
                   renderInput={(params) => (
                     <TextField margin="normal" size="small" {...params} />
                   )}
@@ -186,18 +115,19 @@ function ModificarEvento() {
               </LocalizationProvider>
             </Grid>
           </Grid>
+          <br></br>
 
           <Grid container direction="row" spacing={2}>
             {/* IMPORTANTE */}
             <Grid item xs={4} sm={2}>
               <br></br>
               <FormControlLabel
-                size="small"
+                disabled
                 name="importante"
                 checked={evento.importante}
-                onChange={handleOnchange}
                 control={<Checkbox />}
                 label="Evento importante"
+                size="small"
               />
             </Grid>
             {/* FECHA DE VENCIMIENTO */}
@@ -208,11 +138,11 @@ function ModificarEvento() {
                   dateAdapter={AdapterDayjs}
                 >
                   <DesktopDatePicker
+                    disabled
                     label="Fecha de vencimiento"
                     name="fechaVencimiento"
                     value={evento.fechaVencimiento}
-                    onChange={handleChangeFecha}
-                    minDate={moment().add(1, "days")}
+                    onChange={(e) => e.target.value}
                     renderInput={(params) => (
                       <TextField size="small" margin="normal" {...params} />
                     )}
@@ -221,8 +151,8 @@ function ModificarEvento() {
               ) : null}
             </Grid>
           </Grid>
-          <br></br>
           {/* DATOS DEL PACIENTE */}
+          <br></br>
           <Typography
             component="h6"
             variant="h6"
@@ -234,33 +164,34 @@ function ModificarEvento() {
           >
             &nbsp;Datos del paciente
           </Typography>
-          {/* NOMBRE DEL PACIENTE */}
           <Grid container direction="row" spacing={2}>
+            {/* NOMBRE DEL PACIENTE */}
             <Grid item xs={4} sm={4}>
               <TextField
                 disabled
-                label="Nombre"
+                label="Nombre/s"
                 type="text"
+                size="small"
                 name="nombre"
                 value={paciente.nombre}
                 margin="normal"
-                size="small"
                 fullWidth
                 variant="outlined"
               ></TextField>
             </Grid>
             {/* APELLIDO DEL PACIENTE */}
+
             <Grid item xs={4} sm={4}>
               <TextField
                 disabled
-                label="Apellido"
+                label="Apellido/s"
                 type="text"
+                size="small"
                 name="apellido"
                 value={paciente.apellido}
                 margin="normal"
                 fullWidth
                 variant="outlined"
-                size="small"
               ></TextField>
             </Grid>
             {/* DNI DEL PACIENTE */}
@@ -272,59 +203,73 @@ function ModificarEvento() {
                 name="pacienteDni"
                 value={paciente.dni}
                 margin="normal"
+                size="small"
                 fullWidth
                 variant="outlined"
-                size="small"
               ></TextField>
             </Grid>
           </Grid>
-          {/* ACÁ VENDRÍAN LOS DATOS DEL MÉDICO */}
-
+          {/* DATOS DEL MÉDICO */}
+          <Typography
+            component="h6"
+            variant="h6"
+            style={{
+              color: "#0c5774",
+              textAlign: "left",
+              fontWeight: "bold",
+            }}
+          >
+            &nbsp;Datos del médico
+          </Typography>
+          {/* NOMBRE DEL MÉDICO */}
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={3} sm={3}>
+              <TextField
+                disabled
+                label="Nombre/s"
+                type="text"
+                size="small"
+                name="nombre"
+                value={medico.nombre}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+              ></TextField>
+            </Grid>
+            {/* APELLIDO DEL MÉDICO */}
+            <Grid item xs={3} sm={3}>
+              <TextField
+                disabled
+                label="Apellido/s"
+                type="text"
+                size="small"
+                name="apellido"
+                value={medico.apellido}
+                margin="normal"
+                fullWidth
+                variant="outlined"
+              ></TextField>
+            </Grid>
+          </Grid>
           {/* DESCRIPCIÓN */}
           <Grid container direction="row" spacing={2}>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={4} sm={12}>
               <TextField
+                disabled
                 label="Descripción"
                 multiline
                 size="small"
                 margin="normal"
                 fullWidth
-                rows={8}
-                name="descripcion"
+                rows={6}
                 value={evento.descripcion}
-                onChange={handleOnchange}
               />
             </Grid>
           </Grid>
-
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-
-          <Grid container direction="row" spacing={2}>
-            {/* VOLVER A ATRÁS */}
-            <Grid item xs={4} sm={4}>
-              <BotonVolver></BotonVolver>
-            </Grid>
-            {/* GUARDAR */}
-            <Grid item xs={4} sm={8}>
-              <Box textAlign="right">
-                <Button
-                  variant="contained"
-                  size="medium"
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: 15,
-                    backgroundColor: "#007FFF",
-                  }}
-                  endIcon={<SaveIcon style={{ fontSize: 24 }} />}
-                  onClick={update}
-                >
-                  Guardar
-                </Button>
-              </Box>
-            </Grid>
+          <br></br><br></br>
+          {/* VOLVER A ATRÁS */}
+          <Grid item xs={10}>
+            <BotonVolver></BotonVolver>
           </Grid>
         </CardContent>
       </Card>
@@ -332,4 +277,4 @@ function ModificarEvento() {
   );
 }
 
-export default ModificarEvento;
+export default VerEvento;

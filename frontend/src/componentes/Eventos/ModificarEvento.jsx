@@ -14,21 +14,25 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState, useEffect } from "react";
 import SaveIcon from "@mui/icons-material/Save";
-import BotonVolver from "./botones/BotonVolver";
-import { api } from "../API backend/api";
-import { useParams, useNavigate } from "react-router-dom";
-import { alertas } from "./alertas";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import BotonVolver from "../Botones/BotonVolver";
 import moment from "moment";
 import validator from "validator";
+import { api } from "../../API backend/api";
+import { alertas } from "../alertas";
 
-function NuevoEvento() {
+function ModificarEvento() {
   const params = useParams();
   let navigate = useNavigate();
-  moment.locale("es");
 
-  const usuario = JSON.parse(
-    window.localStorage.getItem("loggedCliniShareAppUser")
-  );
+  const [evento, setEvento] = useState({
+    titulo: "",
+    importante: false,
+    fecha: "",
+    fechaVencimiento: "",
+    descripcion: "",
+  });
 
   const [paciente, setPaciente] = useState({
     nombre: "",
@@ -36,27 +40,77 @@ function NuevoEvento() {
     dni: "",
   });
 
-  const [evento, setEvento] = useState({
-    titulo: "",
-    importante: false,
-    medicoId: usuario.medico.medicoId,
-    pacienteId: params.id,
-    descripcion: "",
-    fechaVencimiento: "",
-  });
-
   useEffect(() => {
     (async () => {
-      const pacienteEncontrado = await api.obtenerPacienteById(params.id);
+      const eventoEncontrado = await api.obtenerEventoConPacienteYMedicoPorId(
+        params.id
+      );
+      setEvento((estadoAnterior) => {
+        return { ...estadoAnterior, ...eventoEncontrado };
+      });
 
+      const pacienteDelEvento = eventoEncontrado.paciente;
       setPaciente((estadoAnterior) => {
-        return { ...estadoAnterior, ...pacienteEncontrado };
+        return { ...estadoAnterior, ...pacienteDelEvento };
       });
     })();
   }, [params.id]);
 
-  const onKeyDown = (e) => {
-    e.preventDefault();
+  const update = async () => {
+    let fechaActual = new Date();
+    if (evento.titulo.length === 0 || evento.descripcion.length === 0) {
+      alertas.alertaCamposObligatorios();
+      return;
+    } else if (evento.importante) {
+      if (evento.fechaVencimiento !== null) {
+        if (!validator.isDate(evento.fechaVencimiento)) {
+          alertas.fechaErronea("vencimiento");
+          return;
+        } else if (evento.fechaVencimiento < fechaActual) {
+          alertas.fechaInvalidaMenor("vencimiento");
+          return;
+        }
+      }
+    }else if(!evento.importante){
+      evento.fechaVencimiento = null;
+    }
+    //else if (
+    //   evento.importante &&
+    //   JSON.stringify(evento.fechaVencimiento) === "null"
+    // ) {
+    //   console.log("EVENTO IMPORTANTE CON FECHA VACÍA");
+    //   console.log(evento.fechaVencimiento);
+    // } else if (evento.importante && evento.fechaVencimiento !== null) {
+    //   console.log("EVENTO IMPORTANTE Y FECHA DE VENCIMIENTO != NULL");
+    //   console.log("Fecha de vencimiento: ", evento.fechaVencimiento);
+    //   if (!validator.isDate(evento.fechaVencimiento)) {
+    //     console.log("FECHA INVÁLIDA");
+    //     alertas.fechaErronea("vencimiento");
+    //     return;
+    //   }
+    //   if (
+    //     evento.fechaVencimiento < fechaActual &&
+    //     JSON.stringify(evento.fechaVencimiento) !== "null"
+    //   ) {
+    //     console.log("FECHA MENOR A HOY");
+    //     alertas.fechaInvalidaMenor("vencimiento");
+    //     return;
+    //   }
+    // } else if (!evento.importante) {
+    //   console.log("FECHA NO IMPORTANTE");
+    //   console.log(
+    //     "Fecha de vencimiento: ",
+    //     JSON.stringify(evento.fechaVencimiento)
+    //   );
+    //   evento.fechaVencimiento = null;
+    // }
+    const respuesta = await api.modificarEvento(params.id, { ...evento });
+    if (respuesta) {
+      alertas.alertaModificacionExitosa("evento");
+      navigate(-1);
+    } else {
+      alertas.alertaProblemas();
+    }
   };
 
   const handleOnchange = (e) => {
@@ -72,45 +126,9 @@ function NuevoEvento() {
       e = {};
     } else {
       const value = e["$d"];
-
       setEvento((estadoAnterior) => {
         return { ...estadoAnterior, fechaVencimiento: value };
       });
-    }
-  };
-
-  const handleSubmit = async (evento) => {
-    try {
-      if (evento.titulo.length === 0 || evento.descripcion.length === 0) {
-        alertas.alertaCamposObligatorios();
-        return;
-      } else {
-        let fechaActual = new Date();
-
-        if (evento.fechaVencimiento === "") {
-          evento.fechaVencimiento = null;
-        } else {
-          if (
-            !validator.isDate(evento.fechaVencimiento) ||
-            evento.fechaVencimiento.getFullYear() < fechaActual.getFullYear()
-          ) {
-            alertas.fechaErronea("vencimiento");
-            return;
-          }
-        }
-      }
-
-      evento.pacienteId = params.id;
-      evento.medicoId = usuario.medico.medicoId;
-      const response = await api.crearEvento(evento);
-      if (!response) {
-        alertas.alertaProblemas();
-      } else {
-        alertas.alertaExito("evento");
-        navigate(-1);
-      }
-    } catch (err) {
-      console.error(err);
     }
   };
 
@@ -127,9 +145,8 @@ function NuevoEvento() {
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Nuevo evento / Datos del evento
+        &nbsp;&nbsp;&nbsp;Modificar evento / Datos del evento
       </Typography>
-
       <Card style={{ height: "94vh" }}>
         <CardContent>
           {/* DATOS DEL EVENTO */}
@@ -160,6 +177,7 @@ function NuevoEvento() {
                   label="Fecha del evento"
                   inputFormat="DD/MM/YYYY"
                   name="fecha"
+                  value={evento.fecha}
                   onChange={handleOnchange}
                   renderInput={(params) => (
                     <TextField margin="normal" size="small" {...params} />
@@ -168,17 +186,18 @@ function NuevoEvento() {
               </LocalizationProvider>
             </Grid>
           </Grid>
+
           <Grid container direction="row" spacing={2}>
             {/* IMPORTANTE */}
             <Grid item xs={4} sm={2}>
               <br></br>
               <FormControlLabel
+                size="small"
                 name="importante"
-                value={evento.importante}
+                checked={evento.importante}
                 onChange={handleOnchange}
                 control={<Checkbox />}
                 label="Evento importante"
-                size="small"
               />
             </Grid>
             {/* FECHA DE VENCIMIENTO */}
@@ -189,7 +208,6 @@ function NuevoEvento() {
                   dateAdapter={AdapterDayjs}
                 >
                   <DesktopDatePicker
-                    disabled={!evento.importante}
                     label="Fecha de vencimiento"
                     name="fechaVencimiento"
                     value={evento.fechaVencimiento}
@@ -226,9 +244,9 @@ function NuevoEvento() {
                 name="nombre"
                 value={paciente.nombre}
                 margin="normal"
+                size="small"
                 fullWidth
                 variant="outlined"
-                size="small"
               ></TextField>
             </Grid>
             {/* APELLIDO DEL PACIENTE */}
@@ -241,8 +259,8 @@ function NuevoEvento() {
                 value={paciente.apellido}
                 margin="normal"
                 fullWidth
-                size="small"
                 variant="outlined"
+                size="small"
               ></TextField>
             </Grid>
             {/* DNI DEL PACIENTE */}
@@ -260,24 +278,30 @@ function NuevoEvento() {
               ></TextField>
             </Grid>
           </Grid>
+          {/* ACÁ VENDRÍAN LOS DATOS DEL MÉDICO */}
+
           {/* DESCRIPCIÓN */}
           <Grid container direction="row" spacing={2}>
             <Grid item xs={12} sm={12}>
               <TextField
                 label="Descripción"
                 multiline
+                size="small"
                 margin="normal"
                 fullWidth
-                name="descripcion"
-                onChange={handleOnchange}
                 rows={8}
+                name="descripcion"
                 value={evento.descripcion}
-                size="small"
-                helperText="Campo obligatorio"
+                onChange={handleOnchange}
               />
             </Grid>
           </Grid>
-          <br></br><br></br><br></br>
+
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
             <Grid item xs={4} sm={4}>
@@ -295,7 +319,7 @@ function NuevoEvento() {
                     backgroundColor: "#007FFF",
                   }}
                   endIcon={<SaveIcon style={{ fontSize: 24 }} />}
-                  onClick={() => handleSubmit(evento)}
+                  onClick={update}
                 >
                   Guardar
                 </Button>
@@ -308,4 +332,4 @@ function NuevoEvento() {
   );
 }
 
-export default NuevoEvento;
+export default ModificarEvento;

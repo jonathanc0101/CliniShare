@@ -11,12 +11,12 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useEffect, useState } from "react";
 import SaveIcon from "@mui/icons-material/Save";
-import { api } from "../API backend/api";
-import BotonVolver from "./botones/BotonVolver";
+import BotonVolver from "../Botones/BotonVolver";
 import { Navigate } from "react-router-dom";
-import { alertas } from "./alertas";
 import "dayjs/locale/es";
 import moment from "moment";
+import { api } from "../../API backend/api";
+import { alertas } from "../alertas";
 
 function ModificarMedico() {
   const [guardado, setGuardado] = useState(false);

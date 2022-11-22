@@ -10,10 +10,10 @@ import {
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
-import { api } from "../API backend/api";
-import { alertas } from "./alertas";
+import { api } from "../../API backend/api";
+import { alertas } from "../alertas";
 import { Navigate } from "react-router-dom";
-import BotonVolver from "./botones/BotonVolver";
+import BotonVolver from "../Botones/BotonVolver";
 import "dayjs/locale/es";
 import moment from "moment";
 import validator from "validator";

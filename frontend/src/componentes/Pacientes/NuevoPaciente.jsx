@@ -11,11 +11,10 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import "../App.css";
-import { api } from "../API backend/api";
+import { api } from "../../API backend/api";
 import SaveIcon from "@mui/icons-material/Save";
-import BotonVolver from "./botones/BotonVolver";
-import { alertas } from "./alertas";
+import BotonVolver from "../Botones/BotonVolver";
+import { alertas } from "../alertas";
 import "dayjs/locale/es";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
