@@ -16,6 +16,8 @@ import ModificarMedico from "./componentes/Medicos/ModificarMedico";
 import ListadoMedicos from "./componentes/Medicos/ListadoMedicos";
 import BotonSincronizar from "./componentes/Botones/BotonSincronizar";
 import Sincronizacion from "./componentes/Sincronizacion/Sincronizacion";
+import PacientesParaActualizar from "./componentes/Sincronizacion/PacientesParaActualizar";
+
 
 const Rutas = () => {
   let routes = useRoutes([
@@ -38,6 +40,10 @@ const Rutas = () => {
     },
     {
       path: "/sincronizacion",
+      element: <PacientesParaActualizar></PacientesParaActualizar>
+    },
+    {
+      path: "/sincronizacion/paciente/:id",
       element: <Sincronizacion></Sincronizacion>
     },
 

@@ -82,10 +82,8 @@ function ModificarMedico() {
       alertas.contraseñasDiferentes();
       return;
     }
-    console.log("Usuario nuevo a enviar: ", newMedico);
 
     const respuesta = await api.modificarMedico(newMedico);
-    console.log("Respuesta del api: ", respuesta);
     if (respuesta) {
       alertas.alertaModificacionExitosa("usuario");
       setGuardado(true);

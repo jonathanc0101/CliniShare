@@ -36,7 +36,6 @@ function MenuAppBar() {
   const usuario = JSON.parse(
     window.localStorage.getItem("loggedCliniShareAppUser")
   );
-  console.log(usuario.medico.nombre + " " + usuario.medico.apellido);
 
   return (
     <AppBar position="static">
