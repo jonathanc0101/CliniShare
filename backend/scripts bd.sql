@@ -10,3 +10,4 @@ drop table if exists "sesionActiva" cascade;
 drop table if exists "sincronizaciones" cascade;
 drop table if exists "computadoras" cascade;
 drop table if exists "computadoraLocal" cascade;
+drop table if exists "pacientesConflictivos" cascade;

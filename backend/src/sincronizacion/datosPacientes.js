@@ -3,6 +3,7 @@ import { PacientesService } from "../services/paciente.service.js";
 import { sequelize } from "../database/database.js";
 import { Medico } from "../models/Medico.js";
 import { Evento } from "../models/Evento.js";
+import { PacientesConflictivosService } from "../services/pacienteConflictivo.service.js";
 
 export async function handleSincronizarPostRequest(req, res, next) {
   res.send(
@@ -47,6 +48,8 @@ export async function actualizarDatos(datos) {
   if(datos.pacientes.length === 0 || datos.medicos.length === 0 || datos.eventos.length === 0){
     return;
   }
+
+  PacientesConflictivosService.apartarConflictos(datos.pacientes);
   
   datos.eventos = await actualizarIdsPacientes(datos);
 
@@ -55,11 +58,7 @@ export async function actualizarDatos(datos) {
       for (const medico of datos.medicos) {
         await Medico.upsert(medico, { transaction: t });
       }
-      
-      for (const paciente of datos.pacientes) {
-        await PacientesService.upsertarPorDNIyNacimiento(paciente, t);
-      }
-      
+            
       for (const evento of datos.eventos) {
         await Evento.upsert(evento, { transaction: t });
       }
