@@ -11,11 +11,11 @@ import {
 import { Link, Navigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useEffect, useState } from "react";
-import { api } from "../API backend/api";
+import { api } from "../../API backend/api";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import { alertas } from "./alertas";
+import { alertas } from "../alertas";
 
 function LoginForm() {
   const [correoElectronico, setCorreoElectronico] = useState("");

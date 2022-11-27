@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import SaveIcon from "@mui/icons-material/Save";
-import { api } from "../API backend/api";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
@@ -15,15 +14,16 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
-import EventosDePaciente from "./EventosDePaciente";
-import EventosImportantes from "./EventosImportantes";
+import EventosDePaciente from "../Eventos/EventosDePaciente";
+import EventosImportantes from "../Eventos/EventosImportantes";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/es";
-import { alertas } from "./alertas";
 import moment from "moment";
-import BotonVolver from "./botones/BotonVolver";
+import BotonVolver from "../Botones/BotonVolver";
 import validator from "validator";
+import { api } from "../../API backend/api";
+import { alertas } from "../alertas";
 
 function ModificarPaciente() {
   const params = useParams();

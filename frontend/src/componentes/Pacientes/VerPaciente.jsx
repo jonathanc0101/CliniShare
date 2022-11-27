@@ -8,16 +8,16 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { api } from "../API backend/api";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import EventosImportantes from "./EventosImportantes";
-import EventosDePaciente from "./EventosDePaciente";
+import EventosImportantes from "../Eventos/EventosImportantes";
+import EventosDePaciente from "../Eventos/EventosDePaciente";
 import { Link } from "react-router-dom";
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import BotonVolver from "./botones/BotonVolver";
+import BotonVolver from "../Botones/BotonVolver";
+import { api } from "../../API backend/api";
 
 function VerPaciente() {
   const params = useParams();

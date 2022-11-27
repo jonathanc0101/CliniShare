@@ -11,9 +11,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useEffect, useState } from "react";
 
-import { api } from "../API backend/api";
 import { styled } from "@mui/material/styles";
-import Menu from "./Menu";
+import { api } from "../../API backend/api";
+import Menu from "../Menu/Menu";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",

@@ -6,11 +6,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useEffect, useState } from "react";
-import { api } from "../API backend/api";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import Menu from "./Menu";
+import Menu from "../Menu/Menu";
 import {
   Button,
   InputAdornment,
@@ -19,9 +18,10 @@ import {
   Tooltip,
 } from "@mui/material";
 import AddCircleOutlineTwoToneIcon from "@mui/icons-material/AddCircleOutlineTwoTone";
-import MenuAppBar from "./MenuAppBar";
+import MenuAppBar from "../Menu/MenuAppBar";
 import SearchIcon from "@mui/icons-material/Search";
 import PostAddIcon from "@mui/icons-material/PostAdd";
+import { api } from "../../API backend/api";
 
 function ListadoPacientes() {
   const [page, setPage] = useState(0);

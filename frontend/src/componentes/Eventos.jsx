@@ -1,8 +1,8 @@
 
 import { useEffect, useState } from "react";
-
 import { api } from "../API backend/api";
-import ListadoEventos from "./ListadoEventos";
+
+import ListadoEventos from "./Eventos/ListadoEventos";
 
 function Eventos() {
   const [eventos, setEventos] = useState([]);
