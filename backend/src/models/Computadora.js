@@ -6,7 +6,6 @@ import { PacienteConflictivo } from "./PacienteConflictivo.js";
 export const Computadora  = sequelize.define("computadoras",{
     id: {
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },

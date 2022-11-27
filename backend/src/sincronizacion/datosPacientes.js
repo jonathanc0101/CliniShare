@@ -40,7 +40,7 @@ export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
   return eventosDesarmados;
 }
 
-export async function actualizarDatos(datos) {
+export async function actualizarDatos(datos,computadoraId) {
 
   if (Object.keys(datos).length === 0) {
     return;
@@ -49,7 +49,9 @@ export async function actualizarDatos(datos) {
     return;
   }
 
-  PacientesConflictivosService.apartarConflictos(datos.pacientes);
+
+  //la resolucion de conflictos se ve despues
+  PacientesConflictivosService.apartarConflictos(datos.pacientes, computadoraId);
   
   datos.eventos = await actualizarIdsPacientes(datos);
 

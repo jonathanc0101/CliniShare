@@ -12,7 +12,7 @@ export const PacientesConflictivosService = {
   apartarConflictos
 };
 
-async function apartarConflictos(pacientes){
+async function apartarConflictos(pacientes,computadoraId){
   let pacientesNoConflictivos = [];
 
   const pacientesFiltrados = pacientes.map( (p) => {
@@ -43,6 +43,8 @@ async function apartarConflictos(pacientes){
 
     if(sonIguales){
       pacientesNoConflictivos.push(paciente)
+    }else{
+      upsertarPorDNINacimientoYComputadoraId({...paciente,computadoraId});
     }
 
   }
@@ -83,10 +85,6 @@ async function upsertarPorDNINacimientoYComputadoraId(paciente){
     }
   });
 
-  if(pacienteFound){
-    paciente.id = pacienteFound.id;
-  }
-
-  Paciente.upsert(paciente);
+  PacienteConflictivo.upsert(paciente);
 }
 

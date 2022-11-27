@@ -10,10 +10,6 @@ export const PacienteConflictivo = sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
-    id: {
-      type: Sequelize.UUID,
-      allowNull: false,
-    },
     nombre: {
       type: DataTypes.STRING,
       allowNull: false,

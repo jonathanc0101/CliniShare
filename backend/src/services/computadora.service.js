@@ -7,7 +7,10 @@ export const ComputadoraService = {
 
 async function upsertarComputadora(computadora) {
   try {
-    const newComputadora = await Computadora.upsert(computadora);
+
+    computadora.id = computadora.computadoraId;
+    
+    const newComputadora = await Computadora.upsert(computadora, {where:{id:computadora.computadoraId}});
 
     return newComputadora ;
   } catch (error) {
