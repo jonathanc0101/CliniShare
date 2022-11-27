@@ -1,8 +1,9 @@
-import { Grid, InputLabel, OutlinedInput, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Checkbox, FormControlLabel, Grid, InputLabel, OutlinedInput, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 
-function PacienteLocal(paciente, esPacienteLocal = false) {
-  const [pacienteLocal, setPacienteLocal] = useState({
+function PacienteASincronizar({paciente, esPacienteLocal, enviarPaciente}) {
+
+  const [pacienteASincronizar, setPacienteASincronizar] = useState({
     id: "",
     nombre: "",
     apellido: "",
@@ -13,19 +14,20 @@ function PacienteLocal(paciente, esPacienteLocal = false) {
     let value = event.target.value;
     let name = event.target.name;
 
-    setPacienteLocal((estadoAnterior) => {
+    setPacienteASincronizar((estadoAnterior) => {
       return { ...estadoAnterior, [name]: value };
     });
   };
 
   useEffect(() => {
+
     (async () => {
-      const pacienteU = await paciente.paciente;
-      setPacienteLocal((estadoAnterior) => {
+      const pacienteU = await paciente;
+      setPacienteASincronizar((estadoAnterior) => {
         return { ...estadoAnterior, ...pacienteU };
       });
     })();
-  }, [paciente.paciente.id]);
+  }, [paciente.id]);
 
   //   useEffect(() => {
   //     (async () => {
@@ -48,29 +50,38 @@ function PacienteLocal(paciente, esPacienteLocal = false) {
         fontWeight: "bold",
         lineHeight: "2",
       }} */}
-      {esPacienteLocal ? (
+      {esPacienteLocal==true ? (
         <Typography>&nbsp;&nbsp;Datos del paciente localmente</Typography>
       ) : (
-        <Typography>&nbsp;&nbsp;Datos del paciente externo</Typography>
+        <Typography>&nbsp;&nbsp;Datos del paciente recibido</Typography>
       )}
       <br></br>
       <InputLabel>&nbsp;&nbsp;Nombre</InputLabel>
       <OutlinedInput
         id="outlined-nombre"
         type="text"
-        value={pacienteLocal.nombre}
+        value={pacienteASincronizar.nombre}
         onChange={handleChange}
         size="small"
         fullWidth
         margin="none"
       />
+
+      {/* <FormControlLabel
+                size="small"
+                name="nombre"
+                checked={paciente.nombre}
+                onChange={handleChange}
+                control={<Checkbox />}
+                label="Nombre"
+              /> */}
       <br></br>
       <br></br>
       <InputLabel>&nbsp;&nbsp;Apellido</InputLabel>
       <OutlinedInput
         id="outlined-apellido"
         type="text"
-        value={pacienteLocal.apellido}
+        value={pacienteASincronizar.apellido}
         onChange={handleChange}
         size="small"
         fullWidth
@@ -83,7 +94,7 @@ function PacienteLocal(paciente, esPacienteLocal = false) {
           <OutlinedInput
             id="outlined-dni"
             type="text"
-            value={pacienteLocal.dni}
+            value={pacienteASincronizar.dni}
             onChange={handleChange}
             size="small"
             fullWidth
@@ -94,7 +105,7 @@ function PacienteLocal(paciente, esPacienteLocal = false) {
           <OutlinedInput
             id="outlined-fechaDeNacimiento"
             type="text"
-            // value={pacienteLocal.apellido}
+            // value={pacienteASincronizar.apellido}
             // onChange={handleChange}
             size="small"
             fullWidth
@@ -108,7 +119,7 @@ function PacienteLocal(paciente, esPacienteLocal = false) {
           <OutlinedInput
             id="outlined-sexo"
             type="text"
-            // value={pacienteLocal.apellido}
+            // value={pacienteASincronizar.apellido}
             // onChange={handleChange}
             size="small"
             fullWidth
@@ -119,7 +130,7 @@ function PacienteLocal(paciente, esPacienteLocal = false) {
           <OutlinedInput
             id="outlined-genero"
             type="text"
-            // value={pacienteLocal.apellido}
+            // value={pacienteASincronizar.apellido}
             // onChange={handleChange}
             size="small"
             fullWidth
@@ -131,7 +142,7 @@ function PacienteLocal(paciente, esPacienteLocal = false) {
       <OutlinedInput
         id="outlined-domicilio"
         type="text"
-        // value={pacienteLocal.apellido}
+        // value={pacienteASincronizar.apellido}
         // onChange={handleChange}
         size="small"
         fullWidth
@@ -142,7 +153,7 @@ function PacienteLocal(paciente, esPacienteLocal = false) {
       <OutlinedInput
         id="outlined-telefono"
         type="text"
-        // value={pacienteLocal.apellido}
+        // value={pacienteASincronizar.apellido}
         // onChange={handleChange}
         size="small"
         fullWidth
@@ -151,4 +162,4 @@ function PacienteLocal(paciente, esPacienteLocal = false) {
   );
 }
 
-export default PacienteLocal;
+export default PacienteASincronizar;
