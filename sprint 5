@@ -1,19 +1,4 @@
-que cada pantalla diga que datos faltan cuando faltan completar
-
 que cuando el nombre o algun otro dato del paciente difiere en distintas maquinas, que se le pregunte ¿Es el mismo paciente? y en base a esa respuesta, que es almacenada 
-que cuando sincronizo no recibo eventos que yo haya creado (comparar id medico a quien le estoy enviando con id del evento)
-quitar el campo fecha modificacion owner de evento
-ver que pasa cuando desconectamos las maquinas de la red
-filtrar medicos y pacientes antes de enviar
-demostrar que se puede sincronizar entre mas de dos maquinas, en distintos momentos, ej: sincronizando con a, luego con b.
-se guarda la sincronizacion cuando se reciben y actualizan los datos, se piden los datos a sincronizar a partir de x fecha
-no enviar de vuelta los datos que acabo de recibir
 
-pensar sincronizacion a nivel de maquina, se sincroniza maquina a maquina, se crea la tabla maquina que tiene uuid de maquina
-se sigue sincronizando aunque no se haya iniciado sesion o se la haya cerrado
 
-sacar owner de paciente
 
-hacer diagrama de estados de sincronizacion
-
-restringir que solo haya un usuario en la maquina. que la tabla de usuarios no admita mas de un registro?

@@ -20,6 +20,7 @@ export const PacientesService = {
   getDnisYNacimientosDePacientes,
   upsertarPorDNIyNacimiento,
   getIdPorDniYNacimiento,
+  getPorDniYNacimiento,
 };
 
 async function getPacientesFromModel() {
@@ -144,6 +145,22 @@ async function getIdPorDniYNacimiento(paciente){
     return {};
   } else {
     return pacienteFound.id;
+  }
+}
+
+async function getPorDniYNacimiento(paciente){
+  const pacienteFound = await Paciente.findOne({
+    where:{
+      dni:paciente.dni,
+      fechaNacimiento:paciente.fechaNacimiento
+    }
+  });
+
+
+  if (!pacienteFound) {
+    return {};
+  } else {
+    return pacienteFound;
   }
 }
 

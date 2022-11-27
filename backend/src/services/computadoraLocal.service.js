@@ -15,8 +15,7 @@ async function obtenerUUIDActual(){
       return computadoraLocal.dataValues.id;
     } else {
         const computadoraNueva = await crearComputadoraLocalDefault();
-
-      return computadoraNueva.dataValues.id ;
+        return computadoraNueva.dataValues.id ;
     }
   } catch (error) {
     console.log( "No se pudo encontrar computadoraLocal, error: " + error);
