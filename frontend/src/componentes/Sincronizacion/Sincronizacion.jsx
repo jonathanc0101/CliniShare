@@ -20,25 +20,56 @@ import MenuAppBar from "../Menu/MenuAppBar";
 
 function Sincronizacion() {
   const params = useParams();
-  const [pacienteLocal, setPacienteLocal] = useState({
-    id: "",
-    nombre: "",
-    apellido: "",
-    dni: "",
-  });
+
   const [pacienteExterno, setPacienteExterno] = useState({
-    id: "",
-    nombre: "",
-    apellido: "",
-    dni: "",
+    datos: {
+      id: "",
+      nombre: "",
+      apellido: "",
+      dni: "",
+      fechaNacimiento: "",
+      telefono: "",
+      domicilio: "",
+      genero: "",
+      sexo: "",
+    },
+    validez: {
+      idNuevo: false,
+      nombreNuevo: false,
+      apellidoNuevo: false,
+      dniNuevo: false,
+      fechaNacimientoNuevo: false,
+      telefonoNuevo: false,
+      domicilioNuevo: false,
+      generoNuevo: false,
+      sexoNuevo: false,
+    },
   });
 
-  const [estadoPacienteLocal, setEstadoPacienteLocal] = useState([
-    { id: "", idNuevo: false },
-    { nombre: "", nombreNuevo: false },
-    { apellido: "", apellidoNuevo: false },
-    { dni: "", dniNuevo: false },
-  ]);
+  const [pacienteLocal, setPacienteLocal] = useState({
+    datos: {
+      id: "",
+      nombre: "",
+      apellido: "",
+      dni: "",
+      fechaNacimiento: "",
+      telefono: "",
+      domicilio: "",
+      genero: "",
+      sexo: "",
+    },
+    validez: {
+      idNuevo: false,
+      nombreNuevo: true,
+      apellidoNuevo: false,
+      dniNuevo: false,
+      fechaNacimientoNuevo: false,
+      telefonoNuevo: false,
+      domicilioNuevo: false,
+      generoNuevo: false,
+      sexoNuevo: false,
+    },
+  });
 
   const [pacienteActualizado, setPacienteActualizado] = useState({});
 
@@ -56,10 +87,50 @@ function Sincronizacion() {
   };
 
   const pacientesLocalesData = [
-    { id: "1", nombre: "Nicole", apellido: "Alvarado", dni: "43032135" },
-    { id: "2", nombre: "Gianella", apellido: "Zeballos", dni: "43036123" },
-    { id: "3", nombre: "Teodoro", apellido: "Fernández", dni: "41238023" },
-    { id: "4", nombre: "Ismael", apellido: "Cruz", dni: "40026199" },
+    {
+      id: "1",
+      nombre: "Nicole",
+      apellido: "Alvarado",
+      dni: "43032135",
+      fechaNacimiento: "13-02-2001",
+      telefono: "4458572",
+      domicilio: "domicilio",
+      genero: "test",
+      sexo: "depende",
+    },
+    {
+      id: "2",
+      nombre: "Gianella",
+      apellido: "Zeballos",
+      dni: "43036123",
+      fechaNacimiento: "13-02-2001",
+      telefono: "4458572",
+      domicilio: "domicilio",
+      genero: "test",
+      sexo: "depende",
+    },
+    {
+      id: "3",
+      nombre: "Teodoro",
+      apellido: "Fernández",
+      dni: "41238023",
+      fechaNacimiento: "13-02-2001",
+      telefono: "4458572",
+      domicilio: "domicilio",
+      genero: "test",
+      sexo: "depende",
+    },
+    {
+      id: "4",
+      nombre: "Ismael",
+      apellido: "Cruz",
+      dni: "40026199",
+      fechaNacimiento: "13-02-2001",
+      telefono: "4458572",
+      domicilio: "domicilio",
+      genero: "test",
+      sexo: "depende",
+    },
   ];
 
   const pacientesOtrosData = [
@@ -68,19 +139,54 @@ function Sincronizacion() {
       nombre: "Nicol",
       apellido: "Alvarado Rodriguez",
       dni: "43032135",
+      fechaNacimiento: "13-02-2001",
+      telefono: "4458572",
+      domicilio: "domicilio",
+      genero: "test",
+      sexo: "depende",
     },
-    { id: "2", nombre: "Yanela", apellido: "Zeballos", dni: "43036123" },
-    { id: "3", nombre: "Teo", apellido: "Fernandez", dni: "41238023" },
-    { id: "4", nombre: "Ismael Teo", apellido: "Cruz", dni: "40026199" },
+    {
+      id: "2",
+      nombre: "Yanela",
+      apellido: "Zeballos",
+      dni: "43036123",
+      fechaNacimiento: "13-02-2001",
+      telefono: "4458572",
+      domicilio: "domicilio",
+      genero: "test",
+      sexo: "depende",
+    },
+    {
+      id: "3",
+      nombre: "Teo",
+      apellido: "Fernandez",
+      dni: "41238023",
+      fechaNacimiento: "13-02-2001",
+      telefono: "4458572",
+      domicilio: "domicilio",
+      genero: "test",
+      sexo: "depende",
+    },
+    {
+      id: "4",
+      nombre: "Ismael Teo",
+      apellido: "Cruz",
+      dni: "40026199",
+      fechaNacimiento: "13-02-2001",
+      telefono: "4458572",
+      domicilio: "domicilio",
+      genero: "test",
+      sexo: "depende",
+    },
   ];
 
   const handleChangePacienteLocal = (event) => {
     let value = event.target.value;
     let name = event.target.name;
 
-    setPacienteLocal((estadoAnterior) => {
-      return { ...estadoAnterior, [name]: value };
-    });
+    // setPacienteLocal((estadoAnterior) => {
+    //   return { ...estadoAnterior, [name]: value };
+    // });
   };
 
   const handleChangePacienteExterno = (event) => {
@@ -105,6 +211,7 @@ function Sincronizacion() {
       (element) => element.id === params.id
     );
     setPacienteLocal((estadoAnterior) => {
+      console.log(estadoAnterior);
       return { ...estadoAnterior, ...pacienteLocal };
     });
   };
@@ -114,6 +221,7 @@ function Sincronizacion() {
       (element) => element.id === params.id
     );
     setPacienteExterno((estadoAnterior) => {
+      console.log(estadoAnterior);
       return { ...estadoAnterior, ...pacienteExterno };
     });
   };
@@ -121,11 +229,6 @@ function Sincronizacion() {
     (async () => {
       obtenerPacienteLocal();
       obtenerPacienteExterno();
-      // var datosDelPaciente = pacienteLocal.map(function(e, i) {
-      //   return [e, estado[i]];
-      // });
-
-      console.log(estadoPacienteLocal);
     })();
   }, [params.id]);
   return (
@@ -145,25 +248,13 @@ function Sincronizacion() {
           <Grid xs={6}>
             <Typography>&nbsp;&nbsp;Datos del paciente localmente</Typography>
             <Grid container direction="row" spacing={0}>
-              {/* <InputLabel>&nbsp;&nbsp;Nombre</InputLabel> */}
-
-              {/* <OutlinedInput
-                id="outlined-paciente-local-nombre"
-                type="text"
-                value={pacienteLocal.nombre}
-                onChange={handleChangePacienteLocal}
-                size="small"
-                fullWidth
-                margin="none"
-              /> */}
               <FormControl>
                 <FormLabel component="legend">Nombre:</FormLabel>
                 <FormControlLabel
                   value="start"
                   size="small"
                   name="nombrePacienteLocal"
-                  checked={pacienteLocal.nombreNuevo}
-                  onChange={handleChangePacienteLocal}
+                  checked={pacienteLocal.validez.nombreNuevo}
                   control={<Checkbox />}
                   label={pacienteLocal.nombre}
                   labelPlacement="start"
@@ -171,39 +262,62 @@ function Sincronizacion() {
               </FormControl>
             </Grid>
             <Grid container direction="row" spacing={0}>
-              <InputLabel>&nbsp;&nbsp;Apellido</InputLabel>
-              <OutlinedInput
-                id="outlined-paciente-local-apellido"
-                type="text"
-                value={pacienteLocal.apellido}
-                onChange={handleChangePacienteLocal}
-                size="small"
-                fullWidth
-              />
+              <FormControl>
+                <FormLabel component="legend">Apellido:</FormLabel>
+                <FormControlLabel
+                  value="start"
+                  size="small"
+                  name="apellidoPacienteLocal"
+                  checked={pacienteLocal.validez.apellidoNuevo}
+                  control={<Checkbox />}
+                  label={pacienteLocal.apellido}
+                  labelPlacement="start"
+                />
+              </FormControl>
             </Grid>
             <Grid container direction="row" spacing={0} columnSpacing={1}>
               <Grid item xs={6}>
-                <InputLabel>&nbsp;&nbsp;DNI</InputLabel>
-                <OutlinedInput
-                  id="outlined-paciente-local-dni"
-                  type="text"
-                  value={pacienteLocal.dni}
-                  onChange={handleChangePacienteLocal}
-                  size="small"
-                  fullWidth
-                />
+                <FormControl>
+                  <FormLabel component="legend">DNI:</FormLabel>
+                  <FormControlLabel
+                    value="start"
+                    size="small"
+                    name="dniPacienteLocal"
+                    checked={pacienteLocal.validez.dniNuevo}
+                    control={<Checkbox />}
+                    label={pacienteLocal.dni}
+                    labelPlacement="start"
+                  />
+                </FormControl>
               </Grid>
-              <Grid item xs={6}>
-                <InputLabel>&nbsp;&nbsp;Fecha de nacimiento</InputLabel>
-                <OutlinedInput
-                  id="outlined-pacienteLocal-fechaDeNacimiento"
-                  type="text"
-                  // value={pacienteASincronizar.apellido}
-                  // onChange={handleChangePacienteLocal}
+              {/* <Grid item xs={6}>
+                <FormControl>
+                  <FormLabel component="legend">Fecha de nacimiento:</FormLabel>
+                  <FormControlLabel
+                    value="start"
+                    size="small"
+                    name="fechaDeNacimientoPacienteLocal"
+                    checked={pacienteLocal.validez.fechaNacimientoNuevo}
+                    control={<Checkbox />}
+                    label={pacienteLocal.fechaNacimiento}
+                    labelPlacement="start"
+                  />
+                </FormControl>
+              </Grid> */}
+            </Grid>
+            <Grid container direction="row" spacing={0}>
+              <FormControl>
+                <FormLabel component="legend">Fecha de nacimiento:</FormLabel>
+                <FormControlLabel
+                  value="start"
                   size="small"
-                  fullWidth
+                  name="fechaDeNacimientoPacienteLocal"
+                  checked={pacienteLocal.validez.fechaNacimientoNuevo}
+                  control={<Checkbox />}
+                  label={pacienteLocal.fechaNacimiento}
+                  labelPlacement="start"
                 />
-              </Grid>
+              </FormControl>
             </Grid>
             <Grid container direction="row" spacing={0} columnSpacing={1}>
               <Grid item xs={6}>
