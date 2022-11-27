@@ -1,4 +1,4 @@
-import { PacientesConflictivosService } from "../services/pacienteConflictivo.service";
+import { PacientesConflictivosService } from "../services/pacienteConflictivo.service.js";
 
 export const getAll = async (req, res, next) => {
   const pacientes = await PacientesConflictivosService.getAll();
@@ -10,4 +10,8 @@ export const resolver = async (req, res, next) => {
   res.send(JSON.stringify(response));
 }
 
+export const getPacientesYConflictos = async(req,res,next) => {
+  const response = await PacientesConflictivosService.getPacientesYConflictos();
+  res.send(JSON.stringify(response));
+}
 
