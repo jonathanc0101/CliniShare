@@ -22,69 +22,52 @@ function Sincronizacion() {
   const params = useParams();
 
   const [pacienteExterno, setPacienteExterno] = useState({
-    datos: {
-      id: "",
-      nombre: "",
-      apellido: "",
-      dni: "",
-      fechaNacimiento: "",
-      telefono: "",
-      domicilio: "",
-      genero: "",
-      sexo: "",
-    },
-    validez: {
-      idNuevo: false,
-      nombreNuevo: false,
-      apellidoNuevo: false,
-      dniNuevo: false,
-      fechaNacimientoNuevo: false,
-      telefonoNuevo: false,
-      domicilioNuevo: false,
-      generoNuevo: false,
-      sexoNuevo: false,
-    },
+    id: "",
+    nombre: "",
+    apellido: "",
+    dni: "",
+    fechaNacimiento: "",
+    telefono: "",
+    domicilio: "",
+    genero: "",
+    sexo: "",
+  });
+
+  const [estadoPacienteExterno, setEstadoPacienteExterno] = useState({
+    idNuevo: false,
+    nombreNuevo: false,
+    apellidoNuevo: false,
+    dniNuevo: false,
+    fechaNacimientoNuevo: false,
+    telefonoNuevo: false,
+    domicilioNuevo: false,
+    generoNuevo: false,
+    sexoNuevo: false,
   });
 
   const [pacienteLocal, setPacienteLocal] = useState({
-    datos: {
-      id: "",
-      nombre: "",
-      apellido: "",
-      dni: "",
-      fechaNacimiento: "",
-      telefono: "",
-      domicilio: "",
-      genero: "",
-      sexo: "",
-    },
-    validez: {
-      idNuevo: false,
-      nombreNuevo: true,
-      apellidoNuevo: false,
-      dniNuevo: false,
-      fechaNacimientoNuevo: false,
-      telefonoNuevo: false,
-      domicilioNuevo: false,
-      generoNuevo: false,
-      sexoNuevo: false,
-    },
+    id: "",
+    nombre: "",
+    apellido: "",
+    dni: "",
+    fechaNacimiento: "",
+    telefono: "",
+    domicilio: "",
+    genero: "",
+    sexo: "",
   });
 
-  const [pacienteActualizado, setPacienteActualizado] = useState({});
-
-  const [pacienteChecks, setPacienteChecks] = useState({});
-  const recibirPaciente = (paciente) => {
-    setPacienteActualizado((estadoAnterior) => {
-      return { ...estadoAnterior, ...paciente };
-    });
-  };
-
-  const actualizarPaciente = () => {
-    // // setPacienteActualizado((estadoAnterior) => {
-    // //   return { ...estadoAnterior, ...paciente };
-    // // });
-  };
+  const [estadoPacienteLocal, setEstadoPacienteLocal] = useState({
+    idNuevo: false,
+    nombreNuevo: false,
+    apellidoNuevo: false,
+    dniNuevo: false,
+    fechaNacimientoNuevo: false,
+    telefonoNuevo: false,
+    domicilioNuevo: false,
+    generoNuevo: false,
+    sexoNuevo: false,
+  });
 
   const pacientesLocalesData = [
     {
@@ -181,21 +164,23 @@ function Sincronizacion() {
   ];
 
   const handleChangePacienteLocal = (event) => {
-    let value = event.target.value;
     let name = event.target.name;
+    let checked = event.target.checked;
 
-    // setPacienteLocal((estadoAnterior) => {
-    //   return { ...estadoAnterior, [name]: value };
-    // });
+    console.log("CHECKED " + event.target.checked);
+    console.log("NAME " + event.target.name);
+
+    setEstadoPacienteLocal({ ...estadoPacienteLocal, [name]: checked });
   };
 
   const handleChangePacienteExterno = (event) => {
-    let value = event.target.value;
     let name = event.target.name;
+    let checked = event.target.checked;
 
-    setPacienteExterno((estadoAnterior) => {
-      return { ...estadoAnterior, [name]: value };
-    });
+    console.log("CHECKED " + event.target.checked);
+    console.log("NAME " + event.target.name);
+
+    setEstadoPacienteExterno({ ...estadoPacienteExterno, [name]: checked });
   };
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -211,8 +196,10 @@ function Sincronizacion() {
       (element) => element.id === params.id
     );
     setPacienteLocal((estadoAnterior) => {
-      console.log(estadoAnterior);
       return { ...estadoAnterior, ...pacienteLocal };
+    });
+    setEstadoPacienteLocal((estadoAnterior) => {
+      return { ...estadoAnterior, ...estadoPacienteLocal };
     });
   };
 
@@ -221,10 +208,13 @@ function Sincronizacion() {
       (element) => element.id === params.id
     );
     setPacienteExterno((estadoAnterior) => {
-      console.log(estadoAnterior);
       return { ...estadoAnterior, ...pacienteExterno };
     });
+    setEstadoPacienteExterno((estadoAnterior) => {
+      return { ...estadoAnterior, ...estadoPacienteExterno };
+    });
   };
+
   useEffect(() => {
     (async () => {
       obtenerPacienteLocal();
@@ -253,9 +243,10 @@ function Sincronizacion() {
                 <FormControlLabel
                   value="start"
                   size="small"
-                  name="nombrePacienteLocal"
-                  checked={pacienteLocal.validez.nombreNuevo}
+                  name="nombreNuevo"
+                  checked={estadoPacienteLocal.nombreNuevo}
                   control={<Checkbox />}
+                  onChange={handleChangePacienteLocal}
                   label={pacienteLocal.nombre}
                   labelPlacement="start"
                 />
@@ -267,9 +258,10 @@ function Sincronizacion() {
                 <FormControlLabel
                   value="start"
                   size="small"
-                  name="apellidoPacienteLocal"
-                  checked={pacienteLocal.validez.apellidoNuevo}
+                  name="apellidoNombre"
+                  checked={estadoPacienteLocal.apellidoNuevo}
                   control={<Checkbox />}
+                  onChange={handleChangePacienteLocal}
                   label={pacienteLocal.apellido}
                   labelPlacement="start"
                 />
@@ -282,28 +274,15 @@ function Sincronizacion() {
                   <FormControlLabel
                     value="start"
                     size="small"
-                    name="dniPacienteLocal"
-                    checked={pacienteLocal.validez.dniNuevo}
+                    name="dniNuevo"
+                    checked={estadoPacienteLocal.dniNuevo}
                     control={<Checkbox />}
+                    onChange={handleChangePacienteLocal}
                     label={pacienteLocal.dni}
                     labelPlacement="start"
                   />
                 </FormControl>
               </Grid>
-              {/* <Grid item xs={6}>
-                <FormControl>
-                  <FormLabel component="legend">Fecha de nacimiento:</FormLabel>
-                  <FormControlLabel
-                    value="start"
-                    size="small"
-                    name="fechaDeNacimientoPacienteLocal"
-                    checked={pacienteLocal.validez.fechaNacimientoNuevo}
-                    control={<Checkbox />}
-                    label={pacienteLocal.fechaNacimiento}
-                    labelPlacement="start"
-                  />
-                </FormControl>
-              </Grid> */}
             </Grid>
             <Grid container direction="row" spacing={0}>
               <FormControl>
@@ -311,163 +290,199 @@ function Sincronizacion() {
                 <FormControlLabel
                   value="start"
                   size="small"
-                  name="fechaDeNacimientoPacienteLocal"
-                  checked={pacienteLocal.validez.fechaNacimientoNuevo}
+                  name="fechaNacimientoNuevo"
+                  checked={estadoPacienteLocal.fechaNacimientoNuevo}
                   control={<Checkbox />}
+                  onChange={handleChangePacienteLocal}
                   label={pacienteLocal.fechaNacimiento}
+                  labelPlacement="start"
+                />
+              </FormControl>
+            </Grid>
+            <Grid container direction="row" spacing={0}>
+              <FormControl>
+                <FormLabel component="legend">Sexo:</FormLabel>
+                <FormControlLabel
+                  value="start"
+                  size="small"
+                  name="sexoNuevo"
+                  checked={estadoPacienteLocal.sexoNuevo}
+                  control={<Checkbox />}
+                  onChange={handleChangePacienteLocal}
+                  label={pacienteLocal.sexo}
+                  labelPlacement="start"
+                />
+              </FormControl>
+            </Grid>
+            <Grid container direction="row" spacing={0}>
+              <FormControl>
+                <FormLabel component="legend">Género:</FormLabel>
+                <FormControlLabel
+                  value="start"
+                  size="small"
+                  name="generoNuevo"
+                  checked={estadoPacienteLocal.generoNuevo}
+                  control={<Checkbox />}
+                  onChange={handleChangePacienteLocal}
+                  label={pacienteLocal.genero}
+                  labelPlacement="start"
+                />
+              </FormControl>
+            </Grid>
+            <Grid container direction="row" spacing={0}>
+              <FormControl>
+                <FormLabel component="legend">Domicilio:</FormLabel>
+                <FormControlLabel
+                  value="start"
+                  size="small"
+                  name="domicilioNuevo"
+                  checked={estadoPacienteLocal.domicilioNuevo}
+                  control={<Checkbox />}
+                  onChange={handleChangePacienteLocal}
+                  label={pacienteLocal.domicilio}
+                  labelPlacement="start"
+                />
+              </FormControl>
+            </Grid>
+            <Grid container direction="row" spacing={0}>
+              <FormControl>
+                <FormLabel component="legend">Teléfono:</FormLabel>
+                <FormControlLabel
+                  value="start"
+                  size="small"
+                  name="telefonoNuevo"
+                  checked={estadoPacienteLocal.telefonoNuevo}
+                  control={<Checkbox />}
+                  onChange={handleChangePacienteLocal}
+                  label={pacienteLocal.telefono}
+                  labelPlacement="start"
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid xs={6}>
+            <Typography>&nbsp;&nbsp;Datos del paciente externo</Typography>
+            <Grid container direction="row" spacing={0}>
+              <FormControl>
+                <FormLabel component="legend">Nombre:</FormLabel>
+                <FormControlLabel
+                  value="start"
+                  size="small"
+                  name="nombreNuevo"
+                  checked={estadoPacienteExterno.nombreNuevo}
+                  control={<Checkbox />}
+                  onChange={handleChangePacienteExterno}
+                  label={pacienteExterno.nombre}
+                  labelPlacement="start"
+                />
+              </FormControl>
+            </Grid>
+            <Grid container direction="row" spacing={0}>
+              <FormControl>
+                <FormLabel component="legend">Apellido:</FormLabel>
+                <FormControlLabel
+                  value="start"
+                  size="small"
+                  name="apellidoNombre"
+                  checked={estadoPacienteExterno.apellidoNuevo}
+                  control={<Checkbox />}
+                  onChange={handleChangePacienteExterno}
+                  label={pacienteExterno.apellido}
                   labelPlacement="start"
                 />
               </FormControl>
             </Grid>
             <Grid container direction="row" spacing={0} columnSpacing={1}>
               <Grid item xs={6}>
-                <InputLabel>&nbsp;&nbsp;Sexo</InputLabel>
-                <OutlinedInput
-                  id="outlined-pacienteLocal-sexo"
-                  type="text"
-                  // value={pacienteASincronizar.apellido}
-                  // onChange={handleChangePacienteLocal}
-                  size="small"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <InputLabel>&nbsp;&nbsp;Género</InputLabel>
-                <OutlinedInput
-                  id="outlined-pacienteLocal-genero"
-                  type="text"
-                  // value={pacienteASincronizar.apellido}
-                  // onChange={handleChangePacienteLocal}
-                  size="small"
-                  fullWidth
-                />
+                <FormControl>
+                  <FormLabel component="legend">DNI:</FormLabel>
+                  <FormControlLabel
+                    value="start"
+                    size="small"
+                    name="dniNuevo"
+                    checked={estadoPacienteExterno.dniNuevo}
+                    control={<Checkbox />}
+                    onChange={handleChangePacienteExterno}
+                    label={pacienteExterno.dni}
+                    labelPlacement="start"
+                  />
+                </FormControl>
               </Grid>
             </Grid>
             <Grid container direction="row" spacing={0}>
-              <InputLabel>&nbsp;&nbsp;Domicilio</InputLabel>
-              <OutlinedInput
-                id="outlined-pacienteLocal-domicilio"
-                type="text"
-                // value={pacienteASincronizar.apellido}
-                // onChange={handleChangePacienteLocal}
-                size="small"
-                fullWidth
-              />
-            </Grid>
-            <Grid container direction="row" spacing={0}>
-              <InputLabel>&nbsp;&nbsp;Teléfono</InputLabel>
-              <OutlinedInput
-                id="outlined-pacienteLocal-telefono"
-                type="text"
-                // value={pacienteASincronizar.apellido}
-                // onChange={handleChangePacienteLocal}
-                size="small"
-                fullWidth
-              />
-            </Grid>
-          </Grid>
-          <Grid xs={6}>
-            <Typography>&nbsp;&nbsp;Datos del paciente externo</Typography>
-            <Grid container direction="row" spacing={0}>
-              <InputLabel>&nbsp;&nbsp;Nombre</InputLabel>
-              <OutlinedInput
-                id="outlined-paciente-externo-nombre"
-                type="text"
-                value={pacienteExterno.nombre}
-                onChange={handleChangePacienteExterno}
-                size="small"
-                fullWidth
-                margin="none"
-              />
-            </Grid>
-            {/* <FormControlLabel
-                size="small"
-                name="nombre"
-                checked={paciente.nombre}
-                onChange={handleChange}
-                control={<Checkbox />}
-                label="Nombre"
-              /> */}
-            <Grid container direction="row" spacing={0}>
-              <InputLabel>&nbsp;&nbsp;Apellido</InputLabel>
-              <OutlinedInput
-                id="outlined-paciente-externo-apellido"
-                type="text"
-                value={pacienteExterno.apellido}
-                onChange={handleChangePacienteExterno}
-                size="small"
-                fullWidth
-              />
-            </Grid>
-            <Grid container direction="row" spacing={0} columnSpacing={1}>
-              <Grid item xs={6}>
-                <InputLabel>&nbsp;&nbsp;DNI</InputLabel>
-                <OutlinedInput
-                  id="outlined-paciente-externo-dni"
-                  type="text"
-                  value={pacienteExterno.dni}
+              <FormControl>
+                <FormLabel component="legend">Fecha de nacimiento:</FormLabel>
+                <FormControlLabel
+                  value="start"
+                  size="small"
+                  name="fechaNacimientoNuevo"
+                  checked={estadoPacienteExterno.fechaNacimientoNuevo}
+                  control={<Checkbox />}
                   onChange={handleChangePacienteExterno}
-                  size="small"
-                  fullWidth
+                  label={pacienteExterno.fechaNacimiento}
+                  labelPlacement="start"
                 />
-              </Grid>
-              <Grid item xs={6}>
-                <InputLabel>&nbsp;&nbsp;Fecha de nacimiento</InputLabel>
-                <OutlinedInput
-                  id="outlined-paciente-externo-fechaDeNacimiento"
-                  type="text"
-                  // value={pacienteASincronizar.apellido}
-                  // onChange={handleChange}
-                  size="small"
-                  fullWidth
-                />
-              </Grid>
-            </Grid>
-            <Grid container direction="row" spacing={0} columnSpacing={1}>
-              <Grid item xs={6}>
-                <InputLabel>&nbsp;&nbsp;Sexo</InputLabel>
-                <OutlinedInput
-                  id="outlined-paciente-externo-sexo"
-                  type="text"
-                  // value={pacienteASincronizar.apellido}
-                  // onChange={handleChange}
-                  size="small"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <InputLabel>&nbsp;&nbsp;Género</InputLabel>
-                <OutlinedInput
-                  id="outlined-paciente-externo-genero"
-                  type="text"
-                  // value={pacienteASincronizar.apellido}
-                  // onChange={handleChange}
-                  size="small"
-                  fullWidth
-                />
-              </Grid>
+              </FormControl>
             </Grid>
             <Grid container direction="row" spacing={0}>
-              <InputLabel>&nbsp;&nbsp;Domicilio</InputLabel>
-              <OutlinedInput
-                id="outlined-paciente-externo-domicilio"
-                type="text"
-                // value={pacienteASincronizar.apellido}
-                // onChange={handleChange}
-                size="small"
-                fullWidth
-              />
+              <FormControl>
+                <FormLabel component="legend">Sexo:</FormLabel>
+                <FormControlLabel
+                  value="start"
+                  size="small"
+                  name="sexoNuevo"
+                  checked={estadoPacienteExterno.sexoNuevo}
+                  control={<Checkbox />}
+                  onChange={handleChangePacienteExterno}
+                  label={pacienteExterno.sexo}
+                  labelPlacement="start"
+                />
+              </FormControl>
             </Grid>
             <Grid container direction="row" spacing={0}>
-              <InputLabel>&nbsp;&nbsp;Teléfono</InputLabel>
-              <OutlinedInput
-                id="outlined-paciente-externo-telefono"
-                type="text"
-                // value={pacienteASincronizar.apellido}
-                // onChange={handleChange}
-                size="small"
-                fullWidth
-              />
+              <FormControl>
+                <FormLabel component="legend">Género:</FormLabel>
+                <FormControlLabel
+                  value="start"
+                  size="small"
+                  name="generoNuevo"
+                  checked={estadoPacienteExterno.generoNuevo}
+                  control={<Checkbox />}
+                  onChange={handleChangePacienteExterno}
+                  label={pacienteExterno.genero}
+                  labelPlacement="start"
+                />
+              </FormControl>
+            </Grid>
+            <Grid container direction="row" spacing={0}>
+              <FormControl>
+                <FormLabel component="legend">Domicilio:</FormLabel>
+                <FormControlLabel
+                  value="start"
+                  size="small"
+                  name="domicilioNuevo"
+                  checked={estadoPacienteExterno.domicilioNuevo}
+                  control={<Checkbox />}
+                  onChange={handleChangePacienteExterno}
+                  label={pacienteExterno.domicilio}
+                  labelPlacement="start"
+                />
+              </FormControl>
+            </Grid>
+            <Grid container direction="row" spacing={0}>
+              <FormControl>
+                <FormLabel component="legend">Teléfono:</FormLabel>
+                <FormControlLabel
+                  value="start"
+                  size="small"
+                  name="telefonoNuevo"
+                  checked={estadoPacienteExterno.telefonoNuevo}
+                  control={<Checkbox />}
+                  onChange={handleChangePacienteExterno}
+                  label={pacienteExterno.telefono}
+                  labelPlacement="start"
+                />
+              </FormControl>
             </Grid>
           </Grid>
         </Grid>
@@ -475,9 +490,9 @@ function Sincronizacion() {
         <BotonVolver> </BotonVolver>
         <br></br>
         <br></br>
-        <Button variant="outlined" onClick={actualizarPaciente}>
+        {/* <Button variant="outlined" onClick={actualizarPaciente}>
           Actualizar
-        </Button>
+        </Button> */}
       </Box>
     </>
   );
