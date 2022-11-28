@@ -61,6 +61,8 @@ async function getAll() {
   }
 }
 
+
+
 async function getPacientesYConflictos() {
   const zip = (a, b) =>
     a.map((k, i) => {
@@ -78,7 +80,13 @@ async function getPacientesYConflictos() {
 
   const pacientesYConflictos = zip(pacientes, pacientesConflictivos);
 
-  return { pacientesYConflictos };
+  const pacientesYConflictosFiltrados = pacientesYConflictos.filter(x => {
+    if(x.conflicto){
+      return true
+    }
+  });
+
+  return { pacientesYConflictosFiltrados };
 }
 
 //   dnisYFechasInterseccion = newDnisyFechas.filter((value) => localDnisYfechas.some(elem => JSON.stringify(value) === JSON.stringify(elem)));
