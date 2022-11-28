@@ -24,6 +24,7 @@ export const api = {
   obtenerEventosCompletosImportantesPorPacienteId,
   modificarEvento,
   sincronizar,
+  obtenerPacienteConConflictos
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -301,25 +302,25 @@ async function sincronizar(){
   }
 }
 
-// async function obtenerPacienteConConflictos() {
-//   try {
-//     const eventosImportantesObtenidos = await axios.get(
-//       rutas.getEventosCompletosImportantesPorPacienteId + pacienteId
-//     );
-
-//     return eventosImportantesObtenidos;
-//   } catch (error) {
-//     return "El evento no existe";
-//   }
-// }
-
-async function resolverConflicto(pacienteParaActualizar) {
+async function obtenerPacienteConConflictos() {
   try {
-    const response = await axios.post(rutas.resolverConflicto, pacienteParaActualizar);
-    const pacienteParaActualizarRespuesta = response.data;
-    return Object.keys(pacienteParaActualizarRespuesta).length !== 0;
+    const pacientesConflictivos = await axios.get(
+      rutas.getPacientesConConflictos
+    );
+      console.log("Desde del api: " + pacientesConflictivos);
+    return pacientesConflictivos;
   } catch (error) {
-    console.error(error);
-    return false;
+    return "No se encontraron pacientes conflictivos";
   }
 }
+
+// async function resolverConflicto(pacienteParaActualizar) {
+//   try {
+//     const response = await axios.post(rutas.resolverConflicto, pacienteParaActualizar);
+//     const pacienteParaActualizarRespuesta = response.data;
+//     return Object.keys(pacienteParaActualizarRespuesta).length !== 0;
+//   } catch (error) {
+//     console.error(error);
+//     return false;
+//   }
+// }

@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import BotonVolver from "../Botones/BotonVolver";
 import MenuAppBar from "../Menu/MenuAppBar";
+import { api } from "../../API backend/api";
 
 function Sincronizacion() {
   const params = useParams();
@@ -217,6 +218,9 @@ function Sincronizacion() {
 
   useEffect(() => {
     (async () => {
+      const response =
+      await api.obtenerPacienteConConflictos();
+
       obtenerPacienteLocal();
       obtenerPacienteExterno();
     })();
