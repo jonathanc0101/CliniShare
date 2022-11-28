@@ -41,6 +41,7 @@ export async function getDatosParaSincronizar(fecha, dnisYFechas, computadora) {
 }
 
 export async function actualizarDatos(datos,computadoraId) {
+  console.log("hola");
 
   if (Object.keys(datos).length === 0) {
     return;
@@ -49,8 +50,8 @@ export async function actualizarDatos(datos,computadoraId) {
     return;
   }
 
-  
   datos.eventos = await actualizarIdsPacientes(datos);
+  
   
   try {
     await sequelize.transaction(async (t) => {
@@ -58,14 +59,15 @@ export async function actualizarDatos(datos,computadoraId) {
         await Medico.upsert(medico, { transaction: t });
       }
       
+      
       for (const evento of datos.eventos) {
         await Evento.upsert(evento, { transaction: t });
       }
       
     });
-
+    
     await PacientesConflictivosService.apartarConflictos(datos.pacientes, computadoraId);
-
+    
     return true;
   } catch (error) {
     console.log("No se pudo actualizar el evento compartido: " + error);
