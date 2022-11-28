@@ -26,20 +26,8 @@ async function apartarConflictos(pacientes, computadoraId) {
     let pacienteEncontrado = pAux.dataValues;
     delete pacienteEncontrado.id;
 
-    // console.log("\n\n\n");
-    // console.log("\n\n recibido \n", paciente);
-    // console.log("\n\n\n");
-
-    // console.log("\n\n\n");
-    // console.log("\n\n encontrado \n", pacienteEncontrado);
-    // console.log("\n\n\n");
-
     const sonIguales =
       JSON.stringify(paciente) === JSON.stringify(pacienteEncontrado);
-
-    console.log("\n\n\n");
-    console.log("sonIguales: ", sonIguales);
-    console.log("\n\n\n");
 
     if (sonIguales) {
       pacientesNoConflictivos.push(paciente);
@@ -82,14 +70,17 @@ async function resolver(pacienteConflictivo) {
       transaction: t,
     });
 
-    let paciente = { ...pacienteConflictivo.dataValues };
+    let paciente = { ...pacienteConflictivo };
     delete paciente.computadoraId;
     delete paciente.conflictoId;
 
-    upsertado = await PacientesService.upsertarPorDNIyNacimiento(paciente, {
-      transaction: t,
-    });
+    
+    upsertado = await PacientesService.upsertarPorDNIyNacimiento(paciente, t,);
   });
+  
+  console.log("\n\n\n");
+  console.log("upsertado ",upsertado);
+  console.log("\n\n\n");
 
   return upsertado;
 }

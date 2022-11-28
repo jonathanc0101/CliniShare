@@ -49,23 +49,22 @@ export async function actualizarDatos(datos,computadoraId) {
     return;
   }
 
-
-  //la resolucion de conflictos se ve despues
-  PacientesConflictivosService.apartarConflictos(datos.pacientes, computadoraId);
   
   datos.eventos = await actualizarIdsPacientes(datos);
-
+  
   try {
     await sequelize.transaction(async (t) => {
       for (const medico of datos.medicos) {
         await Medico.upsert(medico, { transaction: t });
       }
-            
+      
       for (const evento of datos.eventos) {
         await Evento.upsert(evento, { transaction: t });
       }
-
+      
     });
+
+    await PacientesConflictivosService.apartarConflictos(datos.pacientes, computadoraId);
 
     return true;
   } catch (error) {
