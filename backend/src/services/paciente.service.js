@@ -140,6 +140,7 @@ async function getIdPorDniYNacimiento(paciente){
     }
   });
 
+  transaction: t
 
   if (!pacienteFound) {
     return {};
