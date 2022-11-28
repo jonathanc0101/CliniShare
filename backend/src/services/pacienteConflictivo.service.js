@@ -78,7 +78,7 @@ async function getPacientesYConflictos() {
     });
   });
 
-  const pacientesYConflictos = zip(pacientes, pacientesConflictivos);
+  const pacientesYConflictos = zip(pacientesFiltrados, pacientesConflictivos);
 
   const pacientesYConflictosFiltrados = pacientesYConflictos.filter(x => {
     if(x.conflicto){
