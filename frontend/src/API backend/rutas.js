@@ -27,7 +27,8 @@ const rutas = {
   getEventosCompletosImportantesPorPacienteId:
     "eventos/importantes/paciente/id/",
   postBroadcast: "broadcast",
-  getPacientesConConflictos: "conflictos/includePacientes/all/",
+  getPacientesYConflictos: "conflictos/includePacientes/all/",
+  getTodosPacientesConConflictos: "conflictos/all/",
   resolverConflicto: "conflictos/resolver",
 
 };

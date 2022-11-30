@@ -224,7 +224,7 @@ function Sincronizacion() {
       obtenerPacienteLocal();
       obtenerPacienteExterno();
     })();
-  }, [params.id]);
+  }, []);
   return (
     <>
       <Box sx={{ maxWidth: "100%", height: "auto" }}>
