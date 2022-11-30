@@ -1,13 +1,21 @@
-import express from "express";
-import https from "https";
-
+import fs from "fs";
 import forge from "node-forge";
 
 const pki = forge.pki;
 
+export const utils = {
+    generateRSAKeyPair,
+    generateAndSignCert
+}
+
 function generateRSAKeyPair(){
     return pki.rsa.generateKeyPair(2048);
 }
+
+// function saveKeys(keys,name){
+//     const privatePem = pki.publicKeyToPem(keys.publicKey);
+//     const publicPem = pki.privateKeyToPem(keys.privateKey);
+// }
 
 function generateAndSignCert(keys) {
   // create a new certificate
@@ -24,7 +32,7 @@ function generateAndSignCert(keys) {
   const attrs = [
     {
       name: "commonName",
-      value: "example.org",
+      value: "clinishare",
     },
     {
       name: "countryName",
@@ -58,23 +66,3 @@ function generateAndSignCert(keys) {
   // now convert the Forge certificate to PEM format
   return cert;
 }
-
-
-const keys = generateRSAKeyPair();
-const cert = generateAndSignCert(keys);
-
-const app = express();
-
-app.use("/", (req, res, next) => {
-  res.send("Hello");
-});
-
-const sslServer = https.createServer(
-  {
-    key: pki.privateKeyToPem(keys.privateKey),
-    cert: pki.certificateToPem(cert),
-  },
-  app
-);
-
-sslServer.listen(3443, () => console.log("secure server runin"));
