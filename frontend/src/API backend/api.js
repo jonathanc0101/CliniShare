@@ -333,9 +333,9 @@ async function obtenerPacienteConflictivo(pacienteDni) {
 
 async function resolverConflictos(pacienteParaActualizar) {
   try {
+    console.log("API RESOLVER: ",pacienteParaActualizar);
     const response = await axios.post(rutas.resolverConflicto, pacienteParaActualizar);
     const pacienteParaActualizarRespuesta = response.data;
-    console.log("API: ", pacienteParaActualizarRespuesta);
     return pacienteParaActualizarRespuesta;
   } catch (error) {
     console.error(error);

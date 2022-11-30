@@ -26,8 +26,6 @@ function ResolverConflictos() {
     color: theme.palette.text.secondary,
   }));
   const [pacienteExterno, setPacienteExterno] = useState({
-    conflictoId: "",
-    computadoraId: "",
     nombre: "",
     apellido: "",
     dni: "",
@@ -56,7 +54,6 @@ function ResolverConflictos() {
   });
 
   const [pacienteResuelto, setPacienteResuelto] = useState({
-    conflictoId: "",
     nombre: "",
     apellido: "",
     dni: "",
@@ -67,7 +64,6 @@ function ResolverConflictos() {
     telefono: "",
     direccion: "",
     email: "",
-    computadoraId: "",
   });
 
   const [pacienteLocal, setPacienteLocal] = useState({
@@ -127,6 +123,8 @@ function ResolverConflictos() {
       if (estadoPacienteExterno[atributo] === true) {
         let valor = pacienteExterno[atributo];
         console.log("Valor en paciente externo: \n", valor);
+        console.log("Atributo: \n", atributo);
+
 
         setPacienteResuelto((estadoAnterior) => {
           return { ...estadoAnterior, [atributo]: valor };
@@ -134,7 +132,7 @@ function ResolverConflictos() {
       }
     }
     const respuesta = await api.resolverConflictos(pacienteResuelto);
-    console.log(respuesta);
+    console.log(JSON.stringify(respuesta));
   };
 
   useEffect(() => {
