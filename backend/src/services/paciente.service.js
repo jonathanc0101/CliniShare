@@ -255,6 +255,6 @@ async function upsertarPorDNIyNacimiento(paciente,transaction){
     paciente.id = pacienteFound.id;
   }
 
-  Paciente.upsert(paciente,{transaction});
+  await Paciente.upsert(paciente,{transaction});
 }
 

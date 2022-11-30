@@ -26,20 +26,8 @@ async function apartarConflictos(pacientes, computadoraId) {
     let pacienteEncontrado = pAux.dataValues;
     delete pacienteEncontrado.id;
 
-    // console.log("\n\n\n");
-    // console.log("\n\n recibido \n", paciente);
-    // console.log("\n\n\n");
-
-    // console.log("\n\n\n");
-    // console.log("\n\n encontrado \n", pacienteEncontrado);
-    // console.log("\n\n\n");
-
     const sonIguales =
       JSON.stringify(paciente) === JSON.stringify(pacienteEncontrado);
-
-    console.log("\n\n\n");
-    console.log("sonIguales: ", sonIguales);
-    console.log("\n\n\n");
 
     if (sonIguales) {
       pacientesNoConflictivos.push(paciente);
@@ -61,38 +49,17 @@ async function getAll() {
   }
 }
 
-
-
 async function getPacientesYConflictos() {
-  const zip = (a, b) =>
-    a.map((k, i) => {
-      return { paciente: k, conflicto: b[i] };
-    });
-
   const pacientesConflictivos = await PacienteConflictivo.findAll();
-  const pacientes = await Paciente.findAll();
 
-  const pacientesFiltrados = pacientes.filter((v) => {
-    return pacientesConflictivos.some((e) => {
-      return e.fechaNacimiento === v.fechaNacimiento && e.dni === v.dni;
-    });
-  });
+  let pacientesMappeados = [];
 
-  const pacientesYConflictos = zip(pacientes, pacientesConflictivos);
+  for(const conflicto of pacientesConflictivos){
+    pacientesMappeados.push({paciente: await PacientesService.getPorDniYNacimiento(conflicto),conflicto})
+  }
 
-  const pacientesYConflictosFiltrados = pacientesYConflictos.filter(x => {
-    if(x.conflicto){
-      return true
-    }
-  });
-
-  return { pacientesYConflictosFiltrados };
+  return { pacientesConflictivos: pacientesMappeados };
 }
-
-//   dnisYFechasInterseccion = newDnisyFechas.filter((value) => localDnisYfechas.some(elem => JSON.stringify(value) === JSON.stringify(elem)));
-//   dnisYFechasInterseccion = dnisYFechasInterseccion.filter((value) =>
-//   newDnisyFechas.some(elem => JSON.stringify(value) === JSON.stringify(elem))
-//   );
 
 async function resolver(pacienteConflictivo) {
   let upsertado = {};
@@ -103,14 +70,17 @@ async function resolver(pacienteConflictivo) {
       transaction: t,
     });
 
-    let paciente = { ...pacienteConflictivo.dataValues };
+    let paciente = { ...pacienteConflictivo };
     delete paciente.computadoraId;
     delete paciente.conflictoId;
 
-    upsertado = await PacientesService.upsertarPorDNIyNacimiento(paciente, {
-      transaction: t,
-    });
+    
+    upsertado = await PacientesService.upsertarPorDNIyNacimiento(paciente, t,);
   });
+  
+  console.log("\n\n\n");
+  console.log("upsertado ",upsertado);
+  console.log("\n\n\n");
 
   return upsertado;
 }
