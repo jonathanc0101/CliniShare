@@ -15,6 +15,7 @@ import BotonVolver from "../Botones/BotonVolver";
 import MenuAppBar from "../Menu/MenuAppBar";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
+import RenglonesOpcion from "./RenglonesOpcion";
 
 function ResolverConflictos() {
   const params = useParams();
@@ -53,21 +54,6 @@ function ResolverConflictos() {
     direccion: false,
     email: false,
     computadoraId: true,
-  });
-
-  const [pacienteResuelto, setPacienteResuelto] = useState({
-    conflictoId: "",
-    nombre: "",
-    apellido: "",
-    dni: "",
-    fechaNacimiento: "",
-    fechaDefuncion: "",
-    genero: "",
-    sexo: "",
-    telefono: "",
-    direccion: "",
-    email: "",
-    computadoraId: "",
   });
 
   const [pacienteLocal, setPacienteLocal] = useState({
@@ -112,33 +98,19 @@ function ResolverConflictos() {
 
   const guardar = async function () {
     // Recorre para los datos locales
+    let pacienteResultado = { ...pacienteExterno };
     for (let atributo in estadoPacienteLocal) {
       if (estadoPacienteLocal[atributo] === true) {
         let valor = pacienteLocal[atributo];
-        console.log("Valor en paciente local: \n", valor);
 
-        setPacienteResuelto((estadoAnterior) => {
-          return { ...estadoAnterior, [atributo]: valor };
-        });
+        pacienteResultado[atributo] = valor;
       }
     }
-    // Recorre para los datos externos
-    for (let atributo in estadoPacienteExterno) {
-      if (estadoPacienteExterno[atributo] === true) {
-        const valor = pacienteExterno[atributo];
-        console.log("Valor en paciente externo: \n", valor);
-        console.log("Atributo: \n", atributo);
-
-        setPacienteResuelto((estadoAnterior) => {
-          return { ...estadoAnterior, [atributo]: valor };
-        });
-      }
-    }
-    resolverConflictos();
+    resolverConflictos(pacienteResultado);
   };
 
-  const resolverConflictos = async function () {
-    const respuesta = await api.resolverConflictos(pacienteResuelto);
+  const resolverConflictos = async function (pacienteResultado) {
+    const respuesta = await api.resolverConflictos(pacienteResultado);
     console.log("RESPUESTA:", respuesta);
   };
 
@@ -166,6 +138,9 @@ function ResolverConflictos() {
             <MenuAppBar></MenuAppBar>
           </Grid>
         </Grid>
+
+        <RenglonesOpcion paciente={pacienteLocal} conflicto={pacienteExterno}></RenglonesOpcion>
+
         <Grid container rowSpacing={2}>
           <Grid item xs={12}>
             <Item>Conflictos en datos del paciente</Item>

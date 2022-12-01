@@ -19,6 +19,9 @@ import BuildIcon from '@mui/icons-material/Build';
 import { Link } from "react-router-dom";
 import BotonVolver from "../Botones/BotonVolver";
 import { api } from "../../API backend/api";
+import RengloOpcion from "./RenglonOpcion";
+import RenglonOpcion from "./RenglonOpcion";
+import RenglonesOpcion from "./RenglonesOpcion";
 
 function PacientesParaActualizar() {
   const Item = styled(Paper)(({ theme }) => ({
@@ -165,6 +168,7 @@ function PacientesParaActualizar() {
           </Table>
         </TableContainer>
       </Grid>
+
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
@@ -185,6 +189,7 @@ function PacientesParaActualizar() {
         }}
       />
       <BotonVolver></BotonVolver>
+
     </>
   );
 }

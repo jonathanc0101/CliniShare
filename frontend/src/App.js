@@ -18,6 +18,7 @@ import BotonSincronizar from "./componentes/Botones/BotonSincronizar";
 import Sincronizacion from "./componentes/Sincronizacion/Sincronizacion";
 import PacientesParaActualizar from "./componentes/Sincronizacion/PacientesParaActualizar";
 import ResolverConflictos from "./componentes/Sincronizacion/ResolverConflictos";
+import RengloOpcion from "./componentes/Sincronizacion/RenglonOpcion";
 
 
 const Rutas = () => {
@@ -51,6 +52,11 @@ const Rutas = () => {
       path: "/resolver/conflictos/paciente/:dni",
       element: <ResolverConflictos></ResolverConflictos>
     },
+    {
+      path: "/renglon/opcion",
+      element: <RengloOpcion></RengloOpcion>
+    },
+
 
     // ...
   ]);
