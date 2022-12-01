@@ -1,6 +1,12 @@
-import axios from "axios";
+
 import { SERVER_BD_PORT, INITIAL_RESPONSE } from "../UDP/constants.js";
 import emitter from "../eventos/eventEmitter.js";
+
+import { utils } from "../encripcion/utils.js";
+import ComputadoraLocalService from "../services/computadoraLocal.service.js";
+
+const cryptoData = await ComputadoraLocalService.getKeysAndCertPEM();
+const axios = utils.getAxiosInstance(cryptoData.privateKey,cryptoData.certificateSigned);
 
 export function handleNewComputer(computadora) {
   for (let ip in computadora.IPS) {

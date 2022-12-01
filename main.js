@@ -3,6 +3,8 @@ const axios = require('axios');
 const { app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 
+app.commandLine.appendSwitch('ignore-certificate-errors')
+
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -14,7 +16,7 @@ const createWindow = () => {
   })
 
   
-  win.loadURL("http://localhost:5000");
+  win.loadURL("https://localhost:5000");
 }
 
  
