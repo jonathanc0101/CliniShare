@@ -296,12 +296,10 @@ function ModificarEvento() {
               />
             </Grid>
           </Grid>
-
           <br></br>
           <br></br>
           <br></br>
           <br></br>
-
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
             <Grid item xs={4} sm={4}>
