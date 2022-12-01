@@ -13,6 +13,19 @@ export const ComputadoraLocal = sequelize.define("computadoraLocal",{
         type: DataTypes.STRING,
         allowNull: false,
       },
+      publicKey:{
+        type: DataTypes.STRING(2048),
+        allowNull: false,
+      },
+      privateKey:{
+        type: DataTypes.STRING(2048),
+        allowNull: false,
+      },
+      certificateSigned:{
+        type: DataTypes.STRING(2048),
+        allowNull: false,
+      },
+
 },{
     freezeTableName: true,
     timestamps: false

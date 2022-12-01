@@ -7,6 +7,9 @@ import userRoutes from "./routes/user.routes.js";
 import conflictosRoutes from "./routes/conflictos.routes.js";
 import cors from "cors";
 
+import { ComputadoraLocalService } from "./services/computadoraLocal.service.js";
+import { utils } from "./encripcion/utils.js";
+const cryptoData = await ComputadoraLocalService.getKeysAndCertPEM();
 
 const app = express();
 app.use(cors());
@@ -20,4 +23,10 @@ app.use(eventosRoutes);
 app.use(userRoutes);
 app.use(conflictosRoutes);
 
-export default app;
+const server = utils.createHTTPSserver(
+  cryptoData.privateKey,
+  cryptoData.certificateSigned,
+  app
+);
+
+export default server;
