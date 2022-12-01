@@ -26,6 +26,7 @@ function ResolverConflictos() {
     color: theme.palette.text.secondary,
   }));
   const [pacienteExterno, setPacienteExterno] = useState({
+    conflictoId: "",
     nombre: "",
     apellido: "",
     dni: "",
@@ -36,6 +37,7 @@ function ResolverConflictos() {
     telefono: "",
     direccion: "",
     email: "",
+    computadoraId: "",
   });
 
   const [estadoPacienteExterno, setEstadoPacienteExterno] = useState({
@@ -54,6 +56,7 @@ function ResolverConflictos() {
   });
 
   const [pacienteResuelto, setPacienteResuelto] = useState({
+    conflictoId: "",
     nombre: "",
     apellido: "",
     dni: "",
@@ -64,6 +67,7 @@ function ResolverConflictos() {
     telefono: "",
     direccion: "",
     email: "",
+    computadoraId: "",
   });
 
   const [pacienteLocal, setPacienteLocal] = useState({
@@ -121,18 +125,21 @@ function ResolverConflictos() {
     // Recorre para los datos externos
     for (let atributo in estadoPacienteExterno) {
       if (estadoPacienteExterno[atributo] === true) {
-        let valor = pacienteExterno[atributo];
+        const valor = pacienteExterno[atributo];
         console.log("Valor en paciente externo: \n", valor);
         console.log("Atributo: \n", atributo);
-
 
         setPacienteResuelto((estadoAnterior) => {
           return { ...estadoAnterior, [atributo]: valor };
         });
       }
     }
+    resolverConflictos();
+  };
+
+  const resolverConflictos = async function () {
     const respuesta = await api.resolverConflictos(pacienteResuelto);
-    console.log(JSON.stringify(respuesta));
+    console.log("RESPUESTA:", respuesta);
   };
 
   useEffect(() => {
