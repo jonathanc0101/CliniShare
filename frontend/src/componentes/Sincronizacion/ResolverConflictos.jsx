@@ -131,7 +131,7 @@ function ResolverConflictos() {
         });
       }
     }
-    const respuesta = await api.resolverConflictos({pacienteResuelto});
+    const respuesta = await api.resolverConflictos(pacienteResuelto);
     console.log(JSON.stringify(respuesta));
   };
 
