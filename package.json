@@ -14,13 +14,13 @@
     "rc": "BROWSER=none npm run --prefix frontend/ start",
     "most": "concurrently -k \"npm:rcb\" \"npm:dev\"",
     "all": "concurrently -k \" npm run rc\" \"npm:electron\" \"npm:dev\"",
-    "prod":"concurrently -k \" npm run rc\" \"npm:electron\" \"npm:backend\"",
-    "docker":"concurrently \"docker-compose build && docker-compose up\" \"npm:electron\" ",
-    "after-docker":"concurrently \"docker-compose up\" \"npm:electron\" ",
-    "compose-backends":"docker-compose build backend backend2 backend3 postgres postgres2 postgres3 && docker-compose up",
+    "prod": "concurrently -k \" npm run rc\" \"npm:electron\" \"npm:backend\"",
+    "docker": "concurrently \"docker-compose build && docker-compose up\" \"npm:electron\" ",
+    "after-docker": "concurrently \"docker-compose up\" \"npm:electron\" ",
+    "compose-backends": "docker-compose build backend backend2 backend3 postgres postgres2 postgres3 && docker-compose up",
     "electron": "wait-on tcp:5000 && electron .",
     "electron2": "electron ."
-  },
+},
   "author": "",
   "license": "ISC",
   "devDependencies": {
