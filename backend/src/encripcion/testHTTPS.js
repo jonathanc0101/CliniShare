@@ -14,14 +14,16 @@ const cert = utils.generateAndSelfSignCert(keys);
 
 const app = express();
 
-app.use(comprobar);
 
-app.use("/", (req, res, next) => {
-  console.log(req.headers.token);
-  res.send("Hello");
+app.get("/bad", (req, res, next) => {
+  res.send("bad");
 });
 
+app.use(comprobar);
 
+app.get("/good", (req, res, next) => {
+  res.send("good");
+});
 
 const sslServer = https.createServer(
   {
