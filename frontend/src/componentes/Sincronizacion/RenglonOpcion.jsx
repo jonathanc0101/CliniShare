@@ -59,15 +59,25 @@ function RenglonOpcion({ titulo, val1, val2 }) {
   }
 
   const handleChangePacienteInterno = (event) => {
+    console.log("NAME: " + event.target.name);
+    console.log("TITULO: " + titulo);
+    console.log("CHEKED: " + event.target.checked);
+
     let name = event.target.name;
     let checked = event.target.checked;
-    setChekedPacienteInterno({ ...checkedPacienteInterno, [name]: checked });
+    setChekedPacienteInterno({ ...checkedPacienteInterno, [titulo]: checked });
+    if (checked == true) {
+      setChekedPacienteExterno({ ...checkedPacienteInterno, [titulo]: false });
+    }
   };
 
   const handleChangePacienteExterno = (event) => {
     let name = event.target.name;
     let checked = event.target.checked;
-    setChekedPacienteExterno({ ...checkedPacienteExterno, [name]: checked });
+    setChekedPacienteExterno({ ...checkedPacienteExterno, [titulo]: checked });
+    if (checked == true) {
+      setChekedPacienteInterno({ ...checkedPacienteInterno, [titulo]: false });
+    }
   };
 
   return (
@@ -77,6 +87,7 @@ function RenglonOpcion({ titulo, val1, val2 }) {
           <Typography>{capitalizarTitulo(titulo)}</Typography>
 
           <FormControlLabel
+            // disabled={checkedPacienteExterno[titulo] ? true : false}
             control={
               <Checkbox
                 checked={checkedPacienteInterno[titulo]}
@@ -92,7 +103,7 @@ function RenglonOpcion({ titulo, val1, val2 }) {
           <Typography>{capitalizarTitulo(titulo)}</Typography>
 
           <FormControlLabel
-            control={ 
+            control={
               <Checkbox
                 checked={checkedPacienteExterno[titulo]}
                 onChange={handleChangePacienteExterno}
