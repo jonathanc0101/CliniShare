@@ -3,7 +3,7 @@ import express from "express";
 
 import { utils } from "./utils.js";
 
-import comprobar from "../routes/comprobadorToken.js";
+import {comprobarTest} from "../routes/comprobadorToken.js";
 
 import forge from "node-forge";
 
@@ -19,7 +19,7 @@ app.get("/bad", (req, res, next) => {
   res.send("bad");
 });
 
-app.use(comprobar);
+app.use(comprobarTest);
 
 app.get("/good", (req, res, next) => {
   res.send("good");

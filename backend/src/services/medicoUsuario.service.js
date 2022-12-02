@@ -9,6 +9,7 @@ export const MedicosUsuariosService = {
   getMedicoByDni: (dniABuscar) => getMedicoByDniFromModel(dniABuscar),
   getMedicoById: (id) => getMedicoByIdFromModel(id),
   getMedicoByEmail: getMedicoByEmailFromModel,
+  getMedicoByToken,
   create,
   modificar,
 };
@@ -89,6 +90,20 @@ async function getMedicoByIdFromModel(id) {
   const medico = await Medico.findOne({
     where: {
       id,
+    },
+  });
+
+  if (!medico) {
+    return {};
+  } else {
+    return medico;
+  }
+}
+
+async function getMedicoByToken(token){
+  const medico = await Medico.findOne({
+    where: {
+      token,
     },
   });
 
