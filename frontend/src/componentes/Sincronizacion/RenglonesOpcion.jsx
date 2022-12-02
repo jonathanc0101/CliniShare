@@ -4,27 +4,50 @@ import RenglonOpcion from "./RenglonOpcion";
 function RenglonesOpcion({ paciente, conflicto }) {
   let datosProcesados = [];
 
-  for (let atributo in paciente) {
-    console.log(atributo);
-    let valor = paciente[atributo];
+  function formatearFecha(fechaAFormatear) {
+    let fecha = new Date(fechaAFormatear);
+    let dia = `${fecha.getDate()}`.padStart(2, "0");
+    let mes = `${fecha.getMonth() + 1}`.padStart(2, "0");
+    let anio = fecha.getFullYear();
+    const fechaFormateada = `${dia}-${mes}-${anio}`;
+    return fechaFormateada;
+  }
 
-    datosProcesados.push({
-      titulo: atributo,
-      val1: valor,
-      val2: conflicto[atributo],
-    });
+
+  for (let atributo in paciente) {
+    let valor = "";
+    let valorConflicto = "";
+    if (atributo === "fechaNacimiento" || atributo === "fechaDefuncion") {
+      valor = formatearFecha(paciente[atributo]);
+      valorConflicto = formatearFecha(conflicto[atributo])
+    } else {
+      valor = paciente[atributo];
+      valorConflicto = (conflicto[atributo])
+
+    }
+    if (atributo !== "activo" && atributo !== "id") {
+      datosProcesados.push({
+        titulo: atributo,
+        val1: valor,
+        val2: valorConflicto,
+      });
+    }
   }
   return (
     <>
       {datosProcesados.map((dato) => {
         return (
-          <RenglonOpcion
-            titulo={dato.titulo}
-            val1={dato.val1}
-            val2={dato.val2}
-          ></RenglonOpcion>
+          <div key={dato.titulo}>
+            <RenglonOpcion
+              titulo={dato.titulo}
+              val1={dato.val1}
+              val2={dato.val2}
+            ></RenglonOpcion>
+          </div>
         );
-      })}
+      })
+      
+      }
     </>
   );
 }
