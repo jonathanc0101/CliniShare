@@ -41,6 +41,7 @@ function ResolverConflictos() {
     computadoraId: "",
   });
 
+  const [pacienteResuelto, setPacienteResuelto] = useState({});
   const [estadoPacienteExterno, setEstadoPacienteExterno] = useState({
     conflictoId: true,
     nombre: false,
@@ -97,22 +98,21 @@ function ResolverConflictos() {
   };
 
   const guardar = async function () {
-    // Recorre para los datos locales
-    let pacienteResultado = { ...pacienteExterno };
-    for (let atributo in estadoPacienteLocal) {
-      if (estadoPacienteLocal[atributo] === true) {
-        let valor = pacienteLocal[atributo];
-
-        pacienteResultado[atributo] = valor;
-      }
-    }
-    resolverConflictos(pacienteResultado);
+    resolverConflictos(pacienteResuelto);
   };
 
-  const resolverConflictos = async function (pacienteResultado) {
-    const respuesta = await api.resolverConflictos(pacienteResultado);
-    console.log("RESPUESTA:", respuesta);
+  const resolverConflictos = async function (p) {
+    const respuesta = await api.resolverConflictos(p);
+    console.log("RESPUESTA DEL API:", respuesta);
   };
+
+  function setAtributoPacienteResuelto(atributo, valor) {
+    setPacienteResuelto((estadoAnterior) => {
+      return { ...estadoAnterior, [atributo]: valor };
+    });
+    console.log("PACIENTE RESUELTO: ", pacienteResuelto);
+
+  }
 
   useEffect(() => {
     (async () => {
@@ -130,6 +130,10 @@ function ResolverConflictos() {
     })();
   }, [params.dni]);
 
+  useEffect(() => {
+    setPacienteResuelto({ ...pacienteExterno });
+  }, []);
+
   return (
     <>
       <Box sx={{ maxWidth: "100%", height: "auto" }}>
@@ -138,10 +142,15 @@ function ResolverConflictos() {
             <MenuAppBar></MenuAppBar>
           </Grid>
         </Grid>
-
+        <Grid container rowSpacing={2}>
+          <Grid item xs={12}>
+            <Item>Conflictos en datos del paciente</Item>
+          </Grid>
+        </Grid>
         <RenglonesOpcion
           paciente={pacienteLocal}
           conflicto={pacienteExterno}
+          setAtributoPacienteResuelto={setAtributoPacienteResuelto}
         ></RenglonesOpcion>
       </Box>
       <Button onClick={guardar}>Guardar</Button>

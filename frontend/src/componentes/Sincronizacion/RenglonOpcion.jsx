@@ -12,7 +12,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 
 import { useState } from "react";
 
-function RenglonOpcion({ titulo, val1, val2 }) {
+function RenglonOpcion({ titulo, val1, val2, setAtributoPacienteResuelto }) {
   const [checkedPacienteInterno, setChekedPacienteInterno] = useState({
     nombre: false,
     apellido: false,
@@ -59,23 +59,21 @@ function RenglonOpcion({ titulo, val1, val2 }) {
   }
 
   const handleChangePacienteInterno = (event) => {
-    console.log("NAME: " + event.target.name);
-    console.log("TITULO: " + titulo);
-    console.log("CHEKED: " + event.target.checked);
-
-    let name = event.target.name;
     let checked = event.target.checked;
     setChekedPacienteInterno({ ...checkedPacienteInterno, [titulo]: checked });
     if (checked == true) {
+      setAtributoPacienteResuelto(titulo, val1);
+
       setChekedPacienteExterno({ ...checkedPacienteInterno, [titulo]: false });
     }
   };
 
   const handleChangePacienteExterno = (event) => {
-    let name = event.target.name;
     let checked = event.target.checked;
     setChekedPacienteExterno({ ...checkedPacienteExterno, [titulo]: checked });
     if (checked == true) {
+      setAtributoPacienteResuelto(titulo, val2);
+
       setChekedPacienteInterno({ ...checkedPacienteInterno, [titulo]: false });
     }
   };
