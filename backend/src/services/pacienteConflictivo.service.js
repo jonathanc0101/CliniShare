@@ -75,12 +75,15 @@ async function resolver(pacienteConflictivo) {
     delete paciente.conflictoId;
 
     
-    upsertado = await PacientesService.upsertarPorDNIyNacimiento(paciente, t,);
+    upsertado = await PacientesService.upsertarPorDNIyNacimiento(paciente, t);
+    
+    console.log("\n\n\n");
+    console.log("upsertado ",upsertado);
+    console.log("\n\n\n");
+    
+    return true
   });
   
-  console.log("\n\n\n");
-  console.log("upsertado ",upsertado);
-  console.log("\n\n\n");
 
   return upsertado;
 }
