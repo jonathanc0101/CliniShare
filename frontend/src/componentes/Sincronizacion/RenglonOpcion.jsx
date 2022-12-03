@@ -6,13 +6,21 @@ import {
   FormHelperText,
   FormLabel,
   Input,
+  InputLabel,
+  OutlinedInput,
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function RenglonOpcion({ titulo, val1, val2, setAtributoPacienteResuelto }) {
+  const [valorActual, setValorActual] = useState(val2);
+
+  useEffect(() => {
+    setValorActual(val2);
+  }, [val2]);
+
   const [checkedPacienteInterno, setChekedPacienteInterno] = useState({
     nombre: false,
     apellido: false,
@@ -63,7 +71,7 @@ function RenglonOpcion({ titulo, val1, val2, setAtributoPacienteResuelto }) {
     setChekedPacienteInterno({ ...checkedPacienteInterno, [titulo]: checked });
     if (checked == true) {
       setAtributoPacienteResuelto(titulo, val1);
-
+      setValorActual(val1);
       setChekedPacienteExterno({ ...checkedPacienteExterno, [titulo]: false });
     }
   };
@@ -73,7 +81,7 @@ function RenglonOpcion({ titulo, val1, val2, setAtributoPacienteResuelto }) {
     setChekedPacienteExterno({ ...checkedPacienteExterno, [titulo]: checked });
     if (checked == true) {
       setAtributoPacienteResuelto(titulo, val2);
-
+      setValorActual(val2);
       setChekedPacienteInterno({ ...checkedPacienteInterno, [titulo]: false });
     }
   };
@@ -81,11 +89,12 @@ function RenglonOpcion({ titulo, val1, val2, setAtributoPacienteResuelto }) {
   return (
     <>
       <Grid container direction="row" spacing={0}>
-        <Grid xs={6}>
-          <Typography>{capitalizarTitulo(titulo)}</Typography>
-
+      <Grid xs={0.2}></Grid>
+        <Grid xs={2.9} style={{border: "1px solid gray"}}>
+          <Typography>&nbsp;&nbsp;{capitalizarTitulo(titulo)}</Typography>
+          &nbsp;&nbsp;
           <FormControlLabel
-            // disabled={checkedPacienteExterno[titulo] ? true : false}
+            disabled={checkedPacienteInterno[titulo] ? true : false}
             control={
               <Checkbox
                 checked={checkedPacienteInterno[titulo]}
@@ -94,13 +103,15 @@ function RenglonOpcion({ titulo, val1, val2, setAtributoPacienteResuelto }) {
               />
             }
             label={val1}
-            labelPlacement="start"
+            labelPlacement="end"
           />
         </Grid>
-        <Grid xs={6}>
-          <Typography>{capitalizarTitulo(titulo)}</Typography>
-
+        <Grid xs={0.2}></Grid>
+        <Grid xs={2.9} style={{border: "1px solid gray"}}>
+          <Typography>&nbsp;&nbsp;{capitalizarTitulo(titulo)}</Typography>
+          &nbsp;&nbsp;
           <FormControlLabel
+            disabled={checkedPacienteExterno[titulo] ? true : false}
             control={
               <Checkbox
                 checked={checkedPacienteExterno[titulo]}
@@ -109,8 +120,23 @@ function RenglonOpcion({ titulo, val1, val2, setAtributoPacienteResuelto }) {
               />
             }
             label={val2}
-            labelPlacement="start"
+            labelPlacement="end"
           />
+        </Grid>
+        <Grid xs={0.2}></Grid>
+
+        <Grid xs={4.8} >
+          <br></br>
+          <InputLabel>&nbsp;&nbsp;
+            {capitalizarTitulo(titulo) + " "}
+            <OutlinedInput
+            disabled
+              id={"outlined-adornment-" + { titulo }}
+              type="text"
+              value={valorActual}
+              size="small"
+            />
+          </InputLabel>
         </Grid>
       </Grid>
     </>
