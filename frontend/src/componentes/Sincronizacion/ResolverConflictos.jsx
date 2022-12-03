@@ -41,7 +41,6 @@ function ResolverConflictos() {
     computadoraId: "",
   });
 
-  const [pacienteResuelto, setPacienteResuelto] = useState({});
   const [estadoPacienteExterno, setEstadoPacienteExterno] = useState({
     conflictoId: true,
     nombre: false,
@@ -83,36 +82,22 @@ function ResolverConflictos() {
     email: false,
   });
 
-  const handleChangePacienteExterno = (event) => {
-    let name = event.target.name;
-    let checked = event.target.checked;
-    setEstadoPacienteExterno({ ...estadoPacienteExterno, [name]: checked });
-  };
-
-  const handleChangePacienteLocal = (event) => {
-    let name = event.target.name;
-    let checked = event.target.checked;
-    console.log("CHECKED " + event.target.checked);
-    console.log("NAME " + event.target.name);
-    setEstadoPacienteLocal({ ...estadoPacienteLocal, [name]: checked });
-  };
-
   const guardar = async function () {
-    resolverConflictos(pacienteResuelto);
+    resolverConflictos(pacienteResueltoAux);
   };
 
   const resolverConflictos = async function (p) {
     const respuesta = await api.resolverConflictos(p);
-    console.log("RESPUESTA DEL API:", respuesta);
   };
 
   function setAtributoPacienteResuelto(atributo, valor) {
-    setPacienteResuelto((estadoAnterior) => {
-      return { ...estadoAnterior, [atributo]: valor };
-    });
-    console.log("PACIENTE RESUELTO: ", pacienteResuelto);
 
+    pacienteResueltoAux[atributo] = valor;
+    console.log("PACIENTE  : ", pacienteResueltoAux);
   }
+
+
+  const  pacienteResueltoAux = pacienteExterno;
 
   useEffect(() => {
     (async () => {
@@ -127,11 +112,14 @@ function ResolverConflictos() {
       setPacienteLocal((estadoAnterior) => {
         return { ...estadoAnterior, ...respuestaPaciente };
       });
+
     })();
   }, [params.dni]);
 
   useEffect(() => {
-    setPacienteResuelto({ ...pacienteExterno });
+    // setPacienteResuelto({ ...pacienteExterno });
+    console.log("AUX: ",pacienteResueltoAux);
+
   }, []);
 
   return (

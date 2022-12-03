@@ -64,7 +64,7 @@ function RenglonOpcion({ titulo, val1, val2, setAtributoPacienteResuelto }) {
     if (checked == true) {
       setAtributoPacienteResuelto(titulo, val1);
 
-      setChekedPacienteExterno({ ...checkedPacienteInterno, [titulo]: false });
+      setChekedPacienteExterno({ ...checkedPacienteExterno, [titulo]: false });
     }
   };
 

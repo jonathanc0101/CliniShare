@@ -324,7 +324,6 @@ async function obtenerPacienteConflictivo(pacienteDni) {
     const pacienteConflictivo = pacientesConflictivos.data.find(
       (paciente) => paciente.dni === pacienteDni
     );
-    console.log("Paciente conflictivo api: " + pacienteConflictivo);
     return pacienteConflictivo;
   } catch (error) {
     return "Paciente no encontrado";
