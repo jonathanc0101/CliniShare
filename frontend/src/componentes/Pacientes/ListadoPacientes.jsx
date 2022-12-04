@@ -12,6 +12,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import Menu from "../Menu/Menu";
 import {
   Button,
+  IconButton,
   InputAdornment,
   OutlinedInput,
   TablePagination,
@@ -22,6 +23,8 @@ import MenuAppBar from "../Menu/MenuAppBar";
 import SearchIcon from "@mui/icons-material/Search";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import { api } from "../../API backend/api";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import DescargarPDF from "../DescargarPDF";
 
 function ListadoPacientes() {
   const [page, setPage] = useState(0);
@@ -162,6 +165,16 @@ function ListadoPacientes() {
                   >
                     Agregar evento
                   </TableCell>
+                  <TableCell
+                    style={{
+                      width: "0%",
+                      textAlign: "center",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Descargar
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -208,6 +221,23 @@ function ListadoPacientes() {
                             <PostAddIcon color="info"></PostAddIcon>
                           </Tooltip>
                         </Link>
+                      </TableCell>
+                      <TableCell align="center">
+                        {/* <Link to={"/pacientes/descargar/id/" + paciente.id}>
+                          <Tooltip title="Descargar historia clínica">
+                            <FileDownloadIcon color="info"></FileDownloadIcon>
+                          </Tooltip>
+                        </Link> */}
+                        {/* <IconButton
+                          color="primary"
+                          aria-label="upload picture"
+                          component="label"
+                        >
+                          <DescargarPDF></DescargarPDF>
+                          <FileDownloadIcon />
+                        </IconButton> */
+                        }
+                        <DescargarPDF paciente={paciente}></DescargarPDF>
                       </TableCell>
                     </TableRow>
                   ))}

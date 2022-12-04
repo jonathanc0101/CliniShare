@@ -35,16 +35,16 @@ function RenglonOpcion({ titulo, val1, val2, setAtributoPacienteResuelto }) {
   });
   const [checkedPacienteExterno, setChekedPacienteExterno] = useState({
     conflictoId: true,
-    nombre: false,
-    apellido: false,
+    nombre: true,
+    apellido: true,
     dni: true,
     fechaNacimiento: true,
-    fechaDefuncion: false,
-    genero: false,
-    sexo: false,
-    telefono: false,
-    direccion: false,
-    email: false,
+    fechaDefuncion: true,
+    genero: true,
+    sexo: true,
+    telefono: true,
+    direccion: true,
+    email: true,
     computadoraId: true,
   });
 
@@ -89,25 +89,25 @@ function RenglonOpcion({ titulo, val1, val2, setAtributoPacienteResuelto }) {
   return (
     <>
       <Grid container direction="row" spacing={0}>
-      <Grid xs={0.2}></Grid>
-        <Grid xs={2.9} style={{border: "1px solid gray"}}>
+        <Grid xs={0.2}></Grid>
+        <Grid xs={2.9} style={{ border: "1px solid gray" }}>
           <Typography>&nbsp;&nbsp;{capitalizarTitulo(titulo)}</Typography>
           &nbsp;&nbsp;
-          <FormControlLabel
-            disabled={checkedPacienteInterno[titulo] ? true : false}
-            control={
-              <Checkbox
-                checked={checkedPacienteInterno[titulo]}
-                onChange={handleChangePacienteInterno}
-                name={capitalizarTitulo(titulo)}
-              />
-            }
-            label={val1}
-            labelPlacement="end"
-          />
+            <FormControlLabel
+              disabled={checkedPacienteInterno[titulo] ? true : false}
+              control={
+                <Checkbox
+                  checked={checkedPacienteInterno[titulo]}
+                  onChange={handleChangePacienteInterno}
+                  name={capitalizarTitulo(titulo)}
+                />
+              }
+              label={val1}
+              labelPlacement="end"
+            />
         </Grid>
         <Grid xs={0.2}></Grid>
-        <Grid xs={2.9} style={{border: "1px solid gray"}}>
+        <Grid xs={2.9} style={{ border: "1px solid gray" }}>
           <Typography>&nbsp;&nbsp;{capitalizarTitulo(titulo)}</Typography>
           &nbsp;&nbsp;
           <FormControlLabel
@@ -125,12 +125,13 @@ function RenglonOpcion({ titulo, val1, val2, setAtributoPacienteResuelto }) {
         </Grid>
         <Grid xs={0.2}></Grid>
 
-        <Grid xs={4.8} >
+        <Grid xs={4.8}>
           <br></br>
-          <InputLabel>&nbsp;&nbsp;
+          <InputLabel>
+            &nbsp;&nbsp;
             {capitalizarTitulo(titulo) + " "}
             <OutlinedInput
-            disabled
+              disabled
               id={"outlined-adornment-" + { titulo }}
               type="text"
               value={valorActual}

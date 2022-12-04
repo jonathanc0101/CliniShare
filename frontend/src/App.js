@@ -19,9 +19,8 @@ import Sincronizacion from "./componentes/Sincronizacion/Sincronizacion";
 import PacientesParaActualizar from "./componentes/Sincronizacion/PacientesParaActualizar";
 import ResolverConflictos from "./componentes/Sincronizacion/ResolverConflictos";
 import RengloOpcion from "./componentes/Sincronizacion/RenglonOpcion";
-import VerPDF from "./componentes/VerPDF";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import PDFFile from "./componentes/PDFFIle";
+
+import DescargarPDF from "./componentes/DescargarPDF";
 
 const Rutas = () => {
   let routes = useRoutes([
@@ -57,10 +56,6 @@ const Rutas = () => {
     {
       path: "/renglon/opcion",
       element: <RengloOpcion></RengloOpcion>,
-    },
-    {
-      path: "/ver/pdf",
-      element: <VerPDF></VerPDF>,
     },
 
     // ...

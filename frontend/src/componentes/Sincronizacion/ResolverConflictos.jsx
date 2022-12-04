@@ -139,6 +139,14 @@ function ResolverConflictos() {
             <Item>Conflictos en datos del paciente</Item>
           </Grid>
         </Grid>
+        <Grid container rowSpacing={2}>
+          <Grid sm={2.67}>
+          <Item>Datos internos</Item>
+          </Grid>
+          <Grid sm={2.67}>
+          <Item>Datos externos</Item>
+          </Grid>
+        </Grid>
         <Grid container direction="row">
           <Grid item xs={10}>
             <RenglonesOpcion
@@ -148,7 +156,6 @@ function ResolverConflictos() {
             ></RenglonesOpcion>
           </Grid>
           <Grid item xs={1.5}>
-            <br></br>
             <br></br>
             <br></br>
             <br></br>
