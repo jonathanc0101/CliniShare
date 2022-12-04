@@ -11,7 +11,7 @@ export const userService = {
   login,
   register,
   modify,
-  getAllMedicosUUIDSDeUsers,
+  getAllMedicosUUIDSDeUsers
 };
 
 async function generateHash(password) {
@@ -129,3 +129,4 @@ async function getAllMedicosUUIDSDeUsers() {
     console.log("Error getAllUsersUUIDS ", error);
   }
 }
+

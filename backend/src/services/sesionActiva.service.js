@@ -3,20 +3,36 @@ import bcrypt from "bcrypt";
 
 export const sesionActivaService = {
   nueva,
-  comprobarToken,
-  obtenerUUIDActual
+  cerrar,
+  comprobarToken
 };
 
 async function nueva(medicoEncontrado) {
   try {
     const token = await bcrypt.hash("token", bcrypt.genSaltSync(8));
     // eliminamos todos los tokens ya que solo hay una sesion a la vez
-    SesionActiva.truncate();
+
     const nuevoToken = await SesionActiva.create({ token,medicoId:medicoEncontrado["id"] });
 
     if (!nuevoToken) {
       return {};
     }
+
+    return token;
+  } catch (error) {
+    console.log( "No se pudo registrar crear nuevo token, error: " + error);
+    return {}
+  }
+}
+
+
+async function cerrar(token) {
+  try {
+    const tokenRecibido = await SesionActiva.destroy({
+      where: {
+        token,
+      },
+    });
 
     return token;
   } catch (error) {
@@ -44,19 +60,5 @@ async function comprobarToken(token) {
   }
 }
 
-async function obtenerUUIDActual(){
-  try {
-    const uuid = await SesionActiva.findOne({attributes: ["medicoId"]});
-
-    if (uuid) {
-      return uuid.dataValues.medicoId;
-    } else {
-      return {};
-    }
-  } catch (error) {
-    console.log( "No se pudo encontrar sesion, error: " + error);
-    return {}
-  }
-}
 
 
