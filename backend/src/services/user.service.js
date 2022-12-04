@@ -11,8 +11,7 @@ export const userService = {
   login,
   register,
   modify,
-  getAllMedicosUUIDSDeUsers,
-  comprobarToken
+  getAllMedicosUUIDSDeUsers
 };
 
 async function generateHash(password) {
@@ -131,20 +130,3 @@ async function getAllMedicosUUIDSDeUsers() {
   }
 }
 
-async function comprobarToken(token){
-  try {
-    const medicoEncontrado = await MedicosUsuariosService.getMedicoByToken(
-      token
-    );
-
-    if (!medicoEncontrado) {
-      return false;
-    }else{
-      return true;
-    }
-
-  } catch (error) {
-    console.log("No se pudo verificar token de usuario, error: " + error);
-    return {};
-  }
-}
