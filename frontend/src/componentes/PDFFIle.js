@@ -18,21 +18,26 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "justify",
     fontFamily: "Times-Roman",
-    header: {
-      fontSize: 12,
-      marginBottom: 20,
-      textAlign: "center",
-      color: "grey",
-    },
-    pageNumber: {
-      position: "absolute",
-      fontSize: 12,
-      bottom: 30,
-      left: 0,
-      rigth: 0,
-      textAlign: "center",
-      color: "grey",
-    },
+  },
+  image: {
+    marginVertical: 15,
+    marginHorizontal: 100,
+  },
+  header: {
+    fontSize: 12,
+    marginBottom: 20,
+    textAlign: "center",
+    color: "grey",
+    fontFamily: "Times-Roman",
+  },
+  pageNumber: {
+    position: "absolute",
+    fontSize: 12,
+    bottom: 30,
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    color: "grey",
   },
 });
 
@@ -45,40 +50,90 @@ const stylesTable = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     borderTop: "1px solid #EEE",
-    paddingTop: 8,
-    paddingBottom: 8,
+    padding: 0,
   },
   header: {
     borderTop: "none",
+    margin: 12,
+    fontSize: 14,
+    textAlign: "justify",
+    fontFamily: "Times-Roman",
+    padding: 0,
   },
-  bold: {
+  encabezado: {
+    margin: 12,
+    fontSize: 14,
+    textAlign: "justify",
+    fontFamily: "Times-Roman",
+    width: "30%",
     fontWeight: "bold",
+    padding: 0,
   },
-  // So Declarative and unDRY 👌
-  row1: {
-    width: "30%",
+  rowImportante: {
+    width: "2%",
     border: "1px solid",
+    margin: 14,
+    fontSize: 14,
+    textAlign: "justify",
+    fontFamily: "Times-Roman",
+    lineHeight: "0",
   },
-  row2: {
-    width: "30%",
-    border: "1px solid",
-  },
-  row3: {
-    width: "30%",
-    border: "1px solid",
-  },
-  row4: {
+  rowTitulo: {
     width: "20%",
     border: "1px solid",
+    margin: 12,
+    fontSize: 14,
+    textAlign: "justify",
+    fontFamily: "Times-Roman",
+    lineHeight: "0",
   },
-  row5: {
-    width: "27%",
+  rowFecha: {
+    width: "8%",
     border: "1px solid",
+    margin: 12,
+    fontSize: 14,
+    textAlign: "justify",
+    fontFamily: "Times-Roman",
+    lineHeight: "0",
+  },
+  rowFechaVencimiento: {
+    width: "8%",
+    border: "1px solid",
+    margin: 12,
+    fontSize: 14,
+    textAlign: "justify",
+    fontFamily: "Times-Roman",
+    lineHeight: "0",
+  },
+  rowDescripcion: {
+    width: "30%",
+    border: "1px solid",
+    margin: 12,
+    fontSize: 14,
+    textAlign: "justify",
+    fontFamily: "Times-Roman",
+    lineHeight: "0",
+  },
+  rowMedico: {
+    width: "15%",
+    border: "1px solid",
+    margin: 12,
+    fontSize: 14,
+    textAlign: "justify",
+    fontFamily: "Times-Roman",
+    lineHeight: "0",
   },
 });
 
 const PDFFile = ({ paciente }) => {
-  console.log("PACIENTE en PDF: ", paciente);
+  const formatearFecha = (fechaNacimiento) => {
+    let fecha = new Date(fechaNacimiento);
+    let dia = `${fecha.getDate()}`.padStart(2, "0");
+    let mes = `${fecha.getMonth() + 1}`.padStart(2, "0");
+    let anio = fecha.getFullYear();
+    const fechaFormateada = `${dia}-${mes}-${anio}`;
+    return fechaFormateada;
+  };
 
   // let eventos = [];
   const [eventos, setEventos] = useState([]);
@@ -99,26 +154,40 @@ const PDFFile = ({ paciente }) => {
   return (
     <Document>
       <Page size="A4" style={styles.body}>
-        <Text style={styles.header}></Text>
-        <Text style={styles.text}>Datos del paciente:</Text>
+        <Text style={styles.header}>Datos del paciente:</Text>
         <Text style={styles.text}>Nombre:&nbsp;{paciente.nombre}</Text>
         <Text style={styles.text}>Apellido:&nbsp;{paciente.apellido}</Text>
         <Text style={styles.text}>Nro de documento:&nbsp;{paciente.dni}</Text>
         <Text style={styles.text}>
-          Fecha de nacimiento:&nbsp;{paciente.fechaNacimiento}
+          Fecha de nacimiento:&nbsp;{formatearFecha(paciente.fechaNacimiento)}
         </Text>
 
+        <Text style={styles.header}>Historia clínica:</Text>
         <View style={stylesTable.table}>
-          <View style={[stylesTable.row, stylesTable.bold, stylesTable.header]}>
-            <Text style={stylesTable.row1}>Título</Text>
-            <Text style={stylesTable.row2}>Descripción</Text>
-            <Text style={stylesTable.row3}>Fecha</Text>
+          <View style={stylesTable.row}>
+            <Text style={stylesTable.rowTitulo}>Título</Text>
+            <Text style={stylesTable.rowFecha}>Fecha</Text>
+            <Text style={stylesTable.rowDescripcion}>Descripción</Text>
+            <Text style={stylesTable.rowMedico}>Médico</Text>
           </View>
           {eventos.map((row, i) => (
             <View key={i} style={stylesTable.row} wrap={false}>
-              <Text style={stylesTable.row1}>{row.titulo}</Text>
-              <Text style={stylesTable.row2}>{row.descripcion}</Text>
-              <Text style={stylesTable.row3}>{row.fecha}</Text>
+              {/* <Text style={stylesTable.rowImportante}>
+                {row.importante ? "Si" : "NO"}
+              </Text> */}
+              <Text style={stylesTable.rowTitulo}>{row.titulo}</Text>
+              <Text style={stylesTable.rowFecha}>
+                {formatearFecha(row.fecha)}
+              </Text>
+              {/* <Text style={stylesTable.rowFechaVencimiento}>
+                {row.fechaVencimiento !== null
+                  ? formatearFecha(row.fechaVencimiento)
+                  : "Sin fecha"}
+              </Text> */}
+              <Text style={stylesTable.rowDescripcion}>{row.descripcion}</Text>
+              <Text style={stylesTable.rowMedico}>
+                {row.medico.nombre} {row.medico.apellido}
+              </Text>
             </View>
           ))}
         </View>
