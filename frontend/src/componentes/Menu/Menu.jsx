@@ -21,27 +21,45 @@ function Menu() {
 
   return (
     <>
-      <Grid item xs={4} sm={2} style={{backgroundColor:"#007FFF", border: "3px solid #007FFF"}}>
+      <Grid
+        item
+        xs={4}
+        sm={2}
+        style={{ backgroundColor: "#007FFF", border: "3px solid #007FFF" }}
+      >
         <Paper square={true}>
           <MenuList>
-              <MenuItem style={{fontWeight:"bold", fontSize:17}}>Menú</MenuItem>
+            <Link
+              to={"/ver/pdf"}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              <MenuItem style={{ fontWeight: "bold", fontSize: 17 }}>
+                Menú
+              </MenuItem>
+            </Link>
             <Link
               to={"/pacientes/all"}
               style={{ color: "inherit", textDecoration: "inherit" }}
             >
-              <MenuItem style={{color:"#007FFF", fontSize:15}} >Mis pacientes</MenuItem>
+              <MenuItem style={{ color: "#007FFF", fontSize: 15 }}>
+                Mis pacientes
+              </MenuItem>
             </Link>
             <Link
               to={"/medicos/all"}
               style={{ color: "inherit", textDecoration: "inherit" }}
             >
-              <MenuItem style={{color:"#007FFF", fontSize:15}}>Médicos</MenuItem>
+              <MenuItem style={{ color: "#007FFF", fontSize: 15 }}>
+                Médicos
+              </MenuItem>
             </Link>
             <Link
               to={"/sincronizacion"}
               style={{ color: "inherit", textDecoration: "inherit" }}
             >
-              <MenuItem style={{color:"#007FFF", fontSize:15}}>Sincronización</MenuItem>
+              <MenuItem style={{ color: "#007FFF", fontSize: 15 }}>
+                Sincronización
+              </MenuItem>
             </Link>
             {/* <Link
               to={"/eventos/all"}

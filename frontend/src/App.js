@@ -19,7 +19,9 @@ import Sincronizacion from "./componentes/Sincronizacion/Sincronizacion";
 import PacientesParaActualizar from "./componentes/Sincronizacion/PacientesParaActualizar";
 import ResolverConflictos from "./componentes/Sincronizacion/ResolverConflictos";
 import RengloOpcion from "./componentes/Sincronizacion/RenglonOpcion";
-
+import VerPDF from "./componentes/VerPDF";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PDFFile from "./componentes/PDFFIle";
 
 const Rutas = () => {
   let routes = useRoutes([
@@ -42,21 +44,24 @@ const Rutas = () => {
     },
     {
       path: "/sincronizacion",
-      element: <PacientesParaActualizar></PacientesParaActualizar>
+      element: <PacientesParaActualizar></PacientesParaActualizar>,
     },
     {
       path: "/sincronizacion/paciente/:id",
-      element: <Sincronizacion></Sincronizacion>
+      element: <Sincronizacion></Sincronizacion>,
     },
     {
       path: "/resolver/conflictos/paciente/:dni",
-      element: <ResolverConflictos></ResolverConflictos>
+      element: <ResolverConflictos></ResolverConflictos>,
     },
     {
       path: "/renglon/opcion",
-      element: <RengloOpcion></RengloOpcion>
+      element: <RengloOpcion></RengloOpcion>,
     },
-
+    {
+      path: "/ver/pdf",
+      element: <VerPDF></VerPDF>,
+    },
 
     // ...
   ]);
@@ -69,6 +74,7 @@ function App() {
       <Router>
         <Rutas></Rutas>
       </Router>
+
       {/* <BotonSincronizar /> */}
     </>
   );
