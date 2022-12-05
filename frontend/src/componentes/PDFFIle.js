@@ -1,6 +1,16 @@
-import { Page, Document, Text, StyleSheet, View } from "@react-pdf/renderer";
+import {
+  Page,
+  Document,
+  Text,
+  StyleSheet,
+  View,
+  Image,
+} from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
 import { api } from "../API backend/api";
+import logoClinishare from "../utilidades/caduceoNegro.png";
+
+// import logoClinishare from "../photos/lebron_transparent.png";
 
 // Create styles
 const styles = StyleSheet.create({
@@ -20,15 +30,25 @@ const styles = StyleSheet.create({
     fontFamily: "Times-Roman",
   },
   image: {
-    marginVertical: 15,
-    marginHorizontal: 100,
+    marginVertical: 10,
+    marginHorizontal: 230,
   },
   header: {
-    fontSize: 12,
-    marginBottom: 20,
-    textAlign: "center",
-    color: "grey",
+    fontSize: 23,
+    marginBottom: 10,
+    textAlign: "left",
+    color: "black",
     fontFamily: "Times-Roman",
+    fontWeight: "bold",
+  },
+  headerHistoriaClinica: {
+    fontSize: 23,
+    marginBottom: 10,
+    marginTop: 10,
+    textAlign: "right",
+    color: "black",
+    fontFamily: "Times-Roman",
+    fontWeight: "bold",
   },
   pageNumber: {
     position: "absolute",
@@ -44,13 +64,23 @@ const styles = StyleSheet.create({
 const stylesTable = StyleSheet.create({
   table: {
     width: "100%",
-    border: "1px solid",
+    border: "1px solid black",
   },
   row: {
     display: "flex",
     flexDirection: "row",
-    borderTop: "1px solid #EEE",
+    borderTop: "1px solid black",
+    borderRight: "1px  black",
+    borderLeft: "1px  black",
+
     padding: 0,
+  },
+  rowEncabezado: {
+    display: "flex",
+    flexDirection: "row",
+    fontWeight: "bold",
+    padding: 0,
+    border: "1px black",
   },
   header: {
     borderTop: "none",
@@ -61,26 +91,23 @@ const stylesTable = StyleSheet.create({
     padding: 0,
   },
   encabezado: {
-    margin: 12,
-    fontSize: 14,
-    textAlign: "justify",
     fontFamily: "Times-Roman",
-    width: "30%",
+    backgroundColor: "#E9E9E9",
     fontWeight: "bold",
-    padding: 0,
+    textAlign: "center",
   },
   rowImportante: {
-    width: "2%",
-    border: "1px solid",
     margin: 14,
     fontSize: 14,
     textAlign: "justify",
     fontFamily: "Times-Roman",
+    width: "2%",
+
     lineHeight: "0",
   },
   rowTitulo: {
     width: "20%",
-    border: "1px solid",
+
     margin: 12,
     fontSize: 14,
     textAlign: "justify",
@@ -88,8 +115,8 @@ const stylesTable = StyleSheet.create({
     lineHeight: "0",
   },
   rowFecha: {
-    width: "8%",
-    border: "1px solid",
+    width: "15%",
+
     margin: 12,
     fontSize: 14,
     textAlign: "justify",
@@ -98,7 +125,7 @@ const stylesTable = StyleSheet.create({
   },
   rowFechaVencimiento: {
     width: "8%",
-    border: "1px solid",
+
     margin: 12,
     fontSize: 14,
     textAlign: "justify",
@@ -107,21 +134,25 @@ const stylesTable = StyleSheet.create({
   },
   rowDescripcion: {
     width: "30%",
-    border: "1px solid",
+
+    margin: 12,
+    fontSize: 14,
+    textAlign: "left",
+    fontFamily: "Times-Roman",
+    lineHeight: "0",
+  },
+  rowMedico: {
+    width: "20%",
+
     margin: 12,
     fontSize: 14,
     textAlign: "justify",
     fontFamily: "Times-Roman",
     lineHeight: "0",
   },
-  rowMedico: {
-    width: "15%",
-    border: "1px solid",
-    margin: 12,
-    fontSize: 14,
-    textAlign: "justify",
-    fontFamily: "Times-Roman",
-    lineHeight: "0",
+  image: {
+    marginVertical: 15,
+    marginHorizontal: 100,
   },
 });
 
@@ -154,17 +185,30 @@ const PDFFile = ({ paciente }) => {
   return (
     <Document>
       <Page size="A4" style={styles.body}>
-        <Text style={styles.header}>Datos del paciente:</Text>
-        <Text style={styles.text}>Nombre:&nbsp;{paciente.nombre}</Text>
-        <Text style={styles.text}>Apellido:&nbsp;{paciente.apellido}</Text>
-        <Text style={styles.text}>Nro de documento:&nbsp;{paciente.dni}</Text>
+        {/* <Image style={styles.image} src={logoClinishare} /> */}
+        <Text style={styles.header}>Datos generales del paciente:</Text>
         <Text style={styles.text}>
-          Fecha de nacimiento:&nbsp;{formatearFecha(paciente.fechaNacimiento)}
+          Apellido y Nombre:&nbsp;&nbsp;{paciente.apellido}&nbsp;
+          {paciente.nombre}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sexo:&nbsp;&nbsp;
+          {paciente.sexo}
+        </Text>
+        <Text style={styles.text}>
+          Domicilio:&nbsp;&nbsp;{paciente.direccion}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Teléfono:&nbsp;&nbsp;
+          {paciente.telefono}
         </Text>
 
-        <Text style={styles.header}>Historia clínica:</Text>
+        <Text style={styles.text}>
+          Fecha de nacimiento:&nbsp;&nbsp;
+          {formatearFecha(paciente.fechaNacimiento)}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DNI:&nbsp;&nbsp;
+          {paciente.dni}
+        </Text>
+
+        <Text style={styles.headerHistoriaClinica}>Historia clínica</Text>
         <View style={stylesTable.table}>
-          <View style={stylesTable.row}>
+          <View style={[stylesTable.encabezado, stylesTable.rowEncabezado]}>
             <Text style={stylesTable.rowTitulo}>Título</Text>
             <Text style={stylesTable.rowFecha}>Fecha</Text>
             <Text style={stylesTable.rowDescripcion}>Descripción</Text>

@@ -162,7 +162,7 @@ function NuevoPaciente() {
         &nbsp;&nbsp;&nbsp;Nuevo paciente - Datos del paciente
       </Typography>
       {/* DATOS DEL PACIENTE */}
-      <Card style={{ height: "94vh" }}>
+      <Card >
         <CardContent>
           {/* DATOS DEL PACIENTE */}
           <Grid container direction="row" spacing={2}>

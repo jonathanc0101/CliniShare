@@ -147,7 +147,7 @@ function ModificarEvento() {
       >
         &nbsp;&nbsp;&nbsp;Modificar evento / Datos del evento
       </Typography>
-      <Card style={{ height: "94vh" }}>
+      <Card >
         <CardContent>
           {/* DATOS DEL EVENTO */}
           <Grid container direction="row" spacing={2}>
