@@ -83,7 +83,7 @@ export default function loadListeners(emitter) {
   emitter.on("datos_recibidos", async (obj) => {
     console.log("\n\nevento:datos_recibidos\n\n", obj);
 
-    await actualizarDatos(obj.datosPacientes);
+    await actualizarDatos(obj.datosPacientes,obj.computadora.computadoraId);
     SincronizacionService.registrarSincronizacion(
       obj.computadora.computadoraId
     );
@@ -99,7 +99,7 @@ export default function loadListeners(emitter) {
       obj.datosPacientes
     );
 
-    await actualizarDatos(obj.datosPacientes);
+    await actualizarDatos(obj.datosPacientes,obj.computadora.computadoraId);
     SincronizacionService.registrarSincronizacion(
       obj.computadora.computadoraId
     );

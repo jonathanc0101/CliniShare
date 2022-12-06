@@ -1,9 +1,14 @@
-import axios from "axios";
 import { SERVER_BD_PORT } from "../UDP/constants.js";
 import { PacientesService } from "../services/paciente.service.js";
 import emitter from "../eventos/eventEmitter.js";
 import { getComputadora } from "../UDP/constants.js";
 import { SincronizacionService } from "../services/sincronizacion.service.js";
+import { ComputadoraLocalService } from "../services/computadoraLocal.service.js";
+
+
+import { utils } from "../encripcion/utils.js";
+const cryptoData = await ComputadoraLocalService.getKeysAndCertPEM();
+const axios = utils.getAxiosInstance(cryptoData.privateKey,cryptoData.certificateSigned);
 
 export async function sincronizar(computadora) {
   console.log("\n\nsincronizando looping \n\n");

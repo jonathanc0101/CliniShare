@@ -3,7 +3,6 @@ import { sequelize } from "./database/database.js";
 import { SERVER_BD_PORT } from "./UDP/constants.js";
 import emitter from "./eventos/eventEmitter.js";
 
-
 export async function main() {
   try {
     await sequelize.sync({force: false}) //sincronización con la bd
