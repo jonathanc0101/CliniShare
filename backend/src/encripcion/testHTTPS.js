@@ -8,11 +8,12 @@ import forge from "node-forge";
 const pki = forge.pki;
 
 const keys = utils.generateRSAKeyPair();
-const cert = utils.generateAndSignCert(keys);
+const cert = utils.generateAndSelfSignCert(keys);
 
 const app = express();
 
 app.use("/", (req, res, next) => {
+  console.log(req.headers.token);
   res.send("Hello");
 });
 

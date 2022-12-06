@@ -26,11 +26,15 @@ const rutas = {
   getEventosCompletosPorPacienteId: "eventos/all/completos/idPaciente/",
   getEventosCompletosImportantesPorPacienteId:
     "eventos/importantes/paciente/id/",
-  postBroadcast: "broadcast"
+  postBroadcast: "broadcast",
+  getPacientesYConflictos: "conflictos/includePacientes/all/",
+  getTodosPacientesConConflictos: "conflictos/all/",
+  resolverConflicto: "conflictos/resolver",
+
 };
 
 for (let ruta in rutas) {
-  rutas[ruta] = "http://localhost:" + puertoServidorBackend + "/" + rutas[ruta];
+  rutas[ruta] = "https://localhost:" + puertoServidorBackend + "/" + rutas[ruta];
 }
 
 export default rutas;

@@ -17,6 +17,7 @@ import ListadoMedicos from "./componentes/Medicos/ListadoMedicos";
 import BotonSincronizar from "./componentes/Botones/BotonSincronizar";
 import Sincronizacion from "./componentes/Sincronizacion/Sincronizacion";
 import PacientesParaActualizar from "./componentes/Sincronizacion/PacientesParaActualizar";
+import ResolverConflictos from "./componentes/Sincronizacion/ResolverConflictos";
 
 
 const Rutas = () => {
@@ -45,6 +46,10 @@ const Rutas = () => {
     {
       path: "/sincronizacion/paciente/:id",
       element: <Sincronizacion></Sincronizacion>
+    },
+    {
+      path: "/resolver/conflictos/paciente/:dni",
+      element: <ResolverConflictos></ResolverConflictos>
     },
 
     // ...

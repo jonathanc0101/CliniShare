@@ -6,7 +6,7 @@ import { utils } from "./utils.js";
 const pki = forge.pki;
 
 const keys = utils.generateRSAKeyPair();
-const cert = utils.generateAndSignCert(keys);
+const cert = utils.generateAndSelfSignCert(keys);
 
 const httpsAgent = new https.Agent({
   requestCert: true,

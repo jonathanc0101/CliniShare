@@ -15,8 +15,10 @@ import {
 } from "@mui/material";
 import MenuAppBar from "../Menu/MenuAppBar";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import BuildIcon from '@mui/icons-material/Build';
 import { Link } from "react-router-dom";
 import BotonVolver from "../Botones/BotonVolver";
+import { api } from "../../API backend/api";
 
 function PacientesParaActualizar() {
   const Item = styled(Paper)(({ theme }) => ({
@@ -27,9 +29,7 @@ function PacientesParaActualizar() {
     color: theme.palette.text.secondary,
   }));
 
-  const [pacientesAActualizar, setPacientesAActualizar] = useState([
-    { id:"", nombre: "", apellido: "", dni: "" },
-  ]);
+  const [pacientesAActualizar, setPacientesAActualizar] = useState([]);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -47,14 +47,20 @@ function PacientesParaActualizar() {
   };
 
   useEffect(() => {
-    const pacientesData = [
-      { id: "1", nombre: "Nicole", apellido: "Alvarado", dni: "43032135" },
-      { id: "2", nombre: "Gianella", apellido: "Zeballos", dni: "43036123" },
-      { id: "3", nombre: "Teodoro", apellido: "Fernández", dni: "41238023" },
-      { id: "4", nombre: "Ismael", apellido: "Cruz", dni: "40026199" },
-    ];
-    setPacientesAActualizar(pacientesData);
+    obtenerPacientesConConflictos();
+    // const pacientesData = [
+    //   { id: "1", nombre: "Nicole", apellido: "Alvarado", dni: "43032135" },
+    //   { id: "2", nombre: "Gianella", apellido: "Zeballos", dni: "43036123" },
+    //   { id: "3", nombre: "Teodoro", apellido: "Fernández", dni: "41238023" },
+    //   { id: "4", nombre: "Ismael", apellido: "Cruz", dni: "40026199" },
+    // ];
+    // setPacientesAActualizar(pacientesData);
   }, []);
+  
+  const obtenerPacientesConConflictos = async () => {
+    const response = await api.obtenerPacientesConConflictos();
+    setPacientesAActualizar(response.data);
+  };
 
   return (
     <>
@@ -111,6 +117,16 @@ function PacientesParaActualizar() {
                 >
                   Ver datos
                 </TableCell>
+                <TableCell
+                  style={{
+                    width: "4%",
+                    textAlign: "center",
+                    backgroundColor: "#E9E9E9",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Resolver
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -118,7 +134,7 @@ function PacientesParaActualizar() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((paciente) => (
                   <TableRow
-                    key={paciente.id}
+                    key={paciente.conflictoId}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
@@ -127,10 +143,15 @@ function PacientesParaActualizar() {
                     <TableCell>{paciente.apellido}</TableCell>
                     <TableCell>{paciente.dni}</TableCell>
                     <TableCell align="center">
-                      <Link to={"/sincronizacion/paciente/" + paciente.id}>
-                      <Tooltip title="Ver datos">
-                        <VisibilityIcon color="info"></VisibilityIcon>
-                      </Tooltip>
+                        <Tooltip title="Ver datos">
+                          <VisibilityIcon color="info"></VisibilityIcon>
+                        </Tooltip>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Link to={"/resolver/conflictos/paciente/" + paciente.dni}>
+                        <Tooltip title="Resolver conflictos">
+                          <BuildIcon color="info"></BuildIcon>
+                        </Tooltip>
                       </Link>
                     </TableCell>
                   </TableRow>
