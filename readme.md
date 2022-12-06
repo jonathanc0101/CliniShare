@@ -1,6 +1,6 @@
 # CliniShare
 
-Sistema distribuido de gestión de historias clínicas y colaboración médica.
+El sistema distribuido de gestión de historias clínicas y colaboración médica.
 
     Con el sistema se puede:
 *   Gestionar historias clínicas de manera segura sin uso de internet.
@@ -25,7 +25,7 @@ Sistema operativo Ubuntu Linux o WSL con Ubuntu Linux versión 2 o superior.
 
 Una versión de node mayor a la 16.
 
-git
+Git
 ```
 
 ### Instalación
@@ -60,4 +60,7 @@ sh ./run.sh
 ```
 
 
-Suerte usando el sistema!
+
+
+
+Suerte y que te diviertas usando el sistema!
