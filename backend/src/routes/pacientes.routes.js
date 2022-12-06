@@ -6,8 +6,7 @@ import {
   getPacienteById,
   getPacientes,
   getDnisDePacientes,
-  getUUIDSDePacientes,
-  getDnisYNacimientosDePacientes
+  getUUIDSDePacientes
 } from "../controllers/paciente.controller.js";
 
 const router = Router();
@@ -18,7 +17,6 @@ router.get("/pacientes/all/dnis", getDnisDePacientes);
 router.get("/pacientes/dni/:dni", getPacienteByDni);
 router.get("/pacientes/id/:id", getPacienteById);
 
-router.get("/pacientes/all/dnis;nacimientos", getDnisYNacimientosDePacientes);
 
 
 router.post("/pacientes/new", createPaciente);

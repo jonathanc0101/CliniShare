@@ -23,7 +23,7 @@ instance.interceptors.request.use(
   (config) => {
     /** In dev, intercepts request and logs it into console for dev */
 
-    config.headers["token"] = "chau";
+    config.headers["token"] = "l";
 
     // console.info("✉️ ", Object.keys());
     return config;
@@ -34,5 +34,8 @@ instance.interceptors.request.use(
   }
 );
 
-const response = await instance.get("https://localhost:3000/");
+let response = await instance.get("https://localhost:3000/bad");
+console.log(response.data);
+
+response = await instance.get("https://localhost:3000/good");
 console.log(response.data);

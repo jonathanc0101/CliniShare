@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "./axiosInterceptado";
 import rutas from "./rutas";
 
 export const api = {

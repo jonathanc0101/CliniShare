@@ -3,6 +3,8 @@ import express from "express";
 
 import { utils } from "./utils.js";
 
+import {comprobarTest} from "../routes/comprobadorToken.js";
+
 import forge from "node-forge";
 
 const pki = forge.pki;
@@ -12,12 +14,16 @@ const cert = utils.generateAndSelfSignCert(keys);
 
 const app = express();
 
-app.use("/", (req, res, next) => {
-  console.log(req.headers.token);
-  res.send("Hello");
+
+app.get("/bad", (req, res, next) => {
+  res.send("bad");
 });
 
+app.use(comprobarTest);
 
+app.get("/good", (req, res, next) => {
+  res.send("good");
+});
 
 const sslServer = https.createServer(
   {
