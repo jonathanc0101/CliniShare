@@ -1,3 +1,3 @@
 #!/bin/sh
-npm i recursive-install -g --save 
+npm i -g recursive-install
 npm-recursive-install 
