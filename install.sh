@@ -1,3 +1,3 @@
 #!/bin/sh
-npm i frontend
-npm i backend
+npm i ./frontend
+npm i ./backend
