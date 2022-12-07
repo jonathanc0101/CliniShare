@@ -165,52 +165,96 @@ const stylesTable = StyleSheet.create({
 });
 
 const stylesTableEventosImportantes = StyleSheet.create({
+  rowHeaderTitulo: {
+    width: "20%",
+    margin: 2,
+    fontSize: 10,
+    textAlign: "center",
+    fontFamily: "Times-Roman",
+    fontWeight: "bold",
+    lineHeight: "0",
+  },
+  rowHeaderFecha: {
+    width: "19%",
+    margin: 2,
+    fontSize: 10,
+    textAlign: "center",
+    fontFamily: "Times-Roman",
+    fontWeight: "bold",
+
+    lineHeight: "0",
+  },
+  rowHeaderFechaVencimiento: {
+    width: "19%",
+    margin: 2,
+    fontSize: 10,
+    textAlign: "center",
+    fontFamily: "Times-Roman",
+    fontWeight: "bold",
+
+    lineHeight: "0",
+  },
+  rowHeaderDescripcion: {
+    width: "30%",
+    margin: 2,
+    fontSize: 10,
+    textAlign: "center",
+    fontFamily: "Times-Roman",
+    fontWeight: "bold",
+
+    lineHeight: "0",
+  },
+  rowHeaderMedico: {
+    width: "25%",
+    margin: 2,
+    fontSize: 10,
+    textAlign: "center",
+    fontFamily: "Times-Roman",
+    fontWeight: "bold",
+
+    lineHeight: "0",
+  },
   rowTitulo: {
     width: "20%",
-
-    margin: 12,
-    fontSize: 14,
+    margin: 2,
+    fontSize: 10,
     textAlign: "center",
     fontFamily: "Times-Roman",
     lineHeight: "0",
   },
   rowFecha: {
-    width: "20%",
-
-    margin: 12,
-    fontSize: 14,
+    width: "19%",
+    margin: 2,
+    fontSize: 10,
     textAlign: "center",
     fontFamily: "Times-Roman",
     lineHeight: "0",
   },
   rowFechaVencimiento: {
-    width: "20%",
-
-    margin: 12,
-    fontSize: 14,
+    width: "19%",
+    margin: 2,
+    fontSize: 10,
     textAlign: "center",
     fontFamily: "Times-Roman",
     lineHeight: "0",
   },
   rowDescripcion: {
     width: "30%",
-
-    margin: 12,
-    fontSize: 14,
-    textAlign: "left",
+    margin: 2,
+    fontSize: 10,
+    textAlign: "justify",
     fontFamily: "Times-Roman",
     lineHeight: "0",
   },
   rowMedico: {
-    width: "20%",
-    margin: 12,
-    fontSize: 14,
+    width: "25%",
+    margin: 2,
+    fontSize: 10,
     textAlign: "center",
     fontFamily: "Times-Roman",
     lineHeight: "0",
   },
-})
-
+});
 
 const PDFFile = ({ paciente }) => {
   const formatearFecha = (fechaNacimiento) => {
@@ -283,17 +327,21 @@ const PDFFile = ({ paciente }) => {
             fixed
             style={[stylesTable.encabezado, stylesTable.rowEncabezado]}
           >
-            <Text style={stylesTableEventosImportantes.rowTitulo}>Título</Text>
-            <Text style={stylesTableEventosImportantes.rowFecha}>Fecha</Text>
-            <Text style={stylesTableEventosImportantes.rowFechaVencimiento}>
+            <Text style={stylesTableEventosImportantes.rowHeaderTitulo}>Título</Text>
+            <Text style={stylesTableEventosImportantes.rowHeaderFecha}>Fecha</Text>
+            <Text style={stylesTableEventosImportantes.rowHeaderFechaVencimiento}>
               Fecha de vencimiento
             </Text>
-            <Text style={stylesTableEventosImportantes.rowDescripcion}>Descripción</Text>
-            <Text style={stylesTableEventosImportantes.rowMedico}>Médico</Text>
+            <Text style={stylesTableEventosImportantes.rowHeaderDescripcion}>
+              Descripción
+            </Text>
+            <Text style={stylesTableEventosImportantes.rowHeaderMedico}>Médico</Text>
           </View>
           {eventosImportantes.map((row, i) => (
             <View key={i} style={stylesTable.row} wrap={false}>
-              <Text style={stylesTableEventosImportantes.rowTitulo}>{row.titulo}</Text>
+              <Text style={stylesTableEventosImportantes.rowTitulo}>
+                {row.titulo}
+              </Text>
               <Text style={stylesTableEventosImportantes.rowFecha}>
                 {formatearFecha(row.fecha)}
               </Text>
@@ -302,7 +350,9 @@ const PDFFile = ({ paciente }) => {
                   ? formatearFecha(row.fechaVencimiento)
                   : "Sin fecha"}
               </Text>
-              <Text style={stylesTableEventosImportantes.rowDescripcion}>{row.descripcion}</Text>
+              <Text style={stylesTableEventosImportantes.rowDescripcion}>
+                {row.descripcion}
+              </Text>
               <Text style={stylesTableEventosImportantes.rowMedico}>
                 {row.medico.nombre} {row.medico.apellido}
               </Text>
