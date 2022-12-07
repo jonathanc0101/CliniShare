@@ -21,6 +21,7 @@ import moment from "moment";
 import validator from "validator";
 import { api } from "../../API backend/api";
 import { alertas } from "../alertas";
+import MenuAppBar from "../Menu/MenuAppBar";
 
 function ModificarEvento() {
   const params = useParams();
@@ -134,6 +135,8 @@ function ModificarEvento() {
 
   return (
     <>
+        <MenuAppBar></MenuAppBar>
+
       <Typography
         component="h6"
         variant="h6"
@@ -147,7 +150,7 @@ function ModificarEvento() {
       >
         &nbsp;&nbsp;&nbsp;Modificar evento / Datos del evento
       </Typography>
-      <Card style={{ height: "94vh" }}>
+      <Card >
         <CardContent>
           {/* DATOS DEL EVENTO */}
           <Grid container direction="row" spacing={2}>
@@ -297,9 +300,7 @@ function ModificarEvento() {
             </Grid>
           </Grid>
           <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
+
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
             <Grid item xs={4} sm={4}>

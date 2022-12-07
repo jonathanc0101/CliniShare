@@ -18,6 +18,7 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import BotonVolver from "../Botones/BotonVolver";
 import { api } from "../../API backend/api";
+import MenuAppBar from "../Menu/MenuAppBar";
 
 function VerPaciente() {
   const params = useParams();
@@ -57,6 +58,8 @@ function VerPaciente() {
 
   return (
     <>
+      <MenuAppBar></MenuAppBar>
+
       <Typography
         component="h6"
         variant="h6"
@@ -64,13 +67,12 @@ function VerPaciente() {
           backgroundColor: "#0c5774",
           color: "white",
           textAlign: "left",
-          fontWeight: "bold",
           lineHeight: "2",
         }}
       >
         &nbsp;&nbsp;&nbsp;Ver / Datos del paciente
       </Typography>
-      <Card style={{ height: "94vh" }}>
+      <Card>
         <CardContent>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={6}>

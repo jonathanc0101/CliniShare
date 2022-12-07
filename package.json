@@ -33,6 +33,9 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/styles": "^4.11.5",
+    "@react-pdf/renderer": "^3.0.1",
     "axios": "^0.26.0",
     "concurrently": "^7.5.0",
     "cors": "^2.8.5",

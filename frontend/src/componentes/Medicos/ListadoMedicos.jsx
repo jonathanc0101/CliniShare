@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { styled } from "@mui/material/styles";
 import {
+  Box,
   InputAdornment,
   OutlinedInput,
   TablePagination,
@@ -64,7 +65,16 @@ function ListadoMedicos() {
         <Menu></Menu>
         {/* BUSCAR MÉDICO */}
         <Grid item xs={4} sm={4}>
+        <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>{" "}
+          <Box textAlign={"left"}>
           <OutlinedInput
+          size="small"
             id="outlined-adornment-search-medicos"
             endAdornment={
               <InputAdornment position="end">
@@ -76,6 +86,7 @@ function ListadoMedicos() {
             }}
             placeholder="Buscar médico..."
           />
+          </Box>
         </Grid>
         <Grid item xs={4} sm={4}></Grid>
       </Grid>
@@ -85,7 +96,7 @@ function ListadoMedicos() {
         {/* TABLA PACIENTES */}
         <Grid xs={10}>
           <TableContainer
-            sx={{ maxHeight: 389, maxWidth: 1060 }}
+            sx={{ maxHeight: 389, maxWidth: 1100 }}
             style={{ border: "1px solid gray" }}
           >
             <Table stickyHeader size="small" aria-label="sticky table">

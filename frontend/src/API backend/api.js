@@ -324,7 +324,6 @@ async function obtenerPacienteConflictivo(pacienteDni) {
     const pacienteConflictivo = pacientesConflictivos.data.find(
       (paciente) => paciente.dni === pacienteDni
     );
-    console.log("Paciente conflictivo api: " + pacienteConflictivo);
     return pacienteConflictivo;
   } catch (error) {
     return "Paciente no encontrado";
@@ -335,6 +334,7 @@ async function resolverConflictos(pacienteParaActualizar) {
   try {
     console.log("API RESOLVER: ",pacienteParaActualizar);
     const response = await axios.post(rutas.resolverConflicto, pacienteParaActualizar);
+    console.log(response);
     const pacienteParaActualizarRespuesta = response.data;
     return pacienteParaActualizarRespuesta;
   } catch (error) {
