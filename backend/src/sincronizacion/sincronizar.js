@@ -8,7 +8,7 @@ import { ComputadoraLocalService } from "../services/computadoraLocal.service.js
 
 import { utils } from "../encripcion/utils.js";
 const cryptoData = await ComputadoraLocalService.getKeysAndCertPEM();
-const axios = utils.getAxiosInstance(cryptoData.privateKey,cryptoData.certificateSigned);
+const axios = await utils.getAxiosInstance(cryptoData.privateKey,cryptoData.certificateSigned);
 
 export async function sincronizar(computadora) {
   console.log("\n\nsincronizando looping \n\n");
@@ -18,14 +18,14 @@ export async function sincronizar(computadora) {
   const computadoraLocal = await getComputadora();
 
   const postSincronicemosString =
-    "http://" +
+    "https://" +
     computadora.ip.toString().trim() +
     ":" +
     SERVER_BD_PORT.toString().trim() +
     "/sincronizar";
 
   const getDNISyNacimientosString =
-    "http://" +
+    "https://" +
     computadora.ip.toString().trim() +
     ":" +
     SERVER_BD_PORT.toString().trim() +
@@ -88,14 +88,14 @@ export async function sincronizarNonLooping(computadora) {
   const computadoraLocal = await getComputadora();
   
   const postSincronicemosString =
-    "http://" +
+    "https://" +
     computadora.ip.toString().trim() +
     ":" +
     SERVER_BD_PORT.toString().trim() +
     "/sincronizar";
 
   const getDNISyNacimientosString =
-    "http://" +
+    "https://" +
     computadora.ip.toString().trim() +
     ":" +
     SERVER_BD_PORT.toString().trim() +

@@ -17,7 +17,7 @@
     "prod": "concurrently -k \"npm:rc\" \"npm:electron\" \"npm:backend\"",
     "docker": "concurrently \"docker-compose build && docker-compose up\" \"npm:electron\" ",
     "after-docker": "concurrently \"docker-compose up\" \"npm:electron\" ",
-    "compose-backends": "docker-compose build backend backend2 backend3 postgres postgres2 postgres3 && docker-compose up",
+    "compose-backends": "docker-compose build backend1 backend2 backend3 postgres",
     "electron": "wait-on tcp:5000 && electron .",
     "electron2": "electron ."
   },

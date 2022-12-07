@@ -12,6 +12,7 @@ export const utils = {
   getAxiosInstance,
 };
 
+
 function generateRSAKeyPair() {
   return pki.rsa.generateKeyPair(2048);
 }
