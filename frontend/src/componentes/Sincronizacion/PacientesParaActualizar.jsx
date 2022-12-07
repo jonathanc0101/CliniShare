@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
+import Grid from "@mui/material/Unstable_Grid2";
+
 import { styled } from "@mui/material/styles";
 import {
   Box,
-  Grid,
+  Button,
+  InputAdornment,
+  OutlinedInput,
   Paper,
   Table,
   TableBody,
@@ -15,13 +19,15 @@ import {
 } from "@mui/material";
 import MenuAppBar from "../Menu/MenuAppBar";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import BuildIcon from '@mui/icons-material/Build';
+import BuildIcon from "@mui/icons-material/Build";
 import { Link } from "react-router-dom";
 import BotonVolver from "../Botones/BotonVolver";
 import { api } from "../../API backend/api";
 import RengloOpcion from "./RenglonOpcion";
 import RenglonOpcion from "./RenglonOpcion";
 import RenglonesOpcion from "./RenglonesOpcion";
+import Menu from "../Menu/Menu";
+import SearchIcon from "@mui/icons-material/Search";
 
 function PacientesParaActualizar() {
   const Item = styled(Paper)(({ theme }) => ({
@@ -59,7 +65,7 @@ function PacientesParaActualizar() {
     // ];
     // setPacientesAActualizar(pacientesData);
   }, []);
-  
+
   const obtenerPacientesConConflictos = async () => {
     const response = await api.obtenerPacientesConConflictos();
     setPacientesAActualizar(response.data);
@@ -68,107 +74,109 @@ function PacientesParaActualizar() {
   return (
     <>
       <Grid container direction="row">
-        <Grid item xs={4} sm={12}>
+        <Grid item xs={10} sm={12}>
           <MenuAppBar></MenuAppBar>
         </Grid>
       </Grid>
       <br></br>
-      <Grid container direction="row" spacing={2} justifyContent={"center"}>
+      <Grid container direction="row" spacing={2}>
+        <Menu></Menu>
         {/* TABLA PACIENTES */}
-        <TableContainer
-          sx={{ maxWidth: "100%", height: "auto" }}
-          style={{ border: "1px solid gray" }}
-        >
-          <Table stickyHeader size="small" aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  style={{
-                    width: "20%",
-                    backgroundColor: "#E9E9E9",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Nombre
-                </TableCell>
-                <TableCell
-                  style={{
-                    width: "20%",
-                    backgroundColor: "#E9E9E9",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Apellido
-                </TableCell>
-                <TableCell
-                  style={{
-                    width: "20%",
-                    backgroundColor: "#E9E9E9",
-                    fontWeight: "bold",
-                  }}
-                >
-                  DNI
-                </TableCell>
-
-                <TableCell
-                  style={{
-                    width: "4%",
-                    textAlign: "center",
-                    backgroundColor: "#E9E9E9",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Ver datos
-                </TableCell>
-                <TableCell
-                  style={{
-                    width: "4%",
-                    textAlign: "center",
-                    backgroundColor: "#E9E9E9",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Resolver
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {pacientesAActualizar
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((paciente) => (
-                  <TableRow
-                    key={paciente.conflictoId}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
+        <Grid item xs={9.8}>
+          <TableContainer
+            sx={{ maxWidth: "100%", height: "auto" }}
+            style={{ border: "1px solid gray" }}
+          >
+            <Table stickyHeader size="small" aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    style={{
+                      width: "20%",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
                     }}
                   >
-                    <TableCell>{paciente.nombre}</TableCell>
-                    <TableCell>{paciente.apellido}</TableCell>
-                    <TableCell>{paciente.dni}</TableCell>
-                    <TableCell align="center">
-                        <Tooltip title="Ver datos">
-                          <VisibilityIcon color="info"></VisibilityIcon>
-                        </Tooltip>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Link to={"/resolver/conflictos/paciente/" + paciente.dni}>
-                        <Tooltip title="Resolver conflictos">
-                          <BuildIcon color="info"></BuildIcon>
-                        </Tooltip>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6}></TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Grid>
+                    Nombre
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "20%",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Apellido
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "20%",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    DNI
+                  </TableCell>
 
+                  <TableCell
+                    style={{
+                      width: "8%",
+                      textAlign: "center",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Ver datos
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      width: "4%",
+                      textAlign: "center",
+                      backgroundColor: "#E9E9E9",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Resolver
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {pacientesAActualizar
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((paciente) => (
+                    <TableRow
+                      key={paciente.conflictoId}
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
+                    >
+                      <TableCell>{paciente.nombre}</TableCell>
+                      <TableCell>{paciente.apellido}</TableCell>
+                      <TableCell>{paciente.dni}</TableCell>
+                      <TableCell align="center">
+                        <Tooltip title="Ver datos">
+                          <VisibilityIcon disabled color="info"></VisibilityIcon>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Link
+                          to={"/resolver/conflictos/paciente/" + paciente.dni}
+                        >
+                          <Tooltip title="Resolver conflictos">
+                            <BuildIcon color="info"></BuildIcon>
+                          </Tooltip>
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 53 * emptyRows }}>
+                    <TableCell colSpan={6}></TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
@@ -188,8 +196,8 @@ function PacientesParaActualizar() {
           }`;
         }}
       />
-      <BotonVolver></BotonVolver>
-
+        </Grid>
+      </Grid>
     </>
   );
 }

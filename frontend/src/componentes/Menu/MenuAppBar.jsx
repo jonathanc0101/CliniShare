@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MedicalIcon from "@mui/icons-material/MedicalServices";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import BotonSincronizar from "../Botones/BotonSincronizar";
 
 const pages = [];
 
@@ -85,8 +86,7 @@ function MenuAppBar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
-
+          </Box>      
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
@@ -98,6 +98,7 @@ function MenuAppBar() {
               </Button>
             ))}
           </Box>
+          <BotonSincronizar></BotonSincronizar>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Typography
             variant="h5"
             noWrap

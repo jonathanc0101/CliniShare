@@ -33,7 +33,7 @@ function Menu() {
               to={"/ver/pdf"}
               style={{ color: "inherit", textDecoration: "inherit" }}
             >
-              <MenuItem style={{ fontWeight: "bold", fontSize: 17 }}>
+              <MenuItem disabled style={{ fontWeight: "bold", fontSize: 17 }}>
                 Menú
               </MenuItem>
             </Link>
@@ -58,7 +58,7 @@ function Menu() {
               style={{ color: "inherit", textDecoration: "inherit" }}
             >
               <MenuItem style={{ color: "#007FFF", fontSize: 15 }}>
-                Sincronización
+                Conflictos
               </MenuItem>
             </Link>
             {/* <Link

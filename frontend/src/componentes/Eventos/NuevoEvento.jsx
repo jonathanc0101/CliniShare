@@ -20,6 +20,7 @@ import moment from "moment";
 import validator from "validator";
 import { api } from "../../API backend/api";
 import { alertas } from "../alertas";
+import MenuAppBar from "../Menu/MenuAppBar";
 
 function NuevoEvento() {
   const params = useParams();
@@ -116,6 +117,8 @@ function NuevoEvento() {
 
   return (
     <>
+        <MenuAppBar></MenuAppBar>
+
       <Typography
         component="h6"
         variant="h6"
@@ -277,7 +280,7 @@ function NuevoEvento() {
               />
             </Grid>
           </Grid>
-          <br></br><br></br><br></br>
+          <br></br>
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}
             <Grid item xs={4} sm={4}>

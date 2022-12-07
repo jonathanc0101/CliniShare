@@ -11,6 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Menu from "../Menu/Menu";
 import {
+  Box,
   Button,
   IconButton,
   InputAdornment,
@@ -61,48 +62,71 @@ function ListadoPacientes() {
       </Grid>
       <br></br>
       <Grid container direction="row" spacing={2}>
-        <Menu></Menu>
-        {/* BUSCAR PACIENTE */}
-        <Grid item xs={4} sm={4}>
-          <OutlinedInput
-            id="outlined-adornment-search"
-            endAdornment={
-              <InputAdornment position="end">
-                <SearchIcon></SearchIcon>
-              </InputAdornment>
-            }
-            onChange={(event) => {
-              setSearchPacientes(event.target.value);
-            }}
-            placeholder="Buscar paciente..."
-          />
+      <Menu></Menu>
+      {/* BUSCAR PACIENTE */}
+
+      <Grid item xs={4} sm={4}>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>{" "}
+          <Box textAlign={"left"}>
+            <OutlinedInput
+              id="outlined-adornment-search"
+              size="small"
+              endAdornment={
+                <InputAdornment position="end">
+                  <SearchIcon></SearchIcon>
+                </InputAdornment>
+              }
+              onChange={(event) => {
+                setSearchPacientes(event.target.value);
+              }}
+              placeholder="Buscar paciente..."
+            />
+          </Box>
         </Grid>
-        {/* BOTÓN AGREGAR PACIENTE */}
-        <Grid item xs={4} sm={4}>
-          <Link
-            to={"/pacientes/new/"}
-            style={{ color: "inherit", textDecoration: "inherit" }}
-          >
-            <Tooltip title="Agregar paciente">
-              <Button
-                size="large"
-                variant="contained"
-                startIcon={<AddCircleOutlineTwoToneIcon />}
-                style={{ fontWeight: "bold" }}
-              >
-                Agregar paciente
-              </Button>
-            </Tooltip>
-          </Link>
+      {/* BOTÓN AGREGAR PACIENTE */}
+      <Grid item xs={4} sm={5.6}>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+
+          <Box textAlign="right">
+            <Link
+              to={"/pacientes/new/"}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              <Tooltip title="Agregar paciente">
+                <Button
+                  size="large"
+                  variant="contained"
+                  startIcon={<AddCircleOutlineTwoToneIcon />}
+                  style={{ fontWeight: "bold" }}
+                >
+                  Agregar paciente
+                </Button>
+              </Tooltip>
+            </Link>
+          </Box>
         </Grid>
       </Grid>
 
       <Grid container direction="row" spacing={2}>
-        <Grid xs={2}></Grid>
+      <Grid xs={2} ></Grid>
+
         {/* TABLA PACIENTES */}
         <Grid xs={10}>
+
           <TableContainer
-            sx={{ maxHeight: 380, maxWidth: 1060 }}
+            sx={{ maxHeight: 380, maxWidth: 1100 }}
             style={{ border: "1px solid gray" }}
           >
             <Table stickyHeader size="small" aria-label="sticky table">
@@ -157,7 +181,7 @@ function ListadoPacientes() {
                   </TableCell>
                   <TableCell
                     style={{
-                      width: "2%",
+                      width: "12%",
                       textAlign: "center",
                       backgroundColor: "#E9E9E9",
                       fontWeight: "bold",
@@ -235,8 +259,7 @@ function ListadoPacientes() {
                         >
                           <DescargarPDF></DescargarPDF>
                           <FileDownloadIcon />
-                        </IconButton> */
-                        }
+                        </IconButton> */}
                         <DescargarPDF paciente={paciente}></DescargarPDF>
                       </TableCell>
                     </TableRow>
@@ -249,27 +272,27 @@ function ListadoPacientes() {
               </TableBody>
             </Table>
           </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={pacientes.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            labelRowsPerPage={"Registros por página:"}
+            labelDisplayedRows={() => {
+              return `Registros: ${page * rowsPerPage + 1} – ${
+                page * rowsPerPage + rowsPerPage
+              } de ${
+                pacientes.length !== -1
+                  ? pacientes.length
+                  : `more than ${rowsPerPage}`
+              }`;
+            }}
+          />
         </Grid>
       </Grid>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={pacientes.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        labelRowsPerPage={"Registros por página:"}
-        labelDisplayedRows={() => {
-          return `Registros: ${page * rowsPerPage + 1} – ${
-            page * rowsPerPage + rowsPerPage
-          } de ${
-            pacientes.length !== -1
-              ? pacientes.length
-              : `more than ${rowsPerPage}`
-          }`;
-        }}
-      />
     </>
   );
 }

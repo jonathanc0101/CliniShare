@@ -8,7 +8,7 @@ import {
 } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
 import { api } from "../API backend/api";
-import logoClinishare from "../utilidades/caduceoNegro.png";
+import logoClinishare from "../utilidades/logoCliniShare.png";
 
 // import logoClinishare from "../photos/lebron_transparent.png";
 
@@ -29,10 +29,7 @@ const styles = StyleSheet.create({
     textAlign: "justify",
     fontFamily: "Times-Roman",
   },
-  image: {
-    marginVertical: 10,
-    marginHorizontal: 230,
-  },
+
   header: {
     fontSize: 23,
     marginBottom: 10,
@@ -58,6 +55,13 @@ const styles = StyleSheet.create({
     right: 0,
     textAlign: "center",
     color: "grey",
+  },
+  image: {
+    height:"60",
+    width:"175",
+    marginHorizontal:360,
+    marginBottom:10
+
   },
 });
 
@@ -150,10 +154,7 @@ const stylesTable = StyleSheet.create({
     fontFamily: "Times-Roman",
     lineHeight: "0",
   },
-  image: {
-    marginVertical: 15,
-    marginHorizontal: 100,
-  },
+
 });
 
 const PDFFile = ({ paciente }) => {
@@ -185,7 +186,7 @@ const PDFFile = ({ paciente }) => {
   return (
     <Document>
       <Page size="A4" style={styles.body}>
-        {/* <Image style={styles.image} src={logoClinishare} /> */}
+        <Image fixed  style={styles.image} src={logoClinishare} />
         <Text style={styles.header}>Datos generales del paciente:</Text>
         <Text style={styles.text}>
           Apellido y Nombre:&nbsp;&nbsp;{paciente.apellido}&nbsp;
@@ -208,7 +209,7 @@ const PDFFile = ({ paciente }) => {
 
         <Text style={styles.headerHistoriaClinica}>Historia clínica</Text>
         <View style={stylesTable.table}>
-          <View style={[stylesTable.encabezado, stylesTable.rowEncabezado]}>
+          <View fixed style={[stylesTable.encabezado, stylesTable.rowEncabezado]}>
             <Text style={stylesTable.rowTitulo}>Título</Text>
             <Text style={stylesTable.rowFecha}>Fecha</Text>
             <Text style={stylesTable.rowDescripcion}>Descripción</Text>

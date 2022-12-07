@@ -24,6 +24,7 @@ import BotonVolver from "../Botones/BotonVolver";
 import validator from "validator";
 import { api } from "../../API backend/api";
 import { alertas } from "../alertas";
+import MenuAppBar from "../Menu/MenuAppBar";
 
 function ModificarPaciente() {
   const params = useParams();
@@ -137,6 +138,8 @@ function ModificarPaciente() {
   };
   return (
     <div>
+      <MenuAppBar></MenuAppBar>
+
       <Typography
         component="h6"
         variant="h6"
@@ -150,7 +153,7 @@ function ModificarPaciente() {
       >
         &nbsp;&nbsp;&nbsp;Modificar / Datos del paciente
       </Typography>
-      <Card >
+      <Card>
         <CardContent>
           {/* DATOS DEL PACIENTE */}
           <Grid container direction="row" spacing={2}>
@@ -342,15 +345,16 @@ function ModificarPaciente() {
 
           <Grid container direction="row" spacing={2}>
             <Grid item xs={2} sm={6}>
-              
-                <u                 style={{
+              <u
+                style={{
                   color: "black",
                   textAlign: "left",
                   fontWeight: "bold",
                   lineHeight: 1,
-                }}>
-                  <h3>Historia clínica</h3>
-                </u>
+                }}
+              >
+                <h3>Historia clínica</h3>
+              </u>
             </Grid>
             <Grid item xs={2} sm={6}>
               <Box textAlign="right">
