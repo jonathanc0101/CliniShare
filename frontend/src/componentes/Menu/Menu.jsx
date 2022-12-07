@@ -29,14 +29,9 @@ function Menu() {
       >
         <Paper square={true}>
           <MenuList>
-            <Link
-              to={"/ver/pdf"}
-              style={{ color: "inherit", textDecoration: "inherit" }}
-            >
-              <MenuItem disabled style={{ fontWeight: "bold", fontSize: 17 }}>
-                Menú
-              </MenuItem>
-            </Link>
+            <MenuItem disabled style={{ fontWeight: "bold", fontSize: 17 }}>
+              Menú
+            </MenuItem>
             <Link
               to={"/pacientes/all"}
               style={{ color: "inherit", textDecoration: "inherit" }}

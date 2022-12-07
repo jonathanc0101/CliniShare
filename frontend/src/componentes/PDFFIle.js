@@ -47,6 +47,15 @@ const styles = StyleSheet.create({
     fontFamily: "Times-Roman",
     fontWeight: "bold",
   },
+  headerEventosImportantes: {
+    fontSize: 22,
+    marginBottom: 10,
+    marginTop: 10,
+    textAlign: "center",
+    color: "gray",
+    fontFamily: "Times-Roman",
+    fontWeight: "bold",
+  },
   pageNumber: {
     position: "absolute",
     fontSize: 12,
@@ -57,11 +66,10 @@ const styles = StyleSheet.create({
     color: "grey",
   },
   image: {
-    height:"60",
-    width:"175",
-    marginHorizontal:360,
-    marginBottom:10
-
+    height: "60",
+    width: "175",
+    marginHorizontal: 360,
+    marginBottom: 10,
   },
 });
 
@@ -114,25 +122,25 @@ const stylesTable = StyleSheet.create({
 
     margin: 12,
     fontSize: 14,
-    textAlign: "justify",
+    textAlign: "center",
     fontFamily: "Times-Roman",
     lineHeight: "0",
   },
   rowFecha: {
-    width: "15%",
+    width: "17%",
 
     margin: 12,
     fontSize: 14,
-    textAlign: "justify",
+    textAlign: "center",
     fontFamily: "Times-Roman",
     lineHeight: "0",
   },
   rowFechaVencimiento: {
-    width: "8%",
+    width: "17%",
 
     margin: 12,
     fontSize: 14,
-    textAlign: "justify",
+    textAlign: "center",
     fontFamily: "Times-Roman",
     lineHeight: "0",
   },
@@ -150,12 +158,59 @@ const stylesTable = StyleSheet.create({
 
     margin: 12,
     fontSize: 14,
-    textAlign: "justify",
+    textAlign: "center",
     fontFamily: "Times-Roman",
     lineHeight: "0",
   },
-
 });
+
+const stylesTableEventosImportantes = StyleSheet.create({
+  rowTitulo: {
+    width: "20%",
+
+    margin: 12,
+    fontSize: 14,
+    textAlign: "center",
+    fontFamily: "Times-Roman",
+    lineHeight: "0",
+  },
+  rowFecha: {
+    width: "20%",
+
+    margin: 12,
+    fontSize: 14,
+    textAlign: "center",
+    fontFamily: "Times-Roman",
+    lineHeight: "0",
+  },
+  rowFechaVencimiento: {
+    width: "20%",
+
+    margin: 12,
+    fontSize: 14,
+    textAlign: "center",
+    fontFamily: "Times-Roman",
+    lineHeight: "0",
+  },
+  rowDescripcion: {
+    width: "30%",
+
+    margin: 12,
+    fontSize: 14,
+    textAlign: "left",
+    fontFamily: "Times-Roman",
+    lineHeight: "0",
+  },
+  rowMedico: {
+    width: "20%",
+    margin: 12,
+    fontSize: 14,
+    textAlign: "center",
+    fontFamily: "Times-Roman",
+    lineHeight: "0",
+  },
+})
+
 
 const PDFFile = ({ paciente }) => {
   const formatearFecha = (fechaNacimiento) => {
@@ -169,6 +224,7 @@ const PDFFile = ({ paciente }) => {
 
   // let eventos = [];
   const [eventos, setEventos] = useState([]);
+  const [eventosImportantes, setEventosImportantes] = useState([]);
 
   useEffect(() => {
     const obtenerEventosPorPacienteId = async () => {
@@ -183,10 +239,22 @@ const PDFFile = ({ paciente }) => {
     obtenerEventosPorPacienteId();
   }, [paciente.id]);
 
+  useEffect(() => {
+    const obtenerEventosImportantesPorPacienteId = async () => {
+      const response =
+        await api.obtenerEventosCompletosImportantesPorPacienteId(paciente.id);
+
+      if (response.data.length !== 0) {
+        setEventosImportantes(response.data);
+      }
+    };
+    obtenerEventosImportantesPorPacienteId();
+  }, [paciente.id]);
+
   return (
     <Document>
       <Page size="A4" style={styles.body}>
-        <Image fixed  style={styles.image} src={logoClinishare} />
+        <Image fixed style={styles.image} src={logoClinishare} />
         <Text style={styles.header}>Datos generales del paciente:</Text>
         <Text style={styles.text}>
           Apellido y Nombre:&nbsp;&nbsp;{paciente.apellido}&nbsp;
@@ -207,9 +275,47 @@ const PDFFile = ({ paciente }) => {
           {paciente.dni}
         </Text>
 
+        <Text style={styles.headerEventosImportantes}>
+          Eventos importantes:
+        </Text>
+        <View style={stylesTable.table}>
+          <View
+            fixed
+            style={[stylesTable.encabezado, stylesTable.rowEncabezado]}
+          >
+            <Text style={stylesTableEventosImportantes.rowTitulo}>Título</Text>
+            <Text style={stylesTableEventosImportantes.rowFecha}>Fecha</Text>
+            <Text style={stylesTableEventosImportantes.rowFechaVencimiento}>
+              Fecha de vencimiento
+            </Text>
+            <Text style={stylesTableEventosImportantes.rowDescripcion}>Descripción</Text>
+            <Text style={stylesTableEventosImportantes.rowMedico}>Médico</Text>
+          </View>
+          {eventosImportantes.map((row, i) => (
+            <View key={i} style={stylesTable.row} wrap={false}>
+              <Text style={stylesTableEventosImportantes.rowTitulo}>{row.titulo}</Text>
+              <Text style={stylesTableEventosImportantes.rowFecha}>
+                {formatearFecha(row.fecha)}
+              </Text>
+              <Text style={stylesTableEventosImportantes.rowFechaVencimiento}>
+                {row.fechaVencimiento !== null
+                  ? formatearFecha(row.fechaVencimiento)
+                  : "Sin fecha"}
+              </Text>
+              <Text style={stylesTableEventosImportantes.rowDescripcion}>{row.descripcion}</Text>
+              <Text style={stylesTableEventosImportantes.rowMedico}>
+                {row.medico.nombre} {row.medico.apellido}
+              </Text>
+            </View>
+          ))}
+        </View>
+
         <Text style={styles.headerHistoriaClinica}>Historia clínica</Text>
         <View style={stylesTable.table}>
-          <View fixed style={[stylesTable.encabezado, stylesTable.rowEncabezado]}>
+          <View
+            fixed
+            style={[stylesTable.encabezado, stylesTable.rowEncabezado]}
+          >
             <Text style={stylesTable.rowTitulo}>Título</Text>
             <Text style={stylesTable.rowFecha}>Fecha</Text>
             <Text style={stylesTable.rowDescripcion}>Descripción</Text>
