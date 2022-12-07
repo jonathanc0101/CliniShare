@@ -126,7 +126,7 @@ function ListadoPacientes() {
         <Grid xs={10}>
 
           <TableContainer
-            sx={{ maxHeight: 380, maxWidth: 1100 }}
+            sx={{ maxHeight: 330, maxWidth: 1100 }}
             style={{ border: "1px solid gray" }}
           >
             <Table stickyHeader size="small" aria-label="sticky table">
@@ -272,7 +272,8 @@ function ListadoPacientes() {
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
+          <TablePagination             sx={{ maxWidth: 1080 }}
+
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
             count={pacientes.length}
