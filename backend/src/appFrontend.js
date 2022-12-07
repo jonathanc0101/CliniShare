@@ -4,8 +4,8 @@ import path from "path";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { ComputadoraLocalService } from "./services/computadoraLocal.service.js";
-
 import { utils } from "./encripcion/utils.js";
+import { REACT_SERVER_BD_PORT } from "./UDP/constants.js";
 const cryptoData = await ComputadoraLocalService.getKeysAndCertPEM();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -25,6 +25,6 @@ const server = utils.createHTTPSserver(
   app
 );
 
-frontendApp.listen(REACT_SERVER_BD_PORT, () => {
+server.listen(REACT_SERVER_BD_PORT, () => {
   console.log("React server is listening on port", REACT_SERVER_BD_PORT);
 })
