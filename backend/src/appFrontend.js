@@ -25,5 +25,6 @@ const server = utils.createHTTPSserver(
   app
 );
 
-
-export default server;
+frontendApp.listen(REACT_SERVER_BD_PORT, () => {
+  console.log("React server is listening on port", REACT_SERVER_BD_PORT);
+})
