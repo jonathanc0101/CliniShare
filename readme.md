@@ -26,6 +26,8 @@ Sistema operativo Ubuntu Linux o WSL con Ubuntu Linux versión 2 o superior.
 Una versión de node mayor a la 16.
 
 Git
+
+PostgreSQL
 ```
 
 ### Instalación
