@@ -14,7 +14,7 @@
     "rcb": "npm run --prefix frontend/ start",
     "rc": "BROWSER=none npm run --prefix frontend/ start",
     "most": "concurrently -k \"npm:rcb\" \"npm:dev\" \"npm:backendReact\"",
-    "all": "concurrently -k  \"npm:rcb\" \"npm:electron\" \"npm:dev\" ",
+    "all": "concurrently -k  \"npm:rc\" \"npm:electron\" \"npm:dev\" ",
     "prod": "concurrently -k \"npm:electron\" \"npm:backend\" \"npm:backendReact\"",
     "docker": "concurrently \"docker-compose build && docker-compose up\" \"npm:electron\" ",
     "after-docker": "concurrently \"docker-compose up\" \"npm:electron\" ",
@@ -34,20 +34,13 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
-    "@material-ui/core": "^4.12.4",
-    "@material-ui/styles": "^4.11.5",
-    "@react-pdf/renderer": "^3.0.1",
     "axios": "^0.26.0",
     "concurrently": "^7.5.0",
     "cors": "^2.8.5",
     "database-clinishare": "file:backend",
     "date-fns": "^2.29.3",
-    "dayjs": "^1.11.6",
-    "dgram": "^1.0.1",
     "electron-squirrel-startup": "^1.0.0",
-    "pantallas-react": "file:frontend",
     "pg-hstore": "^2.3.4",
-    "react-window": "^1.8.7",
     "wait-on": "^6.0.1"
   },
   "config": {

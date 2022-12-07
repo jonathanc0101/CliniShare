@@ -1,7 +1,9 @@
 #!/bin/sh
 npm i ./backend
+
 cd ./frontend
-npm install --save --legacy-peer-deps 
-npm i
+npm install --force
 npm run build
 cd ..
+
+npm install
