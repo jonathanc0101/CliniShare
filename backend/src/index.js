@@ -1,6 +1,8 @@
 import app from "./app.js";
+import frontendApp from "./appFrontend.js";
+
 import { sequelize } from "./database/database.js";
-import { SERVER_BD_PORT } from "./UDP/constants.js";
+import { SERVER_BD_PORT,REACT_SERVER_BD_PORT } from "./UDP/constants.js";
 import emitter from "./eventos/eventEmitter.js";
 
 export async function main() {
@@ -14,6 +16,10 @@ export async function main() {
       emitter.emit("db_connected");
 
     });
+
+    frontendApp.listen(REACT_SERVER_BD_PORT, () => {
+      console.log("React server is listening on port", REACT_SERVER_BD_PORT);
+    })
     
   } catch (error) {
     console.error("Unable to connect to the database:", error);
