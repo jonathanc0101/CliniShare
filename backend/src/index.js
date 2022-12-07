@@ -1,6 +1,7 @@
 import app from "./app.js";
+
 import { sequelize } from "./database/database.js";
-import { SERVER_BD_PORT } from "./UDP/constants.js";
+import { SERVER_BD_PORT,REACT_SERVER_BD_PORT } from "./UDP/constants.js";
 import emitter from "./eventos/eventEmitter.js";
 
 export async function main() {

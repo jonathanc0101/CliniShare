@@ -18,7 +18,9 @@ import BotonSincronizar from "./componentes/Botones/BotonSincronizar";
 import Sincronizacion from "./componentes/Sincronizacion/Sincronizacion";
 import PacientesParaActualizar from "./componentes/Sincronizacion/PacientesParaActualizar";
 import ResolverConflictos from "./componentes/Sincronizacion/ResolverConflictos";
+import RengloOpcion from "./componentes/Sincronizacion/RenglonOpcion";
 
+import DescargarPDF from "./componentes/DescargarPDF";
 
 const Rutas = () => {
   let routes = useRoutes([
@@ -41,15 +43,19 @@ const Rutas = () => {
     },
     {
       path: "/sincronizacion",
-      element: <PacientesParaActualizar></PacientesParaActualizar>
+      element: <PacientesParaActualizar></PacientesParaActualizar>,
     },
     {
       path: "/sincronizacion/paciente/:id",
-      element: <Sincronizacion></Sincronizacion>
+      element: <Sincronizacion></Sincronizacion>,
     },
     {
       path: "/resolver/conflictos/paciente/:dni",
-      element: <ResolverConflictos></ResolverConflictos>
+      element: <ResolverConflictos></ResolverConflictos>,
+    },
+    {
+      path: "/renglon/opcion",
+      element: <RengloOpcion></RengloOpcion>,
     },
 
     // ...
@@ -63,6 +69,7 @@ function App() {
       <Router>
         <Rutas></Rutas>
       </Router>
+
       {/* <BotonSincronizar /> */}
     </>
   );

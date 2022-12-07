@@ -78,7 +78,7 @@ function ModificarMedico() {
     } else if (passwordAVerificar.length === 0) {
       alertas.passwordAVerificarVacia();
       return;
-    } else if (!verificarPassword) {
+    } else if (!verificarPassword(passwordAVerificar)) {
       alertas.contraseñasDiferentes();
       return;
     }

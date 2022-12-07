@@ -17,6 +17,7 @@ import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import BotonVolver from "../Botones/BotonVolver";
+import MenuAppBar from "../Menu/MenuAppBar";
 
 function VerEvento() {
   const params = useParams();
@@ -64,6 +65,7 @@ function VerEvento() {
 
   return (
     <>
+    <MenuAppBar></MenuAppBar>
       <Typography
         component="h6"
         variant="h6"
@@ -77,7 +79,7 @@ function VerEvento() {
       >
         &nbsp;&nbsp;&nbsp;Datos del evento
       </Typography>
-      <Card style={{ height: "94vh" }}>
+      <Card>
         <CardContent>
           {/* DATOS DEL EVENTO */}
           <Grid container direction="row" spacing={2}>
@@ -266,7 +268,7 @@ function VerEvento() {
               />
             </Grid>
           </Grid>
-          <br></br><br></br>
+          <br></br>
           {/* VOLVER A ATRÁS */}
           <Grid item xs={10}>
             <BotonVolver></BotonVolver>

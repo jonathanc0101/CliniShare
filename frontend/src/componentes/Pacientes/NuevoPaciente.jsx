@@ -19,6 +19,7 @@ import "dayjs/locale/es";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import validator from "validator";
+import MenuAppBar from "../Menu/MenuAppBar";
 
 function NuevoPaciente() {
   let navigate = useNavigate();
@@ -148,6 +149,7 @@ function NuevoPaciente() {
 
   return (
     <div onKeyDown={handleKeyPress}>
+      <MenuAppBar></MenuAppBar>
       <Typography
         component="h6"
         variant="h6"
@@ -162,7 +164,7 @@ function NuevoPaciente() {
         &nbsp;&nbsp;&nbsp;Nuevo paciente - Datos del paciente
       </Typography>
       {/* DATOS DEL PACIENTE */}
-      <Card style={{ height: "94vh" }}>
+      <Card >
         <CardContent>
           {/* DATOS DEL PACIENTE */}
           <Grid container direction="row" spacing={2}>
@@ -316,13 +318,6 @@ function NuevoPaciente() {
               ></TextField>
             </Grid>
           </Grid>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
           <br></br>
           <Grid container direction="row" spacing={2}>
             {/* VOLVER A ATRÁS */}

@@ -57,7 +57,7 @@ export default function loadListeners(emitter) {
   });
 
   emitter.on("new_computer", (computer) => {
-    console.log("\n\nevento:ew_computer\n\n");
+    console.log("\n\nevento:new_computer\n\n");
     handleNewComputer(computer);
   });
 

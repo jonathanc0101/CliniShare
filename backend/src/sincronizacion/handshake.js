@@ -11,12 +11,13 @@ const axios = utils.getAxiosInstance(cryptoData.privateKey,cryptoData.certificat
 export function handleNewComputer(computadora) {
   for (let ip in computadora.IPS) {
     const getMethodString =
-      "http://" +
+      "https://" +
       computadora.IPS[ip].toString().trim() +
       ":" +
       SERVER_BD_PORT.toString().trim() +
       "/clinishare";
 
+    console.log("HI");
     axios
       .get(getMethodString)
       .then((res) => {
@@ -37,7 +38,7 @@ export function handleNewComputer(computadora) {
 export function handleNewComputerNonLooping(computadora) {
   for (let ip in computadora.IPS) {
     const getMethodString =
-      "http://" +
+      "https://" +
       computadora.IPS[ip].toString().trim() +
       ":" +
       SERVER_BD_PORT.toString().trim() +
