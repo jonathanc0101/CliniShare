@@ -1,7 +1,7 @@
 import express from "express";
 import nodemailer from "nodemailer";
-import xoauth2 from "xoauth2";
-let app = express();
+import { getEmailFromTemplate } from "./template.js";
+
 /*
     Here we are configuring our SMTP Server details.
     STMP is mail server which is responsible for sending and recieving email.
@@ -11,24 +11,25 @@ let app = express();
 
 function sendVerificationEmail(to, codigo) {
   let smtpTransport = nodemailer.createTransport({
-    service: 'Gmail', 
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
-    xoauth2: xoauth2.createXOAuth2Generator({
+    type: "OAuth2",
     user: "clinisharesrl@gmail.com",
-    pass: "Clini5hareRocksMan",
-     })
+    clientId: "911861983941-1kad6obsir034a2p0h17ovombsssn7if.apps.googleusercontent.com",
+    clientSecret: "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",
+    refreshToken : "1//04oWn_xK452rfCgYIARAAGAQSNwF-L9IrBGXZaGjxWo_24bj3GLWH1pdvqwkrZLp_h0wX1a1DKwXPuN8zagC2cNmKEjigfvORW0g"
      }
   
     },
   );
 
   let mailOptions = {
+    from: "CliniShare <CliniShareSRL@gmail.com>",
     to,
-    subject: "Please confirm your Email account",
-    html:
-      "Hello,<br> Este es su código para verificar su email.<br>" +
-      " " +
-      codigo,
+    subject: "Por favor confirme su código de email",
+    html: getEmailFromTemplate(codigo) 
   };
 
   console.log(mailOptions);
@@ -43,56 +44,4 @@ function sendVerificationEmail(to, codigo) {
 
 sendVerificationEmail("jonathancavia0101@gmail.com", "12345");
 
-/*------------------Routing Started ------------------------*/
 
-// app.get('/',function(req,res){
-//     res.sendfile('index.html');
-// });
-// app.get('/send',function(req,res){
-//         rand=Math.floor((Math.random() * 100) + 54);
-//     host=req.get('host');
-//     link="http://"+req.get('host')+"/verify?id="+rand;
-//     mailOptions={
-//         to : req.query.to,
-//         subject : "Please confirm your Email account",
-//         html : "Hello,<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify</a>"
-//     }
-//     console.log(mailOptions);
-//     smtpTransport.sendMail(mailOptions, function(error, response){
-//      if(error){
-//             console.log(error);
-//         res.end("error");
-//      }else{
-//             console.log("Message sent: " + response.message);
-//         res.end("sent");
-//          }
-// });
-// });
-
-// app.get('/verify',function(req,res){
-// console.log(req.protocol+":/"+req.get('host'));
-// if((req.protocol+"://"+req.get('host'))==("http://"+host))
-// {
-//     console.log("Domain is matched. Information is from Authentic email");
-//     if(req.query.id==rand)
-//     {
-//         console.log("email is verified");
-//         res.end("<h1>Email "+mailOptions.to+" is been Successfully verified");
-//     }
-//     else
-//     {
-//         console.log("email is not verified");
-//         res.end("<h1>Bad Request</h1>");
-//     }
-// }
-// else
-// {
-//     res.end("<h1>Request is from unknown source");
-// }
-// });
-
-// /*--------------------Routing Over----------------------------*/
-
-// app.listen(3000,function(){
-//     console.log("Express Started on Port 3000");
-// });
