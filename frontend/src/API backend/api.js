@@ -26,7 +26,8 @@ export const api = {
   sincronizar,
   obtenerPacientesConConflictos,
   obtenerPacienteConflictivo,
-  resolverConflictos
+  resolverConflictos,
+  obtenerEventosPorFechas,
 };
 
 axios.defaults.headers.post["Content-Type"] =
@@ -332,8 +333,11 @@ async function obtenerPacienteConflictivo(pacienteDni) {
 
 async function resolverConflictos(pacienteParaActualizar) {
   try {
-    console.log("API RESOLVER: ",pacienteParaActualizar);
-    const response = await axios.post(rutas.resolverConflicto, pacienteParaActualizar);
+    console.log("API RESOLVER: ", pacienteParaActualizar);
+    const response = await axios.post(
+      rutas.resolverConflicto,
+      pacienteParaActualizar
+    );
     console.log(response);
     const pacienteParaActualizarRespuesta = response.data;
     return pacienteParaActualizarRespuesta;
@@ -342,3 +346,52 @@ async function resolverConflictos(pacienteParaActualizar) {
     return false;
   }
 }
+
+async function obtenerEventosPorFechas(fechaInicio, fechaFin, pacienteId) {
+  try {
+    console.log("obtenerEventosPorFechas\n");
+    console.log("Paciente: " + pacienteId);
+
+    const fechaInicioAux = convertir(fechaInicio);
+    const fechaFinAux = convertir(fechaFin);
+
+    const eventos = await axios.get(
+      rutas.getEventosCompletosPorPacienteId + pacienteId
+    );
+
+    console.log("TODOS LOS EVENTOS: ", eventos.data);
+    const eventosPorFechas = eventos.data.filter(filtrarPorFechas);
+
+    function filtrarPorFechas(evento) {
+      evento.fecha = formatearFecha(evento.fecha);
+      evento.fecha = convertir(evento.fecha);
+      return evento.fecha >= fechaInicioAux && evento.fecha <= fechaFinAux;
+    }
+
+    console.log("EVENTOS POR FECHAS: ", eventosPorFechas);
+    return eventosPorFechas;
+  } catch (error) {}
+}
+
+function convertir(fecha) {
+  var fechaString = fecha;
+  var fechaPartes = fechaString.split("-");
+
+  var fechaDate = new Date(
+    +fechaPartes[2],
+    fechaPartes[1] - 1,
+    +fechaPartes[0]
+  );
+  console.log("STRING: " + fechaString);
+  console.log("DATE?: " + fechaDate);
+  return fechaDate;
+}
+
+const formatearFecha = (fechaDeEvento) => {
+  let fecha = new Date(fechaDeEvento);
+  let dia = `${fecha.getDate()}`.padStart(2, "0");
+  let mes = `${fecha.getMonth() + 1}`.padStart(2, "0");
+  let anio = fecha.getFullYear();
+  const fechaFormateada = `${dia}-${mes}-${anio}`;
+  return fechaFormateada;
+};

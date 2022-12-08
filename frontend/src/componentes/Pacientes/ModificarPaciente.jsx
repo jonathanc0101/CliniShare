@@ -25,6 +25,7 @@ import validator from "validator";
 import { api } from "../../API backend/api";
 import { alertas } from "../alertas";
 import MenuAppBar from "../Menu/MenuAppBar";
+import InputTelefono from "../InputTelefono";
 
 function ModificarPaciente() {
   const params = useParams();
@@ -67,14 +68,12 @@ function ModificarPaciente() {
 
     setPaciente((estadoAnterior) => {
       return { ...estadoAnterior, dni: value };
-    });
+    }); 
   };
 
   const handleChangeTelefono = (event) => {
-    let value = event.target.value.replace(/[-]\D/g, "");
-
     setPaciente((estadoAnterior) => {
-      return { ...estadoAnterior, telefono: value };
+      return { ...estadoAnterior, telefono: event };
     });
   };
 
@@ -147,11 +146,10 @@ function ModificarPaciente() {
           backgroundColor: "#0c5774",
           color: "white",
           textAlign: "left",
-          fontWeight: "bold",
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Modificar / Datos del paciente
+        &nbsp;&nbsp;&nbsp;Datos del paciente / Edición
       </Typography>
       <Card>
         <CardContent>
@@ -260,7 +258,7 @@ function ModificarPaciente() {
           </Grid>
           <Grid container direction="row" spacing={2}>
             {/* DOMICILIO */}
-            <Grid item xs={4} sm={3}>
+            <Grid item xs={4} sm={2}>
               <TextField
                 label="Domicilio"
                 type="text"
@@ -275,19 +273,9 @@ function ModificarPaciente() {
               ></TextField>
             </Grid>
             {/* TELÉFONO */}
-            <Grid item xs={4} sm={2}>
-              <TextField
-                label="Teléfono"
-                type="text"
-                name="telefono"
-                margin="normal"
-                fullWidth
-                variant="outlined"
-                value={paciente.telefono}
-                onChange={handleChangeTelefono}
-                size="small"
-                helperText="Campo obligatorio"
-              ></TextField>
+            <Grid item xs={4} sm={3}>
+            <InputTelefono handleChangeTelefono={handleChangeTelefono} styles="small" telefono={paciente.telefono}></InputTelefono>
+
             </Grid>
             {/* CORREO ELECTRÓNICO */}
             <Grid item xs={4} sm={3}>

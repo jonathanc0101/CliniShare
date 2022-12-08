@@ -17,6 +17,7 @@ import BotonVolver from "../Botones/BotonVolver";
 import "dayjs/locale/es";
 import moment from "moment";
 import validator from "validator";
+import InputTelefono from "../InputTelefono";
 
 function RegistroMedico() {
   const [registrado, setRegistrado] = useState(false);
@@ -111,9 +112,8 @@ function RegistroMedico() {
   };
 
   const handleChangeTelefono = (event) => {
-    let value = event.target.value.replace(/\D/g, "");
     setMedico((estadoAnterior) => {
-      return { ...estadoAnterior, telefono: value };
+      return { ...estadoAnterior, telefono: event };
     });
   };
 
@@ -289,18 +289,8 @@ function RegistroMedico() {
             </Grid>
             {/* TELÉFONO */}
             <Grid item xs={4} sm={4}>
-              <TextField
-                label="Teléfono"
-                type="text"
-                name="telefono"
-                value={medico.telefono}
-                onChange={handleChangeTelefono}
-                margin="normal"
-                fullWidth
-                variant="outlined"
-                helperText="Campo obligatorio"
-                size="small"
-              ></TextField>
+            <InputTelefono handleChangeTelefono={handleChangeTelefono} telefono={medico.telefono} styles="small"></InputTelefono>
+
             </Grid>
           </Grid>
 

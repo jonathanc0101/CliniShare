@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import validator from "validator";
 import MenuAppBar from "../Menu/MenuAppBar";
+import InputTelefono from "../InputTelefono";
 
 function NuevoPaciente() {
   let navigate = useNavigate();
@@ -102,10 +103,9 @@ function NuevoPaciente() {
   };
 
   const handleChangeTelefono = (event) => {
-    let value = event.target.value.replace(/\D/g, "");
 
     setPaciente((estadoAnterior) => {
-      return { ...estadoAnterior, telefono: value };
+      return { ...estadoAnterior, telefono: event };
     });
   };
 
@@ -157,11 +157,10 @@ function NuevoPaciente() {
           backgroundColor: "#0c5774",
           color: "white",
           textAlign: "left",
-          fontWeight: "bold",
           lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Nuevo paciente - Datos del paciente
+        &nbsp;&nbsp;&nbsp;Datos del paciente / Nuevo paciente
       </Typography>
       {/* DATOS DEL PACIENTE */}
       <Card >
@@ -289,17 +288,7 @@ function NuevoPaciente() {
             </Grid>
             {/* TELÉFONO */}
             <Grid item xs={4} sm={3}>
-              <TextField
-                label="Teléfono"
-                type="text"
-                name="telefono"
-                margin="normal"
-                fullWidth
-                variant="outlined"
-                value={Paciente.telefono}
-                onChange={handleChangeTelefono}
-                helperText="Campo obligatorio"
-              ></TextField>
+              <InputTelefono handleChangeTelefono={handleChangeTelefono} styles="medium"></InputTelefono>
             </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>
