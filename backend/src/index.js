@@ -4,6 +4,10 @@ import { sequelize } from "./database/database.js";
 import { SERVER_BD_PORT,REACT_SERVER_BD_PORT } from "./UDP/constants.js";
 import emitter from "./eventos/eventEmitter.js";
 
+//aca se importan los controller que no tengan service todavia
+import { TokenUsuario } from "./models/TokenUsuario.js";
+
+
 export async function main() {
   try {
     await sequelize.sync({force: false}) //sincronización con la bd

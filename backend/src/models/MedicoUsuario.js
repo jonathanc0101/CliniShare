@@ -1,7 +1,6 @@
 import { DataTypes,Sequelize } from "sequelize";
 import { sequelize } from "../database/database.js";
 import {SesionActiva} from "./SesionActiva.js";
-import { Sincronizacion } from "./Sincronizacion.js";
 
 
 export const MedicoUsuario = sequelize.define(
@@ -44,6 +43,11 @@ export const MedicoUsuario = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    verificado:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    }
   },
   {
     timestamps: true,
