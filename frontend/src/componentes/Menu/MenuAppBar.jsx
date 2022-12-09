@@ -1,19 +1,19 @@
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import MedicalIcon from "@mui/icons-material/MedicalServices";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import BotonSincronizar from "../Botones/BotonSincronizar";
-import { Grid } from "@mui/material";
+import { Grid, ListItemIcon } from "@mui/material";
+import logoClinishare from "/home/nicole/Escritorio/CliniShare/frontend/src/utilidades/logoCliniShare.png";
+import Logout from "@mui/icons-material/Logout";
+
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import PersonIcon from "@mui/icons-material/Person";
 
 const pages = [];
 
@@ -42,7 +42,27 @@ function MenuAppBar() {
   return (
     <>
       <Grid item xs={12} container>
-        <Grid item xs={0.4}>
+        <Grid item xs={4}>
+          <Box
+            textAlign="left"
+            style={{
+              width: "1%",
+            }}
+          >
+            <img
+              width={150}
+              height={45}
+              style={{
+                marginBottom: 4,
+                marginTop: 6,
+                marginLeft: 5,
+              }}
+              src={logoClinishare}
+              alt="LogoCliniShare"
+            ></img>
+          </Box>
+        </Grid>
+        {/* <Grid item xs={0.4}>
           <Box textAlign="center">
             <MedicalIcon
               style={{
@@ -69,7 +89,7 @@ function MenuAppBar() {
               CliniShare
             </Typography>
           </Box>
-        </Grid>
+        </Grid> */}
         <Grid item xs={4}>
           <BotonSincronizar></BotonSincronizar>
         </Grid>
@@ -116,19 +136,34 @@ function MenuAppBar() {
                 to={"/ver/perfil"}
                 style={{ color: "inherit", textDecoration: "inherit" }}
               >
-                <MenuItem>Perfil</MenuItem>
+                <MenuItem>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  Perfil
+                </MenuItem>
               </Link>
               <Link
                 to={"/configuracion/cuenta"}
                 style={{ color: "inherit", textDecoration: "inherit" }}
               >
-                <MenuItem>Cuenta</MenuItem>
+                <MenuItem>
+                  <ListItemIcon>
+                    <ManageAccountsIcon />
+                  </ListItemIcon>
+                  Cuenta
+                </MenuItem>
               </Link>
               <Link
                 to={"/"}
                 style={{ color: "inherit", textDecoration: "inherit" }}
               >
-                <MenuItem>Salir</MenuItem>
+                <MenuItem>
+                  <ListItemIcon>
+                    <Logout />
+                  </ListItemIcon>
+                  Salir
+                </MenuItem>
               </Link>
 
               {/* {settings.map((setting) => (
