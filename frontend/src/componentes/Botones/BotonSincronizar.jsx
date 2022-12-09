@@ -1,11 +1,12 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { api } from "../../API backend/api";
 import SyncIcon from "@mui/icons-material/Sync";
 function BotonSincronizar() {
   return (
     <>
+    <Box textAlign={"center"} style={{marginTop:2}}>
       <Button
-        style={{ backgroundColor: "white" }}
+        style={{ backgroundColor: "white", marginTop:7, marginBottom:5 }}
         variant="contained"
         onClick={() => api.sincronizar()}
         endIcon={
@@ -15,8 +16,8 @@ function BotonSincronizar() {
         <Typography variant="h7" color={"#0c5774"} fontWeight={"bold"}>
           SINCRONIZAR
         </Typography>
-      </Button>
-    </>
+            </Button>
+            </Box></>
   );
 }
 

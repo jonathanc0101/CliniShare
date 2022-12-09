@@ -13,6 +13,7 @@ import MedicalIcon from "@mui/icons-material/MedicalServices";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import BotonSincronizar from "../Botones/BotonSincronizar";
+import { Grid } from "@mui/material";
 
 const pages = [];
 
@@ -39,87 +40,58 @@ function MenuAppBar() {
   );
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <MedicalIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            CLINISHARE
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+    <>
+      <Grid item xs={12} container>
+        <Grid item xs={0.4}>
+          <Box textAlign="center">
+            <MedicalIcon
+              style={{
+                marginBottom: 10,
+                marginTop: 12,
+                marginLeft: 10,
+                marginRight: 10,
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={3.6}>
+          <Box textAlign="left">
+            <Typography
+              variant="h6"
+              style={{
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".2rem",
+                marginBottom: 10,
+                marginTop: 10,
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>      
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+              CliniShare
+            </Typography>
           </Box>
-          <BotonSincronizar></BotonSincronizar>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            sx={{
-              mr: 2,
+        </Grid>
+        <Grid item xs={4}>
+          <BotonSincronizar></BotonSincronizar>
+        </Grid>
 
-              fontFamily: "cursive",
-              fontWeight: 700,
-              color: "inherit",
-              textDecoration: "none",
-            }}
-            style={{
-              lineHeight: "2",
-            }}
-          >
-            {usuario.medico.nombre} {usuario.medico.apellido}
-          </Typography>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+        <Grid item xs={3.5}>
+          <Box textAlign="right" style={{ marginRight: 2 }}>
+            <Typography
+              variant="h5"
+              style={{
+                fontFamily: "cursive",
+                fontWeight: 700,
+                marginTop: 10,
+              }}
+            >
+              {usuario.medico.nombre} {usuario.medico.apellido}
+            </Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={0.5}>
+          <Box textAlign="left">
+            <Tooltip title="Abrir configuraciones">
+              <IconButton onClick={handleOpenUserMenu}>
                 {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
                 <Avatar />
               </IconButton>
@@ -166,9 +138,9 @@ function MenuAppBar() {
               ))} */}
             </Menu>
           </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+        </Grid>
+      </Grid>
+    </>
   );
 }
 export default MenuAppBar;

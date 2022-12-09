@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Box } from "@mui/system";
 
 function Menu() {
   const [verEventos, setVerEventos] = useState(false);
@@ -21,50 +22,77 @@ function Menu() {
 
   return (
     <>
-      <Grid
+      {/* <Grid
         item
         xs={4}
         sm={2}
         style={{ backgroundColor: "#007FFF", border: "3px solid #007FFF" }}
       >
-        <Paper square={true}>
-          <MenuList>
-            <MenuItem disabled style={{ fontWeight: "bold", fontSize: 17 }}>
-              Menú
-            </MenuItem>
-            <Link
-              to={"/pacientes/all"}
-              style={{ color: "inherit", textDecoration: "inherit" }}
-            >
-              <MenuItem style={{ color: "#007FFF", fontSize: 15 }}>
-                Mis pacientes
-              </MenuItem>
-            </Link>
-            <Link
-              to={"/medicos/all"}
-              style={{ color: "inherit", textDecoration: "inherit" }}
-            >
-              <MenuItem style={{ color: "#007FFF", fontSize: 15 }}>
-                Médicos
-              </MenuItem>
-            </Link>
-            <Link
-              to={"/sincronizacion"}
-              style={{ color: "inherit", textDecoration: "inherit" }}
-            >
-              <MenuItem style={{ color: "#007FFF", fontSize: 15 }}>
-                Conflictos
-              </MenuItem>
-            </Link>
-            {/* <Link
+        <Paper square={true}> */}
+      <MenuList>
+        <MenuItem
+          disabled
+          style={{ fontWeight: "bold", fontSize: 24, color: "black" }}
+        >
+          Menú
+        </MenuItem>
+        <Link
+          to={"/pacientes/all"}
+          style={{ color: "inherit", textDecoration: "inherit" }}
+        >
+          <MenuItem
+            style={{
+              color: "black",
+              fontSize: 17,
+              marginBottom: 90,
+              marginTop: 90,
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Mis pacientes
+          </MenuItem>
+        </Link>
+        <Link
+          to={"/medicos/all"}
+          style={{ color: "inherit", textDecoration: "inherit" }}
+        >
+          <MenuItem
+            style={{
+              color: "black",
+              fontSize: 17,
+              marginBottom: 90,
+              marginTop: 90,
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Médicos
+          </MenuItem>
+        </Link>
+        <Link
+          to={"/sincronizacion"}
+          style={{ color: "inherit", textDecoration: "inherit" }}
+        >
+          <MenuItem
+            style={{
+              color: "black",
+              fontSize: 17,
+              marginBottom: 90,
+              marginTop: 90,
+              fontWeight: "bold",
+            }}
+          >
+            Conflictos
+          </MenuItem>
+        </Link>
+        {/* <Link
               to={"/eventos/all"}
               style={{ color: "inherit", textDecoration: "inherit" }}
             >
               <MenuItem>Eventos</MenuItem>
             </Link> */}
-          </MenuList>
-        </Paper>
-      </Grid>
+      </MenuList>
     </>
   );
 }
