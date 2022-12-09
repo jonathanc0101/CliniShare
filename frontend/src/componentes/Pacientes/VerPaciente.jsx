@@ -59,7 +59,6 @@ function VerPaciente() {
   return (
     <>
       <MenuAppBar></MenuAppBar>
-
       <Typography
         component="h6"
         variant="h6"
@@ -67,7 +66,6 @@ function VerPaciente() {
           backgroundColor: "#0c5774",
           color: "white",
           textAlign: "left",
-          lineHeight: "2",
         }}
       >
         &nbsp;&nbsp;&nbsp;Datos del paciente / Visualización
@@ -273,7 +271,7 @@ function VerPaciente() {
             </Grid>
           </Grid>
 
-              <EventosDePaciente id={params.id} />
+          <EventosDePaciente id={params.id} />
 
           <Grid container direction="row" spacing={2}>
             <Grid item xs={4} sm={4}>

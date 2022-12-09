@@ -57,21 +57,13 @@ function ListadoPacientes() {
   return (
     <>
       <Grid container spacing={0} direction={"column"}>
-        <AppBar position="static" style={{ marginBottom: 15 }}>
           <MenuAppBar></MenuAppBar>
-        </AppBar>
         <Grid item xs={12} container>
           <Grid item xs={0.1}></Grid>
           <Grid bgcolor={"lightblue"} item xs={1.9}>
             <Menu></Menu>
           </Grid>
-          <Grid
-            item
-            xs={10}
-            container
-            spacing={0}
-            marginTop={1}
-          >
+          <Grid item xs={10} container spacing={0} marginTop={1}>
             <Grid item xs={6}>
               &nbsp;&nbsp;&nbsp;
               <OutlinedInput
@@ -110,7 +102,7 @@ function ListadoPacientes() {
               <TableContainer
                 style={{
                   border: "1px solid gray",
-                  maxHeight: 402,
+                  height: 430,
                   width: "auto",
                   marginRight: 10,
                   marginLeft: 10,
@@ -238,19 +230,6 @@ function ListadoPacientes() {
                             </Link>
                           </TableCell>
                           <TableCell align="center">
-                            {/* <Link to={"/pacientes/descargar/id/" + paciente.id}>
-                          <Tooltip title="Descargar historia clínica">
-                            <FileDownloadIcon color="info"></FileDownloadIcon>
-                          </Tooltip>
-                        </Link> */}
-                            {/* <IconButton
-                          color="primary"
-                          aria-label="upload picture"
-                          component="label"
-                        >
-                          <DescargarPDF></DescargarPDF>
-                          <FileDownloadIcon />
-                        </IconButton> */}
                             <DescargarPDF paciente={paciente}></DescargarPDF>
                           </TableCell>
                         </TableRow>
@@ -264,9 +243,15 @@ function ListadoPacientes() {
                 </Table>
               </TableContainer>
             </Grid>
-            <Grid item xs={12} bgcolor={"lightblue"}>
+            <Grid
+              item
+              xs={12}
+              bgcolor={"lightblue"}
+              border={"1px black"}
+              style={{ marginLeft: 10, marginRight: 10 }}
+            >
               <TablePagination
-                style={{ width: "auto" }}
+                style={{ width: "auto", marginTop: 0 }}
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
                 count={pacientes.length}

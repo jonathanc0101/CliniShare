@@ -41,7 +41,13 @@ function MenuAppBar() {
 
   return (
     <>
-      <Grid item xs={12} container>
+      <Grid
+        item
+        xs={12}
+        container
+        bgcolor={"#007FFF"}
+        style={{ marginBottom: 10 }}
+      >
         <Grid item xs={4}>
           <Box
             textAlign="left"
@@ -55,41 +61,13 @@ function MenuAppBar() {
               style={{
                 marginBottom: 4,
                 marginTop: 6,
-                marginLeft: 5,
+                marginLeft: 20,
               }}
               src={logoClinishare}
               alt="LogoCliniShare"
             ></img>
           </Box>
         </Grid>
-        {/* <Grid item xs={0.4}>
-          <Box textAlign="center">
-            <MedicalIcon
-              style={{
-                marginBottom: 10,
-                marginTop: 12,
-                marginLeft: 10,
-                marginRight: 10,
-              }}
-            />
-          </Box>
-        </Grid>
-        <Grid item xs={3.6}>
-          <Box textAlign="left">
-            <Typography
-              variant="h6"
-              style={{
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".2rem",
-                marginBottom: 10,
-                marginTop: 10,
-              }}
-            >
-              CliniShare
-            </Typography>
-          </Box>
-        </Grid> */}
         <Grid item xs={4}>
           <BotonSincronizar></BotonSincronizar>
         </Grid>
@@ -101,7 +79,8 @@ function MenuAppBar() {
               style={{
                 fontFamily: "cursive",
                 fontWeight: 700,
-                marginTop: 10,
+                marginTop: 12,
+                color: "white",
               }}
             >
               {usuario.medico.nombre} {usuario.medico.apellido}

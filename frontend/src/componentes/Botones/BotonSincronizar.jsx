@@ -6,7 +6,7 @@ function BotonSincronizar() {
     <>
     <Box textAlign={"center"} style={{marginTop:2}}>
       <Button
-        style={{ backgroundColor: "white", marginTop:7, marginBottom:5 }}
+        style={{ backgroundColor: "white", marginTop:8, marginBottom:5 }}
         variant="contained"
         onClick={() => api.sincronizar()}
         endIcon={
