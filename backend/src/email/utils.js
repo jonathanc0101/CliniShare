@@ -2,14 +2,7 @@ import express from "express";
 import nodemailer from "nodemailer";
 import { getEmailFromTemplate } from "./template.js";
 
-/*
-    Here we are configuring our SMTP Server details.
-    STMP is mail server which is responsible for sending and recieving email.
-*/
-
-/*------------------SMTP Over-----------------------------*/
-
-function sendVerificationEmail(to, codigo) {
+export function sendVerificationEmail(to, codigo) {
   let smtpTransport = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -41,7 +34,3 @@ function sendVerificationEmail(to, codigo) {
     }
   });
 }
-
-sendVerificationEmail("jonathancavia0101@gmail.com", "12345");
-
-
