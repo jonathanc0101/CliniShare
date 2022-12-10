@@ -112,7 +112,7 @@ function MenuAppBar() {
               onClose={handleCloseUserMenu}
             >
               <Link
-                to={"/ver/perfil"}
+                to={"/configuracion/cuenta/"}
                 style={{ color: "inherit", textDecoration: "inherit" }}
               >
                 <MenuItem>
