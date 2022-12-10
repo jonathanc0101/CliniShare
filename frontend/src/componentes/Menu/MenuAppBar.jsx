@@ -1,18 +1,19 @@
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import MedicalIcon from "@mui/icons-material/MedicalServices";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import BotonSincronizar from "../Botones/BotonSincronizar";
+import { Grid, ListItemIcon } from "@mui/material";
+import logoClinishare from "/home/nicole/Escritorio/CliniShare/frontend/src/utilidades/logoCliniShare.png";
+import Logout from "@mui/icons-material/Logout";
+
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import PersonIcon from "@mui/icons-material/Person";
 
 const pages = [];
 
@@ -39,87 +40,57 @@ function MenuAppBar() {
   );
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <MedicalIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+    <>
+      <Grid
+        item
+        xs={12}
+        container
+        bgcolor={"#007FFF"}
+        style={{ marginBottom: 10 }}
+      >
+        <Grid item xs={4}>
+          <Box
+            textAlign="left"
+            style={{
+              width: "1%",
             }}
           >
-            CLINISHARE
-          </Typography>
+            <img
+              width={150}
+              height={45}
+              style={{
+                marginBottom: 4,
+                marginTop: 6,
+                marginLeft: 20,
+              }}
+              src={logoClinishare}
+              alt="LogoCliniShare"
+            ></img>
+          </Box>
+        </Grid>
+        <Grid item xs={4}>
+          <BotonSincronizar></BotonSincronizar>
+        </Grid>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
+        <Grid item xs={3.5}>
+          <Box textAlign="right" style={{ marginRight: 2 }}>
+            <Typography
+              variant="h5"
+              style={{
+                fontFamily: "cursive",
+                fontWeight: 700,
+                marginTop: 12,
+                color: "white",
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>      
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+              {usuario.medico.nombre} {usuario.medico.apellido}
+            </Typography>
           </Box>
-          <BotonSincronizar></BotonSincronizar>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            sx={{
-              mr: 2,
-
-              fontFamily: "cursive",
-              fontWeight: 700,
-              color: "inherit",
-              textDecoration: "none",
-            }}
-            style={{
-              lineHeight: "2",
-            }}
-          >
-            {usuario.medico.nombre} {usuario.medico.apellido}
-          </Typography>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+        </Grid>
+        <Grid item xs={0.5}>
+          <Box textAlign="left">
+            <Tooltip title="Abrir configuraciones">
+              <IconButton onClick={handleOpenUserMenu}>
                 {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
                 <Avatar />
               </IconButton>
@@ -144,19 +115,34 @@ function MenuAppBar() {
                 to={"/ver/perfil"}
                 style={{ color: "inherit", textDecoration: "inherit" }}
               >
-                <MenuItem>Perfil</MenuItem>
+                <MenuItem>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  Perfil
+                </MenuItem>
               </Link>
               <Link
                 to={"/configuracion/cuenta"}
                 style={{ color: "inherit", textDecoration: "inherit" }}
               >
-                <MenuItem>Cuenta</MenuItem>
+                <MenuItem>
+                  <ListItemIcon>
+                    <ManageAccountsIcon />
+                  </ListItemIcon>
+                  Cuenta
+                </MenuItem>
               </Link>
               <Link
                 to={"/"}
                 style={{ color: "inherit", textDecoration: "inherit" }}
               >
-                <MenuItem>Salir</MenuItem>
+                <MenuItem>
+                  <ListItemIcon>
+                    <Logout />
+                  </ListItemIcon>
+                  Salir
+                </MenuItem>
               </Link>
 
               {/* {settings.map((setting) => (
@@ -166,9 +152,9 @@ function MenuAppBar() {
               ))} */}
             </Menu>
           </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+        </Grid>
+      </Grid>
+    </>
   );
 }
 export default MenuAppBar;

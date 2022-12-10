@@ -17,6 +17,7 @@ import "dayjs/locale/es";
 import moment from "moment";
 import { api } from "../../API backend/api";
 import { alertas } from "../alertas";
+import InputTelefono from "../InputTelefono";
 
 function ModificarMedico() {
   const [guardado, setGuardado] = useState(false);
@@ -93,10 +94,9 @@ function ModificarMedico() {
   };
 
   const handleChangeTelefono = (event) => {
-    let value = event.target.value.replace(/\D/g, "");
 
     setMedico((estadoAnterior) => {
-      return { ...estadoAnterior, telefono: value };
+      return { ...estadoAnterior, telefono: event };
     });
   };
 
@@ -149,7 +149,7 @@ function ModificarMedico() {
       >
         &nbsp;&nbsp;&nbsp;Configuración general de la cuenta
       </Typography>
-      <Card style={{ height: "94vh" }}>
+      <Card >
         <CardContent>
           {/* DATOS DEL MÉDICO USUARIO */}
           <Grid container direction="row" spacing={2}>
@@ -288,17 +288,8 @@ function ModificarMedico() {
             </Grid>
             {/* TELÉFONO */}
             <Grid item xs={4} sm={4}>
-              <TextField
-                label="Teléfono"
-                type="text"
-                name="telefono"
-                value={medico.telefono}
-                onChange={handleChangeTelefono}
-                margin="normal"
-                fullWidth
-                variant="outlined"
-                helperText="Campo obligatorio"
-              ></TextField>
+            <InputTelefono handleChangeTelefono={handleChangeTelefono} telefono={medico.telefono} styles="small"></InputTelefono>
+
             </Grid>
           </Grid>
           <Grid container direction="row" spacing={2}>

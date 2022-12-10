@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { styled } from "@mui/material/styles";
 import {
+  AppBar,
   Box,
   InputAdornment,
   OutlinedInput,
@@ -55,147 +56,154 @@ function ListadoMedicos() {
 
   return (
     <>
-      <Grid container direction="row">
-        <Grid item xs={4} sm={12}>
+      <Grid container spacing={0} direction={"column"}>
           <MenuAppBar></MenuAppBar>
-        </Grid>
-      </Grid>
-      <br></br>
-      <Grid container direction="row" spacing={2}>
-        <Menu></Menu>
-        {/* BUSCAR MÉDICO */}
-        <Grid item xs={4} sm={4}>
-        <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>{" "}
-          <Box textAlign={"left"}>
-          <OutlinedInput
-          size="small"
-            id="outlined-adornment-search-medicos"
-            endAdornment={
-              <InputAdornment position="end">
-                <SearchIcon></SearchIcon>
-              </InputAdornment>
-            }
-            onChange={(event) => {
-              setSearchMedicos(event.target.value);
-            }}
-            placeholder="Buscar médico..."
-          />
-          </Box>
-        </Grid>
-        <Grid item xs={4} sm={4}></Grid>
-      </Grid>
+        <Grid item xs={12} container>
+          <Grid item xs={0.1}></Grid>
+          <Grid bgcolor={"lightblue"} item xs={1.9}>
+            <Menu></Menu>
+          </Grid>
+          <Grid item xs={10} container spacing={0} marginTop={1}>
+            <Grid item xs={12}>
+              &nbsp;&nbsp;&nbsp;
+              <OutlinedInput
+                size="small"
+                id="outlined-adornment-search-medicos"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <SearchIcon></SearchIcon>
+                  </InputAdornment>
+                }
+                onChange={(event) => {
+                  setSearchMedicos(event.target.value);
+                }}
+                placeholder="Buscar médico..."
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TableContainer
+                style={{
+                  border: "1px solid gray",
+                  height: 430,
+                  width: "auto",
+                  marginRight: 10,
+                  marginLeft: 10,
+                  marginTop: 10,
+                }}
+              >
+                <Table stickyHeader size="small" aria-label="sticky table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell
+                        style={{
+                          width: "20%",
+                          backgroundColor: "#E9E9E9",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Nombre
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          width: "20%",
+                          backgroundColor: "#E9E9E9",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Apellido
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          width: "20%",
+                          backgroundColor: "#E9E9E9",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        DNI
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          width: "2%",
+                          textAlign: "center",
 
-      <Grid container direction="row" spacing={2}>
-        <Grid xs={2} ></Grid>
-        {/* TABLA PACIENTES */}
-        <Grid xs={10}>
-          <TableContainer
-            sx={{ maxHeight: 389, maxWidth: 1100 }}
-            style={{ border: "1px solid gray" }}
-          >
-            <Table stickyHeader size="small" aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    style={{
-                      width: "20%",
-                      backgroundColor: "#E9E9E9",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Nombre
-                  </TableCell>
-                  <TableCell
-                    style={{
-                      width: "20%",
-                      backgroundColor: "#E9E9E9",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Apellido
-                  </TableCell>
-                  <TableCell
-                    style={{
-                      width: "20%",
-                      backgroundColor: "#E9E9E9",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    DNI
-                  </TableCell>
-                  <TableCell
-                    style={{
-                      width: "2%",
-                      textAlign: "center",
-
-                      backgroundColor: "#E9E9E9",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Ver
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {medicos
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .filter((medico) => {
-                    if (searchMedicos === "") {
-                      return medico;
-                    } else if (
-                      medico.nombre
-                        .toLowerCase()
-                        .includes(searchMedicos.toLowerCase())
-                    ) {
-                      return medico;
-                    }
-                  })
-                  .map((medico) => (
-                    <TableRow
-                      key={medico.id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell>{medico.nombre}</TableCell>
-                      <TableCell>{medico.apellido}</TableCell>
-                      <TableCell>{medico.dni}</TableCell>
-
-                      <TableCell align="center">
-                        {/* <Link to={"/medicos/ver/id/" + paciente.id}> */}
-                        <VisibilityIcon color="info"></VisibilityIcon>
-                        {/* </Link> */}
+                          backgroundColor: "#E9E9E9",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Ver
                       </TableCell>
                     </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {medicos
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .filter((medico) => {
+                        if (searchMedicos === "") {
+                          return medico;
+                        } else if (
+                          medico.nombre
+                            .toLowerCase()
+                            .includes(searchMedicos.toLowerCase())
+                        ) {
+                          return medico;
+                        }
+                      })
+                      .map((medico) => (
+                        <TableRow
+                          key={medico.id}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell>{medico.nombre}</TableCell>
+                          <TableCell>{medico.apellido}</TableCell>
+                          <TableCell>{medico.dni}</TableCell>
+
+                          <TableCell align="center">
+                            {/* <Link to={"/medicos/ver/id/" + paciente.id}> */}
+                            <VisibilityIcon color="info"></VisibilityIcon>
+                            {/* </Link> */}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              bgcolor={"lightblue"}
+              border={"1px black"}
+              style={{ marginLeft: 10, marginRight: 10 }}
+            >
+              <TablePagination
+                style={{ width: "auto", marginTop: 0 }}
+                rowsPerPageOptions={[10, 25, 100]}
+                component="div"
+                count={medicos.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                labelRowsPerPage={"Registros por página:"}
+                labelDisplayedRows={() => {
+                  return `Registros: ${page * rowsPerPage + 1} – ${
+                    page * rowsPerPage + rowsPerPage
+                  } de ${
+                    medicos.length !== -1
+                      ? medicos.length
+                      : `more than ${rowsPerPage}`
+                  }`;
+                }}
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={medicos.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        labelRowsPerPage={"Registros por página:"}
-        labelDisplayedRows={() => {
-          return `Registros: ${page * rowsPerPage + 1} – ${
-            page * rowsPerPage + rowsPerPage
-          } de ${
-            medicos.length !== -1
-              ? medicos.length
-              : `more than ${rowsPerPage}`
-          }`;
-        }}
-      />
     </>
   );
 }

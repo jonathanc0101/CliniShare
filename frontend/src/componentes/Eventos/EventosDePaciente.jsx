@@ -11,12 +11,52 @@ import EditIcon from "@mui/icons-material/Edit";
 import { api } from "../../API backend/api";
 import Grid from "@mui/material/Unstable_Grid2";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
-import { TablePagination, Tooltip } from "@mui/material";
+import { Button, TablePagination, TextField, Tooltip } from "@mui/material";
 import EditOffIcon from "@mui/icons-material/EditOff";
+import { Box } from "@mui/system";
+import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import moment from "moment";
+import "dayjs/locale/es";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 function EventosDePaciente(params) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const formatearFecha = (fechaDeEvento) => {
+    let fecha = new Date(fechaDeEvento);
+    let dia = `${fecha.getDate()}`.padStart(2, "0");
+    let mes = `${fecha.getMonth() + 1}`.padStart(2, "0");
+    let anio = fecha.getFullYear();
+    const fechaFormateada = `${dia}-${mes}-${anio}`;
+    return fechaFormateada;
+  };
+
+  const [fechaInicio, setFechaInicio] = useState();
+  const [fechaFin, setFechaFin] = useState(new Date());
+
+  const handleChangeFechaInicio = (event) => {
+    console.log("EN HANDLE INICIO: " + event["$d"]);
+    if (event === null) {
+      event = {};
+    } else {
+      const value = new Date(event["$d"]);
+      console.log(value);
+      setFechaInicio(value);
+    }
+  };
+
+  const handleChangeFechaFin = (event) => {
+    console.log("EN HANDLE FIN: " + event["$d"]);
+
+    if (event === null) {
+      event = {};
+    } else {
+      const value = new Date(event["$d"]);
+      console.log(value);
+      setFechaFin(value);
+    }
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -35,15 +75,6 @@ function EventosDePaciente(params) {
     window.localStorage.getItem("loggedCliniShareAppUser")
   );
 
-  const formatearFecha = (fechaDeEvento) => {
-    let fecha = new Date(fechaDeEvento);
-    let dia = `${fecha.getDate()}`.padStart(2, "0");
-    let mes = `${fecha.getMonth() + 1}`.padStart(2, "0");
-    let anio = fecha.getFullYear();
-    const fechaFormateada = `${dia}-${mes}-${anio}`;
-    return fechaFormateada;
-  };
-
   useEffect(() => {
     const obtenerEventosPorPacienteId = async () => {
       const response = await api.obtenerEventosCompletosPorPacienteId(
@@ -52,15 +83,94 @@ function EventosDePaciente(params) {
 
       if (response.data.length !== 0) {
         setEventos(response.data);
-      } 
+      }
     };
     obtenerEventosPorPacienteId();
   }, [params.id]);
 
+  const obtenerEventosPorFechas = async () => {
+    const fechaInicioAux = formatearFecha(fechaInicio);
+    const fechaFinAux = formatearFecha(fechaFin);
+    const response = await api.obtenerEventosPorFechas(
+      fechaInicioAux,
+      fechaFinAux,
+      params.id
+    );
+
+    console.log(response);
+    setEventos(response);
+  };
+
+  const buscarEventosPorFechas = async () => {
+    obtenerEventosPorFechas();
+  };
+
   return (
     <>
       {eventos?.length ? (
-        <Grid>
+        <Grid container spacing={2} direction="column">
+          <Grid item xs={12} container>
+            {/* FECHA DE INICIO */}
+            <Grid item xs={3}>
+              <Box textAlign={"left"}>
+                <LocalizationProvider
+                  adapterLocale="es"
+                  dateAdapter={AdapterDayjs}
+                >
+                  <DesktopDatePicker
+                    label="Fecha inicio"
+                    name="fechaInicio"
+                    value={fechaInicio}
+                    onChange={handleChangeFechaInicio}
+                    renderInput={(params) => (
+                      <TextField
+                        margin="normal"
+                        size="small"
+                        fullWidth
+                        {...params}
+                      />
+                    )}
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Grid>
+            {/* FECHA FIN */}
+            <Grid item xs={3}>
+              <Box textAlign={"left"}>
+                <LocalizationProvider
+                  adapterLocale="es"
+                  dateAdapter={AdapterDayjs}
+                >
+                  <DesktopDatePicker
+                    label="Fecha fin"
+                    name="fechaFin"
+                    value={fechaFin}
+                    onChange={handleChangeFechaFin}
+                    renderInput={(params) => (
+                      <TextField
+                        margin="normal"
+                        size="small"
+                        fullWidth
+                        {...params}
+                      />
+                    )}
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Grid>
+            <Grid item xs={3}>
+              <Box textAlign={"left"}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  style={{ fontWeight: "bold", marginTop: 15 }}
+                  onClick={buscarEventosPorFechas}
+                >
+                  Buscar
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
           <TableContainer
             sx={{ maxHeight: 225, maxWidth: 1360 }}
             style={{ border: "1px solid #0c5774" }}
@@ -219,21 +329,73 @@ function EventosDePaciente(params) {
         </Grid>
       ) : (
         <>
-          <p style={{ color: "GrayText" }}>No hay ningún evento</p>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
+          <Grid container spacing={2} direction="column">
+            <Grid item xs={12} container>
+              {/* FECHA DE INICIO */}
+              <Grid item xs={3}>
+                <Box textAlign={"left"}>
+                  <LocalizationProvider
+                    adapterLocale="es"
+                    dateAdapter={AdapterDayjs}
+                  >
+                    <DesktopDatePicker
+                      label="Fecha inicio"
+                      name="fechaInicio"
+                      value={fechaInicio}
+                      onChange={handleChangeFechaInicio}
+                      renderInput={(params) => (
+                        <TextField
+                          margin="normal"
+                          size="small"
+                          fullWidth
+                          {...params}
+                        />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </Box>
+              </Grid>
+              {/* FECHA FIN */}
+              <Grid item xs={3}>
+                <Box textAlign={"left"}>
+                  <LocalizationProvider
+                    adapterLocale="es"
+                    dateAdapter={AdapterDayjs}
+                  >
+                    <DesktopDatePicker
+                      label="Fecha fin"
+                      name="fechaFin"
+                      value={fechaFin}
+                      onChange={handleChangeFechaFin}
+                      renderInput={(params) => (
+                        <TextField
+                          margin="normal"
+                          size="small"
+                          fullWidth
+                          {...params}
+                        />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </Box>
+              </Grid>
+              <Grid item xs={3}>
+                <Box textAlign={"left"}>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    style={{ fontWeight: "bold", marginTop: 15 }}
+                    onClick={buscarEventosPorFechas}
+                  >
+                    Buscar
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} container>
+            <p style={{ color: "GrayText" }}>No hay ningún evento</p>
+          </Grid>
         </>
       )}
     </>

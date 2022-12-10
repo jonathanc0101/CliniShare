@@ -1,9 +1,10 @@
 import MenuList from "@mui/material/MenuList";
-import { MenuItem } from "@mui/material";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Unstable_Grid2";
+import { Divider, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import SyncProblemIcon from "@mui/icons-material/SyncProblem";
+import Diversity1Icon from "@mui/icons-material/Diversity1";
+import GroupsIcon from "@mui/icons-material/Groups";
 
 function Menu() {
   const [verEventos, setVerEventos] = useState(false);
@@ -21,50 +22,102 @@ function Menu() {
 
   return (
     <>
-      <Grid
+      {/* <Grid
         item
         xs={4}
         sm={2}
         style={{ backgroundColor: "#007FFF", border: "3px solid #007FFF" }}
       >
-        <Paper square={true}>
-          <MenuList>
-            <MenuItem disabled style={{ fontWeight: "bold", fontSize: 17 }}>
-              Menú
-            </MenuItem>
-            <Link
-              to={"/pacientes/all"}
-              style={{ color: "inherit", textDecoration: "inherit" }}
+        <Paper square={true}> */}
+      <MenuList>
+        <MenuItem disabled>
+          <ListItemText
+            style={{
+              fontWeight: "bold",
+              fontSize: 30,
+              color: "black",
+              textAlign: "center",
+            }}
+          >
+            Menú
+          </ListItemText>
+        </MenuItem>
+        <Divider></Divider>
+
+        <Link to={"/pacientes/all"} style={{ textDecoration: "inherit" }}>
+          <MenuItem>
+            <ListItemText
+              style={{
+                color: "#0c5774",
+
+                marginBottom: 61,
+                marginTop: 61,
+
+                textAlign: "center",
+              }}
             >
-              <MenuItem style={{ color: "#007FFF", fontSize: 15 }}>
-                Mis pacientes
-              </MenuItem>
-            </Link>
-            <Link
-              to={"/medicos/all"}
-              style={{ color: "inherit", textDecoration: "inherit" }}
+              Mis pacientes
+            </ListItemText>
+            <ListItemIcon>
+              <GroupsIcon
+                style={{ color: "#0c5774" }}
+                fontSize="medium"
+              ></GroupsIcon>
+            </ListItemIcon>
+          </MenuItem>
+        </Link>
+        <Divider></Divider>
+
+        <Link to={"/medicos/all"} style={{ textDecoration: "inherit" }}>
+          <MenuItem>
+            <ListItemText
+              style={{
+                color: "#0c5774",
+                marginBottom: 61,
+                marginTop: 61,
+                textAlign: "center",
+              }}
             >
-              <MenuItem style={{ color: "#007FFF", fontSize: 15 }}>
-                Médicos
-              </MenuItem>
-            </Link>
-            <Link
-              to={"/sincronizacion"}
-              style={{ color: "inherit", textDecoration: "inherit" }}
+              Médicos
+            </ListItemText>
+            <ListItemIcon>
+              <Diversity1Icon
+                style={{ color: "#0c5774" }}
+                fontSize="medium"
+              ></Diversity1Icon>
+            </ListItemIcon>
+          </MenuItem>
+        </Link>
+        <Divider></Divider>
+        <Link to={"/sincronizacion"} style={{ textDecoration: "inherit" }}>
+          <MenuItem>
+            <ListItemText
+              style={{
+                color: "#0c5774",
+                marginBottom: 61,
+                marginTop: 61,
+
+                textAlign: "center",
+              }}
             >
-              <MenuItem style={{ color: "#007FFF", fontSize: 15 }}>
-                Conflictos
-              </MenuItem>
-            </Link>
-            {/* <Link
+              Conflictos
+            </ListItemText>
+
+            <ListItemIcon>
+              <SyncProblemIcon
+                style={{ color: "#0c5774" }}
+                fontSize="medium"
+              ></SyncProblemIcon>
+            </ListItemIcon>
+          </MenuItem>
+        </Link>
+        {/* <Link
               to={"/eventos/all"}
               style={{ color: "inherit", textDecoration: "inherit" }}
             >
               <MenuItem>Eventos</MenuItem>
             </Link> */}
-          </MenuList>
-        </Paper>
-      </Grid>
+      </MenuList>
     </>
   );
 }

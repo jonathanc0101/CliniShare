@@ -59,7 +59,6 @@ function VerPaciente() {
   return (
     <>
       <MenuAppBar></MenuAppBar>
-
       <Typography
         component="h6"
         variant="h6"
@@ -67,10 +66,9 @@ function VerPaciente() {
           backgroundColor: "#0c5774",
           color: "white",
           textAlign: "left",
-          lineHeight: "2",
         }}
       >
-        &nbsp;&nbsp;&nbsp;Ver / Datos del paciente
+        &nbsp;&nbsp;&nbsp;Datos del paciente / Visualización
       </Typography>
       <Card>
         <CardContent>
@@ -158,7 +156,7 @@ function VerPaciente() {
           </Grid>
           <Grid container direction="row" spacing={1}>
             {/* DOMICILIO */}
-            <Grid item xs={4} sm={3}>
+            <Grid item xs={4} sm={2}>
               <TextField
                 disabled
                 label="Domicilio"
@@ -172,7 +170,7 @@ function VerPaciente() {
               ></TextField>
             </Grid>
             {/* DOMICILIO */}
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={4} sm={3}>
               <TextField
                 disabled
                 label="Teléfono"
@@ -272,11 +270,9 @@ function VerPaciente() {
               </Box>
             </Grid>
           </Grid>
-          <Grid container direction="row" spacing={2}>
-            <Grid item xs={4} sm={12}>
-              <EventosDePaciente id={params.id} />
-            </Grid>
-          </Grid>
+
+          <EventosDePaciente id={params.id} />
+
           <Grid container direction="row" spacing={2}>
             <Grid item xs={4} sm={4}>
               <BotonVolver></BotonVolver>
