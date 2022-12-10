@@ -16,5 +16,6 @@ router.post("/login", async (req,res,next) =>
 );
 router.post("/register", userController.registerUser);
 router.put("/modify", userController.modifyUser);
+router.put("/validate", userController.validateToken);
 
 export default router;

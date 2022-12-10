@@ -13,7 +13,7 @@ async function nuevoToken(user) {
 
     return tokenRecibido;
   } catch (error) {
-    console.log("Error en la creación de token nuevo " + error);
+    console.log("Error en la creación de token nuevo (nuevoToken) " + error);
   }
 }
 
@@ -23,11 +23,12 @@ async function validarTokenYUsuario(token) {
         const tokenEncontrado = await TokenUsuario.findOne({
             where: {
               validoHasta: { [Op.gt]: new Date() },
+              id:token.id
             },
           });
         
           if (!tokenEncontrado) {
-            return {};
+            return false;
           } else {
             const userEncontrado = await MedicoUsuario.findOne({
               where: { id: tokenEncontrado.medicoId },
@@ -48,7 +49,7 @@ async function validarTokenYUsuario(token) {
         
     } catch (error) {
         
-        console.log("error en tokenusuario: " + error);
+        console.log("error en validarTokenYUsuario: " + error);
         return false;
     }
 }
