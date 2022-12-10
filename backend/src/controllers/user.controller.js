@@ -40,7 +40,8 @@ async function modifyUser(req, res, next) {
 }
 
 async function validateToken(req, res, next) {
-  const token = req.body;
+  const id = req.params.id;
+  const token = {id};
   const response = await TokenUsuarioService.validarTokenYUsuario(token);
 
   res.send(JSON.stringify(response));

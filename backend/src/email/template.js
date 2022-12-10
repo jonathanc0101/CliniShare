@@ -1,4 +1,7 @@
-export function getEmailFromTemplate(codigo){    
+import { SERVER_BD_PORT } from "../UDP/constants.js";
+import ipsGetter from "../UDP/getIp.js";
+
+export async function getEmailFromTemplate(codigo){    
     let html = `<!DOCTYPE html>
     <html>
     <head>
@@ -151,7 +154,7 @@ export function getEmailFromTemplate(codigo){
               <!-- start copy -->
               <tr>
                 <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-                  <p style="margin: 0;">El código para confirmar su email en Clinishare se muestra a continuación. Si ha creado una cuenta en CliniShare, puede tranquilamente ignorar este mensaje.</p>
+                  <p style="margin: 0;">Para confirmar su email en Clinishare clickee en el boton debajo. Si no creó una cuenta en CliniShare, puede tranquilamente ignorar este mensaje.</p>
                 </td>
               </tr>
               <!-- end copy -->
@@ -165,7 +168,7 @@ export function getEmailFromTemplate(codigo){
                         <table border="0" cellpadding="0" cellspacing="0">
                             <tr>
                             <td align="center" bgcolor="#1a82e2" style="border-radius: 6px;">
-                                <a href="#" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">miCodigo1234567miCodigo</a>
+                                <a href="#paginaClinishare" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">miCodigo1234567miCodigo</a>
                             </td>
                             </tr>
                         </table>
@@ -200,7 +203,7 @@ export function getEmailFromTemplate(codigo){
               <!-- start permission -->
               <tr>
                 <td align="center" bgcolor="#e9ecef" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
-                  <p style="margin: 0;">Recibiste este mail porque recibimos una solicitud de creación de usuario en el sistema CliniShare. Si no solicitaste este tipo de acción podés ignorar este mensaje.</p>
+                  <p style="margin: 0;">Recibiste este mail porque tuvimos una solicitud de creación de usuario en nuestro sistema CliniShare. Si no solicitaste este tipo de acción podés ignorar este mensaje.</p>
                 </td>
               </tr>
               <!-- end permission -->
@@ -221,5 +224,17 @@ export function getEmailFromTemplate(codigo){
     </body>
     </html>`;
 
-    return html.replace("miCodigo1234567miCodigo",codigo);
+    return html.replace("#paginaClinishare",await getPaginaVerificacionCodigo(codigo));
 }
+
+async function getPaginaVerificacionCodigo(codigo){
+
+  const IPS = await ipsGetter();
+  const ip = IPS[Object.keys(IPS)[0]];
+
+  const url = "https://" + ip + ":" + SERVER_BD_PORT + "/validate/id/" + codigo;
+
+  return url; 
+}
+
+

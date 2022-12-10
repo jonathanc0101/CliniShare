@@ -1,5 +1,7 @@
 import { MedicoUsuario } from "../models/MedicoUsuario.js";
 import { TokenUsuario } from "../models/TokenUsuario.js";
+import { Op } from "sequelize";
+import { sequelize } from "../database/database.js";
 
 export const TokenUsuarioService = {
   validarTokenYUsuario,
@@ -36,12 +38,17 @@ async function validarTokenYUsuario(token) {
       });
 
       await sequelize.transaction(async (t) => {
-        userEncontrado.verificado = true;
-        userEncontrado.update({
+        let userEncontradoNew = {...userEncontrado.dataValues};
+
+        userEncontradoNew.verificado =true;
+        await MedicoUsuario.update(userEncontradoNew,{
+          where:{
+            id:userEncontradoNew.id
+          },
           transaction: t,
         });
 
-        tokenEncontrado.destroy();
+        await tokenEncontrado.destroy();
       });
 
       return true;

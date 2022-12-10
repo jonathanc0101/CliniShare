@@ -17,8 +17,8 @@ app.use(cors());
 
 //middlewares
 app.use(express.json());
-app.use(userRoutes);
 app.use(handshakeRoutes);
+app.use(userRoutes);
 
 app.use(comprobarToken); //solo se comprueba el token en las solicitudes que no sean de usuario ni de sincronizar: 
 //no login, no register, etc. ya que el usuario no tendría el token en esas requests.

@@ -30,7 +30,7 @@ async function login(email, password) {
     const medicoEncontrado = await MedicosUsuariosService.getMedicoByEmail(
       email
     );
-
+      
     if (!medicoEncontrado) {
       return {};
     }

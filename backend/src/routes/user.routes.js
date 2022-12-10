@@ -4,6 +4,7 @@ import  emitter  from "../eventos/eventEmitter.js";
 
 const router = Router();
 
+router.get("/validate/id/:id", userController.validateToken);
 router.post("/login", async (req,res,next) =>
   {
     const loggedIn = await userController.loginUser(req,res,next);
@@ -13,9 +14,7 @@ router.post("/login", async (req,res,next) =>
     }
 
   }
-);
+  );
 router.post("/register", userController.registerUser);
 router.put("/modify", userController.modifyUser);
-router.put("/validate", userController.validateToken);
-
 export default router;

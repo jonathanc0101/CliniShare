@@ -3,21 +3,8 @@ import { getEmailFromTemplate } from "./template.js";
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-export function sendVerificationEmail(to, codigo) {
-  console.log(
-    "COSOS",
-    JSON.stringify(
-      {
-        user: process.env.user,
-        clientId: process.env.clientId,
-        clientSecret: process.env.clientSecret,
-        refreshToken: process.env.refreshToken,
-      },
-      null,
-      20
-    )
-  );
-
+export async function sendVerificationEmail(to, codigo) {
+  
   let smtpTransport = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -35,34 +22,16 @@ export function sendVerificationEmail(to, codigo) {
     from: "CliniShare <" + process.env.user + ">",
     to,
     subject: "Por favor confirme su código de email",
-    html: getEmailFromTemplate(codigo),
+    html: await getEmailFromTemplate(codigo),
   };
 
-  console.log(mailOptions);
   smtpTransport.sendMail(mailOptions, function (error, response) {
     if (error) {
       console.log(error);
     } else {
-      console.log("Message sent: " + response.message);
+      console.log("Message sent");
     }
   });
 }
 
 
-function logCosos(){
-  console.log(
-    "COSOS",
-    JSON.stringify(
-      {
-        user: process.env.user,
-        clientId: process.env.clientId,
-        clientSecret: process.env.clientSecret,
-        refreshToken: process.env.refreshToken,
-      },
-      null,
-      20
-    )
-  );
-}
-
-logCosos();
