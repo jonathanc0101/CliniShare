@@ -6,6 +6,8 @@ import { Medico } from "../models/Medico.js";
 import { MedicosService } from "./medico.service.js";
 import { MedicoUsuario } from "../models/MedicoUsuario.js";
 import { QueryTypes } from "sequelize";
+import { TokenUsuarioService } from "./tokenUsuario.service.js";
+import { sendVerificationEmail } from "../email/utils.js";
 
 export const userService = {
   login,
@@ -30,6 +32,10 @@ async function login(email, password) {
     );
 
     if (!medicoEncontrado) {
+      return {};
+    }
+
+    if(!medicoEncontrado.verificado){
       return {};
     }
 
@@ -84,6 +90,12 @@ async function register(medico) {
         transaction: t,
       });
       await Medico.create(newMedico, { transaction: t });
+
+      //le creamos un token para que valide su usuario luego
+      const tokenNuevo = await TokenUsuarioService.nuevoToken(responseUser);
+
+      //le enviamos el token al mail para que pueda verificarlo
+      sendVerificationEmail(responseUser.email,tokenNuevo.id);
     });
 
     //no le enviamos el hash al usuario para que no pueda bruteforcearlo

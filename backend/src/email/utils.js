@@ -1,28 +1,27 @@
-import express from "express";
 import nodemailer from "nodemailer";
 import { getEmailFromTemplate } from "./template.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 export function sendVerificationEmail(to, codigo) {
   let smtpTransport = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: "smtp.gmail.com",
     port: 465,
     secure: true,
     auth: {
-    type: "OAuth2",
-    user: "clinisharesrl@gmail.com",
-    clientId: "911861983941-1kad6obsir034a2p0h17ovombsssn7if.apps.googleusercontent.com",
-    clientSecret: "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",
-    refreshToken : "1//04oWn_xK452rfCgYIARAAGAQSNwF-L9IrBGXZaGjxWo_24bj3GLWH1pdvqwkrZLp_h0wX1a1DKwXPuN8zagC2cNmKEjigfvORW0g"
-     }
-  
+      type: "OAuth2",
+      user: process.env.user,
+      clientId: process.env.clientId,
+      clientSecret: process.env.clientSecret,
+      refreshToken: process.env.refreshToken,
     },
-  );
+  });
 
   let mailOptions = {
-    from: "CliniShare <CliniShareSRL@gmail.com>",
+    from: "CliniShare <" + process.env.user  + ">",
     to,
     subject: "Por favor confirme su código de email",
-    html: getEmailFromTemplate(codigo) 
+    html: getEmailFromTemplate(codigo),
   };
 
   console.log(mailOptions);
