@@ -13,7 +13,7 @@ export const userService = {
   login,
   register,
   modify,
-  getAllMedicosUUIDSDeUsers
+  getAllMedicosUUIDSDeUsers,
 };
 
 async function generateHash(password) {
@@ -35,7 +35,7 @@ async function login(email, password) {
       return {};
     }
 
-    if(!medicoEncontrado.verificado){
+    if (!medicoEncontrado.verificado) {
       return {};
     }
 
@@ -86,16 +86,32 @@ async function register(medico) {
     let responseUser = {};
 
     await sequelize.transaction(async (t) => {
+      const userBuscado = await MedicoUsuario.findOne({
+        where: {
+          email: medico.email,
+        },
+      });
+
+      console.log("userbuscado: ", JSON.stringify(userBuscado, null, 20));
+
+      if (userBuscado) {
+        if (!userBuscado.verificado) {
+          await userBuscado.destroy({ transaction: t });
+        } else {
+          return false;
+        }
+      }
+
       responseUser = await MedicoUsuario.create(newMedico, {
         transaction: t,
       });
       await Medico.create(newMedico, { transaction: t });
 
       //le creamos un token para que valide su usuario luego
-      const tokenNuevo = await TokenUsuarioService.nuevoToken(responseUser);
+      const tokenNuevo = await TokenUsuarioService.nuevoToken(responseUser, t);
 
       //le enviamos el token al mail para que pueda verificarlo
-      sendVerificationEmail(responseUser.email,tokenNuevo.id);
+      await sendVerificationEmail(responseUser.email, tokenNuevo.id);
     });
 
     //no le enviamos el hash al usuario para que no pueda bruteforcearlo
@@ -110,21 +126,19 @@ async function register(medico) {
 
 async function modify(medico) {
   try {
-    let medicoNew = {...medico };
+    let medicoNew = { ...medico };
     let hash = "";
-  
 
-    if(medico.password){
+    if (medico.password) {
       hash = await generateHash(medico.password);
       medicoNew = { ...medicoNew, password: hash };
     }
 
-    if (await MedicosUsuariosService.modificar(medicoNew)){
+    if (await MedicosUsuariosService.modificar(medicoNew)) {
       return true;
-    }else{
+    } else {
       return false;
     }
-
   } catch (error) {
     console.log(error);
     return {};
@@ -133,12 +147,14 @@ async function modify(medico) {
 
 async function getAllMedicosUUIDSDeUsers() {
   try {
-    const users = await sequelize.query('SELECT medicos.id as id FROM medicos JOIN "medicosUsuarios" on medicos.email = "medicosUsuarios".email;',{
-      type: QueryTypes.SELECT,
-    });
+    const users = await sequelize.query(
+      'SELECT medicos.id as id FROM medicos JOIN "medicosUsuarios" on medicos.email = "medicosUsuarios".email;',
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
     return users;
   } catch (error) {
     console.log("Error getAllUsersUUIDS ", error);
   }
 }
-

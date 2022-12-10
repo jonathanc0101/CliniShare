@@ -18,6 +18,7 @@ async function create(user) {
   const userCreado = {};
 
   await sequelize.transaction(async (t) => {
+
     userCreado = await MedicoUsuario.create(user, {
       where: { id: user.id },
     });

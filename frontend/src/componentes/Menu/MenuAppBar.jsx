@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import BotonSincronizar from "../Botones/BotonSincronizar";
 import { Grid, ListItemIcon } from "@mui/material";
-import logoClinishare from "/home/nicole/Escritorio/CliniShare/frontend/src/utilidades/logoCliniShare.png";
+import logoClinishare from "../../utilidades/logoCliniShare.png";
 import Logout from "@mui/icons-material/Logout";
 
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
