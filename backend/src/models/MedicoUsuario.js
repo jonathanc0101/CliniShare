@@ -43,6 +43,18 @@ export const MedicoUsuario = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    genero:{
+      type:DataTypes.STRING,
+    },
+    sexo:{
+      type:DataTypes.STRING,
+    },
+    telefono:{
+      type:DataTypes.STRING,
+    },
+    direccion:{
+      type:DataTypes.STRING,
+    },
     verificado:{
       type: DataTypes.BOOLEAN,
       allowNull: false,
