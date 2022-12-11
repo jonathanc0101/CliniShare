@@ -7,3 +7,6 @@ npm run build
 cd ..
 
 npm install
+
+cd ./backend/src/bdSetup
+sh ./setupDB.sh

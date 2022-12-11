@@ -349,8 +349,8 @@ async function resolverConflictos(pacienteParaActualizar) {
 
 async function obtenerEventosPorFechas(fechaInicio, fechaFin, pacienteId) {
   try {
-    console.log("obtenerEventosPorFechas\n");
-    console.log("Paciente: " + pacienteId);
+    // console.log("obtenerEventosPorFechas\n");
+    // console.log("Paciente: " + pacienteId);
 
     const fechaInicioAux = convertir(fechaInicio);
     const fechaFinAux = convertir(fechaFin);
@@ -382,8 +382,7 @@ function convertir(fecha) {
     fechaPartes[1] - 1,
     +fechaPartes[0]
   );
-  console.log("STRING: " + fechaString);
-  console.log("DATE?: " + fechaDate);
+
   return fechaDate;
 }
 

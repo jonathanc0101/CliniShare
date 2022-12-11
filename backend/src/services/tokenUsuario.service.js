@@ -9,7 +9,6 @@ export const TokenUsuarioService = {
 };
 
 async function nuevoToken(user,transaction) {
-  console.log("user: ", JSON.stringify(user, null, 20));
 
   const tokenNuevo = { medicoId: user.id };
   try {

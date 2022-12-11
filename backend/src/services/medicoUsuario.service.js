@@ -42,7 +42,7 @@ async function modificar(user) {
 
     const medicoNuevo = {...medicoViejo.dataValues, ...user};
 
-    console.log("\n\n\nmedico nuevo\n\n\n",medicoNuevo);
+    // console.log("\n\n\nmedico nuevo\n\n\n",medicoNuevo);
 
     await Medico.update(medicoNuevo, { where: { id: medicoViejo.id } });
   });

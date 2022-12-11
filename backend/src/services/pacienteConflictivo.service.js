@@ -77,10 +77,6 @@ async function resolver(pacienteConflictivo) {
     
     upsertado = await PacientesService.upsertarPorDNIyNacimiento(paciente, t);
     
-    console.log("\n\n\n");
-    console.log("upsertado ",upsertado);
-    console.log("\n\n\n");
-    
     return true
   });
   

@@ -17,8 +17,7 @@ export function handleNewComputer(computadora) {
       SERVER_BD_PORT.toString().trim() +
       "/clinishare";
 
-    console.log("HI");
-    axios
+      axios
       .get(getMethodString)
       .then((res) => {
         if (res.data.INITIAL_RESPONSE === INITIAL_RESPONSE) {

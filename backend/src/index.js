@@ -1,7 +1,8 @@
 import app from "./app.js";
+import verifServer from "./verifServer.js";
 
 import { sequelize } from "./database/database.js";
-import { SERVER_BD_PORT,REACT_SERVER_BD_PORT } from "./UDP/constants.js";
+import { SERVER_BD_PORT,VERIF_SERVER_BD_PORT } from "./UDP/constants.js";
 import emitter from "./eventos/eventEmitter.js";
 
 //aca se importan los controller que no tengan service todavia
@@ -18,6 +19,10 @@ export async function main() {
 
       emitter.emit("db_connected");
 
+    });
+
+    verifServer.listen(VERIF_SERVER_BD_PORT, () => {
+      console.log("VERIF_SERVER is listening on port", VERIF_SERVER_BD_PORT);
     });
     
   } catch (error) {

@@ -11,7 +11,7 @@ const cryptoData = await ComputadoraLocalService.getKeysAndCertPEM();
 const axios = await utils.getAxiosInstance(cryptoData.privateKey,cryptoData.certificateSigned);
 
 export async function sincronizar(computadora) {
-  console.log("\n\nsincronizando looping \n\n");
+  // console.log("\n\nsincronizando looping \n\n");
 
   const fechaUltimaSincronizacion = await SincronizacionService.getUltimaFechaDeSincronizacionConComputadoraId(computadora.computadoraId);
 
@@ -32,7 +32,7 @@ export async function sincronizar(computadora) {
     "/pacientes/all/dnis;nacimientos";
 
 
-  console.log("\n\nevento: antes de hacer get dnis\n\n");
+  // console.log("\n\nevento: antes de hacer get dnis\n\n");
   //obtener DNIS para sincronizar con los que tenemos en comun
   let dnisyNacimientosDePacientes = [];
   await axios
@@ -56,7 +56,7 @@ export async function sincronizar(computadora) {
 
   //obtener los datos a sincronizar
 
-  console.log("\n\nevento: antes de hacer post\n\n");
+  // console.log("\n\nevento: antes de hacer post\n\n");
 
   await axios
     .post(postSincronicemosString, {

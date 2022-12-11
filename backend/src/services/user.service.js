@@ -45,7 +45,6 @@ async function login(email, password) {
     );
 
     if (passwordIsValid) {
-      console.log("\n\npassword is valid\n\n");
       token = await sesionActivaService.nueva(medicoEncontrado);
     }
 
@@ -91,8 +90,6 @@ async function register(medico) {
           email: medico.email,
         },
       });
-
-      console.log("userbuscado: ", JSON.stringify(userBuscado, null, 20));
 
       if (userBuscado) {
         if (!userBuscado.verificado) {

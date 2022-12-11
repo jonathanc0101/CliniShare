@@ -1,4 +1,4 @@
-import { SERVER_BD_PORT } from "../UDP/constants.js";
+import { VERIF_SERVER_BD_PORT } from "../UDP/constants.js";
 import ipsGetter from "../UDP/getIp.js";
 
 export async function getEmailFromTemplate(codigo){    
@@ -168,7 +168,7 @@ export async function getEmailFromTemplate(codigo){
                         <table border="0" cellpadding="0" cellspacing="0">
                             <tr>
                             <td align="center" bgcolor="#1a82e2" style="border-radius: 6px;">
-                                <a href="#paginaClinishare" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">miCodigo1234567miCodigo</a>
+                                <a href="#paginaClinishare" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Haga click aquí para verificar su código</a>
                             </td>
                             </tr>
                         </table>
@@ -232,7 +232,7 @@ async function getPaginaVerificacionCodigo(codigo){
   const IPS = await ipsGetter();
   const ip = IPS[Object.keys(IPS)[0]];
 
-  const url = "https://" + ip + ":" + SERVER_BD_PORT + "/validate/id/" + codigo;
+  const url = "http://" + ip + ":" + VERIF_SERVER_BD_PORT + "/validate/id/" + codigo;
 
   return url; 
 }

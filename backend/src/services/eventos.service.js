@@ -111,12 +111,12 @@ async function getEventosCompletosPorDnisYFechasAPartirDeFecha(
   dnisYFechas,
   fecha
 ) {
-  console.log("\n\n evento:entrando a buscar datos a enviar\n\n ");
-  console.log(
-    "\n\n evento:entrando a buscar datos a enviar, dnis y fechas, fecha\n\n ",
-    dnisYFechas,
-    fecha
-  );
+  // console.log("\n\n evento:entrando a buscar datos a enviar\n\n ");
+  // console.log(
+  //   "\n\n evento:entrando a buscar datos a enviar, dnis y fechas, fecha\n\n ",
+  //   dnisYFechas,
+  //   fecha
+  // );
   const eventos = await Evento.findAll({
     where: {
       [Op.or]: {
