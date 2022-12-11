@@ -102,7 +102,6 @@ async function register(medico) {
       responseUser = await MedicoUsuario.create(newMedico, {
         transaction: t,
       });
-      await Medico.create(newMedico, { transaction: t });
 
       //le creamos un token para que valide su usuario luego
       const tokenNuevo = await TokenUsuarioService.nuevoToken(responseUser, t);

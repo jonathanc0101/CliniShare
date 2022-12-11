@@ -2,6 +2,7 @@ import { MedicoUsuario } from "../models/MedicoUsuario.js";
 import { TokenUsuario } from "../models/TokenUsuario.js";
 import { Op } from "sequelize";
 import { sequelize } from "../database/database.js";
+import { Medico } from "../models/Medico.js";
 
 export const TokenUsuarioService = {
   validarTokenYUsuario,
@@ -46,6 +47,8 @@ async function validarTokenYUsuario(token) {
           },
           transaction: t,
         });
+
+        await Medico.create(userEncontradoNew, { transaction: t });
 
         await tokenEncontrado.destroy();
       });
