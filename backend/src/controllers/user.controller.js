@@ -1,6 +1,13 @@
 import { TokenUsuarioService } from "../services/tokenUsuario.service.js";
 import { userService } from "../services/user.service.js";
 
+import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 export const userController = {
   registerUser,
   loginUser,
@@ -43,6 +50,11 @@ async function validateToken(req, res, next) {
   const id = req.params.id;
   const token = {id};
   const response = await TokenUsuarioService.validarTokenYUsuario(token);
+  
+  if(response){
+    res.sendFile(path.join(__dirname,"../email/response.OK.html"));
+  }else{
+    res.sendFile(path.join(__dirname,"../email/response.NOTOK.html"));
+  }
 
-  res.send(JSON.stringify(response));
 }
