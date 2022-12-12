@@ -18,6 +18,7 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import moment from "moment";
 import "dayjs/locale/es";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import DescargarPDFPaciente from "../DescargarPDFPaciente";
 
 function EventosDePaciente(params) {
   const [page, setPage] = useState(0);
@@ -88,6 +89,16 @@ function EventosDePaciente(params) {
     obtenerEventosPorPacienteId();
   }, [params.id]);
 
+  const [pacienteAux, setPacienteAux] = useState({});
+  useEffect(() => {
+    (async () => {
+      const pacienteRespuesta = await api.obtenerPacienteById(params.id);
+      setPacienteAux((estadoAnterior) => {
+        return { ...estadoAnterior, ...pacienteRespuesta };
+      });
+    })();
+  }, [params.id]);
+
   const obtenerEventosPorFechas = async () => {
     const fechaInicioAux = formatearFecha(fechaInicio);
     const fechaFinAux = formatearFecha(fechaFin);
@@ -111,7 +122,7 @@ function EventosDePaciente(params) {
         <Grid container spacing={2} direction="column">
           <Grid item xs={12} container>
             {/* FECHA DE INICIO */}
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <Box textAlign={"left"}>
                 <LocalizationProvider
                   adapterLocale="es"
@@ -124,7 +135,7 @@ function EventosDePaciente(params) {
                     onChange={handleChangeFechaInicio}
                     renderInput={(params) => (
                       <TextField
-                        margin="normal"
+                        margin="none"
                         size="small"
                         fullWidth
                         {...params}
@@ -135,7 +146,7 @@ function EventosDePaciente(params) {
               </Box>
             </Grid>
             {/* FECHA FIN */}
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <Box textAlign={"left"}>
                 <LocalizationProvider
                   adapterLocale="es"
@@ -148,7 +159,7 @@ function EventosDePaciente(params) {
                     onChange={handleChangeFechaFin}
                     renderInput={(params) => (
                       <TextField
-                        margin="normal"
+                        margin="none"
                         size="small"
                         fullWidth
                         {...params}
@@ -158,17 +169,23 @@ function EventosDePaciente(params) {
                 </LocalizationProvider>
               </Box>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={1}>
               <Box textAlign={"left"}>
                 <Button
                   variant="contained"
-                  size="large"
-                  style={{ fontWeight: "bold", marginTop: 15 }}
+                  size="medium"
+                  style={{ fontWeight: "bold" }}
                   onClick={buscarEventosPorFechas}
                 >
                   Buscar
                 </Button>
               </Box>
+            </Grid>
+            <Grid item xs={3}>
+              <DescargarPDFPaciente
+                paciente={pacienteAux}
+                eventos={eventos}
+              ></DescargarPDFPaciente>
             </Grid>
           </Grid>
           <TableContainer

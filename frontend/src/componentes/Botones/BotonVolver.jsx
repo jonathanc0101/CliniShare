@@ -8,7 +8,7 @@ function BotonVolver() {
   return (
     <>
       <Button
-        style={{ border: "1px solid #0c5774" }}
+        style={{ border: "1px solid #0c5774"}}
         variant="outlined"
         startIcon={
           <ArrowBackIcon

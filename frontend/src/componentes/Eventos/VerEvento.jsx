@@ -73,7 +73,6 @@ function VerEvento() {
           backgroundColor: "#0c5774",
           color: "white",
           textAlign: "left",
-          fontWeight: "bold",
           lineHeight: "2",
         }}
       >
@@ -117,20 +116,20 @@ function VerEvento() {
               </LocalizationProvider>
             </Grid>
           </Grid>
-          <br></br>
 
           <Grid container direction="row" spacing={2}>
             {/* IMPORTANTE */}
             <Grid item xs={4} sm={2}>
-              <br></br>
-              <FormControlLabel
+              <TextField 
                 disabled
-                name="importante"
-                checked={evento.importante}
-                control={<Checkbox />}
-                label="Evento importante"
+                label="Situación"
+                type="text"
                 size="small"
-              />
+                name="importante"
+                value={evento.importante ? "Evento importante" : "Evento no importante"}
+                margin="normal"
+                variant="outlined"
+              ></TextField>
             </Grid>
             {/* FECHA DE VENCIMIENTO */}
             <Grid item xs={4} sm={4}>
@@ -154,7 +153,6 @@ function VerEvento() {
             </Grid>
           </Grid>
           {/* DATOS DEL PACIENTE */}
-          <br></br>
           <Typography
             component="h6"
             variant="h6"
@@ -268,7 +266,6 @@ function VerEvento() {
               />
             </Grid>
           </Grid>
-          <br></br>
           {/* VOLVER A ATRÁS */}
           <Grid item xs={10}>
             <BotonVolver></BotonVolver>

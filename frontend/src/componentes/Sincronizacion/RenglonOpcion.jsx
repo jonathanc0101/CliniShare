@@ -59,7 +59,9 @@ function RenglonOpcion({ titulo, val1, val2, setAtributoPacienteResuelto }) {
       return "Fecha de defunción:";
     } else if (titulo === "Teléfono") {
       return "Teléfono";
-    } else if (titulo === "email") {
+    } else if (titulo === "direccion") {
+      return "Dirección:";
+    }else if (titulo === "email") {
       return "Correo electrónico:";
     } else {
       return titulo.charAt(0).toUpperCase() + titulo.slice(1) + ":";

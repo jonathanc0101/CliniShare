@@ -17,6 +17,7 @@ import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
 import RenglonesOpcion from "./RenglonesOpcion";
 import { alertas } from "../alertas";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function ResolverConflictos() {
   const navigate = useNavigate();
@@ -134,17 +135,62 @@ function ResolverConflictos() {
             <MenuAppBar></MenuAppBar>
           </Grid>
         </Grid>
-        <Grid container rowSpacing={2}>
+        <Grid container rowSpacing={2} style={{marginBottom:10}}>
           <Grid item xs={12}>
-            <Item>Conflictos en datos del paciente</Item>
+            <Typography
+              style={{
+                backgroundColor: "#0c5774",
+                color: "white",
+                textAlign: "center",
+                lineHeight: "2",
+                fontSize: 17,
+                fontWeight: "bold",
+              }}
+            >
+              Conflictos en datos del paciente
+            </Typography>
           </Grid>
         </Grid>
         <Grid container rowSpacing={2}>
           <Grid sm={2.67}>
-          <Item>Datos internos</Item>
+            <Typography
+              style={{
+                color: "#0c5774",
+                textAlign: "center",
+                lineHeight: "2",
+                fontSize: 17,
+                fontWeight: "bold",
+              }}
+            >
+              DATOS INTERNOS
+            </Typography>
           </Grid>
-          <Grid sm={2.67}>
-          <Item>Datos externos</Item>
+          <Grid sm={2.55}>
+            <Typography
+              style={{
+                color: "#0c5774",
+                textAlign: "center",
+                lineHeight: "2",
+                fontSize: 17,
+                fontWeight: "bold",
+              }}
+            >
+              DATOS EXTERNOS
+            </Typography>
+          </Grid>
+          <Grid sm={2.55}>
+            <Typography
+              style={{
+                marginLeft:20,
+                color: "#0c5774",
+                textAlign: "left",
+                lineHeight: "2",
+                fontSize: 17,
+                fontWeight: "bold",
+              }}
+            >
+              Paciente actualizado
+            </Typography>
           </Grid>
         </Grid>
         <Grid container direction="row">
@@ -192,8 +238,23 @@ function ResolverConflictos() {
           </Grid>
         </Grid>
       </Box>
-      <hr></hr>
-      <BotonVolver> </BotonVolver>
+
+      <Grid item xs={12} container style={{ marginTop: 15 }}>
+        <Button
+          style={{ border: "1px solid #0c5774", marginLeft: 18 }}
+          variant="outlined"
+          startIcon={
+            <ArrowBackIcon
+              style={{ color: "#0c5774", fontWeight: "bold" }}
+            ></ArrowBackIcon>
+          }
+          onClick={() => navigate(-1)}
+        >
+          <Typography variant="h7" color={"#0c5774"} fontWeight={"bold"}>
+            Volver
+          </Typography>
+        </Button>
+      </Grid>
     </>
   );
 }

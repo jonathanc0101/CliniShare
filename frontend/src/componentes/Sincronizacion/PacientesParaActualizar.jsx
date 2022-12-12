@@ -71,7 +71,7 @@ function PacientesParaActualizar() {
     <>
       <Grid container spacing={0} direction={"column"}>
           <MenuAppBar></MenuAppBar>
-        <Grid item xs={12} container>
+        <Grid item xs={12} style={{ marginTop: 10 }} container>
           <Grid item xs={0.1}></Grid>
           <Grid bgcolor={"lightblue"} item xs={1.9}>
             <Menu></Menu>
@@ -137,7 +137,7 @@ function PacientesParaActualizar() {
                         DNI
                       </TableCell>
 
-                      <TableCell
+                      {/* <TableCell
                         style={{
                           width: "8%",
                           textAlign: "center",
@@ -146,16 +146,16 @@ function PacientesParaActualizar() {
                         }}
                       >
                         Ver datos
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell
                         style={{
-                          width: "4%",
+                          width: "10%",
                           textAlign: "center",
                           backgroundColor: "#E9E9E9",
                           fontWeight: "bold",
                         }}
                       >
-                        Resolver
+                        Resolver datos
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -185,14 +185,14 @@ function PacientesParaActualizar() {
                           <TableCell>{paciente.nombre}</TableCell>
                           <TableCell>{paciente.apellido}</TableCell>
                           <TableCell>{paciente.dni}</TableCell>
-                          <TableCell align="center">
+                          {/* <TableCell align="center">
                             <Tooltip title="Ver datos">
                               <VisibilityIcon
                                 disabled
                                 color="info"
                               ></VisibilityIcon>
                             </Tooltip>
-                          </TableCell>
+                          </TableCell> */}
                           <TableCell align="center">
                             <Link
                               to={

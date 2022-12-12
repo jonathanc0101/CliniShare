@@ -116,7 +116,6 @@ async function alertaModificacionExitosa(entidad) {
     title: "Éxito",
     html: `<p>El <b>${entidad}</b> se actualizó exitosamente</p>`,
     icon: "success",
-    timer: "2000",
     position: "center",
   });
 }

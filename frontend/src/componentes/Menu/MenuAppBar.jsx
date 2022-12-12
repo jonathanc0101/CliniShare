@@ -46,7 +46,6 @@ function MenuAppBar() {
         xs={12}
         container
         bgcolor={"#007FFF"}
-        style={{ marginBottom: 10 }}
       >
         <Grid item xs={4}>
           <Box
@@ -111,17 +110,17 @@ function MenuAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <Link
+              {/* <Link 
                 to={"/configuracion/cuenta/"}
                 style={{ color: "inherit", textDecoration: "inherit" }}
-              >
-                <MenuItem>
+              > */}
+                <MenuItem disabled>
                   <ListItemIcon>
                     <PersonIcon />
                   </ListItemIcon>
                   Perfil
                 </MenuItem>
-              </Link>
+              {/* </Link> */}
               <Link
                 to={"/configuracion/cuenta"}
                 style={{ color: "inherit", textDecoration: "inherit" }}

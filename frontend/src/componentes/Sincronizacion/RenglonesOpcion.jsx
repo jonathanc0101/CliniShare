@@ -27,7 +27,8 @@ function RenglonesOpcion({ paciente, conflicto, setAtributoPacienteResuelto }) {
       atributo !== "activo" &&
       atributo !== "id" &&
       atributo !== "dni" &&
-      atributo !== "fechaNacimiento"
+      atributo !== "fechaNacimiento" &&
+      atributo !== "fechaDefuncion" && atributo !== "genero"
     ) {
       datosProcesados.push({
         titulo: atributo,

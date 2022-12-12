@@ -72,7 +72,7 @@ function ModificarEvento() {
           return;
         }
       }
-    }else if(!evento.importante){
+    } else if (!evento.importante) {
       evento.fechaVencimiento = null;
     }
     //else if (
@@ -135,7 +135,7 @@ function ModificarEvento() {
 
   return (
     <>
-        <MenuAppBar></MenuAppBar>
+      <MenuAppBar></MenuAppBar>
 
       <Typography
         component="h6"
@@ -150,7 +150,7 @@ function ModificarEvento() {
       >
         &nbsp;&nbsp;&nbsp;Modificar evento / Datos del evento
       </Typography>
-      <Card >
+      <Card>
         <CardContent>
           {/* DATOS DEL EVENTO */}
           <Grid container direction="row" spacing={2}>
@@ -192,41 +192,41 @@ function ModificarEvento() {
 
           <Grid container direction="row" spacing={2}>
             {/* IMPORTANTE */}
-            <Grid item xs={4} sm={2}>
-              <br></br>
-              <FormControlLabel
-                size="small"
-                name="importante"
-                checked={evento.importante}
-                onChange={handleOnchange}
-                control={<Checkbox />}
-                label="Evento importante"
-              />
-            </Grid>
-            {/* FECHA DE VENCIMIENTO */}
-            <Grid item xs={4} sm={4}>
-              {evento.importante ? (
-                <LocalizationProvider
-                  adapterLocale="es"
-                  dateAdapter={AdapterDayjs}
-                >
-                  <DesktopDatePicker
-                    label="Fecha de vencimiento"
-                    name="fechaVencimiento"
-                    value={evento.fechaVencimiento}
-                    onChange={handleChangeFecha}
-                    minDate={moment().add(1, "days")}
-                    renderInput={(params) => (
-                      <TextField size="small" margin="normal" {...params} />
-                    )}
-                  />
-                </LocalizationProvider>
-              ) : null}
+            <Grid item xs={12} container >
+              <Grid item xs={2} style={{marginTop:12, marginBottom:10}}>
+                <FormControlLabel 
+                  size="small"
+                  name="importante"
+                  checked={evento.importante}
+                  onChange={handleOnchange}
+                  control={<Checkbox />}
+                  label="Evento importante"
+                />
+              </Grid>
+              {/* FECHA DE VENCIMIENTO */}
+              <Grid item xs={4}>
+                {evento.importante ? (
+                  <LocalizationProvider
+                    adapterLocale="es"
+                    dateAdapter={AdapterDayjs}
+                  >
+                    <DesktopDatePicker
+                      label="Fecha de vencimiento"
+                      name="fechaVencimiento"
+                      value={evento.fechaVencimiento}
+                      onChange={handleChangeFecha}
+                      minDate={moment().add(1, "days")}
+                      renderInput={(params) => (
+                        <TextField size="small" margin="normal" {...params} />
+                      )}
+                    />
+                  </LocalizationProvider>
+                ) : null}
+              </Grid>
             </Grid>
           </Grid>
-          <br></br>
           {/* DATOS DEL PACIENTE */}
-          <Typography
+          <Typography 
             component="h6"
             variant="h6"
             style={{
@@ -320,7 +320,7 @@ function ModificarEvento() {
                   endIcon={<SaveIcon style={{ fontSize: 24 }} />}
                   onClick={update}
                 >
-                  Guardar
+                  Guardar cambios
                 </Button>
               </Box>
             </Grid>

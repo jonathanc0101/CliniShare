@@ -57,8 +57,8 @@ function ListadoMedicos() {
   return (
     <>
       <Grid container spacing={0} direction={"column"}>
-          <MenuAppBar></MenuAppBar>
-        <Grid item xs={12} container>
+        <MenuAppBar></MenuAppBar>
+        <Grid item xs={12} style={{ marginTop: 10 }} container>
           <Grid item xs={0.1}></Grid>
           <Grid bgcolor={"lightblue"} item xs={1.9}>
             <Menu></Menu>
