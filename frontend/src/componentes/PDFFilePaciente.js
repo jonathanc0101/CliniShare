@@ -265,27 +265,7 @@ const PDFFilePaciente = ({ paciente, eventos, eventosImportantes }) => {
     const fechaFormateada = `${dia}-${mes}-${anio}`;
     return fechaFormateada;
   };
-
-  console.log("pdf: ", paciente);
-  // console.log("pdf eventos: ", eventos);
-  console.log("eventos im: ", eventosImportantes);
-
-//   const pacienteA = pacienteAux;
-//   const [eventos, setEventos] = useState([]);
-  // const [eventosImportantes, setEventosImportantes] = useState([]);
-
-
-  // useEffect(() => {
-  //   const obtenerEventosImportantesPorPacienteId = async () => {
-  //     const response =
-  //       await api.obtenerEventosCompletosImportantesPorPacienteId(paciente.id);
-
-  //       setEventosImportantes(response.data);
-
-  //   };
-  //   obtenerEventosImportantesPorPacienteId();
-  // }, [paciente.id]);
-
+  
   return (
     <Document>
       <Page size="A4" style={styles.body}>
