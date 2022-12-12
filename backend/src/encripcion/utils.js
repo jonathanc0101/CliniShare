@@ -85,7 +85,7 @@ function generateAndSelfSignCert(keys) {
 function createHTTPSserver(key, cert, app) {
   const sslServer = https.createServer(
     {
-      requestCert: true,
+      requestCert: false,
       rejectUnauthorized: false,
       key,
       cert,
@@ -98,7 +98,7 @@ function createHTTPSserver(key, cert, app) {
 
 function getAxiosInstance(key, cert) {
   const httpsAgent = new https.Agent({
-    requestCert: true,
+    requestCert: false,
     rejectUnauthorized: false, // (NOTE: this will disable client verification)
     key,
     cert

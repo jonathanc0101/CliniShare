@@ -256,7 +256,7 @@ const stylesTableEventosImportantes = StyleSheet.create({
   },
 });
 
-const PDFFilePaciente = ({ paciente, eventos }) => {
+const PDFFilePaciente = ({ paciente, eventos, eventosImportantes }) => {
   const formatearFecha = (fechaNacimiento) => {
     let fecha = new Date(fechaNacimiento);
     let dia = `${fecha.getDate()}`.padStart(2, "0");
@@ -267,23 +267,24 @@ const PDFFilePaciente = ({ paciente, eventos }) => {
   };
 
   console.log("pdf: ", paciente);
-  console.log("pdf eventos: ", eventos);
+  // console.log("pdf eventos: ", eventos);
+  console.log("eventos im: ", eventosImportantes);
 
 //   const pacienteA = pacienteAux;
 //   const [eventos, setEventos] = useState([]);
-  const [eventosImportantes, setEventosImportantes] = useState([]);
+  // const [eventosImportantes, setEventosImportantes] = useState([]);
 
 
-  useEffect(() => {
-    const obtenerEventosImportantesPorPacienteId = async () => {
-      const response =
-        await api.obtenerEventosCompletosImportantesPorPacienteId(paciente.id);
+  // useEffect(() => {
+  //   const obtenerEventosImportantesPorPacienteId = async () => {
+  //     const response =
+  //       await api.obtenerEventosCompletosImportantesPorPacienteId(paciente.id);
 
-        setEventosImportantes(response.data);
+  //       setEventosImportantes(response.data);
 
-    };
-    obtenerEventosImportantesPorPacienteId();
-  }, [paciente.id]);
+  //   };
+  //   obtenerEventosImportantesPorPacienteId();
+  // }, [paciente.id]);
 
   return (
     <Document>

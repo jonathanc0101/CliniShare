@@ -35,6 +35,7 @@ function EventosDePaciente(params) {
 
   const [fechaInicio, setFechaInicio] = useState();
   const [fechaFin, setFechaFin] = useState(new Date());
+  const [eventosImportantes, setEventosImportantes] = useState([]);
 
   const handleChangeFechaInicio = (event) => {
     console.log("EN HANDLE INICIO: " + event["$d"]);
@@ -98,6 +99,20 @@ function EventosDePaciente(params) {
       });
     })();
   }, [params.id]);
+
+
+  useEffect(() => {
+    const obtenerEventosImportantesPorPacienteId = async () => {
+      const response =
+        await api.obtenerEventosCompletosImportantesPorPacienteId(params.id);
+
+        if (response.data.length !== 0) {
+          setEventosImportantes(response.data);
+        }
+    };
+    obtenerEventosImportantesPorPacienteId();
+  }, [params.id]);
+
 
   const obtenerEventosPorFechas = async () => {
     const fechaInicioAux = formatearFecha(fechaInicio);
@@ -185,6 +200,7 @@ function EventosDePaciente(params) {
               <DescargarPDFPaciente
                 paciente={pacienteAux}
                 eventos={eventos}
+                eventosImportantes ={eventosImportantes}
               ></DescargarPDFPaciente>
             </Grid>
           </Grid>

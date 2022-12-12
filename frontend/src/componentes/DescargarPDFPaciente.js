@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { api } from "../API backend/api";
 import PDFFilePaciente from "./PDFFilePaciente";
 
-const DescargarPDFPaciente = ({ paciente, eventos }) => {
+const DescargarPDFPaciente = ({ paciente, eventos, eventosImportantes }) => {
   console.log(paciente);
   // const [pacienteAux, setPacienteAux] = useState({});
   // useEffect(() => {
@@ -26,7 +26,7 @@ const DescargarPDFPaciente = ({ paciente, eventos }) => {
     <div>
       <PDFDownloadLink
       style={{textDecoration:"inherit"}}
-        document={<PDFFilePaciente paciente={paciente} eventos={eventos} />}
+        document={<PDFFilePaciente paciente={paciente} eventos={eventos} eventosImportantes={eventosImportantes}/>}
         fileName={nombrePDF}
       >
         <Box textAlign={"left"}>
