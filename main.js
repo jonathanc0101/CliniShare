@@ -6,7 +6,7 @@ const patToIcon = "./documentación/imagenes/caduceoBlanco.png";
 app.commandLine.appendSwitch("ignore-certificate-errors");
 
 const createWindow = () => {
-  const win = new BrowserWindow({ show: false});
+  const win = new BrowserWindow({ show: false, title:"CliniShare"});
   win.maximize();
   win.setIcon(patToIcon);
   win.show();
