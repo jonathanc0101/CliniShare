@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { api } from "../API backend/api";
 import PDFFilePaciente from "./PDFFilePaciente";
 
-const DescargarPDFPaciente = ({ paciente, eventos, eventosImportantes }) => {
+const DescargarPDFPaciente = ({ paciente={}, eventos=[], eventosImportantes=[] }) => {
   console.log(paciente);
 
   const nombrePDF =
