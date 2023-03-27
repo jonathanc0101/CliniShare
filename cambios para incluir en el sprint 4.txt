@@ -6,3 +6,5 @@ mostrar fechas de eventos, mostrar un check si es importante
 
 sincronoizar tambien medicos
 plantear tabla nueva medicos en base de datos
+
+
